@@ -1,0 +1,188 @@
+"""Exportación estática: corre el motor para cada parcela con caché y escribe el JSON en la web.
+
+    python -m motor.exportar                 # todas las parcelas con caché
+    python -m motor.exportar jocotan         # una sola
+    MILPA_ONLINE=1 python -m motor.exportar --audio   # además, mp3 con edge-tts
+    python -m motor.exportar --etiquetar     # solo pone las etiquetas ID3 de IA a los mp3 vigentes
+
+Audio: cada mp3 es voz sintética generada con IA. Se declara en el JSON (audio.ia, que la web muestra
+junto al reproductor) y en las etiquetas ID3 del archivo (motor/audio_id3.py). Un mp3 solo se
+enlaza si el hash del texto guardado en su etiqueta coincide con el texto actual de la tarjeta.
+
+Escribe:
+    web/public/data/{parcela}.json            cultivo declarado por defecto (maíz + frijol)
+    web/public/data/{parcela}.{cultivo}.json  maiz_solo y sorgo
+    web/public/data/parcelas.json             índice para el mapa (también las parcelas sin datos)
+    web/public/data/ejemplo.json              copia del contrato de ejemplo escrito a mano
+
+Falla (código 1) si un JSON no cumple el contrato, si a una rotación le falta uno de los 5 campos
+del reto, o si un texto trae una cifra o una fecha de siembra sin respaldo.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import shutil
+import sys
+from pathlib import Path
+
+from motor import audio_id3, contrato, datos
+from motor.recomendar import ContratoIncompleto, recomendar
+
+WEB_DATA = datos.RAIZ / "web" / "public" / "data"
+WEB_AUDIO = datos.RAIZ / "web" / "public" / "audio"
+VOCES = ["es-GT-MartaNeural", "es-MX-DaliaNeural"]  # plan: voz es-GT, respaldo es-MX
+CULTIVOS = ["maiz_frijol", "maiz_solo", "sorgo"]
+PRIORIDAD = "agua"
+HERRAMIENTA_VOZ = "edge-tts, texto a voz neural de Microsoft"
+
+
+def declaracion_ia(voz: str) -> dict:
+    """Lo que la web muestra junto al reproductor y lo que va en la etiqueta del mp3."""
+    return {"generado_con_ia": True, "herramienta": HERRAMIENTA_VOZ, "voz": voz,
+            "declaracion": (f"Voz sintética generada con IA ({HERRAMIENTA_VOZ}; voz {voz}) a partir del texto que "
+                            "redactó el motor con plantillas. No es una persona.")}
+
+
+def etiquetar(ruta: Path, municipio: str, voz: str, texto: str) -> None:
+    d = declaracion_ia(voz)
+    audio_id3.escribir(ruta, titulo=f"Milpa Resiliente: tarjeta de {municipio} (voz sintética)",
+                       artista=f"Voz sintética generada con IA: {voz}", album="Milpa Resiliente (prototipo local)",
+                       anio="2026", comentario=d["declaracion"],
+                       extra={audio_id3.MARCA_IA: f"true; {HERRAMIENTA_VOZ}; voz {voz}",
+                              "MILPA_VOZ": voz, audio_id3.CLAVE_HASH: audio_id3.hash_texto(texto)})
+
+
+def mp3_vigente(ruta: Path, texto: str) -> dict | None:
+    """Etiqueta del mp3 si existe, declara IA y fue generado con este mismo texto; si no, None."""
+    if not ruta.exists():
+        return None
+    info = audio_id3.leer(ruta)
+    tx = info.get("TXXX", {})
+    if audio_id3.MARCA_IA in tx and tx.get(audio_id3.CLAVE_HASH) == audio_id3.hash_texto(texto):
+        return info
+    return None
+
+
+def etiquetar_existentes(destino: Path = WEB_DATA) -> list[str]:
+    """Etiqueta los mp3 ya generados con el texto y la voz de su JSON actual (sin volver a generarlos)."""
+    hechos = []
+    for p in datos.parcelas():
+        ruta_json, ruta_mp3 = destino / f"{p['id']}.json", WEB_AUDIO / f"{p['id']}.mp3"
+        if not (ruta_json.exists() and ruta_mp3.exists()):
+            continue
+        a = json.loads(ruta_json.read_text(encoding="utf-8")).get("audio") or {}
+        if not a.get("mp3") or not a.get("texto"):
+            continue
+        voz = (a.get("voz") or VOCES[0]).split(" ")[0]
+        etiquetar(ruta_mp3, p["municipio"], voz, a["texto"])
+        hechos.append(p["id"])
+    return hechos
+
+
+def _escribir(ruta: Path, obj: dict) -> None:
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+    ruta.write_text(json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+
+def generar_audio(texto: str, ruta: Path) -> str | None:
+    """mp3 de la tarjeta con edge-tts (voz neural de Microsoft, sin cuenta). Devuelve la voz usada o None.
+
+    Solo se envía el texto de la tarjeta (sin datos personales). Exige MILPA_ONLINE=1. Si falla, la web
+    usa la voz del navegador.
+    """
+    import asyncio
+    import os
+
+    if os.environ.get("MILPA_ONLINE") != "1":
+        return None
+    try:
+        import edge_tts
+    except ImportError:
+        return None
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+    for voz in VOCES:
+        try:
+            asyncio.run(edge_tts.Communicate(texto, voz, rate="-5%").save(str(ruta)))
+            if ruta.exists() and ruta.stat().st_size > 1000:
+                return voz
+        except Exception as e:  # noqa: BLE001
+            print(f"[audio] {voz} falló: {type(e).__name__}", file=sys.stderr)
+    return None
+
+
+def exportar(pids: list[str] | None = None, destino: Path = WEB_DATA, validar_esquema: bool = True,
+             audio: bool = False) -> dict:
+    destino.mkdir(parents=True, exist_ok=True)
+    indice = []
+    errores: list[str] = []
+    for p in datos.parcelas():
+        if pids and p["id"] not in pids:
+            continue
+        disp = datos.disponibilidad(p["id"])
+        faltan = [k for k in ("ndvi", "power_diario") if not disp[k]]
+        entrada = {"id": p["id"], "nombre": p["nombre"], "municipio": p["municipio"], "departamento": p["departamento"],
+                   "lat": p["lat"], "lon": p["lon"], "provisional": bool(p.get("provisional")),
+                   "disponible": not faltan, "faltan": faltan, "archivos": {}, "fuentes_en_cache": disp}
+        if not faltan:
+            for cultivo in CULTIVOS:
+                try:
+                    res = recomendar(p["id"], cultivo=cultivo, prioridad=PRIORIDAD)
+                except ContratoIncompleto as e:
+                    errores.append(f"{p['id']}/{cultivo}: {e}")
+                    continue
+                errs = contrato.errores_textos(res)
+                if validar_esquema:
+                    errs += contrato.errores_esquema(res)
+                if errs:
+                    errores += [f"{p['id']}/{cultivo}: {x}" for x in errs]
+                    continue
+                if cultivo == CULTIVOS[0]:
+                    ruta_mp3 = WEB_AUDIO / f"{p['id']}.mp3"
+                    voz = generar_audio(res["audio"]["texto"], ruta_mp3) if audio else None
+                    if voz:
+                        etiquetar(ruta_mp3, p["municipio"], voz, res["audio"]["texto"])
+                    info = mp3_vigente(ruta_mp3, res["audio"]["texto"])
+                    if info:
+                        voz_mp3 = info["TXXX"].get("MILPA_VOZ") or voz or VOCES[0]
+                        res["audio"]["mp3"] = f"audio/{p['id']}.mp3"
+                        res["audio"]["voz"] = f"{voz_mp3} (edge-tts, voz neural sintética)"
+                        res["audio"]["ia"] = declaracion_ia(voz_mp3)
+                    elif ruta_mp3.exists():
+                        print(f"[exportar] {p['id']}: el mp3 no coincide con el texto actual o no declara IA; "
+                              "no se enlaza (corra con --audio)", file=sys.stderr)
+                nombre = f"{p['id']}.json" if cultivo == CULTIVOS[0] else f"{p['id']}.{cultivo}.json"
+                _escribir(destino / nombre, res)
+                entrada["archivos"][cultivo] = f"data/{nombre}"
+                if cultivo == CULTIVOS[0]:
+                    entrada["resumen"] = {
+                        "meses_desnudos": res["deteccion"]["meses_desnudos"],
+                        "anios_con_quema": res["deteccion"]["quemas"]["anios_con_quema"],
+                        "confianza": res["rotaciones"][0]["confianza"]["nivel"],
+                    }
+            print(f"[exportar] {p['id']}: {len(entrada['archivos'])} archivos")
+        else:
+            print(f"[exportar] {p['id']}: sin caché de {', '.join(faltan)} (aparece en el mapa como pendiente)")
+        indice.append(entrada)
+    if contrato.EJEMPLO.exists():
+        shutil.copyfile(contrato.EJEMPLO, destino / "ejemplo.json")
+    _escribir(destino / "parcelas.json", {"version_contrato": "1.0", "parcelas": indice})
+    return {"indice": indice, "errores": errores}
+
+
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("parcelas", nargs="*")
+    ap.add_argument("--audio", action="store_true", help="genera mp3 con edge-tts (requiere MILPA_ONLINE=1)")
+    ap.add_argument("--etiquetar", action="store_true", help="solo etiqueta (ID3, IA) los mp3 ya generados")
+    a = ap.parse_args()
+    if a.etiquetar:
+        print("[exportar] etiquetados:", ", ".join(etiquetar_existentes()) or "ninguno")
+        sys.exit(0)
+    r = exportar(a.parcelas or None, audio=a.audio)
+    if r["errores"]:
+        print("\nLa exportación FALLÓ:", file=sys.stderr)
+        for e in r["errores"]:
+            print("  -", e, file=sys.stderr)
+        sys.exit(1)
+    print("[exportar] listo")

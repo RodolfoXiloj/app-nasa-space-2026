@@ -1,0 +1,328 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://milpa-resiliente.local/contracts/recomendacion.schema.json",
+  "title": "Recomendación de rotaciones para una parcela (contrato v1)",
+  "description": "Contrato congelado el 13 nov 2026 entre el motor (Python) y la web (React). Se pueden AGREGAR campos; no se quitan ni se renombran sin avisar a todo el equipo.",
+  "type": "object",
+  "required": ["version_contrato", "meta", "aviso", "parcela", "deteccion", "clima", "smap", "rotaciones", "zarc", "escenarios", "pesos", "fuentes", "glosario", "texto_tarjeta", "audio"],
+  "properties": {
+    "version_contrato": { "const": "1.0" },
+    "meta": {
+      "type": "object",
+      "required": ["tipo", "generado", "motor_version"],
+      "properties": {
+        "tipo": { "enum": ["ejemplo", "calculado"], "description": "ejemplo = escrito a mano para desarrollar la web; calculado = salida del motor" },
+        "generado": { "type": "string" },
+        "motor_version": { "type": "string" },
+        "nota": { "type": "string" },
+        "datos_de_ejemplo": { "type": "array", "items": { "type": "string" }, "description": "Partes que todavía usan datos de ejemplo o respaldo; la web las rotula" }
+      }
+    },
+    "aviso": { "type": "string", "minLength": 10 },
+    "parcela": {
+      "type": "object",
+      "required": ["id", "nombre", "municipio", "departamento", "lat", "lon", "cultivo_declarado", "prioridad", "terreno", "suelo"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "nombre": { "type": "string" },
+        "municipio": { "type": "string" },
+        "departamento": { "type": "string" },
+        "lat": { "type": "number", "minimum": 13, "maximum": 18.5 },
+        "lon": { "type": "number", "minimum": -92.5, "maximum": -88 },
+        "provisional": { "type": "boolean" },
+        "nota": { "type": "string" },
+        "cultivo_declarado": { "enum": ["maiz_frijol", "maiz_solo", "sorgo"] },
+        "prioridad": { "enum": ["agua", "suelo", "plagas"] },
+        "terreno": {
+          "type": "object",
+          "required": ["altitud_m", "pendiente_pct", "fuente_id"],
+          "properties": {
+            "altitud_m": { "type": ["number", "null"] },
+            "pendiente_pct": { "type": ["number", "null"] },
+            "fuente_id": { "type": "string" }
+          }
+        },
+        "suelo": {
+          "type": "object",
+          "required": ["disponible"],
+          "properties": {
+            "disponible": { "type": "boolean" },
+            "arcilla_pct": { "type": ["number", "null"] },
+            "carbono_organico_g_kg": { "type": ["number", "null"] },
+            "ph": { "type": ["number", "null"] },
+            "profundidad": { "type": "string" },
+            "fuente_id": { "type": ["string", "null"] },
+            "nota": { "type": "string" }
+          }
+        }
+      }
+    },
+    "deteccion": {
+      "type": "object",
+      "required": ["periodo", "umbral_desnudo_ndvi", "meses_desnudos", "ndvi_mensual", "ciclos", "quemas", "calidad", "serie", "fuente_ids"],
+      "properties": {
+        "periodo": { "type": "string" },
+        "umbral_desnudo_ndvi": { "type": "number" },
+        "meses_desnudos": { "type": "array", "items": { "$ref": "#/$defs/mes" } },
+        "ndvi_mensual": {
+          "type": "array", "minItems": 12, "maxItems": 12,
+          "items": {
+            "type": "object", "required": ["mes", "mediana", "n"],
+            "properties": { "mes": { "$ref": "#/$defs/mes" }, "mediana": { "type": ["number", "null"] }, "n": { "type": "integer" } }
+          }
+        },
+        "ciclos": {
+          "type": "object", "required": ["mediana", "por_anio", "prominencia_min"],
+          "properties": {
+            "mediana": { "type": ["number", "null"] },
+            "prominencia_min": { "type": "number" },
+            "por_anio": {
+              "type": "array",
+              "items": { "type": "object", "required": ["anio", "ciclos"], "properties": { "anio": { "type": "integer" }, "ciclos": { "type": "integer" }, "picos": { "type": "array", "items": { "type": "string" } } } }
+            }
+          }
+        },
+        "quemas": {
+          "type": "object",
+          "required": ["radio_m", "anios_con_quema", "anios_observados", "periodo", "detecciones", "nota"],
+          "properties": {
+            "radio_m": { "type": "number" },
+            "meses": { "type": "array", "items": { "$ref": "#/$defs/mes" } },
+            "anios_con_quema": { "type": "integer" },
+            "anios_observados": { "type": "integer" },
+            "periodo": { "type": "string" },
+            "meses_con_quema": { "type": "array", "items": { "$ref": "#/$defs/mes" } },
+            "detecciones_1km": { "type": "integer" },
+            "detecciones": {
+              "type": "array",
+              "items": {
+                "type": "object", "required": ["fecha", "distancia_m", "confianza", "cuenta"],
+                "properties": { "fecha": { "type": "string" }, "lat": { "type": "number" }, "lon": { "type": "number" }, "distancia_m": { "type": "number" }, "confianza": { "type": "string" }, "frp": { "type": "number" }, "cuenta": { "type": "boolean" } }
+              }
+            },
+            "nota": { "type": "string" }
+          }
+        },
+        "calidad": {
+          "type": "object", "required": ["compuestos", "validos", "pct_validos"],
+          "properties": { "compuestos": { "type": "integer" }, "validos": { "type": "integer" }, "pct_validos": { "type": "number" } }
+        },
+        "serie": {
+          "type": "array",
+          "items": { "type": "object", "required": ["fecha", "ndvi", "valido"], "properties": { "fecha": { "type": "string" }, "ndvi": { "type": ["number", "null"] }, "valido": { "type": "boolean" } } }
+        },
+        "fuente_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "clima": {
+      "type": "object",
+      "required": ["periodo", "resolucion", "lluvia_mensual_normal_mm", "et0_mensual_normal_mm", "tmax_mensual_normal_c", "lluvia_anual_mm", "anio_mas_seco", "canicula", "fuente_ids"],
+      "properties": {
+        "periodo": { "type": "string" },
+        "resolucion": { "type": "string" },
+        "lluvia_mensual_normal_mm": { "$ref": "#/$defs/doce_numeros" },
+        "et0_mensual_normal_mm": { "$ref": "#/$defs/doce_numeros" },
+        "tmax_mensual_normal_c": { "$ref": "#/$defs/doce_numeros" },
+        "lluvia_anual_mm": {
+          "type": "array",
+          "items": { "type": "object", "required": ["anio", "mm"], "properties": { "anio": { "type": "integer" }, "mm": { "type": "number" } } }
+        },
+        "anio_mas_seco": { "type": "object", "required": ["anio", "mm"], "properties": { "anio": { "type": "integer" }, "mm": { "type": "number" } } },
+        "canicula": {
+          "type": "object",
+          "required": ["ventana", "umbral_dia_seco_mm", "umbral_racha_dias", "anios_racha_larga", "anios_total", "racha_mediana_dias", "por_anio"],
+          "properties": {
+            "ventana": { "type": "string" },
+            "umbral_dia_seco_mm": { "type": "number" },
+            "umbral_racha_dias": { "type": "integer" },
+            "anios_racha_larga": { "type": "integer" },
+            "anios_total": { "type": "integer" },
+            "racha_mediana_dias": { "type": "number" },
+            "por_anio": { "type": "array", "items": { "type": "object", "required": ["anio", "racha_dias"], "properties": { "anio": { "type": "integer" }, "racha_dias": { "type": "integer" } } } }
+          }
+        },
+        "fuente_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "smap": {
+      "type": "object",
+      "required": ["disponible", "nota"],
+      "properties": {
+        "disponible": { "type": "boolean" },
+        "fuente_id": { "type": ["string", "null"] },
+        "humedad_jul_ago_m3m3": { "type": ["number", "null"] },
+        "percentil": { "type": ["number", "null"] },
+        "periodo": { "type": ["string", "null"] },
+        "respaldo": {
+          "type": ["object", "null"],
+          "properties": {
+            "variable": { "type": "string" }, "etiqueta": { "type": "string" }, "jul_ago_mediana": { "type": ["number", "null"] },
+            "unidad": { "type": "string" }, "periodo": { "type": "string" }, "fuente_id": { "type": "string" }
+          }
+        },
+        "nota": { "type": "string" }
+      }
+    },
+    "rotaciones": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": { "$ref": "#/$defs/rotacion" },
+      "description": "Siempre 3: la actual, la mejor de leguminosa o cobertura y la mejor tolerante a sequía"
+    },
+    "zarc": {
+      "type": "object",
+      "required": ["encontrado", "texto", "enlace", "nota_escenario", "registros"],
+      "properties": {
+        "encontrado": { "type": "boolean" },
+        "texto": { "type": "string" },
+        "enlace": { "type": "string" },
+        "nota_escenario": { "type": "string" },
+        "registros": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "escenarios": {
+      "type": "object",
+      "required": ["base", "lluvia_pct", "temp_c", "lista"],
+      "properties": {
+        "base": { "type": "string" },
+        "lluvia_pct": { "type": "array", "items": { "type": "number" } },
+        "temp_c": { "type": "array", "items": { "type": "number" } },
+        "lista": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "lluvia_pct", "temp_c", "canicula_anios_racha_larga", "rotaciones"],
+            "properties": {
+              "id": { "type": "string" },
+              "lluvia_pct": { "type": "number" },
+              "temp_c": { "type": "number" },
+              "canicula_anios_racha_larga": { "type": "integer" },
+              "rotaciones": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object", "required": ["puntajes", "deficit_mediano_pct"],
+                  "properties": { "puntajes": { "$ref": "#/$defs/puntajes" }, "deficit_mediano_pct": { "type": "number" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "pesos": {
+      "type": "object",
+      "required": ["prioridad", "por_prioridad"],
+      "properties": {
+        "prioridad": { "enum": ["agua", "suelo", "plagas"] },
+        "por_prioridad": {
+          "type": "object", "required": ["agua", "suelo", "plagas"],
+          "additionalProperties": { "type": "object", "required": ["agua", "suelo", "plagas"], "properties": { "agua": { "type": "number" }, "suelo": { "type": "number" }, "plagas": { "type": "number" } } }
+        }
+      }
+    },
+    "fuentes": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["id", "nombre", "cita", "url"],
+        "properties": { "id": { "type": "string" }, "nombre": { "type": "string" }, "cita": { "type": "string" }, "url": { "type": "string" }, "resolucion": { "type": ["string", "null"] }, "fecha_consulta": { "type": ["string", "null"] }, "es_nasa": { "type": "boolean" } }
+      }
+    },
+    "glosario": {
+      "type": "array",
+      "items": { "type": "object", "required": ["termino", "definicion"], "properties": { "termino": { "type": "string" }, "definicion": { "type": "string" } } }
+    },
+    "texto_tarjeta": { "type": "string", "minLength": 20 },
+    "audio": {
+      "type": "object", "required": ["mp3", "texto"],
+      "properties": { "mp3": { "type": ["string", "null"] }, "voz": { "type": ["string", "null"] }, "texto": { "type": "string" } }
+    }
+  },
+  "$defs": {
+    "mes": { "type": "integer", "minimum": 1, "maximum": 12 },
+    "doce_numeros": { "type": "array", "minItems": 12, "maxItems": 12, "items": { "type": ["number", "null"] } },
+    "puntajes": {
+      "type": "object", "required": ["agua", "suelo", "plagas", "total"],
+      "properties": {
+        "agua": { "type": "number", "minimum": 0, "maximum": 100 },
+        "suelo": { "type": "number", "minimum": 0, "maximum": 100 },
+        "plagas": { "type": "number", "minimum": 0, "maximum": 100 },
+        "total": { "type": "number", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "evidencia": {
+      "type": "object",
+      "required": ["dato", "valor", "unidad", "fuente", "fuente_id", "resolucion", "periodo"],
+      "properties": {
+        "dato": { "type": "string" },
+        "valor": { "type": ["number", "string", "null"] },
+        "unidad": { "type": ["string", "null"] },
+        "fuente": { "type": "string" },
+        "fuente_id": { "type": "string" },
+        "resolucion": { "type": ["string", "null"] },
+        "periodo": { "type": ["string", "null"] }
+      }
+    },
+    "texto_no_vacio": { "type": "string", "minLength": 3 },
+    "rotacion": {
+      "type": "object",
+      "required": ["id", "nombre", "tipo", "es_actual", "ciclos", "por_que", "evidencia", "beneficios", "vacios", "riesgos", "puntajes", "deficit", "confianza", "calendario", "trazabilidad"],
+      "properties": {
+        "id": { "type": "string" },
+        "nombre": { "type": "string" },
+        "tipo": { "enum": ["actual", "leguminosa_cobertura", "tolerante_sequia"] },
+        "es_actual": { "type": "boolean" },
+        "descripcion": { "type": "string" },
+        "ciclos": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["temporada", "cultivos", "meses"],
+            "properties": {
+              "temporada": { "enum": ["primera", "postrera", "seca"] },
+              "cultivos": { "type": "array", "items": { "type": "string" } },
+              "meses": { "type": "array", "items": { "$ref": "#/$defs/mes" } },
+              "siembra_mes_supuesto": { "$ref": "#/$defs/mes" },
+              "duracion_dias": { "type": "integer" }
+            }
+          }
+        },
+        "por_que": { "$ref": "#/$defs/texto_no_vacio" },
+        "evidencia": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/evidencia" } },
+        "beneficios": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/texto_no_vacio" } },
+        "vacios": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/texto_no_vacio" } },
+        "riesgos": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/texto_no_vacio" } },
+        "puntajes": { "$ref": "#/$defs/puntajes" },
+        "deficit": {
+          "type": "object", "required": ["mediana_pct", "p25_pct", "p75_pct"],
+          "properties": { "mediana_pct": { "type": "number" }, "p25_pct": { "type": "number" }, "p75_pct": { "type": "number" } }
+        },
+        "confianza": {
+          "type": "object", "required": ["nivel", "motivo"],
+          "properties": {
+            "nivel": { "enum": ["alta", "media", "baja"] },
+            "motivo": { "type": "string", "minLength": 5 },
+            "criterios": { "type": "array", "items": { "type": "object", "required": ["criterio", "cumple"], "properties": { "criterio": { "type": "string" }, "cumple": { "type": ["boolean", "null"] }, "detalle": { "type": "string" } } } }
+          }
+        },
+        "calendario": {
+          "type": "array", "minItems": 12, "maxItems": 12,
+          "items": {
+            "type": "object", "required": ["mes", "estado", "cultivo", "alertas"],
+            "properties": {
+              "mes": { "$ref": "#/$defs/mes" },
+              "estado": { "enum": ["cultivo", "cobertura", "rastrojo", "desnudo", "quema"] },
+              "cultivo": { "type": ["string", "null"] },
+              "alertas": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "trazabilidad": {
+          "type": "object", "required": ["agua", "suelo", "plagas"],
+          "properties": {
+            "agua": { "type": "array", "items": { "type": "string" } },
+            "suelo": { "type": "array", "items": { "type": "string" } },
+            "plagas": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

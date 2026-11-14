@@ -1,0 +1,1815 @@
+{
+ "version_contrato": "1.0",
+ "meta": {
+  "tipo": "ejemplo",
+  "generado": "2026-11-13T15:00:00Z",
+  "motor_version": "0.1.0",
+  "nota": "EJEMPLO para desarrollar la web, no es un resultado. Derivado de la salida del motor del 13 nov 2026 con datos reales de Jocotán (POWER, MODIS, FIRMS, SRTM). Serie NDVI recortada a 2025 y suelo con el valor de SoilGrids del plan original (28 oct 2026).",
+  "datos_de_ejemplo": [
+   "Todo el archivo es de ejemplo",
+   "SMAP: se muestra el respaldo GWETROOT de POWER (modelo MERRA-2, no SMAP)",
+   "CHIRPS: aún sin comparar con POWER; la confianza no pasa de media",
+   "Suelo: sin datos de SoilGrids",
+   "ZARC: sin cita para este municipio; se remite al extensionista",
+   "Rotaciones: plantillas iniciales sin revisión agronómica",
+   "FIRMS 2026: sin FIRMS_MAP_KEY; se usan años completos 2012-2025"
+  ]
+ },
+ "aviso": "Milpa Resiliente apoya, no reemplaza, al técnico ni al agricultor. Las cifras vienen de satélites y modelos con límites que se explican en cada opción. Verifíquelo con su extensionista.",
+ "parcela": {
+  "id": "jocotan",
+  "nombre": "Parcela de ejemplo en Jocotán",
+  "municipio": "Jocotán",
+  "departamento": "Chiquimula",
+  "lat": 14.79,
+  "lon": -89.37,
+  "provisional": false,
+  "nota": "Punto del plan original (28 oct 2026). Revisar con imagen de alta resolución que el píxel de 250 m sea agrícola.",
+  "cultivo_declarado": "maiz_frijol",
+  "prioridad": "agua",
+  "terreno": {
+   "altitud_m": 815.0,
+   "pendiente_pct": 28.6,
+   "fuente_id": "srtm"
+  },
+  "suelo": {
+   "disponible": true,
+   "arcilla_pct": 31.9,
+   "carbono_organico_g_kg": null,
+   "ph": null,
+   "profundidad": "0-5 cm",
+   "fuente_id": "soilgrids",
+   "nota": "Valor de arcilla consultado en SoilGrids el 28 oct 2026 (plan original). Carbono y pH sin consultar."
+  }
+ },
+ "deteccion": {
+  "periodo": "2021-2025",
+  "umbral_desnudo_ndvi": 0.35,
+  "meses_desnudos": [],
+  "ndvi_mensual": [
+   {
+    "mes": 1,
+    "mediana": 0.732,
+    "n": 10
+   },
+   {
+    "mes": 2,
+    "mediana": 0.664,
+    "n": 10
+   },
+   {
+    "mes": 3,
+    "mediana": 0.594,
+    "n": 10
+   },
+   {
+    "mes": 4,
+    "mediana": 0.632,
+    "n": 10
+   },
+   {
+    "mes": 5,
+    "mediana": 0.707,
+    "n": 10
+   },
+   {
+    "mes": 6,
+    "mediana": 0.785,
+    "n": 5
+   },
+   {
+    "mes": 7,
+    "mediana": 0.837,
+    "n": 9
+   },
+   {
+    "mes": 8,
+    "mediana": 0.803,
+    "n": 9
+   },
+   {
+    "mes": 9,
+    "mediana": 0.797,
+    "n": 9
+   },
+   {
+    "mes": 10,
+    "mediana": 0.861,
+    "n": 5
+   },
+   {
+    "mes": 11,
+    "mediana": 0.82,
+    "n": 9
+   },
+   {
+    "mes": 12,
+    "mediana": 0.779,
+    "n": 10
+   }
+  ],
+  "ciclos": {
+   "mediana": 1,
+   "prominencia_min": 0.15,
+   "por_anio": [
+    {
+     "anio": 2021,
+     "ciclos": 1,
+     "picos": [
+      "2021-11-17"
+     ]
+    },
+    {
+     "anio": 2022,
+     "ciclos": 0,
+     "picos": []
+    },
+    {
+     "anio": 2023,
+     "ciclos": 1,
+     "picos": [
+      "2023-08-29"
+     ]
+    },
+    {
+     "anio": 2024,
+     "ciclos": 1,
+     "picos": [
+      "2024-07-27"
+     ]
+    },
+    {
+     "anio": 2025,
+     "ciclos": 0,
+     "picos": []
+    }
+   ]
+  },
+  "quemas": {
+   "radio_m": 500.0,
+   "meses": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "anios_con_quema": 0,
+   "anios_observados": 14,
+   "periodo": "2012-2025",
+   "meses_con_quema": [],
+   "detecciones_1km": 2,
+   "detecciones": [
+    {
+     "fecha": "2023-04-22",
+     "lat": 14.78289,
+     "lon": -89.36874,
+     "distancia_m": 802.1,
+     "confianza": "n",
+     "frp": 4.06,
+     "cuenta": false
+    },
+    {
+     "fecha": "2023-04-22",
+     "lat": 14.78317,
+     "lon": -89.36617,
+     "distancia_m": 863.9,
+     "confianza": "n",
+     "frp": 6.21,
+     "cuenta": false
+    }
+   ],
+   "nota": "Quema cercana = foco VIIRS de confianza nominal o alta a 500 m o menos, entre enero y mayo. Sin detección no significa que no hubo quema: el satélite pasa pocas veces al día y no ve quemas breves o bajo nubes."
+  },
+  "calidad": {
+   "compuestos": 115,
+   "validos": 106,
+   "pct_validos": 92.2
+  },
+  "serie": [
+   {
+    "fecha": "2025-01-01",
+    "ndvi": 0.7306,
+    "valido": true
+   },
+   {
+    "fecha": "2025-01-17",
+    "ndvi": 0.7529,
+    "valido": true
+   },
+   {
+    "fecha": "2025-02-02",
+    "ndvi": 0.6646,
+    "valido": true
+   },
+   {
+    "fecha": "2025-02-18",
+    "ndvi": 0.6618,
+    "valido": true
+   },
+   {
+    "fecha": "2025-03-06",
+    "ndvi": 0.6089,
+    "valido": true
+   },
+   {
+    "fecha": "2025-03-22",
+    "ndvi": 0.5237,
+    "valido": true
+   },
+   {
+    "fecha": "2025-04-07",
+    "ndvi": 0.5695,
+    "valido": true
+   },
+   {
+    "fecha": "2025-04-23",
+    "ndvi": 0.6658,
+    "valido": true
+   },
+   {
+    "fecha": "2025-05-09",
+    "ndvi": 0.712,
+    "valido": true
+   },
+   {
+    "fecha": "2025-05-25",
+    "ndvi": 0.7614,
+    "valido": true
+   },
+   {
+    "fecha": "2025-06-10",
+    "ndvi": 0.7596,
+    "valido": false
+   },
+   {
+    "fecha": "2025-06-26",
+    "ndvi": 0.6902,
+    "valido": false
+   },
+   {
+    "fecha": "2025-07-12",
+    "ndvi": 0.8869,
+    "valido": true
+   },
+   {
+    "fecha": "2025-07-28",
+    "ndvi": 0.7928,
+    "valido": true
+   },
+   {
+    "fecha": "2025-08-13",
+    "ndvi": 0.9114,
+    "valido": true
+   },
+   {
+    "fecha": "2025-08-29",
+    "ndvi": 0.7661,
+    "valido": true
+   },
+   {
+    "fecha": "2025-09-14",
+    "ndvi": 0.7966,
+    "valido": true
+   },
+   {
+    "fecha": "2025-09-30",
+    "ndvi": 0.8419,
+    "valido": true
+   },
+   {
+    "fecha": "2025-10-16",
+    "ndvi": 0.8709,
+    "valido": true
+   },
+   {
+    "fecha": "2025-11-01",
+    "ndvi": 0.8025,
+    "valido": true
+   },
+   {
+    "fecha": "2025-11-17",
+    "ndvi": 0.8671,
+    "valido": true
+   },
+   {
+    "fecha": "2025-12-03",
+    "ndvi": 0.7897,
+    "valido": true
+   },
+   {
+    "fecha": "2025-12-19",
+    "ndvi": 0.8295,
+    "valido": true
+   }
+  ],
+  "fuente_ids": [
+   "modis_mod13q1",
+   "ornl_subsets",
+   "firms_viirs"
+  ]
+ },
+ "clima": {
+  "periodo": "2001-2025",
+  "resolucion": "0.5° x 0.625° (~50 km): es la zona, no la parcela",
+  "lluvia_mensual_normal_mm": [
+   73,
+   44,
+   75,
+   43,
+   159,
+   212,
+   167,
+   193,
+   214,
+   168,
+   103,
+   69
+  ],
+  "et0_mensual_normal_mm": [
+   96,
+   109,
+   149,
+   163,
+   154,
+   121,
+   118,
+   119,
+   108,
+   101,
+   88,
+   89
+  ],
+  "tmax_mensual_normal_c": [
+   24.8,
+   27.1,
+   29.7,
+   31.9,
+   30.9,
+   28.0,
+   27.0,
+   27.2,
+   27.0,
+   26.1,
+   24.8,
+   24.7
+  ],
+  "lluvia_anual_mm": [
+   {
+    "anio": 2001,
+    "mm": 1124
+   },
+   {
+    "anio": 2002,
+    "mm": 1160
+   },
+   {
+    "anio": 2003,
+    "mm": 1109
+   },
+   {
+    "anio": 2004,
+    "mm": 944
+   },
+   {
+    "anio": 2005,
+    "mm": 1074
+   },
+   {
+    "anio": 2006,
+    "mm": 1479
+   },
+   {
+    "anio": 2007,
+    "mm": 1593
+   },
+   {
+    "anio": 2008,
+    "mm": 1886
+   },
+   {
+    "anio": 2009,
+    "mm": 1355
+   },
+   {
+    "anio": 2010,
+    "mm": 1512
+   },
+   {
+    "anio": 2011,
+    "mm": 1764
+   },
+   {
+    "anio": 2012,
+    "mm": 1519
+   },
+   {
+    "anio": 2013,
+    "mm": 1514
+   },
+   {
+    "anio": 2014,
+    "mm": 1801
+   },
+   {
+    "anio": 2015,
+    "mm": 1522
+   },
+   {
+    "anio": 2016,
+    "mm": 1345
+   },
+   {
+    "anio": 2017,
+    "mm": 1614
+   },
+   {
+    "anio": 2018,
+    "mm": 1183
+   },
+   {
+    "anio": 2019,
+    "mm": 1367
+   },
+   {
+    "anio": 2020,
+    "mm": 1909
+   },
+   {
+    "anio": 2021,
+    "mm": 2179
+   },
+   {
+    "anio": 2022,
+    "mm": 2931
+   },
+   {
+    "anio": 2023,
+    "mm": 1662
+   },
+   {
+    "anio": 2024,
+    "mm": 1518
+   },
+   {
+    "anio": 2025,
+    "mm": 910
+   }
+  ],
+  "anio_mas_seco": {
+   "anio": 2025,
+   "mm": 910
+  },
+  "canicula": {
+   "ventana": "15 de junio a 31 de agosto",
+   "umbral_dia_seco_mm": 2.0,
+   "umbral_racha_dias": 15,
+   "anios_racha_larga": 0,
+   "anios_total": 25,
+   "racha_mediana_dias": 5,
+   "por_anio": [
+    {
+     "anio": 2001,
+     "racha_dias": 4
+    },
+    {
+     "anio": 2002,
+     "racha_dias": 7
+    },
+    {
+     "anio": 2003,
+     "racha_dias": 4
+    },
+    {
+     "anio": 2004,
+     "racha_dias": 13
+    },
+    {
+     "anio": 2005,
+     "racha_dias": 9
+    },
+    {
+     "anio": 2006,
+     "racha_dias": 4
+    },
+    {
+     "anio": 2007,
+     "racha_dias": 3
+    },
+    {
+     "anio": 2008,
+     "racha_dias": 3
+    },
+    {
+     "anio": 2009,
+     "racha_dias": 8
+    },
+    {
+     "anio": 2010,
+     "racha_dias": 7
+    },
+    {
+     "anio": 2011,
+     "racha_dias": 4
+    },
+    {
+     "anio": 2012,
+     "racha_dias": 5
+    },
+    {
+     "anio": 2013,
+     "racha_dias": 3
+    },
+    {
+     "anio": 2014,
+     "racha_dias": 6
+    },
+    {
+     "anio": 2015,
+     "racha_dias": 11
+    },
+    {
+     "anio": 2016,
+     "racha_dias": 3
+    },
+    {
+     "anio": 2017,
+     "racha_dias": 5
+    },
+    {
+     "anio": 2018,
+     "racha_dias": 6
+    },
+    {
+     "anio": 2019,
+     "racha_dias": 6
+    },
+    {
+     "anio": 2020,
+     "racha_dias": 5
+    },
+    {
+     "anio": 2021,
+     "racha_dias": 5
+    },
+    {
+     "anio": 2022,
+     "racha_dias": 2
+    },
+    {
+     "anio": 2023,
+     "racha_dias": 7
+    },
+    {
+     "anio": 2024,
+     "racha_dias": 6
+    },
+    {
+     "anio": 2025,
+     "racha_dias": 5
+    }
+   ]
+  },
+  "fuente_ids": [
+   "nasa_power",
+   "fao56"
+  ]
+ },
+ "smap": {
+  "disponible": false,
+  "fuente_id": null,
+  "humedad_jul_ago_m3m3": null,
+  "percentil": null,
+  "periodo": null,
+  "respaldo": {
+   "variable": "GWETROOT",
+   "etiqueta": "modelo MERRA-2 vía NASA POWER, no es SMAP",
+   "jul_ago_mediana": 0.64,
+   "unidad": "fracción 0-1",
+   "periodo": "2015-2025",
+   "fuente_id": "nasa_power"
+  },
+  "nota": "Sin SMAP numérico todavía (falta cuenta Earthdata y la tarea de AppEEARS). Se muestra la humedad de raíz del modelo MERRA-2 rotulada como modelo."
+ },
+ "rotaciones": [
+  {
+   "id": "actual_maiz_frijol",
+   "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+   "tipo": "actual",
+   "es_actual": true,
+   "descripcion": "supuesto inicial; describe el sistema tradicional del Corredor Seco",
+   "ciclos": [
+    {
+     "temporada": "primera",
+     "cultivos": [
+      "maíz",
+      "frijol"
+     ],
+     "meses": [
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "siembra_mes_supuesto": 5,
+     "duracion_dias": 120
+    },
+    {
+     "temporada": "postrera",
+     "cultivos": [
+      "frijol"
+     ],
+     "meses": [
+      9,
+      10,
+      11,
+      12
+     ],
+     "siembra_mes_supuesto": 9,
+     "duracion_dias": 80
+    }
+   ],
+   "por_que": "Es lo que hace hoy. El satélite MODIS (2021-2025) no ve ningún mes con suelo desnudo: el verdor mediano no baja de 0.35. Cuenta 1 ciclo de verdor por año. Hubo quema cercana en 0 de 14 años observados con VIIRS.",
+   "evidencia": [
+    {
+     "dato": "Meses de suelo desnudo detectados",
+     "valor": 0,
+     "unidad": "meses",
+     "fuente": "MODIS MOD13Q1 (NDVI) vía ORNL DAAC",
+     "fuente_id": "modis_mod13q1",
+     "resolucion": "250 m",
+     "periodo": "2021-2025"
+    },
+    {
+     "dato": "Ciclos de verdor por año (mediana)",
+     "valor": 1,
+     "unidad": "ciclos",
+     "fuente": "MODIS MOD13Q1 (NDVI) vía ORNL DAAC",
+     "fuente_id": "modis_mod13q1",
+     "resolucion": "250 m",
+     "periodo": "2021-2025"
+    },
+    {
+     "dato": "Años con quema a 500 m o menos (enero-mayo)",
+     "valor": 0,
+     "unidad": "de 14 años",
+     "fuente": "FIRMS VIIRS S-NPP",
+     "fuente_id": "firms_viirs",
+     "resolucion": "375 m",
+     "periodo": "2012-2025"
+    },
+    {
+     "dato": "Compuestos NDVI válidos",
+     "valor": 92.2,
+     "unidad": "%",
+     "fuente": "MODIS MOD13Q1 pixel_reliability",
+     "fuente_id": "modis_mod13q1",
+     "resolucion": "250 m",
+     "periodo": "2021-2025"
+    },
+    {
+     "dato": "Déficit de agua mediano del ciclo",
+     "valor": 2,
+     "unidad": "%",
+     "fuente": "NASA POWER + ET0 Hargreaves y Kc (FAO-56)",
+     "fuente_id": "nasa_power",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Pérdida de cosecha esperada por falta de agua (mediana, Ky x déficit)",
+     "valor": 3,
+     "unidad": "%",
+     "fuente": "NASA POWER + FAO-33",
+     "fuente_id": "fao33",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Años con canícula de más de 15 días secos",
+     "valor": 0,
+     "unidad": "de 25 años",
+     "fuente": "NASA POWER diario",
+     "fuente_id": "nasa_power",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Pendiente del terreno",
+     "valor": 28.6,
+     "unidad": "%",
+     "fuente": "SRTM 90 m",
+     "fuente_id": "srtm",
+     "resolucion": "90 m",
+     "periodo": null
+    },
+    {
+     "dato": "Humedad de raíz julio-agosto (modelo, no SMAP)",
+     "valor": 0.64,
+     "unidad": "fracción 0-1",
+     "fuente": "NASA POWER GWETROOT (MERRA-2)",
+     "fuente_id": "nasa_power",
+     "resolucion": "~50 km",
+     "periodo": "2015-2025"
+    }
+   ],
+   "beneficios": [
+    "Es el sistema que la familia ya conoce y para el que tiene semilla.",
+    "El frijol en postrera aprovecha las lluvias del final del año."
+   ],
+   "vacios": [
+    "No sabemos qué variedad de maíz y frijol usa.",
+    "La lluvia viene de NASA POWER, una celda de ~50 km: describe la zona, no su parcela.",
+    "Aún no tenemos la humedad del suelo medida por SMAP; por ahora se usa un modelo (MERRA-2).",
+    "Las reglas de esta opción son un supuesto inicial: falta revisarlas con un agrónomo.",
+    "El píxel de MODIS mide 250 m: puede mezclar su parcela con las vecinas.",
+    "No hay precios verificados por cultivo: no comparamos ingresos.",
+    "El satélite cuenta un número de ciclos distinto al que usted declaró: confírmelo con el agricultor."
+   ],
+   "riesgos": [
+    "Si la canícula se alarga, el maíz sufre justo cuando está floreando."
+   ],
+   "puntajes": {
+    "agua": 97,
+    "suelo": 100,
+    "plagas": 80,
+    "total": 94
+   },
+   "deficit": {
+    "mediana_pct": 2,
+    "p25_pct": 2,
+    "p75_pct": 7,
+    "perdida_mediana_pct": 3
+   },
+   "confianza": {
+    "nivel": "baja",
+    "motivo": "Aún sin comparar con CHIRPS: la lluvia viene solo de POWER (celda de ~50 km). Sin SMAP numérico todavía: falta la descarga por AppEEARS (cuenta Earthdata). Reglas de la opción sin revisar por un agrónomo.",
+    "criterios": [
+     {
+      "criterio": "Calidad del píxel MODIS",
+      "cumple": true,
+      "detalle": "92.2 % de compuestos NDVI válidos (se pide 80 % o más)"
+     },
+     {
+      "criterio": "Lluvia POWER contra CHIRPS en julio-agosto",
+      "cumple": null,
+      "detalle": "Aún sin comparar con CHIRPS: la lluvia viene solo de POWER (celda de ~50 km)"
+     },
+     {
+      "criterio": "Humedad del suelo SMAP",
+      "cumple": false,
+      "detalle": "Sin SMAP numérico todavía: falta la descarga por AppEEARS (cuenta Earthdata)"
+     }
+    ]
+   },
+   "calendario": [
+    {
+     "mes": 1,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 2,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 3,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 4,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 5,
+     "estado": "cultivo",
+     "cultivo": "maíz + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 6,
+     "estado": "cultivo",
+     "cultivo": "maíz + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 7,
+     "estado": "cultivo",
+     "cultivo": "maíz + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 8,
+     "estado": "cultivo",
+     "cultivo": "maíz + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 9,
+     "estado": "cultivo",
+     "cultivo": "maíz + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 10,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    },
+    {
+     "mes": 11,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    },
+    {
+     "mes": 12,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    }
+   ],
+   "trazabilidad": {
+    "agua": [
+     "Déficit de agua mediano 2 % (entre 2 y 7 % la mitad de los años), balance diario con NASA POWER 2001-2025 y ET0 de Hargreaves (FAO-56)",
+     "Pérdida relativa esperada = Ky x déficit (FAO-33): mediana 3 %",
+     "Resta por canícula larga: 0.0 puntos (frecuencia 0 %, Ky 1.25)"
+    ],
+    "suelo": [
+     "0 meses de suelo desnudo x 9.0 puntos (pendiente fuerte: 28.6 %)",
+     "Quema: resta 0.0 puntos",
+     "Suma 5.0 por leguminosa"
+    ],
+    "plagas": [
+     "Base 40.0",
+     "Suma 30.0: alterna familias entre ciclos (Poaceae -> Fabaceae)",
+     "Suma 10.0: asocia familias distintas en primera"
+    ]
+   }
+  },
+  {
+   "id": "leguminosa_canavalia",
+   "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+   "tipo": "leguminosa_cobertura",
+   "es_actual": false,
+   "descripcion": "supuesto inicial; TODO(Iván): citar guía FAO o ICTA de abonos verdes en el Corredor Seco",
+   "ciclos": [
+    {
+     "temporada": "primera",
+     "cultivos": [
+      "maíz",
+      "canavalia (abono verde)"
+     ],
+     "meses": [
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "siembra_mes_supuesto": 5,
+     "duracion_dias": 120
+    },
+    {
+     "temporada": "postrera",
+     "cultivos": [
+      "frijol"
+     ],
+     "meses": [
+      9,
+      10,
+      11,
+      12
+     ],
+     "siembra_mes_supuesto": 9,
+     "duracion_dias": 80
+    }
+   ],
+   "por_que": "El satélite no ve más meses desnudos de los que esta práctica puede cubrir; su ventaja aquí es dejar de quemar y devolverle materia orgánica al suelo. La leguminosa aporta nitrógeno y materia orgánica.",
+   "evidencia": [
+    {
+     "dato": "Meses de suelo desnudo esperados con esta práctica",
+     "valor": 0,
+     "unidad": "meses",
+     "fuente": "MODIS MOD13Q1 (NDVI) vía ORNL DAAC",
+     "fuente_id": "modis_mod13q1",
+     "resolucion": "250 m",
+     "periodo": "2021-2025"
+    },
+    {
+     "dato": "Déficit de agua mediano del ciclo",
+     "valor": 2,
+     "unidad": "%",
+     "fuente": "NASA POWER + ET0 Hargreaves y Kc (FAO-56)",
+     "fuente_id": "nasa_power",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Pérdida de cosecha esperada por falta de agua (mediana, Ky x déficit)",
+     "valor": 3,
+     "unidad": "%",
+     "fuente": "NASA POWER + FAO-33",
+     "fuente_id": "fao33",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Años con canícula de más de 15 días secos",
+     "valor": 0,
+     "unidad": "de 25 años",
+     "fuente": "NASA POWER diario",
+     "fuente_id": "nasa_power",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Pendiente del terreno",
+     "valor": 28.6,
+     "unidad": "%",
+     "fuente": "SRTM 90 m",
+     "fuente_id": "srtm",
+     "resolucion": "90 m",
+     "periodo": null
+    }
+   ],
+   "beneficios": [
+    "La canavalia y el rastrojo cubren el suelo en la época seca.",
+    "La canavalia es leguminosa: aporta nitrógeno y materia orgánica.",
+    "Sin quema, el suelo guarda más humedad y se lava menos."
+   ],
+   "vacios": [
+    "El consumo de agua de la canavalia no se calcula: no tiene coeficiente de cultivo en FAO-56.",
+    "La lluvia viene de NASA POWER, una celda de ~50 km: describe la zona, no su parcela.",
+    "Aún no tenemos la humedad del suelo medida por SMAP; por ahora se usa un modelo (MERRA-2).",
+    "Las reglas de esta opción son un supuesto inicial: falta revisarlas con un agrónomo."
+   ],
+   "riesgos": [
+    "Si la canavalia se siembra muy pronto, compite con el maíz por agua y luz.",
+    "Dejar el rastrojo en pie choca con la costumbre de pastorear o quemar: hay que acordarlo con la familia."
+   ],
+   "puntajes": {
+    "agua": 97,
+    "suelo": 100,
+    "plagas": 90,
+    "total": 96
+   },
+   "deficit": {
+    "mediana_pct": 2,
+    "p25_pct": 2,
+    "p75_pct": 7,
+    "perdida_mediana_pct": 3
+   },
+   "confianza": {
+    "nivel": "baja",
+    "motivo": "Aún sin comparar con CHIRPS: la lluvia viene solo de POWER (celda de ~50 km). Sin SMAP numérico todavía: falta la descarga por AppEEARS (cuenta Earthdata). Reglas de la opción sin revisar por un agrónomo.",
+    "criterios": [
+     {
+      "criterio": "Calidad del píxel MODIS",
+      "cumple": true,
+      "detalle": "92.2 % de compuestos NDVI válidos (se pide 80 % o más)"
+     },
+     {
+      "criterio": "Lluvia POWER contra CHIRPS en julio-agosto",
+      "cumple": null,
+      "detalle": "Aún sin comparar con CHIRPS: la lluvia viene solo de POWER (celda de ~50 km)"
+     },
+     {
+      "criterio": "Humedad del suelo SMAP",
+      "cumple": false,
+      "detalle": "Sin SMAP numérico todavía: falta la descarga por AppEEARS (cuenta Earthdata)"
+     }
+    ]
+   },
+   "calendario": [
+    {
+     "mes": 1,
+     "estado": "cobertura",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 2,
+     "estado": "cobertura",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 3,
+     "estado": "cobertura",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 4,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 5,
+     "estado": "cultivo",
+     "cultivo": "maíz + canavalia (abono verde)",
+     "alertas": []
+    },
+    {
+     "mes": 6,
+     "estado": "cultivo",
+     "cultivo": "maíz + canavalia (abono verde)",
+     "alertas": []
+    },
+    {
+     "mes": 7,
+     "estado": "cultivo",
+     "cultivo": "maíz + canavalia (abono verde)",
+     "alertas": []
+    },
+    {
+     "mes": 8,
+     "estado": "cultivo",
+     "cultivo": "maíz + canavalia (abono verde)",
+     "alertas": []
+    },
+    {
+     "mes": 9,
+     "estado": "cultivo",
+     "cultivo": "maíz + canavalia (abono verde)",
+     "alertas": []
+    },
+    {
+     "mes": 10,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    },
+    {
+     "mes": 11,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    },
+    {
+     "mes": 12,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    }
+   ],
+   "trazabilidad": {
+    "agua": [
+     "Déficit de agua mediano 2 % (entre 2 y 7 % la mitad de los años), balance diario con NASA POWER 2001-2025 y ET0 de Hargreaves (FAO-56)",
+     "Pérdida relativa esperada = Ky x déficit (FAO-33): mediana 3 %",
+     "Resta por canícula larga: 0.0 puntos (frecuencia 0 %, Ky 1.25)"
+    ],
+    "suelo": [
+     "0 meses de suelo desnudo x 9.0 puntos (pendiente fuerte: 28.6 %)",
+     "Quema: resta 0.0 puntos",
+     "Suma 5.0 por leguminosa",
+     "Suma 10.0 por cobertura",
+     "Suma 10.0 por rastrojo en pie"
+    ],
+    "plagas": [
+     "Base 40.0",
+     "Suma 30.0: alterna familias entre ciclos (Poaceae -> Fabaceae)",
+     "Suma 10.0: asocia familias distintas en primera",
+     "Suma 10.0: cobertura que rompe el ciclo de plagas"
+    ]
+   }
+  },
+  {
+   "id": "tolerante_maiz_corto",
+   "nombre": "Maíz de ciclo corto con frijol en primera y frijol en postrera",
+   "tipo": "tolerante_sequia",
+   "es_actual": false,
+   "descripcion": "supuesto inicial; TODO(Iván): citar variedad ICTA de ciclo corto",
+   "ciclos": [
+    {
+     "temporada": "primera",
+     "cultivos": [
+      "maíz de ciclo corto",
+      "frijol"
+     ],
+     "meses": [
+      5,
+      6,
+      7,
+      8
+     ],
+     "siembra_mes_supuesto": 5,
+     "duracion_dias": 90
+    },
+    {
+     "temporada": "postrera",
+     "cultivos": [
+      "frijol"
+     ],
+     "meses": [
+      9,
+      10,
+      11
+     ],
+     "siembra_mes_supuesto": 9,
+     "duracion_dias": 80
+    }
+   ],
+   "por_que": "Es la opción más tolerante a sequía de la biblioteca, pero con el clima de 2001-2025 la pérdida esperada por falta de agua es parecida a la de hoy (3 % frente a 3 %). En el escenario más seco (lluvia -30 % y +1.5 °C) el déficit de agua sería de 13 % frente a 15 %.",
+   "evidencia": [
+    {
+     "dato": "Meses de suelo desnudo esperados con esta práctica",
+     "valor": 0,
+     "unidad": "meses",
+     "fuente": "MODIS MOD13Q1 (NDVI) vía ORNL DAAC",
+     "fuente_id": "modis_mod13q1",
+     "resolucion": "250 m",
+     "periodo": "2021-2025"
+    },
+    {
+     "dato": "Déficit de agua mediano del ciclo",
+     "valor": 3,
+     "unidad": "%",
+     "fuente": "NASA POWER + ET0 Hargreaves y Kc (FAO-56)",
+     "fuente_id": "nasa_power",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Pérdida de cosecha esperada por falta de agua (mediana, Ky x déficit)",
+     "valor": 3,
+     "unidad": "%",
+     "fuente": "NASA POWER + FAO-33",
+     "fuente_id": "fao33",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Años con canícula de más de 15 días secos",
+     "valor": 0,
+     "unidad": "de 25 años",
+     "fuente": "NASA POWER diario",
+     "fuente_id": "nasa_power",
+     "resolucion": "~50 km",
+     "periodo": "2001-2025"
+    },
+    {
+     "dato": "Pendiente del terreno",
+     "valor": 28.6,
+     "unidad": "%",
+     "fuente": "SRTM 90 m",
+     "fuente_id": "srtm",
+     "resolucion": "90 m",
+     "periodo": null
+    }
+   ],
+   "beneficios": [
+    "Mantiene el maíz y acorta el tiempo en que la canícula puede dañarlo."
+   ],
+   "vacios": [
+    "La variedad de ciclo corto hay que confirmarla con ICTA o con el técnico.",
+    "La lluvia viene de NASA POWER, una celda de ~50 km: describe la zona, no su parcela.",
+    "Aún no tenemos la humedad del suelo medida por SMAP; por ahora se usa un modelo (MERRA-2).",
+    "Las reglas de esta opción son un supuesto inicial: falta revisarlas con un agrónomo."
+   ],
+   "riesgos": [
+    "Una variedad de ciclo corto suele rendir menos en un año con buena lluvia."
+   ],
+   "puntajes": {
+    "agua": 97,
+    "suelo": 100,
+    "plagas": 80,
+    "total": 94
+   },
+   "deficit": {
+    "mediana_pct": 3,
+    "p25_pct": 0,
+    "p75_pct": 8,
+    "perdida_mediana_pct": 3
+   },
+   "confianza": {
+    "nivel": "baja",
+    "motivo": "Aún sin comparar con CHIRPS: la lluvia viene solo de POWER (celda de ~50 km). Sin SMAP numérico todavía: falta la descarga por AppEEARS (cuenta Earthdata). Reglas de la opción sin revisar por un agrónomo.",
+    "criterios": [
+     {
+      "criterio": "Calidad del píxel MODIS",
+      "cumple": true,
+      "detalle": "92.2 % de compuestos NDVI válidos (se pide 80 % o más)"
+     },
+     {
+      "criterio": "Lluvia POWER contra CHIRPS en julio-agosto",
+      "cumple": null,
+      "detalle": "Aún sin comparar con CHIRPS: la lluvia viene solo de POWER (celda de ~50 km)"
+     },
+     {
+      "criterio": "Humedad del suelo SMAP",
+      "cumple": false,
+      "detalle": "Sin SMAP numérico todavía: falta la descarga por AppEEARS (cuenta Earthdata)"
+     }
+    ]
+   },
+   "calendario": [
+    {
+     "mes": 1,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 2,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 3,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 4,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    },
+    {
+     "mes": 5,
+     "estado": "cultivo",
+     "cultivo": "maíz de ciclo corto + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 6,
+     "estado": "cultivo",
+     "cultivo": "maíz de ciclo corto + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 7,
+     "estado": "cultivo",
+     "cultivo": "maíz de ciclo corto + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 8,
+     "estado": "cultivo",
+     "cultivo": "maíz de ciclo corto + frijol",
+     "alertas": []
+    },
+    {
+     "mes": 9,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    },
+    {
+     "mes": 10,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    },
+    {
+     "mes": 11,
+     "estado": "cultivo",
+     "cultivo": "frijol",
+     "alertas": []
+    },
+    {
+     "mes": 12,
+     "estado": "rastrojo",
+     "cultivo": null,
+     "alertas": []
+    }
+   ],
+   "trazabilidad": {
+    "agua": [
+     "Déficit de agua mediano 3 % (entre 0 y 8 % la mitad de los años), balance diario con NASA POWER 2001-2025 y ET0 de Hargreaves (FAO-56)",
+     "Pérdida relativa esperada = Ky x déficit (FAO-33): mediana 3 %",
+     "Resta por canícula larga: 0.0 puntos (frecuencia 0 %, Ky 1.25)"
+    ],
+    "suelo": [
+     "0 meses de suelo desnudo x 9.0 puntos (pendiente fuerte: 28.6 %)",
+     "Quema: resta 0.0 puntos",
+     "Suma 5.0 por leguminosa",
+     "Suma 10.0 por rastrojo en pie"
+    ],
+    "plagas": [
+     "Base 40.0",
+     "Suma 30.0: alterna familias entre ciclos (Poaceae -> Fabaceae)",
+     "Suma 10.0: asocia familias distintas en primera"
+    ]
+   }
+  }
+ ],
+ "zarc": {
+  "encontrado": false,
+  "texto": "Fecha de siembra: consúltela en ZARC (FAO–MAGA) con su extensionista.",
+  "enlace": "https://www.maga.gob.gt/herramienta-digital-zarc-mejorara-decisiones-de-siembra/",
+  "nota_escenario": "La fecha de ZARC no cambia con el escenario; consulte la versión vigente.",
+  "registros": []
+ },
+ "escenarios": {
+  "base": "lluvia_0_temp_0",
+  "lluvia_pct": [
+   0,
+   -10,
+   -20,
+   -30
+  ],
+  "temp_c": [
+   0,
+   1.5
+  ],
+  "lista": [
+   {
+    "id": "lluvia_0_temp_0",
+    "lluvia_pct": 0,
+    "temp_c": 0,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 97,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 94
+      },
+      "deficit_mediano_pct": 2
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 97,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 96
+      },
+      "deficit_mediano_pct": 2
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 97,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 94
+      },
+      "deficit_mediano_pct": 3
+     }
+    }
+   },
+   {
+    "id": "lluvia_0_temp_1.5",
+    "lluvia_pct": 0,
+    "temp_c": 1.5,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 95,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 92
+      },
+      "deficit_mediano_pct": 4
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 95,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 95
+      },
+      "deficit_mediano_pct": 4
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 96,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 93
+      },
+      "deficit_mediano_pct": 4
+     }
+    }
+   },
+   {
+    "id": "lluvia_-10_temp_0",
+    "lluvia_pct": -10,
+    "temp_c": 0,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 94,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 92
+      },
+      "deficit_mediano_pct": 4
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 94,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 94
+      },
+      "deficit_mediano_pct": 4
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 95,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 92
+      },
+      "deficit_mediano_pct": 4
+     }
+    }
+   },
+   {
+    "id": "lluvia_-10_temp_1.5",
+    "lluvia_pct": -10,
+    "temp_c": 1.5,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 93,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 92
+      },
+      "deficit_mediano_pct": 6
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 93,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 94
+      },
+      "deficit_mediano_pct": 6
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 93,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 92
+      },
+      "deficit_mediano_pct": 6
+     }
+    }
+   },
+   {
+    "id": "lluvia_-20_temp_0",
+    "lluvia_pct": -20,
+    "temp_c": 0,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 90,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 90
+      },
+      "deficit_mediano_pct": 8
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 90,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 92
+      },
+      "deficit_mediano_pct": 8
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 92,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 91
+      },
+      "deficit_mediano_pct": 6
+     }
+    }
+   },
+   {
+    "id": "lluvia_-20_temp_1.5",
+    "lluvia_pct": -20,
+    "temp_c": 1.5,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 88,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 89
+      },
+      "deficit_mediano_pct": 9
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 88,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 92
+      },
+      "deficit_mediano_pct": 9
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 90,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 90
+      },
+      "deficit_mediano_pct": 8
+     }
+    }
+   },
+   {
+    "id": "lluvia_-30_temp_0",
+    "lluvia_pct": -30,
+    "temp_c": 0,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 84,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 87
+      },
+      "deficit_mediano_pct": 13
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 84,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 90
+      },
+      "deficit_mediano_pct": 13
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 87,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 88
+      },
+      "deficit_mediano_pct": 11
+     }
+    }
+   },
+   {
+    "id": "lluvia_-30_temp_1.5",
+    "lluvia_pct": -30,
+    "temp_c": 1.5,
+    "canicula_anios_racha_larga": 0,
+    "rotaciones": {
+     "actual_maiz_frijol": {
+      "puntajes": {
+       "agua": 83,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 86
+      },
+      "deficit_mediano_pct": 15
+     },
+     "leguminosa_canavalia": {
+      "puntajes": {
+       "agua": 83,
+       "suelo": 100,
+       "plagas": 90,
+       "total": 89
+      },
+      "deficit_mediano_pct": 15
+     },
+     "tolerante_maiz_corto": {
+      "puntajes": {
+       "agua": 85,
+       "suelo": 100,
+       "plagas": 80,
+       "total": 88
+      },
+      "deficit_mediano_pct": 13
+     }
+    }
+   }
+  ]
+ },
+ "pesos": {
+  "prioridad": "agua",
+  "por_prioridad": {
+   "agua": {
+    "agua": 0.5,
+    "suelo": 0.25,
+    "plagas": 0.25
+   },
+   "suelo": {
+    "agua": 0.25,
+    "suelo": 0.5,
+    "plagas": 0.25
+   },
+   "plagas": {
+    "agua": 0.25,
+    "suelo": 0.25,
+    "plagas": 0.5
+   }
+  }
+ },
+ "fuentes": [
+  {
+   "id": "modis_mod13q1",
+   "nombre": "MODIS/Terra MOD13Q1 v061: índice de vegetación (NDVI) de 16 días a 250 m",
+   "cita": "Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA EOSDIS Land Processes DAAC. doi:10.5067/MODIS/MOD13Q1.061",
+   "url": "https://doi.org/10.5067/MODIS/MOD13Q1.061",
+   "resolucion": "250 m, 16 días",
+   "es_nasa": true,
+   "fecha_consulta": "2026-11-13T14:29:34Z"
+  },
+  {
+   "id": "ornl_subsets",
+   "nombre": "ORNL DAAC: servicio de subconjuntos MODIS/VIIRS por punto",
+   "cita": "ORNL DAAC (2018). Terrestrial Ecology Subsetting & Visualization Services (TESViS) Global Subsets Tool: MODIS/VIIRS Land Products. ORNL DAAC, Oak Ridge, Tennessee, USA. doi:10.3334/ORNLDAAC/1379",
+   "url": "https://modis.ornl.gov/data/modis_webservice.html",
+   "resolucion": null,
+   "es_nasa": true,
+   "fecha_consulta": "2026-11-13T14:29:34Z"
+  },
+  {
+   "id": "firms_viirs",
+   "nombre": "FIRMS: focos de calor VIIRS S-NPP 375 m (archivo anual de Guatemala)",
+   "cita": "NASA FIRMS. VIIRS (S-NPP) I Band 375 m Active Fire Product (VNP14IMGT). NASA Fire Information for Resource Management System. doi:10.5067/FIRMS/VIIRS/VNP14IMGT_NRT.002 (TODO: confirmar DOI del archivo estándar)",
+   "url": "https://firms.modaps.eosdis.nasa.gov/country/",
+   "resolucion": "375 m",
+   "es_nasa": true,
+   "fecha_consulta": "2026-11-13T14:19:24Z"
+  },
+  {
+   "id": "nasa_power",
+   "nombre": "NASA POWER (comunidad AG): lluvia, temperatura y humedad de raíz",
+   "cita": "These data were obtained from the NASA Langley Research Center (LaRC) POWER Project funded through the NASA Earth Science/Applied Science Program.",
+   "url": "https://power.larc.nasa.gov/",
+   "resolucion": "0.5° x 0.625° (~50 km)",
+   "es_nasa": true,
+   "fecha_consulta": "2026-11-13T14:18:48Z"
+  },
+  {
+   "id": "srtm",
+   "nombre": "SRTM 90 m (altitud y pendiente) vía OpenTopoData",
+   "cita": "NASA Shuttle Radar Topography Mission (SRTM), 3 arc-second (~90 m), consultado con la API pública de OpenTopoData (dataset srtm90m). TODO: confirmar versión exacta.",
+   "url": "https://www.opentopodata.org/datasets/srtm/",
+   "resolucion": "90 m",
+   "es_nasa": true,
+   "fecha_consulta": "2026-11-13T14:18:49Z"
+  },
+  {
+   "id": "soilgrids",
+   "nombre": "SoilGrids 2.0 (ISRIC): arcilla, carbono orgánico y pH",
+   "cita": "Poggio, L., de Sousa, L. M., Batjes, N. H., Heuvelink, G. B. M., Kempen, B., Ribeiro, E. y Rossiter, D. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL, 7, 217-240. doi:10.5194/soil-7-217-2021",
+   "url": "https://soilgrids.org/",
+   "resolucion": "250 m",
+   "es_nasa": false,
+   "fecha_consulta": null
+  },
+  {
+   "id": "chirps",
+   "nombre": "CHIRPS: lluvia por satélite y estaciones (referencia independiente, no es NASA)",
+   "cita": "Funk, C. et al. (2015). The climate hazards infrared precipitation with stations - a new environmental record for monitoring extremes. Scientific Data, 2, 150066. doi:10.1038/sdata.2015.66",
+   "url": "https://www.chc.ucsb.edu/data/chirps",
+   "resolucion": "0.05° (~5 km)",
+   "es_nasa": false,
+   "fecha_consulta": null
+  },
+  {
+   "id": "smap",
+   "nombre": "SMAP L3 mejorado (SPL3SMP_E): humedad superficial del suelo a 9 km",
+   "cita": "O'Neill, P. E. et al. SMAP Enhanced L3 Radiometer Global and Polar Grid Daily 9 km EASE-Grid Soil Moisture (SPL3SMP_E). NASA National Snow and Ice Data Center DAAC. TODO: completar versión y DOI al bajar por AppEEARS.",
+   "url": "https://nsidc.org/data/spl3smp_e",
+   "resolucion": "9 km, diario",
+   "es_nasa": true,
+   "fecha_consulta": null
+  },
+  {
+   "id": "gibs",
+   "nombre": "NASA GIBS: capas del mapa (color real y NDVI)",
+   "cita": "We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS).",
+   "url": "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api",
+   "resolucion": "según la capa",
+   "es_nasa": true,
+   "fecha_consulta": null
+  },
+  {
+   "id": "fao56",
+   "nombre": "FAO-56: evapotranspiración de referencia (Hargreaves) y coeficientes de cultivo",
+   "cita": "Allen, R. G., Pereira, L. S., Raes, D. y Smith, M. (1998). Crop evapotranspiration: Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56. Roma: FAO.",
+   "url": "https://www.fao.org/4/x0490e/x0490e00.htm",
+   "resolucion": null,
+   "es_nasa": false,
+   "fecha_consulta": null
+  },
+  {
+   "id": "fao33",
+   "nombre": "FAO-33 y FAO-66: respuesta del rendimiento al agua (Ky)",
+   "cita": "Doorenbos, J. y Kassam, A. H. (1979). Yield response to water. FAO Irrigation and Drainage Paper 33. Roma: FAO. Valores de Ky estacional retomados en Steduto, P. et al. (2012), FAO Irrigation and Drainage Paper 66. TODO: verificar página del cuadro de Ky.",
+   "url": "https://www.fao.org/4/i2800e/i2800e00.htm",
+   "resolucion": null,
+   "es_nasa": false,
+   "fecha_consulta": null
+  },
+  {
+   "id": "zarc",
+   "nombre": "ZARC: Zonificación Agroclimática del Riesgo (FAO y MAGA)",
+   "cita": "FAO y MAGA. Herramienta digital ZARC para decisiones de siembra de maíz y frijol. Se cita; Milpa Resiliente no recalcula fechas.",
+   "url": "https://www.maga.gob.gt/herramienta-digital-zarc-mejorara-decisiones-de-siembra/",
+   "resolucion": null,
+   "es_nasa": false,
+   "fecha_consulta": null
+  },
+  {
+   "id": "openstreetmap",
+   "nombre": "Mapa base de OpenStreetMap",
+   "cita": "© Colaboradores de OpenStreetMap, datos con licencia ODbL.",
+   "url": "https://www.openstreetmap.org/copyright",
+   "resolucion": null,
+   "es_nasa": false,
+   "fecha_consulta": null
+  }
+ ],
+ "glosario": [
+  {
+   "termino": "NDVI",
+   "definicion": "Índice de verdor que calcula el satélite con la luz que reflejan las plantas. Cerca de cero es suelo desnudo; cuanto más alto, más verde y tupida está la parcela."
+  },
+  {
+   "termino": "Suelo desnudo",
+   "definicion": "Meses en que el satélite ve muy poco verde en la parcela. Sin cobertura, el sol seca la tierra y la lluvia la arrastra."
+  },
+  {
+   "termino": "Evapotranspiración",
+   "definicion": "Agua que se va al aire desde el suelo y desde las hojas. Es lo que la planta «gasta» cada día."
+  },
+  {
+   "termino": "ET0",
+   "definicion": "Evapotranspiración de referencia: lo que gastaría un pasto bien regado con el clima de ese día. Se calcula con la temperatura (método de Hargreaves, FAO-56)."
+  },
+  {
+   "termino": "Coeficiente de cultivo (Kc)",
+   "definicion": "Multiplica la ET0 para saber cuánta agua pide cada cultivo según su etapa: poco al nacer, más al florear."
+  },
+  {
+   "termino": "Déficit de agua",
+   "definicion": "Parte del agua que el cultivo necesita y que la lluvia no alcanza a dar. Cero quiere decir que la lluvia alcanzó."
+  },
+  {
+   "termino": "Canícula",
+   "definicion": "Racha de días secos a mitad de la temporada de lluvias, entre junio y agosto. Si se alarga, daña al maíz cuando florea."
+  },
+  {
+   "termino": "Anomalía",
+   "definicion": "Cuánto se aleja un año de lo normal en ese lugar. Una anomalía negativa de lluvia es un año más seco que el promedio."
+  },
+  {
+   "termino": "Resolución",
+   "definicion": "Tamaño del cuadro más pequeño que ve un dato. MODIS ve cuadros de 250 m; NASA POWER, de unos 50 km: no es su parcela, es la zona."
+  },
+  {
+   "termino": "Satélite y medición en tierra",
+   "definicion": "El satélite mide desde arriba y cubre todo el país, pero con menos detalle. Una estación o un pluviómetro mide justo en un punto. Lo mejor es comparar los dos."
+  },
+  {
+   "termino": "Confianza",
+   "definicion": "Qué tan seguros estamos de la recomendación. Baja si faltan datos, si el satélite vio nubes o si dos fuentes no coinciden."
+  },
+  {
+   "termino": "SMAP",
+   "definicion": "Satélite de la NASA que mide la humedad de los primeros centímetros del suelo, en cuadros de unos 9 km."
+  },
+  {
+   "termino": "Rastrojo en pie",
+   "definicion": "Dejar los restos del cultivo en la parcela después de cosechar, sin quemarlos. Protege el suelo en la época seca."
+  },
+  {
+   "termino": "Abono verde",
+   "definicion": "Planta, casi siempre leguminosa, que se siembra para cubrir y alimentar el suelo, no para cosechar."
+  }
+ ],
+ "texto_tarjeta": "Parcela de Jocotán, Chiquimula. Lo que ve el satélite: no se ven meses con el suelo desnudo. Comparamos tres opciones. Opción uno, lo que hace hoy: maíz con frijol en primera y frijol en postrera. Puntaje 94. Opción dos: Maíz con canavalia en primera, frijol en postrera y rastrojo en pie. Puntaje 96. Opción tres: Maíz de ciclo corto con frijol en primera y frijol en postrera. Puntaje 94. Según su prioridad, agua, la que mejor sale es: Maíz con canavalia en primera, frijol en postrera y rastrojo en pie. Confianza baja. Fecha de siembra: consúltela en ZARC (FAO–MAGA) con su extensionista. Esta herramienta apoya, no reemplaza, a su técnico.",
+ "audio": {
+  "mp3": null,
+  "voz": null,
+  "texto": "Parcela de Jocotán, Chiquimula. Lo que ve el satélite: no se ven meses con el suelo desnudo. Comparamos tres opciones. Opción uno, lo que hace hoy: maíz con frijol en primera y frijol en postrera. Puntaje 94. Opción dos: Maíz con canavalia en primera, frijol en postrera y rastrojo en pie. Puntaje 96. Opción tres: Maíz de ciclo corto con frijol en primera y frijol en postrera. Puntaje 94. Según su prioridad, agua, la que mejor sale es: Maíz con canavalia en primera, frijol en postrera y rastrojo en pie. Confianza baja. Fecha de siembra: consúltela en ZARC (FAO–MAGA) con su extensionista. Esta herramienta apoya, no reemplaza, a su técnico."
+ }
+}
