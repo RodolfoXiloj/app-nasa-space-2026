@@ -1,0 +1,15 @@
+# Motor (motor/): solo biblioteca estándar de Python 3.11+, más PyYAML para leer data/*.yaml.
+pyyaml>=6.0
+
+# Pipeline de datos (pipeline/)
+requests>=2.31
+
+# Pruebas y validación del contrato
+pytest>=8.0
+jsonschema>=4.20
+
+# Opcionales (sábado): CHIRPS y audio
+# rasterio>=1.3   # leer GeoTIFF de CHIRPS; respaldo: Pillow o tifffile
+# edge-tts>=6.1   # mp3 de la tarjeta al exportar
+# fastapi>=0.110  # API en vivo (extra)
+# uvicorn>=0.29

@@ -1,0 +1,52 @@
+# Claves locales: nunca al repo
+.env
+.env.*
+!.env.example
+
+# Credenciales sueltas (Earthdata, certificados, claves)
+.netrc
+_netrc
+.urs_cookies
+*.pem
+*.key
+*.p12
+
+# Datos grandes (FIRMS nacional, TIF de CHIRPS, trozos de ORNL): fuera del repo
+data/raw_big/*
+!data/raw_big/.gitkeep
+
+# Notas internas con información de otros equipos.
+# El equipo decide antes del primer push si se publican (ver plan, sección 2).
+docs/evaluacion-milpa-ajustada.txt
+docs/plan-original-sin-ajustes.md
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+htmlcov/
+*.log
+.venv/
+venv/
+*.egg-info/
+
+# Node / web
+node_modules/
+web/dist/
+web/.vite/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Graphify: se versionan graph.json y GRAPH_REPORT.md; graph.html carga vis-network desde un CDN
+# y el resto se regenera con `graphify update .`
+graphify-out/*
+!graphify-out/graph.json
+!graphify-out/GRAPH_REPORT.md

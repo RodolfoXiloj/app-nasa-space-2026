@@ -1,0 +1,10 @@
+[project]
+name = "milpa-resiliente"
+version = "0.1.0"
+description = "Compara 3 rotaciones de cultivo para una parcela del Corredor Seco con datos de la NASA (Space Apps 2026, Field Shift)."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
