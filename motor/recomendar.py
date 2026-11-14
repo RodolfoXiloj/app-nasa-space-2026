@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from motor import VERSION, VERSION_CONTRATO, clima, confianza, datos, deteccion, puntaje, redaccion, zarc
+from motor import VERSION, VERSION_CONTRATO, clima, confianza, datos, deteccion, farmer, puntaje, redaccion, zarc
 
 LLUVIA_PCT = [0, -10, -20, -30]
 TEMP_C = [0, 1.5]
@@ -403,4 +403,5 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
     res["texto_tarjeta"] = redaccion.texto_tarjeta(res)
     res["audio"]["texto"] = res["texto_tarjeta"]
     verificar_campos_reto(res)
+    res["farmer"] = farmer.bloque(res)
     return res

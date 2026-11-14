@@ -25,7 +25,7 @@ _RANGO = re.compile(r"([-−+]?\d+(?:\.\d+)?)[-–]([-−+]?\d+(?:\.\d+)?)%?")
 
 # Campos que son texto redactado (se validan) o series crudas (no cuentan como respaldo).
 CAMPOS_TEXTO = {"por_que", "beneficios", "vacios", "riesgos", "texto_tarjeta", "texto", "motivo", "aviso",
-                "glosario", "trazabilidad", "detalle", "nota", "nota_escenario", "cita", "descripcion"}
+                "glosario", "trazabilidad", "detalle", "nota", "nota_escenario", "cita", "descripcion", "frases"}
 CAMPOS_CRUDOS = {"serie", "por_anio", "detecciones", "lluvia_anual_mm"}
 
 

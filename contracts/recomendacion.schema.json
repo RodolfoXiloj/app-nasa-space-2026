@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://milpa-resiliente.local/contracts/recomendacion.schema.json",
   "title": "Recomendación de rotaciones para una parcela (contrato v1)",
-  "description": "Contrato congelado el 13 nov 2026 entre el motor (Python) y la web (React). Se pueden AGREGAR campos; no se quitan ni se renombran sin avisar a todo el equipo.",
+  "description": "Contrato v1 congelado entre el motor (Python) y la web (React). Se pueden AGREGAR campos; no se quitan ni se renombran sin avisar a todo el equipo. El bloque `farmer` es un añadido opcional: un JSON sin él sigue siendo un v1 válido.",
   "type": "object",
   "required": ["version_contrato", "meta", "aviso", "parcela", "deteccion", "clima", "smap", "rotaciones", "zarc", "escenarios", "pesos", "fuentes", "glosario", "texto_tarjeta", "audio"],
   "properties": {
@@ -234,10 +234,92 @@
     "audio": {
       "type": "object", "required": ["mp3", "texto"],
       "properties": { "mp3": { "type": ["string", "null"] }, "voz": { "type": ["string", "null"] }, "texto": { "type": "string" } }
+    },
+    "farmer": {
+      "type": "object",
+      "description": "Vista «Para el agricultor» (opcional en v1). Solo reordena cifras que ya están en deteccion, clima y rotaciones; no trae cifras nuevas. Mientras los umbrales de docs/umbrales.md no estén confirmados, cada estado es null y opciones.estado es «pendiente».",
+      "required": ["version", "umbrales", "hechos", "opciones", "frases", "audio"],
+      "properties": {
+        "version": { "const": "1" },
+        "umbrales": {
+          "type": "object", "required": ["estado", "documento"],
+          "properties": {
+            "estado": { "enum": ["pendiente", "confirmado"] },
+            "documento": { "type": "string" },
+            "margen_empate": { "type": ["number", "null"] }
+          }
+        },
+        "hechos": {
+          "type": "array", "minItems": 3, "maxItems": 3,
+          "description": "Siempre 3 y en este orden: suelo (MODIS), quema (FIRMS) y canícula (lluvia diaria)",
+          "prefixItems": [
+            { "allOf": [{ "$ref": "#/$defs/hecho_farmer" }, { "properties": { "id": { "const": "suelo" }, "unidad": { "const": "meses" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/hecho_farmer" }, { "properties": { "id": { "const": "quema" }, "unidad": { "const": "anios" } } }] },
+            { "allOf": [{ "$ref": "#/$defs/hecho_farmer" }, { "properties": { "id": { "const": "canicula" }, "unidad": { "const": "anios" } } }] }
+          ],
+          "items": false
+        },
+        "opciones": {
+          "type": "object", "required": ["estado", "actual", "alternativas", "confianza"],
+          "properties": {
+            "estado": { "enum": ["pendiente", "una_destaca", "empate", "gris"], "description": "empate y gris: la vista no muestra ninguna opción como mejor" },
+            "actual": { "type": "string" },
+            "alternativas": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+            "confianza": {
+              "type": "object", "required": ["nivel", "motivo"],
+              "properties": { "nivel": { "enum": ["alta", "media", "baja"] }, "motivo": { "type": "string", "minLength": 5 } }
+            }
+          }
+        },
+        "frases": {
+          "type": "array",
+          "description": "Frases cortas de la vista y del audio. Cada una existe como texto visible y pasa el validador de números",
+          "items": {
+            "type": "object", "required": ["id", "es", "en"],
+            "properties": {
+              "id": { "type": "string" },
+              "hecho": { "enum": ["suelo", "quema", "canicula", null] },
+              "es": { "$ref": "#/$defs/texto_no_vacio" },
+              "en": { "$ref": "#/$defs/texto_no_vacio" },
+              "caa": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "audio": {
+          "type": "object", "required": ["es", "en", "caa"],
+          "description": "Una ranura por idioma; caa = ch'orti'. null = no hay grabación y la web no muestra el botón",
+          "properties": {
+            "es": { "$ref": "#/$defs/audio_farmer" },
+            "en": { "$ref": "#/$defs/audio_farmer" },
+            "caa": { "$ref": "#/$defs/audio_farmer" }
+          }
+        }
+      }
     }
   },
   "$defs": {
     "mes": { "type": "integer", "minimum": 1, "maximum": 12 },
+    "hecho_farmer": {
+      "type": "object",
+      "required": ["id", "estado", "valor", "de", "unidad", "periodo", "fuente_ids", "motivo_gris"],
+      "properties": {
+        "id": { "enum": ["suelo", "quema", "canicula"] },
+        "estado": { "enum": ["verde", "amarillo", "rojo", "gris", null], "description": "null = umbrales sin confirmar. No hay anaranjado" },
+        "valor": { "type": ["integer", "null"], "minimum": 0 },
+        "de": { "type": ["integer", "null"], "minimum": 0 },
+        "unidad": { "enum": ["meses", "anios"] },
+        "meses": { "type": "array", "items": { "$ref": "#/$defs/mes" } },
+        "meses_poca_cobertura": { "type": "array", "items": { "$ref": "#/$defs/mes" } },
+        "periodo": { "type": "string" },
+        "fuente_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "motivo_gris": { "type": ["string", "null"] }
+      }
+    },
+    "audio_farmer": {
+      "type": ["object", "null"],
+      "required": ["mp3"],
+      "properties": { "mp3": { "type": ["string", "null"] }, "subtitulos": { "type": ["string", "null"] }, "voz": { "type": ["string", "null"] } }
+    },
     "doce_numeros": { "type": "array", "minItems": 12, "maxItems": 12, "items": { "type": ["number", "null"] } },
     "puntajes": {
       "type": "object", "required": ["agua", "suelo", "plagas", "total"],
