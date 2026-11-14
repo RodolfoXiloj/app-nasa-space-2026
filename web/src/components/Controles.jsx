@@ -46,13 +46,13 @@ export default function Controles(props) {
       <Segmentado etiqueta="Prioridad de la familia" opciones={Object.entries(PRIORIDADES)} valor={prioridad} onCambio={setPrioridad} />
       <Segmentado
         etiqueta="Escenario de lluvia"
-        opciones={lluvias.map((v) => [v, v === 0 ? 'Normal' : `${v} %`])}
+        opciones={lluvias.map((v) => [v, v === 0 ? 'Normal' : `${v}\u00a0%`])}
         valor={lluvia}
         onCambio={setLluvia}
       />
       <Segmentado
         etiqueta="Escenario de temperatura"
-        opciones={temps.map((v) => [v, v === 0 ? 'Normal' : `+${v} °C`])}
+        opciones={temps.map((v) => [v, v === 0 ? 'Normal' : `+${v}\u00a0°C`])}
         valor={temp}
         onCambio={setTemp}
       />
