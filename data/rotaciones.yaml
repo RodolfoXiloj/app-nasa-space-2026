@@ -11,12 +11,15 @@
 #   beneficios, vacios, riesgos: textos SIN CIFRAS ni fechas (las cifras las pone el motor y el
 #           validador rechaza cualquier número que no esté en el JSON).
 #   fuente: cita corta; «supuesto» = sin fuente publicada todavía (la web lo muestra como vacío).
+#   nombre_corto: cómo se dice en el audio por frases («maíz con canavalia»).
+#   en: los mismos textos en inglés (nombre, nombre_corto, beneficios, vacios, riesgos), sin cifras nuevas.
 #
 # Pendiente (Iván / agrónomo): revisar las reglas de puntaje con alguien del campo.
 
 rotaciones:
   - id: actual_maiz_frijol
     nombre: "Lo que hace hoy: maíz con frijol en primera y frijol en postrera"
+    nombre_corto: "lo que siembra hoy"
     tipo: actual
     cultivo_declarado: maiz_frijol
     ciclos:
@@ -35,9 +38,20 @@ rotaciones:
     riesgos:
       - "Si la canícula se alarga, el maíz sufre justo cuando está floreando."
     fuente: "Sistema tradicional de primera y postrera del oriente de Guatemala (ICTA, Recomendaciones técnicas para el cultivo de maíz en el oriente de Guatemala, 2015)"
+    en:
+      nombre: "What you do today: maize with beans in primera and beans in postrera"
+      nombre_corto: "what you plant today"
+      beneficios:
+        - "It is the system the family already knows and has seed for."
+        - "Beans in postrera use the rains at the end of the year."
+      vacios:
+        - "We don't know which maize and bean varieties you use."
+      riesgos:
+        - "If the canícula runs long, the maize suffers right when it is flowering."
 
   - id: actual_maiz_solo
     nombre: "Lo que hace hoy: maíz solo en primera"
+    nombre_corto: "lo que siembra hoy"
     tipo: actual
     cultivo_declarado: maiz_solo
     ciclos:
@@ -55,9 +69,20 @@ rotaciones:
       - "Repetir maíz año con año favorece plagas del suelo y del cogollo."
       - "Sin postrera, el suelo queda más tiempo sin cultivo."
     fuente: "supuesto inicial; describe el monocultivo de maíz de primera"
+    en:
+      nombre: "What you do today: maize alone in primera"
+      nombre_corto: "what you plant today"
+      beneficios:
+        - "A single crop is easier to manage."
+      vacios:
+        - "We don't know which maize variety you use."
+      riesgos:
+        - "Planting maize year after year favors soil and whorl pests."
+        - "Without postrera, the soil stays longer without a crop."
 
   - id: actual_sorgo
     nombre: "Lo que hace hoy: sorgo (maicillo) en primera"
+    nombre_corto: "lo que siembra hoy"
     tipo: actual
     cultivo_declarado: sorgo
     ciclos:
@@ -74,9 +99,19 @@ rotaciones:
     riesgos:
       - "Los pájaros pueden comerse el grano si no se protege."
     fuente: "ICTA, Programa de Sorgo (icta.gob.gt/sorgo): en el corredor seco el sorgo complementa o sustituye al maíz"
+    en:
+      nombre: "What you do today: sorghum (maicillo) in primera"
+      nombre_corto: "what you plant today"
+      beneficios:
+        - "Sorghum handles drought better than maize."
+      vacios:
+        - "We don't know if your maicillo is a long-cycle landrace or an improved short-cycle variety."
+      riesgos:
+        - "Birds can eat the grain if it is not protected."
 
   - id: leguminosa_canavalia
     nombre: "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie"
+    nombre_corto: "maíz con canavalia"
     tipo: leguminosa_cobertura
     ciclos:
       - { temporada: primera, cultivo: maiz, asociados: [canavalia], siembra_mes: 5, siembra_dia: 25 }
@@ -97,9 +132,23 @@ rotaciones:
       - "En un ensayo de CIMMYT en San Juan Ermita, el primer año dejar de quemar no subió la cosecha: el beneficio es de mediano plazo."
       - "Dejar el rastrojo en pie choca con la costumbre de pastorear o quemar: hay que acordarlo con la familia."
     fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 3 (maíz asociado con canavalia); MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 (cobertura y no quema); CIMMYT, Menú tecnológico maíz y frijol en el Oriente de Guatemala, 2024, p. 4"
+    en:
+      nombre: "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble"
+      nombre_corto: "maize with jack bean"
+      beneficios:
+        - "Jack bean and stubble cover the soil in the dry season."
+        - "Jack bean is a legume: it adds nitrogen and organic matter."
+        - "Without burning, the soil keeps more moisture and washes away less, as the Chiquimula Agroclimatic Technical Board recommends."
+      vacios:
+        - "Jack bean water use is not calculated: it has no crop coefficient in FAO-56."
+      riesgos:
+        - "Sow the jack bean together with the maize or up to about two weeks later, as ICTA advises, and make sure it does not shade the maize."
+        - "In a CIMMYT trial in San Juan Ermita, stopping burning did not raise the harvest in the first year: the benefit is medium term."
+        - "Leaving stubble standing clashes with the habit of grazing or burning: it has to be agreed with the family."
 
   - id: leguminosa_milpa
     nombre: "Milpa completa: maíz, frijol y ayote en primera, frijol en postrera y rastrojo en pie"
+    nombre_corto: "milpa completa"
     tipo: leguminosa_cobertura
     ciclos:
       - { temporada: primera, cultivo: maiz, asociados: [frijol, ayote], siembra_mes: 5, siembra_dia: 25 }
@@ -118,9 +167,21 @@ rotaciones:
       - "El ayote necesita espacio: con mucha densidad de maíz compite por luz."
       - "Dejar el rastrojo en pie choca con la costumbre de pastorear o quemar: hay que acordarlo con la familia."
     fuente: "MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 («Rotar cultivos o policultivos como por ejemplo ayote, maíz y frijol»)"
+    en:
+      nombre: "Full milpa: maize, beans and squash in primera, beans in postrera and standing stubble"
+      nombre_corto: "full milpa"
+      beneficios:
+        - "Squash covers the soil between the maize and slows erosion in the rainy season."
+        - "Three crops in the same plot spread the risk: if one fails, the others remain."
+      vacios:
+        - "Squash water use is not calculated separately: it is grown with the maize."
+      riesgos:
+        - "Squash needs space: with dense maize it competes for light."
+        - "Leaving stubble standing clashes with the habit of grazing or burning: it has to be agreed with the family."
 
   - id: leguminosa_gandul
     nombre: "Maíz con gandul en primera; el gandul sigue verde en la época seca"
+    nombre_corto: "maíz con gandul"
     tipo: leguminosa_cobertura
     ciclos:
       - { temporada: primera, cultivo: maiz, asociados: [gandul], siembra_mes: 5, siembra_dia: 25 }
@@ -139,9 +200,22 @@ rotaciones:
       - "El gandul ocupa la parcela varios meses: se pierde la postrera de frijol."
       - "Hay que protegerlo del ganado en la época seca."
     fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 4 (mucuna, gandul y frijol cachito se adaptan al corredor seco)"
+    en:
+      nombre: "Maize with pigeon pea in primera; the pigeon pea stays green in the dry season"
+      nombre_corto: "maize with pigeon pea"
+      beneficios:
+        - "Pigeon pea is a deep-rooted legume shrub that stays green after the rains stop."
+        - "It gives grain and fodder in the dry season and protects the soil."
+      vacios:
+        - "Pigeon pea water use is not calculated: it has no crop coefficient in FAO-56."
+        - "No bean postrera: the family swaps beans for pigeon pea that year."
+      riesgos:
+        - "Pigeon pea occupies the plot for several months: the bean postrera is lost."
+        - "It has to be protected from livestock in the dry season."
 
   - id: tolerante_sorgo_caupi
     nombre: "Sorgo en primera y caupí en postrera, con rastrojo en pie"
+    nombre_corto: "sorgo con caupí"
     tipo: tolerante_sequia
     ciclos:
       - { temporada: primera, cultivo: sorgo, asociados: [], siembra_mes: 5, siembra_dia: 25 }
@@ -161,9 +235,22 @@ rotaciones:
       - "Cambiar maíz por sorgo afecta la tortilla y la seguridad alimentaria de la familia: decidirlo con ella."
       - "Los pájaros pueden comerse el sorgo si no se protege."
     fuente: "ICTA, Programa de Sorgo; MAGA, nueva variedad de sorgo ICTA Blanco (3 sep 2026); FAO, Estudio de caracterización del Corredor Seco Centroamericano, Tomo I, 2012, pp. 21 y 55; Bioversity International, frijol tepari en Guatemala"
+    en:
+      nombre: "Sorghum in primera and cowpea in postrera, with standing stubble"
+      nombre_corto: "sorghum with cowpea"
+      beneficios:
+        - "Sorghum loses less harvest than maize when water is short: its yield response factor in FAO-33 is lower."
+        - "Cowpea (frijol alacín) is already used in the Dry Corridor as a substitute for beans."
+      vacios:
+        - "There is no published yield response factor for cowpea; tepary bean is documented as drought tolerant."
+        - "We don't know if there is a market or a habit of eating cowpea in the community."
+      riesgos:
+        - "Switching maize for sorghum affects tortillas and the family's food security: decide it with them."
+        - "Birds can eat the sorghum if it is not protected."
 
   - id: tolerante_maiz_corto
     nombre: "Maíz de ciclo corto ICTA B-5 con frijol en primera y frijol en postrera"
+    nombre_corto: "maíz de ciclo corto"
     tipo: tolerante_sequia
     ciclos:
       - { temporada: primera, cultivo: maiz_corto, asociados: [frijol], siembra_mes: 5, siembra_dia: 25 }
@@ -181,3 +268,13 @@ rotaciones:
     riesgos:
       - "Una variedad de ciclo corto rinde menos que una de ciclo largo en un año con buena lluvia."
     fuente: "ICTA, Recomendaciones técnicas para el cultivo de maíz en el oriente de Guatemala, 2015, p. 2 (ICTA B-5, ciclo de tres meses; ICTA B-7, cuatro meses); ICTA 2017, ICTA B-7 TS tolerante a la sequía"
+    en:
+      nombre: "Short-cycle maize ICTA B-5 with beans in primera and beans in postrera"
+      nombre_corto: "short-cycle maize"
+      beneficios:
+        - "It keeps maize and shortens the time the canícula can damage it."
+        - "ICTA recommends it for places with scarce rain in the east of the country."
+      vacios:
+        - "Confirm with the extension worker that certified seed of the variety is available in the area."
+      riesgos:
+        - "A short-cycle variety yields less than a long-cycle one in a year with good rain."

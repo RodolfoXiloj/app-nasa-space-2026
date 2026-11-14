@@ -310,7 +310,7 @@
         },
         "frases": {
           "type": "array",
-          "description": "Frases cortas de la vista y del audio. Cada una existe como texto visible y pasa el validador de números",
+          "description": "Frases cortas de la vista y del audio corto, en orden. Cada una existe como texto visible y pasa el validador de números; el mp3 corto lee solo el español de estas frases (nada solo en audio)",
           "items": {
             "type": "object", "required": ["id", "es", "en"],
             "properties": {
@@ -318,7 +318,9 @@
               "hecho": { "enum": ["suelo", "quema", "canicula", null] },
               "es": { "$ref": "#/$defs/texto_no_vacio" },
               "en": { "$ref": "#/$defs/texto_no_vacio" },
-              "caa": { "type": ["string", "null"] }
+              "caa": { "type": ["string", "null"] },
+              "inicio_s": { "type": ["number", "null"], "minimum": 0, "description": "Segundo en que empieza la frase en audio.es.mp3 (null sin mp3)" },
+              "fin_s": { "type": ["number", "null"], "minimum": 0 }
             }
           }
         },
@@ -366,7 +368,16 @@
     "audio_farmer": {
       "type": ["object", "null"],
       "required": ["mp3"],
-      "properties": { "mp3": { "type": ["string", "null"] }, "subtitulos": { "type": ["string", "null"] }, "voz": { "type": ["string", "null"] } }
+      "properties": {
+        "mp3": { "type": ["string", "null"] },
+        "subtitulos": { "type": ["string", "null"], "description": "WebVTT en el idioma del audio" },
+        "subtitulos_en": { "type": ["string", "null"], "description": "WebVTT en inglés del mismo audio" },
+        "voz": { "type": ["string", "null"] },
+        "ia": { "type": "object", "required": ["generado_con_ia", "declaracion"], "properties": { "generado_con_ia": { "const": true }, "declaracion": { "type": "string", "minLength": 10 } } },
+        "duracion_s": { "type": "number", "minimum": 0 },
+        "bytes": { "type": "integer", "minimum": 0, "description": "Peso del mp3, para mostrarlo junto al botón" },
+        "kbps": { "type": "integer" }
+      }
     },
     "doce_numeros": { "type": "array", "minItems": 12, "maxItems": 12, "items": { "type": ["number", "null"] } },
     "puntajes": {
@@ -398,6 +409,7 @@
       "properties": {
         "id": { "type": "string" },
         "nombre": { "type": "string" },
+        "nombre_corto": { "type": "string", "description": "Como se dice en el audio por frases" },
         "tipo": { "enum": ["actual", "leguminosa_cobertura", "tolerante_sequia"] },
         "es_actual": { "type": "boolean" },
         "descripcion": { "type": "string" },

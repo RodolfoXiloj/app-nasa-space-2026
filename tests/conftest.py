@@ -67,7 +67,8 @@ def base_sintetica(tmp_path_factory) -> str:
         shutil.copyfile(RAIZ / "data" / y, base / y)
     (base / "parcelas.yaml").write_text(
         "parcelas:\n  - {id: sint, nombre: Parcela sintética, municipio: Jocotán, departamento: Chiquimula,"
-        " lat: 14.5, lon: -89.5, provisional: true, nota: prueba}\n", encoding="utf-8")
+        " lat: 14.5, lon: -89.5, provisional: true, nota: prueba,"
+        " en: {nombre: Synthetic plot, nota: test}}\n", encoding="utf-8")
     cache = base / "cache"
     for rel, obj in {"ndvi/sint.json": _ndvi_cache(), "firms/sint.json": _firms_cache(),
                      "power/sint_diario.json": _power_cache(),

@@ -30,6 +30,11 @@ def textos(res: dict) -> list[tuple[str, str]]:
         out.append((f"rotaciones[{i}].por_que", r["por_que"]))
         for campo in ("beneficios", "vacios", "riesgos"):
             out += [(f"rotaciones[{i}].{campo}[{j}]", t) for j, t in enumerate(r[campo])]
+        en = r.get("en") or {}
+        if en.get("por_que"):
+            out.append((f"rotaciones[{i}].en.por_que", en["por_que"]))
+        for campo in ("beneficios", "vacios", "riesgos"):
+            out += [(f"rotaciones[{i}].en.{campo}[{j}]", t) for j, t in enumerate(en.get(campo) or []) if t]
     # Frases de la vista del agricultor (y de su audio): se validan igual que la tarjeta.
     for i, f in enumerate((res.get("farmer") or {}).get("frases", [])):
         out += [(f"farmer.frases[{i}].{lang}", f[lang]) for lang in ("es", "en", "caa") if f.get(lang)]

@@ -71,7 +71,9 @@ def test_opciones_y_confianza_salen_de_las_rotaciones(resultado_sintetico):
     assert op["actual"] == rots[0]["id"] and rots[0]["es_actual"]
     assert op["alternativas"] == [r["id"] for r in rots[1:]]
     c = rots[0]["confianza"]
-    assert op["confianza"] == {"nivel": c["nivel"], "motivo": c["motivo"], "motivo_en": c["motivo_en"]}
+    assert {k: op["confianza"][k] for k in ("nivel", "motivo", "motivo_en")} == {
+        "nivel": c["nivel"], "motivo": c["motivo"], "motivo_en": c["motivo_en"]}
+    assert op["confianza"]["en"] == {"motivo": c["motivo_en"]}
 
 
 def test_ranura_por_idioma_con_chorti(resultado_sintetico):

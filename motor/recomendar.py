@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from motor import VERSION, VERSION_CONTRATO, clima, confianza, datos, deteccion, farmer, puntaje, redaccion, zarc
+from motor import VERSION, VERSION_CONTRATO, clima, confianza, datos, deteccion, farmer, ingles, puntaje, redaccion, zarc
 
 LLUVIA_PCT = [0, -10, -20, -30]
 TEMP_C = [0, 1.5]
@@ -271,6 +271,8 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
         "nota": ("SMAP SPL3SMP_E por AppEEARS." if hay_smap else
                  motivo_smap + " Se muestra la humedad de raíz del modelo MERRA-2 rotulada como modelo."),
     }
+    ingles.bilingue(smap_res, {"nota": "SMAP SPL3SMP_E via AppEEARS." if hay_smap else
+                               motivo_smap_en + " Root-zone moisture from the MERRA-2 model is shown, labeled as a model."})
 
     terreno = (srtm_c or {}).get("datos", {})
     pendiente = terreno.get("pendiente_pct")
@@ -334,20 +336,30 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
         conf = confianza.evaluar(det["calidad"]["pct_validos"], dif, hay_smap, extras, forzar_baja=regla_2018,
                                  detalle_smap=ctx["smap"]["nota"].split(" Se muestra")[0] if not hay_smap else None,
                                  extras_en=extras_en, forzar_baja_en=regla_2018_en, detalle_smap_en=motivo_smap_en)
+        textos = {"nombre": rot["nombre"], "nombre_corto": rot.get("nombre_corto") or rot["nombre"],
+                  "por_que": redaccion.por_que(rot["tipo"], tctx), "beneficios": redaccion.beneficios(rot, tctx),
+                  "vacios": redaccion.vacios(rot, tctx), "riesgos": redaccion.riesgos(rot, tctx)}
+        rot_en = rot.get("en") or {}
+        textos_en = {"nombre": rot_en.get("nombre"), "nombre_corto": rot_en.get("nombre_corto"),
+                     "por_que": ingles.por_que(rot["tipo"], tctx), "beneficios": ingles.beneficios(rot, tctx),
+                     "vacios": ingles.vacios(rot, tctx), "riesgos": ingles.riesgos(rot, tctx)}
         rot_out.append({
-            "id": rot["id"], "nombre": rot["nombre"], "tipo": rot["tipo"], "es_actual": es_actual,
+            "id": rot["id"], "nombre": rot["nombre"], "nombre_corto": rot.get("nombre_corto") or rot["nombre"],
+            "tipo": rot["tipo"], "es_actual": es_actual,
             "descripcion": rot.get("fuente", ""),
             "ciclos": _ciclos_contrato(rot, cultivos),
-            "por_que": redaccion.por_que(rot["tipo"], tctx),
+            "por_que": textos["por_que"],
             "evidencia": _evidencia(ev, ctx, es_actual),
-            "beneficios": redaccion.beneficios(rot, tctx),
-            "vacios": redaccion.vacios(rot, tctx),
-            "riesgos": redaccion.riesgos(rot, tctx),
+            "beneficios": textos["beneficios"],
+            "vacios": textos["vacios"],
+            "riesgos": textos["riesgos"],
             "puntajes": ev["puntajes"],
             "deficit": ev["deficit"],
             "confianza": conf,
             "calendario": _calendario(ev, det, es_actual, clima_res),
             "trazabilidad": ev["trazabilidad"],
+            "es": textos,
+            "en": textos_en,
         })
 
     # ---- escenarios
@@ -416,8 +428,9 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
         "texto_tarjeta": "",
         "audio": {"mp3": None, "voz": None, "texto": ""},
     }
-    res["texto_tarjeta"] = redaccion.texto_tarjeta(res)
-    res["audio"]["texto"] = res["texto_tarjeta"]
     verificar_campos_reto(res)
     res["farmer"] = farmer.bloque(res, datos.umbrales_semaforo(base))
+    res["texto_tarjeta"] = redaccion.texto_tarjeta(res)
+    res["audio"]["texto"] = res["texto_tarjeta"]
+    ingles.agregar(res, base)
     return res

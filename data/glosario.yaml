@@ -2,39 +2,58 @@
 glosario:
   - termino: NDVI
     definicion: "Índice de verdor que calcula el satélite con la luz que reflejan las plantas. Cerca de cero es suelo desnudo; cuanto más alto, más verde y tupida está la parcela."
+    en: {termino: "NDVI", definicion: "Greenness index the satellite computes from the light plants reflect. Near zero is bare soil; the higher it is, the greener and denser the plot."}
   - termino: Suelo desnudo
     definicion: "Meses en que el satélite ve muy poco verde en la parcela. Sin cobertura, el sol seca la tierra y la lluvia la arrastra."
+    en: {termino: "Bare soil", definicion: "Months when the satellite sees very little green on the plot. Without cover, the sun dries the ground and the rain washes it away."}
   - termino: Evapotranspiración
     definicion: "Agua que se va al aire desde el suelo y desde las hojas. Es lo que la planta «gasta» cada día."
+    en: {termino: "Evapotranspiration", definicion: "Water that goes into the air from the soil and the leaves. It is what the plant “spends” every day."}
   - termino: ET0
     definicion: "Evapotranspiración de referencia: lo que gastaría un pasto bien regado con el clima de ese día. Se calcula con la temperatura (método de Hargreaves, FAO-56)."
+    en: {termino: "ET0", definicion: "Reference evapotranspiration: what a well-watered grass would use with that day's weather. It is computed from temperature (Hargreaves method, FAO-56)."}
   - termino: Coeficiente de cultivo (Kc)
     definicion: "Multiplica la ET0 para saber cuánta agua pide cada cultivo según su etapa: poco al nacer, más al florear."
+    en: {termino: "Crop coefficient (Kc)", definicion: "Multiplies ET0 to know how much water each crop needs at each stage: little at emergence, more at flowering."}
   - termino: Déficit de agua
     definicion: "Parte del agua que el cultivo necesita y que la lluvia no alcanza a dar. Cero quiere decir que la lluvia alcanzó."
+    en: {termino: "Water deficit", definicion: "The part of the water the crop needs that the rain does not supply. Zero means the rain was enough."}
   - termino: Canícula
     definicion: "Racha de días secos a mitad de la temporada de lluvias, entre junio y agosto. Si se alarga, daña al maíz cuando florea."
+    en: {termino: "Canícula (midsummer drought)", definicion: "A run of dry days in the middle of the rainy season, between June and August. If it lasts long, it harms maize when it flowers."}
   - termino: Anomalía
     definicion: "Cuánto se aleja un año de lo normal en ese lugar. Una anomalía negativa de lluvia es un año más seco que el promedio."
+    en: {termino: "Anomaly", definicion: "How far a year is from normal at that place. A negative rain anomaly is a year drier than average."}
   - termino: Resolución
     definicion: "Tamaño del cuadro más pequeño que ve un dato. MODIS ve cuadros de 250 m; NASA POWER, de unos 50 km: no es su parcela, es la zona."
+    en: {termino: "Resolution", definicion: "Size of the smallest square a dataset sees. MODIS sees 250 m squares; NASA POWER, about 50 km: it is not your plot, it is the area."}
   - termino: Satélite y medición en tierra
     definicion: "El satélite mide desde arriba y cubre todo el país, pero con menos detalle. Una estación o un pluviómetro mide justo en un punto. Lo mejor es comparar los dos."
+    en: {termino: "Satellite and ground measurement", definicion: "A satellite measures from above and covers the whole country, but with less detail. A station or rain gauge measures right at one point. It is best to compare both."}
   - termino: Confianza
     definicion: "Qué tan seguros estamos de la recomendación. Baja si faltan datos, si el satélite vio nubes o si dos fuentes no coinciden."
+    en: {termino: "Confidence", definicion: "How sure we are about the recommendation. Low if data are missing, if the satellite saw clouds or if two sources disagree."}
   - termino: SMAP
     definicion: "Satélite de la NASA que mide la humedad de los primeros centímetros del suelo, en cuadros de unos 9 km."
+    en: {termino: "SMAP", definicion: "NASA satellite that measures the moisture of the top few centimeters of soil, in squares of about 9 km."}
   - termino: Rastrojo en pie
     definicion: "Dejar los restos del cultivo en la parcela después de cosechar, sin quemarlos. Protege el suelo en la época seca."
+    en: {termino: "Standing stubble", definicion: "Leaving crop residue on the plot after harvest, without burning it. It protects the soil in the dry season."}
   - termino: Abono verde
     definicion: "Planta, casi siempre leguminosa, que se siembra para cubrir y alimentar el suelo, no para cosechar."
+    en: {termino: "Green manure", definicion: "A plant, almost always a legume, sown to cover and feed the soil, not to harvest."}
   - termino: Poca cobertura
     definicion: "Meses en que el satélite ve verde ralo (NDVI entre 0.35 y 0.45): el suelo no está del todo desnudo, pero queda casi descubierto."
+    en: {termino: "Little cover", definicion: "Months when the satellite sees sparse green (NDVI between 0.35 and 0.45): the soil is not fully bare, but almost uncovered."}
   - termino: CHIRPS
     definicion: "Estimación de lluvia que combina satélites y pluviómetros, en cuadros de unos 5 km. La usamos para la lluvia de cada parcela porque es más detallada que la de NASA POWER."
+    en: {termino: "CHIRPS", definicion: "Rain estimate that combines satellites and rain gauges, in squares of about 5 km. We use it for each plot's rain because it is more detailed than NASA POWER."}
   - termino: IMERG (misión GPM)
     definicion: "Lluvia medida por la constelación de satélites GPM de la NASA cada media hora. CHIRPS diario la usa para repartir la lluvia de cada 5 días entre los días."
+    en: {termino: "IMERG (GPM mission)", definicion: "Rain measured every half hour by NASA's GPM satellite constellation. Daily CHIRPS uses it to split the rain of every 5 days among the days."}
   - termino: Percentil
     definicion: "Lugar de un año dentro de todos los años. Percentil 75 quiere decir que 3 de cada 4 años tuvieron un valor más bajo."
+    en: {termino: "Percentile", definicion: "Where a year falls among all years. Percentile 75 means that 3 out of 4 years had a lower value."}
   - termino: Desviación estándar (DE)
     definicion: "Cuánto suele variar un dato de un año a otro. Una anomalía de −1 DE es un año claramente por debajo de lo normal."
+    en: {termino: "Standard deviation (SD)", definicion: "How much a value usually varies from one year to the next. An anomaly of −1 SD is a year clearly below normal."}

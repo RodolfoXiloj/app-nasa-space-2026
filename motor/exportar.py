@@ -7,7 +7,12 @@
 
 Audio: cada mp3 es voz sintética generada con IA. Se declara en el JSON (audio.ia, que la web muestra
 junto al reproductor) y en las etiquetas ID3 del archivo (motor/audio_id3.py). Un mp3 solo se
-enlaza si el hash del texto guardado en su etiqueta coincide con el texto actual de la tarjeta.
+enlaza si el hash del texto guardado en su etiqueta coincide con el texto actual.
+Hay dos audios por parcela (cultivo por defecto):
+    audio/{parcela}.mp3          la tarjeta completa (~70 s), en `audio`
+    audio/{parcela}.frases.mp3   las frases cortas del bloque farmer (20 a 30 s, mono a 32 kbps), en
+                                 `farmer.audio.es`, con subtítulos audio/{parcela}.frases.{es,en}.vtt
+                                 y los tiempos de cada frase en `farmer.frases` (motor/audio_frases.py)
 
 Escribe:
     web/public/data/{parcela}.json            cultivo declarado por defecto (maíz + frijol)
@@ -26,12 +31,14 @@ import shutil
 import sys
 from pathlib import Path
 
-from motor import audio_id3, contrato, datos
+from motor import audio_frases, audio_id3, contrato, datos, frases, ingles
 from motor.recomendar import ContratoIncompleto, recomendar
 
 WEB_DATA = datos.RAIZ / "web" / "public" / "data"
 WEB_AUDIO = datos.RAIZ / "web" / "public" / "audio"
 VOCES = ["es-GT-MartaNeural", "es-MX-DaliaNeural"]  # plan: voz es-GT, respaldo es-MX
+RATE = "-5%"
+ALBUM = "Milpa Resiliente"
 CULTIVOS = ["maiz_frijol", "maiz_solo", "sorgo"]
 PRIORIDAD = "agua"
 HERRAMIENTA_VOZ = "edge-tts, texto a voz neural de Microsoft"
@@ -39,18 +46,25 @@ HERRAMIENTA_VOZ = "edge-tts, texto a voz neural de Microsoft"
 
 def declaracion_ia(voz: str) -> dict:
     """Lo que la web muestra junto al reproductor y lo que va en la etiqueta del mp3."""
-    return {"generado_con_ia": True, "herramienta": HERRAMIENTA_VOZ, "voz": voz,
-            "declaracion": (f"Voz sintética generada con IA ({HERRAMIENTA_VOZ}; voz {voz}) a partir del texto que "
-                            "redactó el motor con plantillas. No es una persona.")}
+    d = {"generado_con_ia": True, "herramienta": HERRAMIENTA_VOZ, "voz": voz,
+         "declaracion": (f"Voz sintética generada con IA ({HERRAMIENTA_VOZ}; voz {voz}) a partir del texto que "
+                         "redactó el motor con plantillas. No es una persona.")}
+    ingles.bilingue(d, {"declaracion": ingles.declaracion_ia(voz, ingles.HERRAMIENTA_EN),
+                        "herramienta": ingles.HERRAMIENTA_EN})
+    return d
 
 
-def etiquetar(ruta: Path, municipio: str, voz: str, texto: str) -> None:
+def etiquetar(ruta: Path, municipio: str, voz: str, texto: str, tiempos: dict | None = None) -> None:
+    """Etiqueta ID3 de IA. Con `tiempos` es el audio corto por frases: guarda el inicio y fin de cada frase."""
     d = declaracion_ia(voz)
-    audio_id3.escribir(ruta, titulo=f"Milpa Resiliente: tarjeta de {municipio} (voz sintética)",
-                       artista=f"Voz sintética generada con IA: {voz}", album="Milpa Resiliente (prototipo local)",
-                       anio="2026", comentario=d["declaracion"],
-                       extra={audio_id3.MARCA_IA: f"true; {HERRAMIENTA_VOZ}; voz {voz}",
-                              "MILPA_VOZ": voz, audio_id3.CLAVE_HASH: audio_id3.hash_texto(texto)})
+    titulo = (f"Milpa Resiliente: {municipio}, audio corto por frases (voz sintética)" if tiempos else
+              f"Milpa Resiliente: tarjeta de {municipio} (voz sintética)")
+    extra = {audio_id3.MARCA_IA: f"true; {HERRAMIENTA_VOZ}; voz {voz}",
+             "MILPA_VOZ": voz, audio_id3.CLAVE_HASH: audio_id3.hash_texto(texto)}
+    if tiempos:
+        extra[audio_frases.CLAVE_TIEMPOS] = json.dumps(tiempos, separators=(",", ":"))
+    audio_id3.escribir(ruta, titulo=titulo, artista=f"Voz sintética generada con IA: {voz}", album=ALBUM,
+                       anio="2026", comentario=d["declaracion"], extra=extra)
 
 
 def mp3_vigente(ruta: Path, texto: str) -> dict | None:
@@ -103,11 +117,47 @@ def generar_audio(texto: str, ruta: Path) -> str | None:
     ruta.parent.mkdir(parents=True, exist_ok=True)
     for voz in VOCES:
         try:
-            asyncio.run(edge_tts.Communicate(texto, voz, rate="-5%").save(str(ruta)))
+            asyncio.run(edge_tts.Communicate(texto, voz, rate=RATE).save(str(ruta)))
             if ruta.exists() and ruta.stat().st_size > 1000:
                 return voz
         except Exception as e:  # noqa: BLE001
             print(f"[audio] {voz} falló: {type(e).__name__}", file=sys.stderr)
+    return None
+
+
+def audio_corto(res: dict, pid: str, municipio: str, generar: bool) -> str | None:
+    """Enlaza (y con `generar`, crea) el mp3 corto de las frases del bloque farmer.
+
+    Llena `farmer.frases[].inicio_s/fin_s` y `farmer.audio.es`, y escribe los subtítulos WebVTT en español e
+    inglés. Si no hay mp3 vigente para el texto actual, deja los tiempos en None y la ranura en None.
+    Devuelve un aviso o None."""
+    f = res["farmer"]
+    if not f["frases"]:
+        return None
+    ruta = WEB_AUDIO / f"{pid}.frases.mp3"
+    texto = frases.texto_audio(f["frases"])
+    if generar:
+        r = audio_frases.sintetizar([x["es"] for x in f["frases"]], ruta, VOCES, RATE)
+        if r:
+            etiquetar(ruta, municipio, r["voz"], texto, {"tiempos": r["tiempos"], "duracion_s": r["duracion_s"]})
+    info = mp3_vigente(ruta, texto)
+    t = audio_frases.tiempos_de_etiqueta(info) if info else None
+    if not t or len(t["tiempos"]) != len(f["frases"]):
+        return (f"{pid}: el mp3 corto no existe o no coincide con las frases actuales; no se enlaza "
+                "(corra con --audio)") if ruta.exists() or generar else None
+    for x, (a, b) in zip(f["frases"], t["tiempos"]):
+        x["inicio_s"], x["fin_s"] = a, b
+    subs = {}
+    for lang in ("es", "en"):
+        rel = f"audio/{pid}.frases.{lang}.vtt"
+        (WEB_AUDIO / f"{pid}.frases.{lang}.vtt").write_text(frases.vtt(f["frases"], lang), encoding="utf-8")
+        subs[lang] = rel
+    voz = info["TXXX"].get("MILPA_VOZ") or VOCES[0]
+    f["audio"]["es"] = {
+        "mp3": f"audio/{pid}.frases.mp3", "subtitulos": subs["es"], "subtitulos_en": subs["en"],
+        "voz": f"{voz} (edge-tts, voz neural sintética)", "ia": declaracion_ia(voz),
+        "duracion_s": round(t["duracion_s"], 1), "bytes": ruta.stat().st_size, "kbps": audio_frases.KBPS,
+    }
     return None
 
 
@@ -151,6 +201,9 @@ def exportar(pids: list[str] | None = None, destino: Path = WEB_DATA, validar_es
                     elif ruta_mp3.exists():
                         print(f"[exportar] {p['id']}: el mp3 no coincide con el texto actual o no declara IA; "
                               "no se enlaza (corra con --audio)", file=sys.stderr)
+                    aviso = audio_corto(res, p["id"], p["municipio"], generar=audio)
+                    if aviso:
+                        print(f"[exportar] {aviso}", file=sys.stderr)
                 nombre = f"{p['id']}.json" if cultivo == CULTIVOS[0] else f"{p['id']}.{cultivo}.json"
                 _escribir(destino / nombre, res)
                 entrada["archivos"][cultivo] = f"data/{nombre}"
@@ -166,7 +219,11 @@ def exportar(pids: list[str] | None = None, destino: Path = WEB_DATA, validar_es
         indice.append(entrada)
     if contrato.EJEMPLO.exists():
         shutil.copyfile(contrato.EJEMPLO, destino / "ejemplo.json")
-    _escribir(destino / "parcelas.json", {"version_contrato": "1.0", "parcelas": indice})
+    _escribir(destino / "parcelas.json", {"version_contrato": "1.0", "parcelas": ingles.parcelas_indice(indice)})
+    # validacion.json lo escribe pipeline/validacion/validar.py; aquí solo se le agregan los textos en inglés
+    ruta_val = destino / "validacion.json"
+    if ruta_val.exists():
+        _escribir(ruta_val, ingles.validacion(json.loads(ruta_val.read_text(encoding="utf-8"))))
     return {"indice": indice, "errores": errores}
 
 

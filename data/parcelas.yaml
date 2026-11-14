@@ -21,6 +21,7 @@ parcelas:
     punto_original: {lat: 14.79, lon: -89.37}
     criterio: estricto
     nota: "Mosaico de parcelas abiertas al suroeste del casco urbano (Sentinel-2). El punto del plan original (14.79, -89.37) era vegetación densa con casas: NDVI >= 0.59 todo el año."
+    en: {nombre: "Example plot in Jocotán", nota: "Mosaic of open plots southwest of the town center (Sentinel-2). The original plan point (14.79, -89.37) was dense vegetation with houses: NDVI >= 0.59 all year."}
 
   - id: camotan
     nombre: Parcela de ejemplo en Camotán
@@ -32,6 +33,7 @@ parcelas:
     punto_original: {lat: 14.84, lon: -89.33}
     criterio: relajado
     nota: "Ladera con mosaico de parcelas y guamil (Sentinel-2). Sin píxeles con suelo desnudo en +-6 km: se eligió el de menor cobertura seca con 9 de 9 vecinos iguales, en otro píxel de CHIRPS que Jocotán."
+    en: {nombre: "Example plot in Camotán", nota: "Hillside with a mosaic of plots and fallow regrowth, or guamil (Sentinel-2). No bare-soil pixels within +-6 km: we chose the one with the least dry-season cover and 9 of 9 neighbors alike, in a different CHIRPS pixel from Jocotán."}
 
   - id: olopa
     nombre: Parcela de ejemplo cerca de Olopa
@@ -43,6 +45,7 @@ parcelas:
     punto_original: {lat: 14.70, lon: -89.34}
     criterio: relajado
     nota: "Llano abierto con pastos o cultivos a ~6 km al sureste del punto original (Sentinel-2). Falta confirmar que esté dentro del municipio de Olopa y no en Esquipulas."
+    en: {nombre: "Example plot near Olopa", nota: "Open flat land with pasture or crops ~6 km southeast of the original point (Sentinel-2). Still to confirm that it lies in the municipality of Olopa and not in Esquipulas."}
 
   - id: san_juan_ermita
     nombre: Parcela de ejemplo en San Juan Ermita
@@ -54,6 +57,7 @@ parcelas:
     punto_original: {lat: 14.77, lon: -89.44}
     criterio: estricto
     nota: "Parcelas abiertas en barbecho en ladera (Sentinel-2). Queda entre San Juan Ermita y Jocotán: confirmar el límite municipal."
+    en: {nombre: "Example plot in San Juan Ermita", nota: "Open fallow plots on a hillside (Sentinel-2). It lies between San Juan Ermita and Jocotán: confirm the municipal boundary."}
 
   - id: zacapa
     nombre: Parcela de ejemplo en Zacapa
@@ -65,3 +69,4 @@ parcelas:
     punto_original: {lat: 14.94, lon: -89.55}
     criterio: estricto
     nota: "Ladera seca al sur de la ciudad. El filtro de NDVI no distingue la milpa del bosque seco caducifolio, que también se seca en verano: punto con incertidumbre, revisar en campo."
+    en: {nombre: "Example plot in Zacapa", nota: "Dry hillside south of the city. The NDVI filter cannot tell the milpa from deciduous dry forest, which also dries out in summer: uncertain point, check in the field."}

@@ -23,6 +23,7 @@ fuente_ky: "FAO-33 retomado en FAO-66, cap. 2, Tabla 1, p. 7 (Steduto et al., 20
 cultivos:
   maiz:
     nombre: maíz
+    en: {nombre: "maize"}
     familia: Poaceae
     kc: { ini: 0.30, med: 1.20, fin: 0.35 }   # fin 0.35: grano secado en el campo (dobla), nota 11
     etapas_dias: [20, 35, 40, 30]              # 125 días, FAO-56 Tabla 11
@@ -31,6 +32,7 @@ cultivos:
 
   maiz_corto:
     nombre: maíz de ciclo corto (ICTA B-5)
+    en: {nombre: "short-cycle maize (ICTA B-5)"}
     familia: Poaceae
     kc: { ini: 0.30, med: 1.20, fin: 0.35 }
     etapas_dias: [15, 25, 30, 20]              # 90 días: ICTA B-5 «ciclo de tres meses» (ICTA 2015, p. 2)
@@ -39,6 +41,7 @@ cultivos:
 
   frijol:
     nombre: frijol
+    en: {nombre: "beans"}
     familia: Fabaceae
     kc: { ini: 0.40, med: 1.15, fin: 0.35 }
     etapas_dias: [15, 25, 25, 15]              # 80 días; supuesto (frijol de postrera)
@@ -47,6 +50,7 @@ cultivos:
 
   sorgo:
     nombre: sorgo (maicillo)
+    en: {nombre: "sorghum (maicillo)"}
     familia: Poaceae
     kc: { ini: 0.30, med: 1.05, fin: 0.55 }
     etapas_dias: [16, 28, 32, 24]              # 100 días: ICTA Blanco (MAGA 2026); proporción de FAO-56 Tabla 11
@@ -55,6 +59,7 @@ cultivos:
 
   caupi:
     nombre: caupí (frijol alacín)
+    en: {nombre: "cowpea (frijol alacín)"}
     familia: Fabaceae
     kc: { ini: 0.40, med: 1.05, fin: 0.35 }
     etapas_dias: [15, 20, 25, 15]              # 75 días; supuesto
@@ -63,6 +68,7 @@ cultivos:
 
   canavalia:
     nombre: canavalia (abono verde)
+    en: {nombre: "jack bean (green manure)"}
     familia: Fabaceae
     kc: null                                   # sin Kc en FAO-56: su consumo de agua no se modela (vacío declarado)
     etapas_dias: null
@@ -71,6 +77,7 @@ cultivos:
 
   ayote:
     nombre: ayote
+    en: {nombre: "squash"}
     familia: Cucurbitaceae
     kc: null                                   # va asociado al maíz: su agua no se modela aparte (vacío declarado)
     etapas_dias: null
@@ -79,6 +86,7 @@ cultivos:
 
   gandul:
     nombre: gandul
+    en: {nombre: "pigeon pea"}
     familia: Fabaceae
     kc: null                                   # sin Kc en FAO-56 Tabla 12: no se modela (vacío declarado)
     etapas_dias: null

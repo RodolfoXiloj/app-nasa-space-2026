@@ -11,10 +11,15 @@ escritos en data/umbrales_semaforo.yaml.
 - Opciones: si dos opciones difieren `margen_empate` puntos o menos en el total (escenario base), no hay
   ganadora. Vale entre alternativas y contra la práctica actual, y se aplica en cadena.
 - Con confianza baja, el bloque de opciones va en gris con el motivo, en español y en inglés.
+- Frases cortas en español e inglés (motor/frases.py): la vista las muestra y el audio corto lee solo
+  esas frases. Sus tiempos (`inicio_s`, `fin_s`) y la ranura `audio.es` los llena motor/exportar.py
+  cuando hay un mp3 vigente.
 Si el YAML dice `estado: pendiente` (o no se pasa), cada `estado` queda en None, `opciones.estado` es
 "pendiente" y la web no inventa un estado.
 """
 from __future__ import annotations
+
+from motor import frases as _frases_mod
 
 VERSION = "1"
 ORDEN = ("suelo", "quema", "canicula")
@@ -186,11 +191,13 @@ def bloque(res: dict, umbrales: dict | None = None) -> dict:
 
     `umbrales`: contenido de data/umbrales_semaforo.yaml (motor.datos.umbrales_semaforo). Sin él, o con
     `estado: pendiente`, no hay estados."""
+    hechos = _hechos(res, umbrales)
+    opciones = _opciones(res, umbrales)
     return {
         "version": VERSION,
         "umbrales": _umbrales(umbrales),
-        "hechos": _hechos(res, umbrales),
-        "opciones": _opciones(res, umbrales),
-        "frases": [],
+        "hechos": hechos,
+        "opciones": opciones,
+        "frases": _frases_mod.construir(res, hechos, opciones, umbrales) if confirmados(umbrales) else [],
         "audio": {lang: None for lang in IDIOMAS},
     }

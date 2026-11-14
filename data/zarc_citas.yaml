@@ -32,3 +32,5 @@ referencias_departamento:
     fuente: "La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos», abril de 2026 (nota de prensa sobre ZARC)"
     url: "https://www.laestrella.com.pa/economia/paises-del-corredor-seco-afinan-siembras-con-datos-climaticos-guatemala-honduras-y-el-salvador-usan-datos-historicos-del-clima-para-definir-siembras-DL21804689"
     fecha_consulta: "2026-11-13"
+    # traducción propia de la cita (se muestra rotulada «our translation» junto al original)
+    en: {traduccion: "specifically in Chiquimula, Quiché and Zacapa… ZARC set a strategic adjustment: move planting dates from May to June", fuente: "La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos» (Dry Corridor countries fine-tune planting with climate data), April 2026 (press note on ZARC)"}

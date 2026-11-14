@@ -26,7 +26,9 @@ _RANGO = re.compile(r"([-−+]?\d+(?:\.\d+)?)[-–]([-−+]?\d+(?:\.\d+)?)%?")
 # Campos que son texto redactado (se validan) o series crudas (no cuentan como respaldo).
 CAMPOS_TEXTO = {"por_que", "beneficios", "vacios", "riesgos", "texto_tarjeta", "texto", "motivo", "aviso",
                 "glosario", "trazabilidad", "detalle", "nota", "nota_escenario", "cita", "descripcion", "frases",
-                "motivo_en", "detalle_en", "motivo_gris", "motivo_gris_en"}
+                "motivo_en", "detalle_en", "motivo_gris", "motivo_gris_en",
+                # textos por idioma («es»/«en»): traducciones y la ranura de audio corto, que no respaldan cifras
+                "es", "en"}
 CAMPOS_CRUDOS = {"serie", "por_anio", "detecciones", "lluvia_anual_mm"}
 # Reglas fijas del equipo (cortes del semáforo, margen de empate): no son cifras de la parcela y no
 # respaldan ningún número de un texto.
@@ -211,6 +213,33 @@ def riesgos(rot: dict, ctx: dict) -> list[str]:
     return out
 
 
+ORDINALES_OPCION = ["la opción uno", "la opción dos", "la opción tres"]
+
+
+def _frase_opciones(res: dict, prioridad: str) -> str:
+    """Qué opción sale mejor, con la regla de empate del bloque `farmer` (docs/umbrales.md): si dos opciones
+    difieren el margen o menos, no hay ganadora; con confianza baja no se dice cuál conviene."""
+    rots = res["rotaciones"]
+    op = (res.get("farmer") or {}).get("opciones") or {}
+    ids = [r["id"] for r in rots]
+    if op.get("estado") == "gris":
+        return "Con la confianza baja, no decimos cuál opción conviene más."
+    if op.get("estado") == "empate":
+        cuales = [ORDINALES_OPCION[ids.index(i)] for i in op["empatadas"]]
+        return (f"Según su prioridad, {prioridad}, ninguna opción se separa lo suficiente: "
+                f"{lista_y(cuales)} quedan parejas.")
+    if op.get("estado") == "una_destaca":
+        mejor = next(r for r in rots if r["id"] == op["destaca"])
+    else:  # umbrales sin confirmar: se nombra la de mayor puntaje, como antes
+        mejor = max(rots, key=lambda r: r["puntajes"]["total"])
+    return (f"Según su prioridad, {prioridad}, la que mejor sale es: "
+            f"{mejor['nombre'].replace('Lo que hace hoy: ', 'la de hoy, ')}.")
+
+
+def lista_y(items: list[str]) -> str:
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " y " + items[-1]
+
+
 def texto_tarjeta(res: dict) -> str:
     p, det, rots = res["parcela"], res["deteccion"], res["rotaciones"]
     act = rots[0]
@@ -228,9 +257,7 @@ def texto_tarjeta(res: dict) -> str:
               "Comparamos tres opciones."]
     for o, r in zip(ordinales, rots):
         partes.append(f"{o}: {r['nombre'].replace('Lo que hace hoy: ', '')}. Puntaje {r['puntajes']['total']}.")
-    mejor = max(rots, key=lambda r: r["puntajes"]["total"])
-    partes.append(f"Según su prioridad, {p['prioridad']}, la que mejor sale es: "
-                  f"{mejor['nombre'].replace('Lo que hace hoy: ', 'la de hoy, ')}.")
+    partes.append(_frase_opciones(res, p["prioridad"]))
     partes.append(f"Confianza {act['confianza']['nivel']}.")
     partes.append(res["zarc"]["texto"])
     partes.append("Esta herramienta apoya, no reemplaza, a su técnico.")
