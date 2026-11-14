@@ -1,4 +1,6 @@
-import { PRIORIDADES, TIPOS, puntajes } from '../lib/datos.js'
+import { puntajes } from '../lib/datos.js'
+import { messages } from '../i18n/messages.js'
+import { useLocale, useT } from '../i18n/useT.js'
 import Calendario12, { LeyendaCalendario } from './Calendario12.jsx'
 
 function Barra({ etiqueta, valor }) {
@@ -18,8 +20,8 @@ function Lista({ titulo, items, clase }) {
     <div className={`bloque ${clase}`}>
       <h4>{titulo}</h4>
       <ul>
-        {items.map((t, i) => (
-          <li key={i}>{t}</li>
+        {items.map((txt, i) => (
+          <li key={i}>{txt}</li>
         ))}
       </ul>
     </div>
@@ -27,16 +29,19 @@ function Lista({ titulo, items, clase }) {
 }
 
 export default function Rotaciones({ res, lluvia, temp, prioridad }) {
+  const t = useT()
+  const loc = useLocale()
+  const dict = messages[loc] || messages.en
   const pts = res.rotaciones.map((r) => puntajes(res, r.id, lluvia, temp, prioridad))
   const mejor = Math.max(...pts.map((p) => p.total))
   const esBase = lluvia === 0 && temp === 0
   return (
     <section className="rotaciones">
       <div className="titulo-seccion">
-        <h2>Tres rotaciones comparadas</h2>
+        <h2>{t('rotaciones.title')}</h2>
         <p className="sub">
-          Prioridad: {PRIORIDADES[prioridad]} ·{' '}
-          {esBase ? 'clima normal' : `escenario: lluvia ${lluvia} %, temperatura +${temp} °C`}
+          {t('rotaciones.subPriority', { p: dict.prioridad[prioridad] })}
+          {esBase ? t('rotaciones.normalClimate') : t('rotaciones.scenario', { lluvia, temp })}
         </p>
       </div>
       <div className="rejilla-rotaciones">
@@ -45,46 +50,44 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
           return (
             <article key={r.id} className={`rotacion tipo-${r.tipo}${p.total === mejor ? ' mejor' : ''}`}>
               <header>
-                <span className="etiqueta">{TIPOS[r.tipo]}</span>
-                {p.total === mejor && <span className="etiqueta mejor-etq">Mejor puntaje</span>}
+                <span className="etiqueta">{dict.tipo[r.tipo]}</span>
+                {p.total === mejor && <span className="etiqueta mejor-etq">{t('rotaciones.bestScore')}</span>}
                 <h3>{r.nombre}</h3>
               </header>
               <div className="puntaje-total">
                 <strong>{p.total}</strong>
-                <span>puntaje total</span>
+                <span>{t('rotaciones.totalScore')}</span>
               </div>
-              <Barra etiqueta="Agua" valor={p.agua} />
-              <Barra etiqueta="Suelo" valor={p.suelo} />
-              <Barra etiqueta="Plagas" valor={p.plagas} />
+              <Barra etiqueta={t('rotaciones.water')} valor={p.agua} />
+              <Barra etiqueta={t('rotaciones.soil')} valor={p.suelo} />
+              <Barra etiqueta={t('rotaciones.pests')} valor={p.plagas} />
               <p className="deficit">
-                Déficit de agua mediano: <b>{esBase ? r.deficit.mediana_pct : p.deficit} %</b>
-                {esBase && (
-                  <>
-                    {' '}
-                    (la mitad de los años entre {r.deficit.p25_pct} y {r.deficit.p75_pct} %)
-                  </>
-                )}
+                {t('rotaciones.deficit')}
+                <b>{esBase ? r.deficit.mediana_pct : p.deficit} %</b>
+                {esBase && t('rotaciones.deficitRange', { p25: r.deficit.p25_pct, p75: r.deficit.p75_pct })}
               </p>
               <div className={`confianza nivel-${r.confianza.nivel}`}>
-                <b>Confianza {r.confianza.nivel}</b>
+                <b>
+                  {t('rotaciones.confidence')} {r.confianza.nivel}
+                </b>
                 <span>{r.confianza.motivo}</span>
               </div>
               <div className="bloque por-que">
-                <h4>Por qué</h4>
+                <h4>{t('rotaciones.why')}</h4>
                 <p>{r.por_que}</p>
               </div>
               <Calendario12 calendario={r.calendario} />
-              <Lista titulo="Beneficios" items={r.beneficios} clase="beneficios" />
-              <Lista titulo="Vacíos de información" items={r.vacios} clase="vacios" />
-              <Lista titulo="Riesgos que debe revisar el técnico" items={r.riesgos} clase="riesgos" />
+              <Lista titulo={t('rotaciones.benefits')} items={r.beneficios} clase="beneficios" />
+              <Lista titulo={t('rotaciones.gaps')} items={r.vacios} clase="vacios" />
+              <Lista titulo={t('rotaciones.risks')} items={r.riesgos} clase="riesgos" />
               <details className="evidencia">
-                <summary>Evidencia ({r.evidencia.length} datos)</summary>
+                <summary>{t('rotaciones.evidence', { n: r.evidencia.length })}</summary>
                 <table>
                   <thead>
                     <tr>
-                      <th>Dato</th>
-                      <th>Valor</th>
-                      <th>Fuente</th>
+                      <th>{t('rotaciones.colData')}</th>
+                      <th>{t('rotaciones.colValue')}</th>
+                      <th>{t('rotaciones.colSource')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -92,7 +95,7 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
                       <tr key={j}>
                         <td>{e.dato}</td>
                         <td className="num">
-                          {e.valor ?? '—'} {e.unidad}
+                          {e.valor ?? t('common.dash')} {e.unidad}
                         </td>
                         <td>
                           {e.fuente}
@@ -108,13 +111,17 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
                 </table>
               </details>
               <details className="evidencia">
-                <summary>Cómo se calculó el puntaje</summary>
-                {['agua', 'suelo', 'plagas'].map((k) => (
+                <summary>{t('rotaciones.scoreHow')}</summary>
+                {[
+                  ['agua', t('rotaciones.water')],
+                  ['suelo', t('rotaciones.soil')],
+                  ['plagas', t('rotaciones.pests')],
+                ].map(([k, label]) => (
                   <div key={k}>
-                    <h5>{k}</h5>
+                    <h5>{label}</h5>
                     <ul>
-                      {r.trazabilidad[k].map((t, j) => (
-                        <li key={j}>{t}</li>
+                      {r.trazabilidad[k].map((txt, j) => (
+                        <li key={j}>{txt}</li>
                       ))}
                     </ul>
                   </div>

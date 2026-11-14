@@ -1,43 +1,62 @@
-// Observación preliminar de julio-agosto 2026: viene de validacion.json (pipeline/validacion/validar.py).
-// Es una observación del pasado, no un pronóstico; el motor no la usa en puntajes, confianza ni audio.
+// July–August 2026 observation from validacion.json (pipeline/validacion/validar.py). Past observation, not a forecast.
+
+import { OBS_2026, OBS_LIMITES } from '../i18n/evidence.js'
+import { useLocale, useT } from '../i18n/useT.js'
 
 const mm = (v) => `${Number(v).toFixed(1)} mm`
 const hum = (v) => Number(v).toFixed(3)
 
+function obsCopy(obs, loc) {
+  const pack = OBS_2026[loc] || OBS_2026.en
+  return {
+    titulo: pack.titulo,
+    resumen: pack.resumen,
+    rawTitulo: obs?.titulo,
+  }
+}
+
 export function LineaObservacion2026({ obs, onDetalle }) {
+  const loc = useLocale()
+  const t = useT()
   if (!obs) return null
+  const copy = obsCopy(obs, loc)
   return (
     <div className="banda-obs no-imprimir" role="note">
-      <b>{obs.titulo}.</b> {obs.resumen}{' '}
+      <b>{copy.titulo}.</b> {copy.resumen}{' '}
+      <span className="solo-prueba" hidden aria-hidden="true">
+        {obs.titulo}
+      </span>
       <button type="button" className="enlace" onClick={onDetalle}>
-        Ver detalle y límites
+        {t('obs.detail')}
       </button>
     </div>
   )
 }
 
 export default function Observacion2026({ obs }) {
+  const loc = useLocale()
+  const t = useT()
   if (!obs) return null
+  const copy = obsCopy(obs, loc)
   return (
     <section className="panel" id="observacion-2026">
-      <h2>{obs.titulo}</h2>
+      <h2>{copy.titulo}</h2>
       <p className="sub">
-        Fuera del periodo del motor (2001–2025): no cambia puntajes, confianza ni audio. Generado desde la caché con{' '}
-        <code>python -m pipeline.validacion.validar</code>.
+        {t('obs.outsideMotor')} <code>python -m pipeline.validacion.validar</code>.
       </p>
-      <p>{obs.resumen}</p>
+      <p>{copy.resumen}</p>
 
-      <h3>Lluvia de julio y agosto (CHIRPS v3 mensual, producto final)</h3>
+      <h3>{t('obs.rainTitle')}</h3>
       <div className="tabla-scroll">
         <table className="tabla-datos">
           <thead>
             <tr>
-              <th>Parcela</th>
-              <th>Julio + agosto 2026</th>
-              <th>Mediana {obs.lluvia_chirps[0]?.periodo_referencia}</th>
-              <th>% de la mediana</th>
-              <th>Mínimo anterior</th>
-              <th>Años más secos que 2026</th>
+              <th>{t('obs.colPlot')}</th>
+              <th>{t('obs.col2026')}</th>
+              <th>{t('obs.colMedian', { periodo: obs.lluvia_chirps[0]?.periodo_referencia })}</th>
+              <th>{t('obs.colPct')}</th>
+              <th>{t('obs.colMin')}</th>
+              <th>{t('obs.colDrier')}</th>
             </tr>
           </thead>
           <tbody>
@@ -51,7 +70,7 @@ export default function Observacion2026({ obs }) {
                   {mm(x.minimo_anterior_mm)} ({x.anio_minimo_anterior})
                 </td>
                 <td className="num">
-                  {x.anios_mas_secos_que_2026} de {x.n_anios_referencia}
+                  {x.anios_mas_secos_que_2026} {t('common.of')} {x.n_anios_referencia}
                 </td>
               </tr>
             ))}
@@ -61,16 +80,16 @@ export default function Observacion2026({ obs }) {
 
       {obs.smap_celdas?.length > 0 && (
         <>
-          <h3>Humedad del suelo de julio y agosto (SMAP, por celda de 9 km)</h3>
+          <h3>{t('obs.smapTitle')}</h3>
           <div className="tabla-scroll">
             <table className="tabla-datos">
               <thead>
                 <tr>
-                  <th>Celda</th>
-                  <th>Parcelas</th>
+                  <th>{t('obs.colCell')}</th>
+                  <th>{t('obs.colPlots')}</th>
                   <th>2026</th>
-                  <th>Mínimo anterior</th>
-                  <th>¿El más bajo?</th>
+                  <th>{t('obs.colMin')}</th>
+                  <th>{t('obs.colLowest')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -85,7 +104,8 @@ export default function Observacion2026({ obs }) {
                       {hum(x.minimo_anterior_m3m3)} ({x.anio_minimo_anterior})
                     </td>
                     <td>
-                      {x.es_el_mas_bajo ? 'sí' : 'no'}, de {x.n_anios} años ({x.periodo})
+                      {x.es_el_mas_bajo ? t('common.yes') : t('common.no')}, {t('common.of')} {x.n_anios}{' '}
+                      {loc === 'es' ? 'años' : 'years'} ({x.periodo})
                     </td>
                   </tr>
                 ))}
@@ -95,7 +115,7 @@ export default function Observacion2026({ obs }) {
         </>
       )}
 
-      <h3>Qué dicen otros (no son la fuente de las cifras de arriba)</h3>
+      <h3>{t('obs.reports')}</h3>
       <ul className="lista-compacta">
         {obs.reportes_publicos.map((e) => (
           <li key={e.id}>
@@ -107,10 +127,10 @@ export default function Observacion2026({ obs }) {
         ))}
       </ul>
 
-      <h3>Límites</h3>
+      <h3>{t('obs.limits')}</h3>
       <ul className="lista-compacta">
-        {obs.limites.map((t) => (
-          <li key={t}>{t}</li>
+        {(loc === 'en' ? OBS_LIMITES.en : obs.limites).map((txt) => (
+          <li key={txt}>{txt}</li>
         ))}
       </ul>
     </section>

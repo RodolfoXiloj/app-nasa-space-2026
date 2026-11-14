@@ -1,9 +1,20 @@
+import { useLocale, useT } from '../i18n/useT.js'
+
 export default function Glosario({ res }) {
-  if (!res) return <main className="contenido"><div className="tarjeta-vacia">Cargando…</div></main>
+  const t = useT()
+  const loc = useLocale()
+  if (!res) {
+    return (
+      <main className="contenido">
+        <div className="tarjeta-vacia">{t('common.loading')}</div>
+      </main>
+    )
+  }
   return (
     <main className="contenido dos-columnas">
       <section className="panel">
-        <h2>¿Qué significa?</h2>
+        <h2>{t('glosario.terms')}</h2>
+        {loc === 'en' && <p className="sub">{t('glosario.dataEs')}</p>}
         <dl className="glosario">
           {res.glosario.map((g) => (
             <div key={g.termino}>
@@ -14,7 +25,7 @@ export default function Glosario({ res }) {
         </dl>
       </section>
       <section className="panel">
-        <h2>Fuentes y citas</h2>
+        <h2>{t('glosario.sources')}</h2>
         <ul className="fuentes">
           {res.fuentes.map((f) => (
             <li key={f.id}>
@@ -25,9 +36,13 @@ export default function Glosario({ res }) {
                 <a href={f.url} target="_blank" rel="noreferrer">
                   {f.url}
                 </a>
-                {f.resolucion ? ` · resolución ${f.resolucion}` : ''}
+                {f.resolucion ? ` · ${t('glosario.resolution')} ${f.resolucion}` : ''}
                 {f.fecha_consulta ? ' · ' : ''}
-                {f.fecha_consulta && <span className="sin-corte">consultado {f.fecha_consulta.slice(0, 10)}</span>}
+                {f.fecha_consulta && (
+                  <span className="sin-corte">
+                    {t('glosario.consulted')} {f.fecha_consulta.slice(0, 10)}
+                  </span>
+                )}
               </small>
             </li>
           ))}

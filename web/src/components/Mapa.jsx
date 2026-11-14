@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { CircleMarker, LayersControl, MapContainer, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import { BASE } from '../lib/datos.js'
+import { useT } from '../i18n/useT.js'
 
-// Capas guardadas en el sitio (pipeline/capas.py): NASA GIBS, zoom 7-9, zona de las parcelas.
-// Funcionan sin internet. Fechas verificadas en GetCapabilities el 13 nov 2026.
 const local = (capa, ext) => `${BASE}capas/${capa}/{z}/{x}/{y}.${ext}`
 const CAJA = [[14.586, -89.64], [15.021, -89.214]]
 const ATRIB_GIBS = 'Imágenes: <a href="https://www.earthdata.nasa.gov/gibs">NASA GIBS</a>'
@@ -20,8 +19,6 @@ function Volar({ destino }) {
   return null
 }
 
-// Sin internet, el mapa base en línea queda gris. Si sus teselas fallan (3 errores sin ninguna carga),
-// se cambia solo a la capa guardada en el sitio y se avisa. El control de capas se actualiza solo.
 function RespaldoSinRed({ enLinea, guardada, avisar }) {
   const map = useMap()
   useEffect(() => {
@@ -53,6 +50,7 @@ function RespaldoSinRed({ enLinea, guardada, avisar }) {
 }
 
 export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
+  const t = useT()
   const enLinea = useRef(null)
   const guardada = useRef(null)
   const [sinRed, setSinRed] = useState(false)
@@ -65,10 +63,10 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
       : []
 
   return (
-    <div className="mapa" role="region" aria-label="Mapa de las parcelas de ejemplo">
+    <div className="mapa" role="region" aria-label={t('mapa.region')}>
       <MapContainer center={[14.82, -89.45]} zoom={10} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
         <LayersControl position="topright">
-          <LayersControl.BaseLayer checked name="Mapa (OpenStreetMap, en línea)">
+          <LayersControl.BaseLayer checked name={t('mapa.osm')}>
             <TileLayer
               ref={enLinea}
               url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -76,14 +74,14 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
               maxZoom={18}
             />
           </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer name="Imagen Sentinel-2, 10 m (en línea)">
+          <LayersControl.BaseLayer name={t('mapa.s2')}>
             <TileLayer
               url="https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/{z}/{y}/{x}.jpg"
               attribution={ATRIB_S2}
               maxZoom={17}
             />
           </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer name="Color real MODIS, 15 mar 2026 (sin red)">
+          <LayersControl.BaseLayer name={t('mapa.modisOffline')}>
             <TileLayer
               ref={guardada}
               url={local('color_real_seca', 'jpg')}
@@ -94,10 +92,10 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
               attribution={ATRIB_GIBS}
             />
           </LayersControl.BaseLayer>
-          <LayersControl.Overlay name="NDVI época seca, 22 mar 2026 (sin red)">
+          <LayersControl.Overlay name={t('mapa.ndviDry')}>
             <TileLayer url={local('ndvi_seca', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
           </LayersControl.Overlay>
-          <LayersControl.Overlay name="NDVI época de lluvia, 14 sep 2026 (sin red)">
+          <LayersControl.Overlay name={t('mapa.ndviWet')}>
             <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
           </LayersControl.Overlay>
         </LayersControl>
@@ -115,8 +113,8 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
               <Tooltip direction="top">
                 <strong>{p.nombre}</strong>
                 <br />
-                {p.disponible ? `Confianza ${nivel}` : 'Sin datos todavía'}
-                {p.provisional ? ' · coordenada provisional' : ''}
+                {p.disponible ? `${t('mapa.confidence')} ${nivel}` : t('mapa.noDataYet')}
+                {p.provisional ? ` · ${t('mapa.provisional')}` : ''}
               </Tooltip>
             </CircleMarker>
           )
@@ -126,13 +124,10 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
       </MapContainer>
       {sinRed && (
         <p className="nota-mapa aviso-sin-red" role="status">
-          Sin internet: se muestra la capa guardada «Color real MODIS, 15 mar 2026».
+          {t('mapa.offlineNote')}
         </p>
       )}
-      <p className="nota-mapa">
-        Círculo: punto de la parcela (píxel MODIS de 250 m); color: confianza de la recomendación. Las capas «sin red» están
-        guardadas en el sitio (NASA GIBS); el mapa base y Sentinel-2 necesitan internet.
-      </p>
+      <p className="nota-mapa">{t('mapa.footnote')}</p>
     </div>
   )
 }

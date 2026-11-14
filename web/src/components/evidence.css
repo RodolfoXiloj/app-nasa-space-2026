@@ -1,0 +1,24 @@
+.selector-idioma {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+.selector-idioma-etq {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.selector-idioma button {
+  font-size: 0.85rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--borde, #c4b9a8);
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.selector-idioma button.activa {
+  background: var(--maiz, #c79100);
+  color: #1d2b1a;
+  font-weight: 700;
+}
