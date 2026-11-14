@@ -6,6 +6,20 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Subtítulos en inglés del audio corto (rama `entrega-impacto-6`): sábado 14 nov 2026
+
+Los `.frases.en.vtt` traían los tiempos del mp3 en español (terminaban entre 25.98 y 28.60 s) aunque los `.frases.en.mp3` duran de 28.48 a 29.81 s. El exportador copiaba esos tiempos a la etiqueta del mp3 en inglés al generarlo; ahora guarda los del inglés y, para los mp3 ya generados, los lee del propio audio (las 5 uniones de 0.25 s entre frases, con ffmpeg y sin red). Regenerado con `python -m motor.exportar`, sin `--audio`: solo cambian los 5 `.en.vtt`; los mp3 no se tocaron. Horas de `date` (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 17:14:30 a 17:14:46 | Pruebas automáticas | `python -m pytest -q` | ✅ solo puntos, hasta «[100%]», sin fallas; salida 0 |
+| 17:14:46 a 17:15:02 | Pruebas automáticas con el total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ «249 passed in 15.27s» |
+| 17:15:02 a 17:15:04 | Humo de la web | `cd web && npm run smoke` | ✅ «Prueba de humo de la web: sin fallas»; salida 0 |
+| 17:15:04 a 17:15:10 | Build | `cd web && npm run build` | ✅ JS inicial `index` 171.54 kB (gzip 56.81 kB); salida 0 |
+| 17:15:10 a 17:15:19 | Vista del agricultor y kit a 360, 390 y 412 px | `python web/scripts/agricultor_playwright.py` | ✅ «77 de 77 comprobaciones pasan»; salida 0 |
+
+La prueba nueva `test_ultimo_subtitulo_termina_con_su_mp3` falla en las 5 parcelas con los `.en.vtt` anteriores y pasa con los nuevos.
+
 ## Rama `entrega-impacto-6` sobre `main` (`5a5d6d3`): sábado 14 nov 2026
 
 Cambios de esta rama: bloque `perdidas_documentadas` en `validacion.json` y en `docs/validacion.md`, límite de 2026 y notas de SMAP, CHIRPS y Prensa Libre con su inglés, el mp3 de la tarjeta de Evidence en el idioma de la interfaz, capturas y PDF de las diapositivas regenerados, y pruebas nuevas en `tests/test_validacion.py` y `tests/test_slides.py`. `sin-red.mjs` ahora exige `audio/{parcela}.en.mp3` en la tarjeta cuando Evidence está en inglés (antes exigía el mp3 en español en los dos idiomas); `evidence_playwright.py` comprueba el mp3 de la tarjeta en cada idioma. Antes se regeneró sin red con `python -m pipeline.validacion.validar` y `python -m motor.exportar` (sin `--audio`): `puntajes`, `farmer.hechos`, `farmer.opciones` y `texto_tarjeta` quedaron idénticos en los 15 JSON de parcela. Mismo equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0; `web/node_modules` con `npm ci`. Horas de `date` (UTC−6).

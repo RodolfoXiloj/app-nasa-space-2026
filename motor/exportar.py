@@ -173,11 +173,27 @@ def audio_tarjeta_en(res: dict, pid: str, municipio: str, generar: bool) -> None
     res["audio"]["en"] = bloque
 
 
+TOLERANCIA_FIN_S = 0.05
+
+
+def tiempos_ingles(ruta_en: Path, info_en: dict, n: int) -> dict | None:
+    """(inicio, fin) de cada frase en el mp3 corto en inglés.
+
+    La etiqueta los trae desde que el exportador guarda los del inglés; los mp3 anteriores guardaban los del
+    español (su última frase termina antes que el audio). En ese caso se leen del propio mp3: las n-1 uniones
+    entre frases (`audio_frases.tiempos_de_mp3`, con ffmpeg y sin red). None si no se pueden saber."""
+    t = audio_frases.tiempos_de_etiqueta(info_en)
+    if t and len(t["tiempos"]) == n and abs(t["tiempos"][-1][1] - t["duracion_s"]) <= TOLERANCIA_FIN_S:
+        return t
+    return audio_frases.tiempos_de_mp3(ruta_en, n)
+
+
 def audio_corto(res: dict, pid: str, municipio: str, generar: bool) -> str | None:
     """Enlaza (y con `generar`, crea) el mp3 corto de las frases del bloque farmer.
 
-    Llena `farmer.frases[].inicio_s/fin_s` y `farmer.audio.es`, y escribe los subtítulos WebVTT en español e
-    inglés. Si no hay mp3 vigente para el texto actual, deja los tiempos en None y la ranura en None.
+    Llena `farmer.frases[].inicio_s/fin_s` (tiempos del mp3 en español) y `farmer.audio.es`, y escribe los
+    subtítulos WebVTT: el español con esos tiempos y el inglés con los del mp3 en inglés (`tiempos_ingles`).
+    Si no hay mp3 vigente para el texto actual, deja los tiempos en None y la ranura en None.
     Devuelve un aviso o None."""
     f = res["farmer"]
     if not f["frases"]:
@@ -195,11 +211,8 @@ def audio_corto(res: dict, pid: str, municipio: str, generar: bool) -> str | Non
                 "(corra con --audio)") if ruta.exists() or generar else None
     for x, (a, b) in zip(f["frases"], t["tiempos"]):
         x["inicio_s"], x["fin_s"] = a, b
-    subs = {}
-    for lang in ("es", "en"):
-        rel = f"audio/{pid}.frases.{lang}.vtt"
-        (WEB_AUDIO / f"{pid}.frases.{lang}.vtt").write_text(frases.vtt(f["frases"], lang), encoding="utf-8")
-        subs[lang] = rel
+    subs = {lang: f"audio/{pid}.frases.{lang}.vtt" for lang in ("es", "en")}
+    (WEB_AUDIO / f"{pid}.frases.es.vtt").write_text(frases.vtt(f["frases"], "es"), encoding="utf-8")
     voz = info["TXXX"].get("MILPA_VOZ") or VOCES[0]
     f["audio"]["es"] = {
         "mp3": f"audio/{pid}.frases.mp3", "subtitulos": subs["es"], "subtitulos_en": subs["en"],
@@ -214,7 +227,7 @@ def audio_corto(res: dict, pid: str, municipio: str, generar: bool) -> str | Non
             r_try = audio_frases.sintetizar([x["en"] for x in f["frases"]], ruta_en, VOCES_EN, RATE_EN, kbps)
             if not r_try:
                 continue
-            tiempos_en = {"tiempos": t["tiempos"], "duracion_s": r_try["duracion_s"]}
+            tiempos_en = {"tiempos": r_try["tiempos"], "duracion_s": r_try["duracion_s"]}   # los del inglés
             etiquetar(ruta_en, municipio, r_try["voz"], texto_en, tiempos_en, en=True)
             if ruta_en.stat().st_size <= MAX_BYTES_FRASES:
                 r_en = r_try
@@ -223,6 +236,17 @@ def audio_corto(res: dict, pid: str, municipio: str, generar: bool) -> str | Non
                   f"(máximo {MAX_BYTES_FRASES})", file=sys.stderr)
             ruta_en.unlink(missing_ok=True)
     info_en = mp3_vigente(ruta_en, texto_en)
+    # Subtítulos en inglés: con los tiempos del mp3 en inglés si está enlazado; si no, los del español, porque
+    # entonces la web los muestra sobre el mp3 en español.
+    t_en = tiempos_ingles(ruta_en, info_en, len(f["frases"])) if info_en else None
+    if t_en:
+        con_tiempos = [{**x, "inicio_s": a, "fin_s": b} for x, (a, b) in zip(f["frases"], t_en["tiempos"])]
+        (WEB_AUDIO / f"{pid}.frases.en.vtt").write_text(frases.vtt(con_tiempos, "en"), encoding="utf-8")
+    else:
+        if info_en:
+            print(f"[exportar] {pid}: sin los tiempos del mp3 corto en inglés (falta ffmpeg o no se hallaron las "
+                  "uniones); los subtítulos en inglés usan los tiempos del español", file=sys.stderr)
+        (WEB_AUDIO / f"{pid}.frases.en.vtt").write_text(frases.vtt(f["frases"], "en"), encoding="utf-8")
     if info_en:
         voz_en = info_en["TXXX"].get("MILPA_VOZ") or VOCES_EN[0]
         kbps_en = (r_en or {}).get("kbps") or audio_frases.cabecera_mp3(ruta_en.read_bytes())["kbps"]

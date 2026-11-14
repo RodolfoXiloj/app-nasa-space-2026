@@ -104,6 +104,75 @@ def sintetizar(frases: list[str], ruta: Path, voces: list[str], rate: str, kbps:
     return None
 
 
+# Una unión entre frases es PAUSA_S de silencio más el margen que `recortar` deja a cada lado: bajo
+# UMBRAL_SILENCIO dura PAUSA_S + 2 * MARGEN_S. Las pausas naturales de la voz (comas, puntos) duran otra cosa.
+UNION_S = PAUSA_S + 2 * MARGEN_S
+TOLERANCIA_UNION_S = 0.015
+
+
+def tiempos_de_pcm(pcm: bytes, n: int) -> dict | None:
+    """Recupera (inicio, fin) de las n frases de un PCM armado con `unir`, buscando sus n-1 uniones.
+
+    Sirve para un mp3 ya generado cuya etiqueta no trae sus propios tiempos (sin red y sin volver a sintetizar).
+    Devuelve {"tiempos", "duracion_s"} o None si no aparecen exactamente n-1 uniones."""
+    m = array("h")
+    m.frombytes(pcm)
+    if sys.byteorder == "big":
+        m.byteswap()
+    total = len(m)
+    centros, i = [], 0
+    while i < total:
+        if abs(m[i]) > UMBRAL_SILENCIO:
+            i += 1
+            continue
+        j = i
+        while j < total and abs(m[j]) <= UMBRAL_SILENCIO:
+            j += 1
+        if i > 0 and j < total and abs((j - i) / TASA_HZ - UNION_S) <= TOLERANCIA_UNION_S:
+            centros.append((i + j) / 2 / TASA_HZ)
+        i = j
+    if len(centros) != n - 1:
+        return None
+    dur = round(total / TASA_HZ, 3)
+    bordes = [0.0]
+    for c in centros:
+        bordes += [round(c - PAUSA_S / 2, 3), round(c + PAUSA_S / 2, 3)]
+    bordes.append(dur)
+    return {"tiempos": [[bordes[k], bordes[k + 1]] for k in range(0, len(bordes), 2)], "duracion_s": dur}
+
+
+def tiempos_de_mp3(ruta: Path, n: int) -> dict | None:
+    """`tiempos_de_pcm` sobre un mp3 del disco (necesita ffmpeg, no red). None si falta ffmpeg o no cuadra."""
+    ff = ffmpeg()
+    if not ff or not Path(ruta).exists():
+        return None
+    try:
+        return tiempos_de_pcm(_a_pcm(ff, Path(ruta)), n)
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+
+def duracion_mp3(datos: bytes) -> float:
+    """Duración en segundos contando los cuadros de audio (sin decodificar ni ffmpeg); salta el cuadro «Info»."""
+    from motor import audio_id3
+
+    audio = audio_id3.quitar_id3(datos)
+    i = next(k for k in range(len(audio) - 4) if audio[k] == 0xFF and (audio[k + 1] & 0xE0) == 0xE0)
+    muestras = hz = 0
+    primero = True
+    while i + 4 <= len(audio) and audio[i] == 0xFF and (audio[i + 1] & 0xE0) == 0xE0:
+        c = _cuadro(audio, i)
+        if c["largo"] <= 0:
+            break
+        info = primero and (b"Info" in audio[i:i + c["largo"]] or b"Xing" in audio[i:i + c["largo"]])
+        if not info:
+            muestras += 1152 if c["version"] == 1 else 576
+            hz = c["hz"]
+        primero = False
+        i += c["largo"]
+    return muestras / hz if hz else 0.0
+
+
 def tiempos_de_etiqueta(info: dict) -> dict | None:
     """{"tiempos": [[inicio, fin], ...], "duracion_s": x} guardado en la etiqueta ID3, o None."""
     crudo = (info.get("TXXX") or {}).get(CLAVE_TIEMPOS)

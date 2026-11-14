@@ -8,6 +8,20 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## English subtitles of the short audio (branch `entrega-impacto-6`): Saturday 14 Nov 2026
+
+The `.frases.en.vtt` files carried the Spanish mp3 timings (ending between 25.98 and 28.60 s), while the `.frases.en.mp3` files last 28.48 to 29.81 s. The exporter copied those timings into the English mp3 tag when generating it; it now stores the English ones and, for mp3 files already generated, reads them from the audio itself (the 5 joins of 0.25 s between phrases, with ffmpeg and no network). Regenerated with `python -m motor.exportar`, no `--audio`: only the 5 `.en.vtt` files change; the mp3 files were not touched. Times from `date` (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 17:14:30 to 17:14:46 | Automated tests | `python -m pytest -q` | ✅ only dots, up to "[100%]", no failure; exit 0 |
+| 17:14:46 to 17:15:02 | Automated tests with the total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ "249 passed in 15.27s" |
+| 17:15:02 to 17:15:04 | Web smoke test | `cd web && npm run smoke` | ✅ "Prueba de humo de la web: sin fallas"; exit 0 |
+| 17:15:04 to 17:15:10 | Web build | `cd web && npm run build` | ✅ first-load JS `index` 171.54 kB (gzip 56.81 kB); exit 0 |
+| 17:15:10 to 17:15:19 | Farmer view and kit at 360, 390 and 412 px | `python web/scripts/agricultor_playwright.py` | ✅ "77 de 77 comprobaciones pasan"; exit 0 |
+
+The new test `test_ultimo_subtitulo_termina_con_su_mp3` fails at all 5 plots with the previous `.en.vtt` files and passes with the new ones.
+
 ## Branch `entrega-impacto-6` on top of `main` (`5a5d6d3`): Saturday 14 Nov 2026
 
 This branch's changes: the `perdidas_documentadas` block in `validacion.json` and in `docs/validacion.md`, the 2026 limit and the SMAP, CHIRPS and Prensa Libre notes with their English, the Evidence card mp3 in the interface language, the slide screenshots and PDF regenerated, and new tests in `tests/test_validacion.py` and `tests/test_slides.py`. `sin-red.mjs` now requires `audio/{plot}.en.mp3` on the card when Evidence is in English (it used to require the Spanish mp3 in both languages); `evidence_playwright.py` checks the card mp3 in each language. Before this, the data were regenerated offline with `python -m pipeline.validacion.validar` and `python -m motor.exportar` (no `--audio`): `puntajes`, `farmer.hechos`, `farmer.opciones` and `texto_tarjeta` stayed identical in the 15 plot JSON files. Same laptop: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0; `web/node_modules` from `npm ci`. Times from `date` (UTC−6).

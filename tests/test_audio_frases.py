@@ -159,6 +159,48 @@ def test_audio_corto_se_enlaza_solo_si_coinciden_las_frases(resultado_sintetico,
     assert otro["farmer"]["audio"]["es"] is None and otro["farmer"]["frases"][1]["inicio_s"] is None
 
 
+def _cues(ruta) -> list[dict]:
+    """Cues de un .vtt: [{"inicio": s, "fin": s, "texto": str}]."""
+    def seg(m: str) -> float:
+        h, mi, se = m.split(":")
+        return int(h) * 3600 + int(mi) * 60 + float(se)
+    out = []
+    for bloque in ruta.read_text(encoding="utf-8").strip().split("\n\n")[1:]:
+        _, marcas, texto = bloque.split("\n", 2)
+        a, b = marcas.split(" --> ")
+        out.append({"inicio": seg(a), "fin": seg(b), "texto": texto})
+    return out
+
+
+def _pcm_frase(seg_voz: float, pausa_interna: float) -> bytes:
+    """Frase sintética ya recortada: margen bajo el umbral, voz, una pausa natural en cero, voz y margen."""
+    tasa = audio_frases.TASA_HZ
+    margen = b"\x64\x00" * int(audio_frases.MARGEN_S * tasa)       # amplitud 100: bajo UMBRAL_SILENCIO
+    voz = b"\x10\x27" * int(seg_voz * tasa)
+    return margen + voz + b"\x00\x00" * int(pausa_interna * tasa) + voz + margen
+
+
+def test_tiempos_de_pcm_halla_las_uniones_y_no_las_pausas_naturales():
+    # pausas naturales de 0.9, 0.2 y 0.33 s (comas y puntos) dentro de las frases: no son uniones
+    pcms = [_pcm_frase(1.0, 0.9), _pcm_frase(0.7, 0.2), _pcm_frase(1.3, 0.33)]
+    pcm, tiempos, dur = audio_frases.unir(pcms)
+    t = audio_frases.tiempos_de_pcm(pcm, 3)
+    assert t["duracion_s"] == dur
+    for (a, b), (x, y) in zip(t["tiempos"], tiempos):
+        assert abs(a - x) <= 0.002 and abs(b - y) <= 0.002
+    assert audio_frases.tiempos_de_pcm(pcm, 4) is None       # con otro número de frases no inventa uniones
+
+
+def test_tiempos_ingles_usa_la_etiqueta_si_termina_con_el_audio(tmp_path):
+    ruta = tmp_path / "x.frases.en.mp3"
+    ruta.write_bytes(AUDIO_FALSO)
+    bien = {"tiempos": [[0.0, 2.0], [2.25, 5.0]], "duracion_s": 5.0}
+    assert exportar.tiempos_ingles(ruta, {"TXXX": {audio_frases.CLAVE_TIEMPOS: json.dumps(bien)}}, 2) == bien
+    # la etiqueta con los tiempos del español (terminan 0.5 s antes que el audio) no se usa
+    mal = {"tiempos": [[0.0, 2.0], [2.25, 4.5]], "duracion_s": 5.0}
+    assert exportar.tiempos_ingles(ruta, {"TXXX": {audio_frases.CLAVE_TIEMPOS: json.dumps(mal)}}, 2) != mal
+
+
 # ---------------------------------------------------------------- archivos publicados
 def _publicados():
     out = []
@@ -191,12 +233,11 @@ def test_nada_solo_en_audio(pid, res):
         assert fr["es"].strip() and fr["en"].strip()
         assert (fr["inicio_s"], fr["fin_s"]) == (ini, fin) and fin_anterior <= ini < fin <= t["duracion_s"]
         fin_anterior = fin
-    # los subtítulos dicen lo mismo que las frases, en el mismo orden
+    # los subtítulos dicen lo mismo que las frases, en el mismo orden; los del español con los tiempos del
+    # mp3 en español (los del inglés siguen su propio mp3: ver test_ultimo_subtitulo_termina_con_su_mp3)
+    assert (WEB / a["subtitulos"]).read_text(encoding="utf-8") == frases.vtt(f["frases"], "es")
     for lang, clave in (("es", "subtitulos"), ("en", "subtitulos_en")):
-        vtt = (WEB / a[clave]).read_text(encoding="utf-8")
-        assert vtt == frases.vtt(f["frases"], lang)
-        cues = [b.split("\n")[2] for b in vtt.strip().split("\n\n")[1:]]
-        assert cues == [fr[lang] for fr in f["frases"]]
+        assert [c["texto"] for c in _cues(WEB / a[clave])] == [fr[lang] for fr in f["frases"]]
     assert contrato.errores_textos(res) == []
 
 
@@ -257,3 +298,39 @@ def test_la_tarjeta_respeta_la_regla_de_empate():
         if op["estado"] == "empate":
             assert "quedan parejas" in res["texto_tarjeta"]
         assert not re.search(r"\balerta\b", res["texto_tarjeta"], re.I)
+
+
+@pytest.mark.skipif(not PUBLICADOS, reason="sin audio corto publicado")
+@pytest.mark.parametrize("pid, res", PUBLICADOS, ids=[p for p, _ in PUBLICADOS])
+def test_ultimo_subtitulo_termina_con_su_mp3(pid, res):
+    """El último cue de cada .frases.{es,en}.vtt termina a menos de 0.15 s del final de su mp3.
+
+    La duración se cuenta por cuadros del mp3 (sin la etiqueta ni ffmpeg); incluye el relleno del codificador,
+    unos 0.06 s. Los cues van en orden y sin cruzarse."""
+    a = res["farmer"]["audio"]
+    for bloque in (a["es"], a["en"]):
+        dur = audio_frases.duracion_mp3((WEB / bloque["mp3"]).read_bytes())
+        cues = _cues(WEB / bloque["subtitulos"])
+        assert len(cues) == len(res["farmer"]["frases"])
+        assert abs(cues[-1]["fin"] - dur) <= 0.15, (bloque["subtitulos"], cues[-1]["fin"], round(dur, 3))
+        assert abs(cues[-1]["fin"] - bloque["duracion_s"]) <= 0.05
+        fin = -1.0
+        for c in cues:
+            assert fin <= c["inicio"] < c["fin"]
+            fin = c["fin"]
+
+
+@pytest.mark.skipif(not PUBLICADOS or not audio_frases.ffmpeg(), reason="sin audio corto publicado o sin ffmpeg")
+@pytest.mark.parametrize("pid, res", PUBLICADOS, ids=[p for p, _ in PUBLICADOS])
+def test_las_uniones_del_mp3_dan_los_tiempos_de_la_etiqueta(pid, res):
+    """Control del método: en el mp3 en español, cuyos tiempos guardó el exportador al generarlo, las uniones
+    halladas en el audio dan esos mismos tiempos (±10 ms). En el inglés dan los del .en.vtt publicado."""
+    n = len(res["farmer"]["frases"])
+    ruta_es = WEB / res["farmer"]["audio"]["es"]["mp3"]
+    etiqueta = audio_frases.tiempos_de_etiqueta(audio_id3.leer(ruta_es))
+    hallados = audio_frases.tiempos_de_mp3(ruta_es, n)
+    for (a, b), (x, y) in zip(hallados["tiempos"], etiqueta["tiempos"]):
+        assert abs(a - x) <= 0.01 and abs(b - y) <= 0.01
+    en = res["farmer"]["audio"]["en"]
+    t_en = audio_frases.tiempos_de_mp3(WEB / en["mp3"], n)
+    assert [[c["inicio"], c["fin"]] for c in _cues(WEB / en["subtitulos"])] == t_en["tiempos"]
