@@ -1,6 +1,6 @@
 # Estado de Milpa Resiliente
 
-Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest, humo, build y sin red: todas pasan). **Prototipo local de referencia: no se entrega ni se publica** (decisión de Rodolfo, 14 nov 2026). Repositorio Git local, sin remoto. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/pruebas.md`, junto con las pendientes; las decisiones y los hallazgos, en `docs/memoria/` (empezar por `Inicio.md`).
+Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest, humo, build y sin red: todas pasan). Este es el repo de entrega de NASA Space Apps 2026. Tiene remoto privado en GitHub y todavía no está desplegado. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/pruebas.md`, junto con las pendientes; las decisiones y los hallazgos, en `docs/memoria/` (empezar por `Inicio.md`).
 
 ## Qué funciona
 
@@ -72,7 +72,7 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 - Canícula: con CHIRPS diario las rachas son más realistas, pero el umbral de 15 días y el día seco de 2 mm siguen siendo los del plan; no se recalibraron para que 2018 salga bien.
 - Camotán sin SMAP: la segunda tarea con SPL4SMGP (modelo, zona de raíces) tardaría horas y habría que rotularla como modelo. Queda como está.
 
-**Ya no aplica** (el repo no se entrega): Render, repo público, push, slides, video, página en inglés y formulario de Space Apps.
+**De entrega (pendiente):** web, README y documentos en inglés; despliegue público; slides; formulario de Space Apps.
 
 ## Comandos
 
