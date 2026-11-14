@@ -22,13 +22,25 @@ function ConCitas({ txt, loc }) {
   )
 }
 
-function vozEspanol() {
+const PREF_VOZ = { es: ['es-GT', 'es-MX', 'es-US', 'es-419', 'es-ES'], en: ['en-US', 'en-GB'] }
+
+function vozDe(idioma) {
   const voces = window.speechSynthesis?.getVoices() || []
-  for (const pref of ['es-GT', 'es-MX', 'es-US', 'es-419', 'es-ES']) {
+  for (const pref of PREF_VOZ[idioma] || PREF_VOZ.es) {
     const v = voces.find((x) => x.lang === pref || x.lang?.replace('_', '-') === pref)
     if (v) return v
   }
-  return voces.find((x) => x.lang?.toLowerCase().startsWith('es')) || null
+  return voces.find((x) => x.lang?.toLowerCase().startsWith(idioma)) || null
+}
+
+// Audio de la tarjeta en el idioma de la interfaz: `audio.en` (voz en inglés) o `audio.es` (el `audio` de
+// siempre). Si falta el mp3 del idioma, va el español y el reproductor lleva lang="es".
+function audioDe(audio, loc) {
+  const a = audio || {}
+  const propio = a[loc] || {}
+  if (propio.mp3) return { mp3: propio.mp3, texto: propio.texto, ia: propio.ia || a.ia, lang: loc }
+  const es = a.es || {}
+  return { mp3: es.mp3 || a.mp3, texto: es.texto || a.texto, ia: es.ia || a.ia, lang: 'es' }
 }
 
 export default function Tarjeta({ res, lluvia, temp, prioridad }) {
@@ -48,13 +60,17 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
   if (d.meses_desnudos.length) detalleSat = t('tarjeta.detalleBare', { meses: listaMesesI18n(d.meses_desnudos, loc) })
   else if (d.meses_poca_cobertura?.length) detalleSat = t('tarjeta.detalleLow', { meses: listaMesesI18n(d.meses_poca_cobertura, loc) })
 
+  const audio = audioDe(res.audio, loc)
+
   function escuchar() {
     if (!hayVoz) return
     window.speechSynthesis.cancel()
-    const u = new SpeechSynthesisUtterance(res.audio.texto || res.texto_tarjeta)
-    const v = vozEspanol()
+    const texto = (loc !== 'es' && res.audio?.[loc]?.texto) || res.audio?.texto || res.texto_tarjeta
+    const idioma = loc !== 'es' && res.audio?.[loc]?.texto ? loc : 'es'
+    const u = new SpeechSynthesisUtterance(texto)
+    const v = vozDe(idioma)
     if (v) u.voice = v
-    u.lang = v?.lang || 'es-MX'
+    u.lang = v?.lang || (idioma === 'es' ? 'es-MX' : 'en-US')
     u.rate = 0.95
     u.onend = () => setHablando(false)
     u.onerror = () => setHablando(false)
@@ -75,17 +91,20 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
   const zarc = m(res.zarc, 'texto')
   const notaZarc = m(res.zarc, 'nota_escenario')
   const aviso = m(res, 'aviso')
-  const declaracion = m(res.audio.ia, 'declaracion').txt
+  const declaracion = m(audio.ia, 'declaracion').txt
 
   return (
     <section className="tarjeta-agricultor">
       <div className="tarjeta-acciones no-imprimir">
         <h2>{t('tarjeta.farmerCard')}</h2>
         <div>
-          {res.audio.mp3 ? (
+          {audio.mp3 ? (
             <audio
+              key={audio.mp3}
               controls
-              src={BASE + res.audio.mp3}
+              src={BASE + audio.mp3}
+              lang={audio.lang}
+              data-idioma={audio.lang}
               aria-label={t('tarjeta.listenAria', { municipio: p.municipio })}
               title={declaracion || t('tarjeta.synthVoice')}
             />
@@ -99,7 +118,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
           </button>
         </div>
         <p className="nota-ia">
-          {res.audio.mp3 ? declaracion || t('tarjeta.synthVoice') : t('tarjeta.synthBrowser')}
+          {audio.mp3 ? declaracion || t('tarjeta.synthVoice') : t('tarjeta.synthBrowser')}
         </p>
       </div>
       <div className="tarjeta">
@@ -185,7 +204,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
       <p className="nota no-imprimir">
         {t('tarjeta.audioNote', {
           prioridad: dict.prioridad[res.parcela.prioridad],
-          offline: res.audio.mp3 ? '' : t('tarjeta.offlineVoice'),
+          offline: audio.mp3 ? '' : t('tarjeta.offlineVoice'),
         })}
       </p>
     </section>

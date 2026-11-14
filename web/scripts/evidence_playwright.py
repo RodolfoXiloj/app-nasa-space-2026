@@ -18,7 +18,8 @@ Por cada ancho e idioma comprueba (docs/accessibility.md, «Evidence view»):
 - con prefers-reduced-motion el mapa no anima el zoom ni el fundido;
 - en inglés no queda texto en español en las tres pestañas (ni en aria-label), salvo citas rotuladas: un
   «…» en español o un título con su traducción entre corchetes; ningún elemento lang="es" fuera de esas citas;
-- el pie lleva la línea visible de uso de IA, la tarjeta impresa también, y index.html su <meta>.
+- el pie lleva la línea visible de uso de IA, la tarjeta impresa también, y index.html su <meta>;
+- el mp3 de la tarjeta está en el idioma de la interfaz (audio.en en inglés, audio.es en español).
 Sale con código 1 si algo falla.
 """
 from __future__ import annotations
@@ -26,6 +27,7 @@ from __future__ import annotations
 import subprocess
 import sys
 import time
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -218,6 +220,22 @@ def caso(navegador, ancho: int, alto: int, idioma: str) -> None:
     anota(ia_hoja.count() == 1 and ia_hoja.is_visible(), f"{pre}: la tarjeta impresa lleva la línea de {marca}")
     pag.emulate_media(media="screen")
     anota("Prototipo local" not in pag.inner_text("body"), f"{pre}: sin «Prototipo local de referencia»")
+
+    # El mp3 de la tarjeta va en el idioma de la interfaz: audio/{parcela}.en.mp3 en inglés y audio/{parcela}.mp3
+    # en español, con su lang y su declaración de IA en ese idioma; el archivo se sirve.
+    aud = pag.locator(".tarjeta-agricultor audio")
+    src = (aud.first.get_attribute("src") or "") if aud.count() == 1 else ""
+    lang_aud = aud.first.get_attribute("lang") if aud.count() == 1 else None
+    if idioma == "en":
+        ok_src = src.endswith(".en.mp3") and ".frases" not in src
+    else:
+        ok_src = src.endswith(".mp3") and not src.endswith(".en.mp3") and ".frases" not in src
+    servido = bool(src) and pag.request.get(urllib.parse.urljoin(URL, src)).ok
+    nota = pag.locator(".tarjeta-agricultor .nota-ia").inner_text() if aud.count() == 1 else ""
+    voz_ok = ("en-US" in nota and "voice" in nota) if idioma == "en" else ("es-GT" in nota and "Voz" in nota)
+    anota(ok_src and lang_aud == idioma and servido and voz_ok,
+          f"{pre}: la tarjeta reproduce el mp3 en {'inglés' if idioma == 'en' else 'español'}",
+          f"src={src} lang={lang_aud} servido={servido}; {nota[:70]}")
 
     anota(not errores, f"{pre}: sin errores de JavaScript", "; ".join(errores[:2]))
     ctx.close()

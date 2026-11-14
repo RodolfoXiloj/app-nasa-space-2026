@@ -119,14 +119,15 @@ try {
   const obs = await ev(`document.querySelector('.banda-obs')?.textContent || ''`)
   anota(obs.includes('Observación preliminar') && !/alerta/i.test(obs), 'Observación de 2026 al abrir Evidence, sin «alerta»', obs.slice(0, 90) + '…')
 
-  // 2. las 5 parcelas, con audio
+  // 2. las 5 parcelas, con el audio de la tarjeta en el idioma activo (audio/{pid}.en.mp3 en inglés, audio/{pid}.mp3 en español)
   const ids = await ev(`[...document.querySelector('.controles select').options].map(o => o.value)`)
+  const sufijo = (await ev(`document.documentElement.lang`)) === 'en' ? '.en.mp3' : '.mp3'
   for (const pid of ids) {
     await ev(`(() => { const s = document.querySelector('.controles select'); const set = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set; set.call(s, '${pid}'); s.dispatchEvent(new Event('change', { bubbles: true })); return true })()`)
-    const ok = await hasta(() => ev(`(() => { const a = document.querySelector('.tarjeta-acciones audio'); return document.querySelectorAll('.rotacion').length === 3 && a && a.src.includes('/audio/${pid}.mp3') })()`), 15000)
+    const ok = await hasta(() => ev(`(() => { const a = document.querySelector('.tarjeta-acciones audio'); return document.querySelectorAll('.rotacion').length === 3 && a && a.src.endsWith('/audio/${pid}${sufijo}') })()`), 15000)
     const audio = await ev(`(async () => { const a = document.querySelector('.tarjeta-acciones audio'); a.muted = true; try { await a.play() } catch (e) { return 'play falló: ' + e.message } await new Promise(r => setTimeout(r, 1500)); const t = a.currentTime; a.pause(); return 'suena ' + t.toFixed(1) + ' s de ' + a.duration.toFixed(0) + ' s' })()`)
     const ia = await ev(`document.querySelector('.nota-ia')?.textContent || ''`)
-    anota(Boolean(ok) && audio.startsWith('suena') && !audio.startsWith('suena 0.0') && /\b(IA|AI)\b/.test(ia), `Parcela ${pid}: 3 rotaciones, tarjeta y audio mp3`, `${audio}; rótulo de IA: ${/\b(IA|AI)\b/.test(ia) ? 'sí' : 'no'}`)
+    anota(Boolean(ok) && audio.startsWith('suena') && !audio.startsWith('suena 0.0') && /\b(IA|AI)\b/.test(ia), `Parcela ${pid}: 3 rotaciones, tarjeta y audio mp3 (${pid}${sufijo})`, `${audio}; rótulo de IA: ${/\b(IA|AI)\b/.test(ia) ? 'sí' : 'no'}`)
   }
 
   // 3. capas «sin red»
