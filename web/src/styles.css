@@ -191,3 +191,23 @@ code { background: var(--fondo); padding: 0 4px; border-radius: 4px; font-size: 
   .solo-imprimir { display: inline; }
   a { color: #000; text-decoration: none; }
 }
+
+/* NASA climate futures (NEX-GDDP-CMIP6), FuturosNasa.jsx */
+.futuros-nasa { background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 14px 16px; margin-top: 16px; }
+.futuros-esc { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 12px; }
+.futuros-esc button { font: inherit; min-height: 48px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--linea); background: var(--papel); color: var(--tinta); cursor: pointer; }
+.futuros-esc button.activa { background: var(--verde); border-color: var(--verde); color: #fff; }
+.futuros-clima { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.futuros-clima div { background: var(--fondo); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 2px; }
+.futuros-clima b { font-size: 1.25rem; }
+.futuros-clima span { font-size: 0.85rem; color: var(--tinta-suave); }
+.futuros-rotaciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.futuro-rot { border: 1px solid var(--linea); border-radius: 8px; padding: 10px 12px; }
+.futuro-rot.mejor { border-color: var(--verde); box-shadow: inset 4px 0 0 var(--verde); }
+.futuro-rot h3 { margin-top: 0; }
+.futuro-cifra { margin: 0 0 6px; color: var(--tinta-suave); }
+.futuro-cifra b { font-size: 1.6rem; color: var(--tinta); }
+.puntos { display: flex; flex-wrap: wrap; gap: 3px; }
+.puntos i { width: 10px; height: 10px; border-radius: 50%; background: var(--linea); display: block; }
+.puntos i.si { background: var(--verde); }
+@media print { .futuros-nasa { display: none !important; } }

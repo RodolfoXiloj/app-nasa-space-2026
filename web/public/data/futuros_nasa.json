@@ -1,0 +1,4235 @@
+{
+ "generado": "2026-11-14T22:30:38Z",
+ "fuente": {
+  "url": "https://developers.google.com/earth-engine/datasets/catalog/NASA_GDDP-CMIP6",
+  "fecha_descarga": "2026-11-14T21:32:25Z",
+  "producto": "NASA Earth Exchange Global Daily Downscaled Projections (NEX-GDDP-CMIP6), 0.25°, vía Google Earth Engine",
+  "version": "NASA/GDDP-CMIP6",
+  "nota": "Medias de mayo-octubre y junio-agosto, 2041-2060 contra 1995-2014, por modelo (método delta). Precalculado sin conexión con pipeline/gee/cmip6_cambios.js; nada llama a Earth Engine en vivo. HadGEM3-GC31-MM no tiene SSP2-4.5 en el conjunto."
+ },
+ "periodo_base": "1995-2014",
+ "periodo_futuro": "2041-2060",
+ "regla_aguanta": "puntaje de agua en ese futuro igual o mayor que el de la rotación actual con el clima de hoy",
+ "parcelas": {
+  "jocotan": {
+   "agua_actual_hoy": 80,
+   "escenarios": {
+    "ssp245": {
+     "nombre": "Emisiones intermedias (SSP2-4.5)",
+     "n_modelos": 33,
+     "lluvia_pct": {
+      "mediana": -4.3,
+      "p10": -10.7,
+      "p90": 4.2
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -6.6,
+      "p10": -19.7,
+      "p90": 3.2
+     },
+     "temp_c": {
+      "mediana": 1.4,
+      "p10": 1.0,
+      "p90": 2.4
+     },
+     "modelos_mas_secos": 24,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 78,
+       "deficit_mediano_pct": 17
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 78,
+       "deficit_mediano_pct": 17
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 33,
+       "agua_mediana": 87,
+       "deficit_mediano_pct": 13
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -0.1,
+       "lluvia_canicula_pct": -4.1,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": 2.9,
+       "lluvia_canicula_pct": 3.2,
+       "temp_c": 1.36,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -4.5,
+       "lluvia_canicula_pct": -6.6,
+       "temp_c": 1.16,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -10.8,
+       "lluvia_canicula_pct": -14.9,
+       "temp_c": 1.84,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -8.3,
+       "lluvia_canicula_pct": -12.8,
+       "temp_c": 1.88,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": 4.3,
+       "lluvia_canicula_pct": -2.9,
+       "temp_c": 1.03,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -0.1,
+       "lluvia_canicula_pct": 4.5,
+       "temp_c": 1.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 7.6,
+       "lluvia_canicula_pct": 3.2,
+       "temp_c": 1.29,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -3.6,
+       "lluvia_canicula_pct": -5.1,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -10.3,
+       "temp_c": 1.9,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -5.4,
+       "lluvia_canicula_pct": -6.9,
+       "temp_c": 1.64,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -2.7,
+       "lluvia_canicula_pct": -2.0,
+       "temp_c": 1.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -11.3,
+       "lluvia_canicula_pct": -14.6,
+       "temp_c": 0.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -2.4,
+       "lluvia_canicula_pct": -4.4,
+       "temp_c": 1.21,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -6.3,
+       "lluvia_canicula_pct": -3.6,
+       "temp_c": 1.11,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -6.1,
+       "lluvia_canicula_pct": -6.2,
+       "temp_c": 1.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -9.8,
+       "lluvia_canicula_pct": -13.9,
+       "temp_c": 2.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": 3.7,
+       "lluvia_canicula_pct": 2.6,
+       "temp_c": 0.76,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": 1.9,
+       "lluvia_canicula_pct": -3.2,
+       "temp_c": 1.02,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.4,
+       "lluvia_canicula_pct": 0.8,
+       "temp_c": 0.87,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -21.8,
+       "lluvia_canicula_pct": -32.3,
+       "temp_c": 1.07,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -7.0,
+       "lluvia_canicula_pct": -14.3,
+       "temp_c": 2.56,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -4.3,
+       "lluvia_canicula_pct": -10.5,
+       "temp_c": 1.8,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -20.0,
+       "temp_c": 1.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -1.5,
+       "lluvia_canicula_pct": -11.8,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": -2.6,
+       "lluvia_canicula_pct": -7.4,
+       "temp_c": 1.34,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": 17.2,
+       "lluvia_canicula_pct": 15.3,
+       "temp_c": 0.81,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -10.1,
+       "lluvia_canicula_pct": -19.9,
+       "temp_c": 1.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 14.5,
+       "lluvia_canicula_pct": 11.2,
+       "temp_c": 1.19,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": 2.4,
+       "lluvia_canicula_pct": 2.0,
+       "temp_c": 1.25,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -6.5,
+       "lluvia_canicula_pct": -18.7,
+       "temp_c": 1.71,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -12.6,
+       "lluvia_canicula_pct": -21.0,
+       "temp_c": 3.72,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -10.3,
+       "temp_c": 2.85,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    },
+    "ssp585": {
+     "nombre": "Emisiones altas (SSP5-8.5)",
+     "n_modelos": 34,
+     "lluvia_pct": {
+      "mediana": -11.8,
+      "p10": -17.9,
+      "p90": 0.3
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -17.4,
+      "p10": -24.2,
+      "p90": 0.3
+     },
+     "temp_c": {
+      "mediana": 2.1,
+      "p10": 1.5,
+      "p90": 3.1
+     },
+     "modelos_mas_secos": 30,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 2,
+       "agua_mediana": 76,
+       "deficit_mediano_pct": 20
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 2,
+       "agua_mediana": 76,
+       "deficit_mediano_pct": 20
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 34,
+       "agua_mediana": 85,
+       "deficit_mediano_pct": 15
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -10.8,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 2.52,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": -4.9,
+       "lluvia_canicula_pct": -6.0,
+       "temp_c": 2.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -16.5,
+       "lluvia_canicula_pct": -20.6,
+       "temp_c": 1.77,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -18.1,
+       "lluvia_canicula_pct": -24.4,
+       "temp_c": 2.44,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -15.3,
+       "lluvia_canicula_pct": -23.2,
+       "temp_c": 2.29,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": -2.6,
+       "lluvia_canicula_pct": -9.2,
+       "temp_c": 1.66,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -21.8,
+       "lluvia_canicula_pct": -25.7,
+       "temp_c": 2.03,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 10.4,
+       "lluvia_canicula_pct": 2.9,
+       "temp_c": 1.76,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -14.6,
+       "lluvia_canicula_pct": -15.2,
+       "temp_c": 1.98,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -11.1,
+       "lluvia_canicula_pct": -13.9,
+       "temp_c": 2.5,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -9.6,
+       "lluvia_canicula_pct": -14.9,
+       "temp_c": 2.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -9.9,
+       "lluvia_canicula_pct": -12.5,
+       "temp_c": 2.07,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -13.2,
+       "lluvia_canicula_pct": -16.2,
+       "temp_c": 1.36,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -17.5,
+       "lluvia_canicula_pct": -16.5,
+       "temp_c": 2.08,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -5.9,
+       "lluvia_canicula_pct": -7.6,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -14.6,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 2.26,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -12.3,
+       "lluvia_canicula_pct": -18.3,
+       "temp_c": 3.39,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-MM",
+       "lluvia_pct": -13.1,
+       "lluvia_canicula_pct": -14.4,
+       "temp_c": 2.61,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": -0.6,
+       "lluvia_canicula_pct": 4.2,
+       "temp_c": 1.29,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": -0.3,
+       "lluvia_canicula_pct": -6.7,
+       "temp_c": 1.47,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.6,
+       "lluvia_canicula_pct": 3.7,
+       "temp_c": 1.4,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -32.6,
+       "lluvia_canicula_pct": -48.7,
+       "temp_c": 1.5,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -11.6,
+       "lluvia_canicula_pct": -22.1,
+       "temp_c": 3.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -15.4,
+       "lluvia_canicula_pct": -20.1,
+       "temp_c": 2.83,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -10.6,
+       "lluvia_canicula_pct": -23.6,
+       "temp_c": 2.05,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -10.4,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 2.57,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": 7.1,
+       "lluvia_canicula_pct": -5.7,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": -5.3,
+       "lluvia_canicula_pct": -7.8,
+       "temp_c": 1.6,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -13.0,
+       "lluvia_canicula_pct": -21.0,
+       "temp_c": 1.74,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 15.6,
+       "lluvia_canicula_pct": 15.0,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": -16.4,
+       "lluvia_canicula_pct": -20.5,
+       "temp_c": 1.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -12.0,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 2.1,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -22.2,
+       "lluvia_canicula_pct": -26.7,
+       "temp_c": 4.38,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -15.3,
+       "lluvia_canicula_pct": -19.5,
+       "temp_c": 3.54,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    }
+   }
+  },
+  "camotan": {
+   "agua_actual_hoy": 84,
+   "escenarios": {
+    "ssp245": {
+     "nombre": "Emisiones intermedias (SSP2-4.5)",
+     "n_modelos": 33,
+     "lluvia_pct": {
+      "mediana": -4.3,
+      "p10": -10.7,
+      "p90": 4.2
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -6.6,
+      "p10": -19.7,
+      "p90": 3.2
+     },
+     "temp_c": {
+      "mediana": 1.4,
+      "p10": 1.0,
+      "p90": 2.4
+     },
+     "modelos_mas_secos": 24,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 5,
+       "agua_mediana": 82,
+       "deficit_mediano_pct": 14
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 5,
+       "agua_mediana": 82,
+       "deficit_mediano_pct": 14
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 33,
+       "agua_mediana": 92,
+       "deficit_mediano_pct": 8
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -0.1,
+       "lluvia_canicula_pct": -4.1,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": 2.9,
+       "lluvia_canicula_pct": 3.2,
+       "temp_c": 1.36,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -4.5,
+       "lluvia_canicula_pct": -6.6,
+       "temp_c": 1.16,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -10.8,
+       "lluvia_canicula_pct": -14.9,
+       "temp_c": 1.84,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -8.3,
+       "lluvia_canicula_pct": -12.8,
+       "temp_c": 1.88,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": 4.3,
+       "lluvia_canicula_pct": -2.9,
+       "temp_c": 1.03,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -0.1,
+       "lluvia_canicula_pct": 4.5,
+       "temp_c": 1.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 7.6,
+       "lluvia_canicula_pct": 3.2,
+       "temp_c": 1.29,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -3.6,
+       "lluvia_canicula_pct": -5.1,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -10.3,
+       "temp_c": 1.9,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -5.4,
+       "lluvia_canicula_pct": -6.9,
+       "temp_c": 1.64,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -2.7,
+       "lluvia_canicula_pct": -2.0,
+       "temp_c": 1.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -11.3,
+       "lluvia_canicula_pct": -14.6,
+       "temp_c": 0.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -2.4,
+       "lluvia_canicula_pct": -4.4,
+       "temp_c": 1.21,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -6.3,
+       "lluvia_canicula_pct": -3.6,
+       "temp_c": 1.11,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -6.1,
+       "lluvia_canicula_pct": -6.2,
+       "temp_c": 1.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -9.8,
+       "lluvia_canicula_pct": -13.9,
+       "temp_c": 2.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": 3.7,
+       "lluvia_canicula_pct": 2.6,
+       "temp_c": 0.76,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": 1.9,
+       "lluvia_canicula_pct": -3.2,
+       "temp_c": 1.02,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.4,
+       "lluvia_canicula_pct": 0.8,
+       "temp_c": 0.87,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -21.8,
+       "lluvia_canicula_pct": -32.3,
+       "temp_c": 1.07,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -7.0,
+       "lluvia_canicula_pct": -14.3,
+       "temp_c": 2.56,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -4.3,
+       "lluvia_canicula_pct": -10.5,
+       "temp_c": 1.8,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -20.0,
+       "temp_c": 1.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -1.5,
+       "lluvia_canicula_pct": -11.8,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": -2.6,
+       "lluvia_canicula_pct": -7.4,
+       "temp_c": 1.34,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": 17.2,
+       "lluvia_canicula_pct": 15.3,
+       "temp_c": 0.81,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -10.1,
+       "lluvia_canicula_pct": -19.9,
+       "temp_c": 1.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 14.5,
+       "lluvia_canicula_pct": 11.2,
+       "temp_c": 1.19,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": 2.4,
+       "lluvia_canicula_pct": 2.0,
+       "temp_c": 1.25,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -6.5,
+       "lluvia_canicula_pct": -18.7,
+       "temp_c": 1.71,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -12.6,
+       "lluvia_canicula_pct": -21.0,
+       "temp_c": 3.72,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -10.3,
+       "temp_c": 2.85,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    },
+    "ssp585": {
+     "nombre": "Emisiones altas (SSP5-8.5)",
+     "n_modelos": 34,
+     "lluvia_pct": {
+      "mediana": -11.8,
+      "p10": -17.9,
+      "p90": 0.3
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -17.4,
+      "p10": -24.2,
+      "p90": 0.3
+     },
+     "temp_c": {
+      "mediana": 2.1,
+      "p10": 1.5,
+      "p90": 3.1
+     },
+     "modelos_mas_secos": 30,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 78,
+       "deficit_mediano_pct": 17
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 78,
+       "deficit_mediano_pct": 17
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 32,
+       "agua_mediana": 88,
+       "deficit_mediano_pct": 12
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -10.8,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 2.52,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": -4.9,
+       "lluvia_canicula_pct": -6.0,
+       "temp_c": 2.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -16.5,
+       "lluvia_canicula_pct": -20.6,
+       "temp_c": 1.77,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -18.1,
+       "lluvia_canicula_pct": -24.4,
+       "temp_c": 2.44,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -15.3,
+       "lluvia_canicula_pct": -23.2,
+       "temp_c": 2.29,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": -2.6,
+       "lluvia_canicula_pct": -9.2,
+       "temp_c": 1.66,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -21.8,
+       "lluvia_canicula_pct": -25.7,
+       "temp_c": 2.03,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 10.4,
+       "lluvia_canicula_pct": 2.9,
+       "temp_c": 1.76,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -14.6,
+       "lluvia_canicula_pct": -15.2,
+       "temp_c": 1.98,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -11.1,
+       "lluvia_canicula_pct": -13.9,
+       "temp_c": 2.5,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -9.6,
+       "lluvia_canicula_pct": -14.9,
+       "temp_c": 2.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -9.9,
+       "lluvia_canicula_pct": -12.5,
+       "temp_c": 2.07,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -13.2,
+       "lluvia_canicula_pct": -16.2,
+       "temp_c": 1.36,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -17.5,
+       "lluvia_canicula_pct": -16.5,
+       "temp_c": 2.08,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -5.9,
+       "lluvia_canicula_pct": -7.6,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -14.6,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 2.26,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -12.3,
+       "lluvia_canicula_pct": -18.3,
+       "temp_c": 3.39,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-MM",
+       "lluvia_pct": -13.1,
+       "lluvia_canicula_pct": -14.4,
+       "temp_c": 2.61,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": -0.6,
+       "lluvia_canicula_pct": 4.2,
+       "temp_c": 1.29,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": -0.3,
+       "lluvia_canicula_pct": -6.7,
+       "temp_c": 1.47,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.6,
+       "lluvia_canicula_pct": 3.7,
+       "temp_c": 1.4,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -32.6,
+       "lluvia_canicula_pct": -48.7,
+       "temp_c": 1.5,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": false
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -11.6,
+       "lluvia_canicula_pct": -22.1,
+       "temp_c": 3.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -15.4,
+       "lluvia_canicula_pct": -20.1,
+       "temp_c": 2.83,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -10.6,
+       "lluvia_canicula_pct": -23.6,
+       "temp_c": 2.05,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -10.4,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 2.57,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": 7.1,
+       "lluvia_canicula_pct": -5.7,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": -5.3,
+       "lluvia_canicula_pct": -7.8,
+       "temp_c": 1.6,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -13.0,
+       "lluvia_canicula_pct": -21.0,
+       "temp_c": 1.74,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 15.6,
+       "lluvia_canicula_pct": 15.0,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": -16.4,
+       "lluvia_canicula_pct": -20.5,
+       "temp_c": 1.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -12.0,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 2.1,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -22.2,
+       "lluvia_canicula_pct": -26.7,
+       "temp_c": 4.38,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": false
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -15.3,
+       "lluvia_canicula_pct": -19.5,
+       "temp_c": 3.54,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    }
+   }
+  },
+  "olopa": {
+   "agua_actual_hoy": 86,
+   "escenarios": {
+    "ssp245": {
+     "nombre": "Emisiones intermedias (SSP2-4.5)",
+     "n_modelos": 33,
+     "lluvia_pct": {
+      "mediana": -4.7,
+      "p10": -10.6,
+      "p90": 4.3
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -6.7,
+      "p10": -19.3,
+      "p90": 4.0
+     },
+     "temp_c": {
+      "mediana": 1.4,
+      "p10": 1.0,
+      "p90": 2.3
+     },
+     "modelos_mas_secos": 23,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 9,
+       "agua_mediana": 85,
+       "deficit_mediano_pct": 13
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 9,
+       "agua_mediana": 85,
+       "deficit_mediano_pct": 13
+      },
+      {
+       "id": "tolerante_maiz_corto",
+       "nombre": "Maíz de ciclo corto ICTA B-5 con frijol en primera y frijol en postrera",
+       "nombre_en": "Short-cycle maize ICTA B-5 with beans in primera and beans in postrera",
+       "es_actual": false,
+       "futuros_que_aguanta": 33,
+       "agua_mediana": 94,
+       "deficit_mediano_pct": 6
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -0.2,
+       "lluvia_canicula_pct": -3.7,
+       "temp_c": 1.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": 2.1,
+       "lluvia_canicula_pct": 2.2,
+       "temp_c": 1.4,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -4.7,
+       "lluvia_canicula_pct": -7.1,
+       "temp_c": 1.14,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -11.1,
+       "lluvia_canicula_pct": -15.2,
+       "temp_c": 1.94,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -8.2,
+       "lluvia_canicula_pct": -12.5,
+       "temp_c": 1.98,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": 4.4,
+       "lluvia_canicula_pct": -2.4,
+       "temp_c": 1.06,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": 0.5,
+       "lluvia_canicula_pct": 5.9,
+       "temp_c": 1.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 8.2,
+       "lluvia_canicula_pct": 4.3,
+       "temp_c": 1.28,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -2.4,
+       "lluvia_canicula_pct": -3.8,
+       "temp_c": 1.41,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -8.4,
+       "lluvia_canicula_pct": -9.6,
+       "temp_c": 1.87,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -7.6,
+       "lluvia_canicula_pct": -9.9,
+       "temp_c": 1.61,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -2.9,
+       "lluvia_canicula_pct": -2.4,
+       "temp_c": 1.41,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -10.6,
+       "lluvia_canicula_pct": -13.6,
+       "temp_c": 0.97,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -2.2,
+       "lluvia_canicula_pct": -4.2,
+       "temp_c": 1.19,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -5.1,
+       "lluvia_canicula_pct": -2.2,
+       "temp_c": 1.04,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -5.8,
+       "lluvia_canicula_pct": -6.2,
+       "temp_c": 1.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -10.4,
+       "lluvia_canicula_pct": -13.9,
+       "temp_c": 2.44,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": 3.9,
+       "lluvia_canicula_pct": 2.9,
+       "temp_c": 0.73,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": 2.0,
+       "lluvia_canicula_pct": -2.2,
+       "temp_c": 1.0,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 1.2,
+       "lluvia_canicula_pct": 1.6,
+       "temp_c": 0.84,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -23.1,
+       "lluvia_canicula_pct": -34.0,
+       "temp_c": 1.09,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -7.0,
+       "lluvia_canicula_pct": -13.7,
+       "temp_c": 2.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -4.7,
+       "lluvia_canicula_pct": -10.7,
+       "temp_c": 1.76,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -8.2,
+       "lluvia_canicula_pct": -19.6,
+       "temp_c": 1.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -1.4,
+       "lluvia_canicula_pct": -11.7,
+       "temp_c": 1.43,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": -2.2,
+       "lluvia_canicula_pct": -6.7,
+       "temp_c": 1.32,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": 15.9,
+       "lluvia_canicula_pct": 14.0,
+       "temp_c": 0.83,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -9.4,
+       "lluvia_canicula_pct": -17.9,
+       "temp_c": 1.19,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 13.7,
+       "lluvia_canicula_pct": 10.4,
+       "temp_c": 1.19,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": 2.0,
+       "lluvia_canicula_pct": 1.2,
+       "temp_c": 1.28,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -7.3,
+       "lluvia_canicula_pct": -20.2,
+       "temp_c": 1.8,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -12.6,
+       "lluvia_canicula_pct": -20.6,
+       "temp_c": 3.98,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -8.7,
+       "lluvia_canicula_pct": -10.2,
+       "temp_c": 2.78,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      }
+     ]
+    },
+    "ssp585": {
+     "nombre": "Emisiones altas (SSP5-8.5)",
+     "n_modelos": 34,
+     "lluvia_pct": {
+      "mediana": -12.1,
+      "p10": -18.4,
+      "p90": 0.6
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -17.6,
+      "p10": -23.6,
+      "p90": 1.2
+     },
+     "temp_c": {
+      "mediana": 2.0,
+      "p10": 1.4,
+      "p90": 3.1
+     },
+     "modelos_mas_secos": 29,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 82,
+       "deficit_mediano_pct": 15
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 82,
+       "deficit_mediano_pct": 15
+      },
+      {
+       "id": "tolerante_maiz_corto",
+       "nombre": "Maíz de ciclo corto ICTA B-5 con frijol en primera y frijol en postrera",
+       "nombre_en": "Short-cycle maize ICTA B-5 with beans in primera and beans in postrera",
+       "es_actual": false,
+       "futuros_que_aguanta": 32,
+       "agua_mediana": 91,
+       "deficit_mediano_pct": 8
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -10.4,
+       "lluvia_canicula_pct": -18.1,
+       "temp_c": 2.53,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": -5.3,
+       "lluvia_canicula_pct": -5.9,
+       "temp_c": 2.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -17.3,
+       "lluvia_canicula_pct": -21.5,
+       "temp_c": 1.72,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -18.9,
+       "lluvia_canicula_pct": -25.8,
+       "temp_c": 2.6,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -16.3,
+       "lluvia_canicula_pct": -24.0,
+       "temp_c": 2.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": -1.9,
+       "lluvia_canicula_pct": -7.6,
+       "temp_c": 1.78,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -20.8,
+       "lluvia_canicula_pct": -22.7,
+       "temp_c": 2.22,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 10.8,
+       "lluvia_canicula_pct": 3.6,
+       "temp_c": 1.74,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -13.4,
+       "lluvia_canicula_pct": -14.2,
+       "temp_c": 1.94,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -10.6,
+       "lluvia_canicula_pct": -13.2,
+       "temp_c": 2.49,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -15.0,
+       "lluvia_canicula_pct": -21.9,
+       "temp_c": 2.53,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -9.0,
+       "lluvia_canicula_pct": -13.1,
+       "temp_c": 2.03,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -12.5,
+       "lluvia_canicula_pct": -15.3,
+       "temp_c": 1.37,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -17.0,
+       "lluvia_canicula_pct": -15.9,
+       "temp_c": 2.03,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -5.2,
+       "lluvia_canicula_pct": -6.9,
+       "temp_c": 1.38,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -13.8,
+       "lluvia_canicula_pct": -18.6,
+       "temp_c": 2.24,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -12.1,
+       "lluvia_canicula_pct": -17.5,
+       "temp_c": 3.34,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-MM",
+       "lluvia_pct": -14.2,
+       "lluvia_canicula_pct": -17.5,
+       "temp_c": 2.72,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": -0.3,
+       "lluvia_canicula_pct": 4.0,
+       "temp_c": 1.26,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": 0.1,
+       "lluvia_canicula_pct": -5.0,
+       "temp_c": 1.43,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.8,
+       "lluvia_canicula_pct": 3.5,
+       "temp_c": 1.37,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -33.8,
+       "lluvia_canicula_pct": -49.4,
+       "temp_c": 1.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": false
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -11.5,
+       "lluvia_canicula_pct": -21.3,
+       "temp_c": 3.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -15.6,
+       "lluvia_canicula_pct": -19.8,
+       "temp_c": 2.76,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -9.6,
+       "lluvia_canicula_pct": -22.6,
+       "temp_c": 2.01,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -10.1,
+       "lluvia_canicula_pct": -17.7,
+       "temp_c": 2.52,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": 8.9,
+       "lluvia_canicula_pct": -4.1,
+       "temp_c": 1.44,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": -7.9,
+       "lluvia_canicula_pct": -10.5,
+       "temp_c": 1.65,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -12.2,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 1.74,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 14.9,
+       "lluvia_canicula_pct": 14.6,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": -16.1,
+       "lluvia_canicula_pct": -20.5,
+       "temp_c": 2.02,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -12.5,
+       "lluvia_canicula_pct": -20.9,
+       "temp_c": 2.23,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -22.1,
+       "lluvia_canicula_pct": -26.1,
+       "temp_c": 4.69,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": false
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -15.7,
+       "lluvia_canicula_pct": -20.2,
+       "temp_c": 3.52,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_maiz_corto": true
+       }
+      }
+     ]
+    }
+   }
+  },
+  "san_juan_ermita": {
+   "agua_actual_hoy": 81,
+   "escenarios": {
+    "ssp245": {
+     "nombre": "Emisiones intermedias (SSP2-4.5)",
+     "n_modelos": 33,
+     "lluvia_pct": {
+      "mediana": -4.3,
+      "p10": -10.7,
+      "p90": 4.2
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -6.6,
+      "p10": -19.7,
+      "p90": 3.2
+     },
+     "temp_c": {
+      "mediana": 1.4,
+      "p10": 1.0,
+      "p90": 2.4
+     },
+     "modelos_mas_secos": 24,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 5,
+       "agua_mediana": 79,
+       "deficit_mediano_pct": 17
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 5,
+       "agua_mediana": 79,
+       "deficit_mediano_pct": 17
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 33,
+       "agua_mediana": 88,
+       "deficit_mediano_pct": 12
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -0.1,
+       "lluvia_canicula_pct": -4.1,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": 2.9,
+       "lluvia_canicula_pct": 3.2,
+       "temp_c": 1.36,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -4.5,
+       "lluvia_canicula_pct": -6.6,
+       "temp_c": 1.16,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -10.8,
+       "lluvia_canicula_pct": -14.9,
+       "temp_c": 1.84,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -8.3,
+       "lluvia_canicula_pct": -12.8,
+       "temp_c": 1.88,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": 4.3,
+       "lluvia_canicula_pct": -2.9,
+       "temp_c": 1.03,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -0.1,
+       "lluvia_canicula_pct": 4.5,
+       "temp_c": 1.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 7.6,
+       "lluvia_canicula_pct": 3.2,
+       "temp_c": 1.29,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -3.6,
+       "lluvia_canicula_pct": -5.1,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -10.3,
+       "temp_c": 1.9,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -5.4,
+       "lluvia_canicula_pct": -6.9,
+       "temp_c": 1.64,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -2.7,
+       "lluvia_canicula_pct": -2.0,
+       "temp_c": 1.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -11.3,
+       "lluvia_canicula_pct": -14.6,
+       "temp_c": 0.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -2.4,
+       "lluvia_canicula_pct": -4.4,
+       "temp_c": 1.21,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -6.3,
+       "lluvia_canicula_pct": -3.6,
+       "temp_c": 1.11,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -6.1,
+       "lluvia_canicula_pct": -6.2,
+       "temp_c": 1.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -9.8,
+       "lluvia_canicula_pct": -13.9,
+       "temp_c": 2.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": 3.7,
+       "lluvia_canicula_pct": 2.6,
+       "temp_c": 0.76,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": 1.9,
+       "lluvia_canicula_pct": -3.2,
+       "temp_c": 1.02,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.4,
+       "lluvia_canicula_pct": 0.8,
+       "temp_c": 0.87,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -21.8,
+       "lluvia_canicula_pct": -32.3,
+       "temp_c": 1.07,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -7.0,
+       "lluvia_canicula_pct": -14.3,
+       "temp_c": 2.56,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -4.3,
+       "lluvia_canicula_pct": -10.5,
+       "temp_c": 1.8,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -20.0,
+       "temp_c": 1.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -1.5,
+       "lluvia_canicula_pct": -11.8,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": -2.6,
+       "lluvia_canicula_pct": -7.4,
+       "temp_c": 1.34,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": 17.2,
+       "lluvia_canicula_pct": 15.3,
+       "temp_c": 0.81,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -10.1,
+       "lluvia_canicula_pct": -19.9,
+       "temp_c": 1.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 14.5,
+       "lluvia_canicula_pct": 11.2,
+       "temp_c": 1.19,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": 2.4,
+       "lluvia_canicula_pct": 2.0,
+       "temp_c": 1.25,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -6.5,
+       "lluvia_canicula_pct": -18.7,
+       "temp_c": 1.71,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -12.6,
+       "lluvia_canicula_pct": -21.0,
+       "temp_c": 3.72,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -8.8,
+       "lluvia_canicula_pct": -10.3,
+       "temp_c": 2.85,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    },
+    "ssp585": {
+     "nombre": "Emisiones altas (SSP5-8.5)",
+     "n_modelos": 34,
+     "lluvia_pct": {
+      "mediana": -11.8,
+      "p10": -17.9,
+      "p90": 0.3
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -17.4,
+      "p10": -24.2,
+      "p90": 0.3
+     },
+     "temp_c": {
+      "mediana": 2.1,
+      "p10": 1.5,
+      "p90": 3.1
+     },
+     "modelos_mas_secos": 30,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 76,
+       "deficit_mediano_pct": 19
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 76,
+       "deficit_mediano_pct": 19
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 33,
+       "agua_mediana": 85,
+       "deficit_mediano_pct": 14
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -10.8,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 2.52,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": -4.9,
+       "lluvia_canicula_pct": -6.0,
+       "temp_c": 2.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -16.5,
+       "lluvia_canicula_pct": -20.6,
+       "temp_c": 1.77,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -18.1,
+       "lluvia_canicula_pct": -24.4,
+       "temp_c": 2.44,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -15.3,
+       "lluvia_canicula_pct": -23.2,
+       "temp_c": 2.29,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": -2.6,
+       "lluvia_canicula_pct": -9.2,
+       "temp_c": 1.66,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -21.8,
+       "lluvia_canicula_pct": -25.7,
+       "temp_c": 2.03,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 10.4,
+       "lluvia_canicula_pct": 2.9,
+       "temp_c": 1.76,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -14.6,
+       "lluvia_canicula_pct": -15.2,
+       "temp_c": 1.98,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -11.1,
+       "lluvia_canicula_pct": -13.9,
+       "temp_c": 2.5,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -9.6,
+       "lluvia_canicula_pct": -14.9,
+       "temp_c": 2.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -9.9,
+       "lluvia_canicula_pct": -12.5,
+       "temp_c": 2.07,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -13.2,
+       "lluvia_canicula_pct": -16.2,
+       "temp_c": 1.36,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -17.5,
+       "lluvia_canicula_pct": -16.5,
+       "temp_c": 2.08,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -5.9,
+       "lluvia_canicula_pct": -7.6,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -14.6,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 2.26,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -12.3,
+       "lluvia_canicula_pct": -18.3,
+       "temp_c": 3.39,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-MM",
+       "lluvia_pct": -13.1,
+       "lluvia_canicula_pct": -14.4,
+       "temp_c": 2.61,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": -0.6,
+       "lluvia_canicula_pct": 4.2,
+       "temp_c": 1.29,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": -0.3,
+       "lluvia_canicula_pct": -6.7,
+       "temp_c": 1.47,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.6,
+       "lluvia_canicula_pct": 3.7,
+       "temp_c": 1.4,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -32.6,
+       "lluvia_canicula_pct": -48.7,
+       "temp_c": 1.5,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": false
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -11.6,
+       "lluvia_canicula_pct": -22.1,
+       "temp_c": 3.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -15.4,
+       "lluvia_canicula_pct": -20.1,
+       "temp_c": 2.83,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -10.6,
+       "lluvia_canicula_pct": -23.6,
+       "temp_c": 2.05,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -10.4,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 2.57,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": 7.1,
+       "lluvia_canicula_pct": -5.7,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": -5.3,
+       "lluvia_canicula_pct": -7.8,
+       "temp_c": 1.6,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -13.0,
+       "lluvia_canicula_pct": -21.0,
+       "temp_c": 1.74,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 15.6,
+       "lluvia_canicula_pct": 15.0,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": -16.4,
+       "lluvia_canicula_pct": -20.5,
+       "temp_c": 1.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -12.0,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 2.1,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -22.2,
+       "lluvia_canicula_pct": -26.7,
+       "temp_c": 4.38,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -15.3,
+       "lluvia_canicula_pct": -19.5,
+       "temp_c": 3.54,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    }
+   }
+  },
+  "zacapa": {
+   "agua_actual_hoy": 67,
+   "escenarios": {
+    "ssp245": {
+     "nombre": "Emisiones intermedias (SSP2-4.5)",
+     "n_modelos": 33,
+     "lluvia_pct": {
+      "mediana": -4.0,
+      "p10": -10.6,
+      "p90": 4.0
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -6.0,
+      "p10": -18.5,
+      "p90": 1.9
+     },
+     "temp_c": {
+      "mediana": 1.4,
+      "p10": 1.0,
+      "p90": 2.3
+     },
+     "modelos_mas_secos": 23,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 9,
+       "agua_mediana": 64,
+       "deficit_mediano_pct": 28
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 9,
+       "agua_mediana": 64,
+       "deficit_mediano_pct": 28
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 33,
+       "agua_mediana": 78,
+       "deficit_mediano_pct": 21
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": 0.2,
+       "lluvia_canicula_pct": -3.5,
+       "temp_c": 1.96,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": 2.0,
+       "lluvia_canicula_pct": 1.9,
+       "temp_c": 1.43,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -4.0,
+       "lluvia_canicula_pct": -6.0,
+       "temp_c": 1.15,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -10.8,
+       "lluvia_canicula_pct": -15.3,
+       "temp_c": 1.85,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -7.9,
+       "lluvia_canicula_pct": -12.5,
+       "temp_c": 1.85,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": 4.4,
+       "lluvia_canicula_pct": -2.3,
+       "temp_c": 1.02,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -0.1,
+       "lluvia_canicula_pct": 4.1,
+       "temp_c": 1.62,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 6.7,
+       "lluvia_canicula_pct": 1.1,
+       "temp_c": 1.29,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -3.7,
+       "lluvia_canicula_pct": -5.0,
+       "temp_c": 1.47,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -8.0,
+       "lluvia_canicula_pct": -9.6,
+       "temp_c": 1.92,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -6.2,
+       "lluvia_canicula_pct": -8.0,
+       "temp_c": 1.6,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -2.7,
+       "lluvia_canicula_pct": -2.2,
+       "temp_c": 1.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -11.0,
+       "lluvia_canicula_pct": -14.4,
+       "temp_c": 0.95,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -2.5,
+       "lluvia_canicula_pct": -4.6,
+       "temp_c": 1.2,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -6.1,
+       "lluvia_canicula_pct": -3.5,
+       "temp_c": 1.09,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -6.0,
+       "lluvia_canicula_pct": -5.5,
+       "temp_c": 1.55,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -9.6,
+       "lluvia_canicula_pct": -14.0,
+       "temp_c": 2.44,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": 2.6,
+       "lluvia_canicula_pct": 1.8,
+       "temp_c": 0.75,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": 2.3,
+       "lluvia_canicula_pct": -2.8,
+       "temp_c": 1.02,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.5,
+       "lluvia_canicula_pct": 0.5,
+       "temp_c": 0.86,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -20.3,
+       "lluvia_canicula_pct": -31.3,
+       "temp_c": 1.09,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -6.6,
+       "lluvia_canicula_pct": -14.1,
+       "temp_c": 2.53,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -4.1,
+       "lluvia_canicula_pct": -10.0,
+       "temp_c": 1.82,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -8.3,
+       "lluvia_canicula_pct": -19.9,
+       "temp_c": 1.59,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -1.5,
+       "lluvia_canicula_pct": -11.9,
+       "temp_c": 1.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": -0.9,
+       "lluvia_canicula_pct": -6.0,
+       "temp_c": 1.3,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": 17.4,
+       "lluvia_canicula_pct": 14.6,
+       "temp_c": 0.81,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -8.5,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 1.18,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 15.1,
+       "lluvia_canicula_pct": 11.7,
+       "temp_c": 1.19,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": 1.7,
+       "lluvia_canicula_pct": 1.5,
+       "temp_c": 1.25,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -5.7,
+       "lluvia_canicula_pct": -18.5,
+       "temp_c": 1.7,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -13.0,
+       "lluvia_canicula_pct": -22.0,
+       "temp_c": 3.75,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -8.7,
+       "lluvia_canicula_pct": -10.3,
+       "temp_c": 2.77,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    },
+    "ssp585": {
+     "nombre": "Emisiones altas (SSP5-8.5)",
+     "n_modelos": 34,
+     "lluvia_pct": {
+      "mediana": -11.6,
+      "p10": -17.9,
+      "p90": 0.6
+     },
+     "lluvia_canicula_pct": {
+      "mediana": -17.1,
+      "p10": -24.4,
+      "p90": 1.1
+     },
+     "temp_c": {
+      "mediana": 2.1,
+      "p10": 1.4,
+      "p90": 3.1
+     },
+     "modelos_mas_secos": 29,
+     "rotaciones": [
+      {
+       "id": "actual_maiz_frijol",
+       "nombre": "Lo que hace hoy: maíz con frijol en primera y frijol en postrera",
+       "nombre_en": "What you do today: maize with beans in primera and beans in postrera",
+       "es_actual": true,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 58,
+       "deficit_mediano_pct": 32
+      },
+      {
+       "id": "leguminosa_canavalia",
+       "nombre": "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie",
+       "nombre_en": "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 3,
+       "agua_mediana": 58,
+       "deficit_mediano_pct": 32
+      },
+      {
+       "id": "tolerante_sorgo_caupi",
+       "nombre": "Sorgo en primera y caupí en postrera, con rastrojo en pie",
+       "nombre_en": "Sorghum in primera and cowpea in postrera, with standing stubble",
+       "es_actual": false,
+       "futuros_que_aguanta": 34,
+       "agua_mediana": 74,
+       "deficit_mediano_pct": 25
+      }
+     ],
+     "modelos": [
+      {
+       "modelo": "ACCESS-CM2",
+       "lluvia_pct": -10.3,
+       "lluvia_canicula_pct": -17.8,
+       "temp_c": 2.51,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "ACCESS-ESM1-5",
+       "lluvia_pct": -5.7,
+       "lluvia_canicula_pct": -7.1,
+       "temp_c": 2.58,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "BCC-CSM2-MR",
+       "lluvia_pct": -15.8,
+       "lluvia_canicula_pct": -20.0,
+       "temp_c": 1.77,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2",
+       "lluvia_pct": -18.1,
+       "lluvia_canicula_pct": -25.1,
+       "temp_c": 2.46,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CESM2-WACCM",
+       "lluvia_pct": -14.9,
+       "lluvia_canicula_pct": -22.9,
+       "temp_c": 2.29,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-CM2-SR5",
+       "lluvia_pct": -2.2,
+       "lluvia_canicula_pct": -8.8,
+       "temp_c": 1.65,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CMCC-ESM2",
+       "lluvia_pct": -22.1,
+       "lluvia_canicula_pct": -26.0,
+       "temp_c": 2.06,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-CM6-1",
+       "lluvia_pct": 10.4,
+       "lluvia_canicula_pct": 2.8,
+       "temp_c": 1.76,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CNRM-ESM2-1",
+       "lluvia_pct": -14.9,
+       "lluvia_canicula_pct": -16.0,
+       "temp_c": 2.02,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "CanESM5",
+       "lluvia_pct": -10.1,
+       "lluvia_canicula_pct": -13.2,
+       "temp_c": 2.52,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3",
+       "lluvia_pct": -9.9,
+       "lluvia_canicula_pct": -16.0,
+       "temp_c": 2.4,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "EC-Earth3-Veg-LR",
+       "lluvia_pct": -8.9,
+       "lluvia_canicula_pct": -11.9,
+       "temp_c": 2.06,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "FGOALS-g3",
+       "lluvia_pct": -12.8,
+       "lluvia_canicula_pct": -15.9,
+       "temp_c": 1.37,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-CM4",
+       "lluvia_pct": -17.3,
+       "lluvia_canicula_pct": -16.4,
+       "temp_c": 2.06,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GFDL-ESM4",
+       "lluvia_pct": -5.7,
+       "lluvia_canicula_pct": -7.7,
+       "temp_c": 1.44,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "GISS-E2-1-G",
+       "lluvia_pct": -14.1,
+       "lluvia_canicula_pct": -18.6,
+       "temp_c": 2.25,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-LL",
+       "lluvia_pct": -11.9,
+       "lluvia_canicula_pct": -18.2,
+       "temp_c": 3.36,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "HadGEM3-GC31-MM",
+       "lluvia_pct": -13.0,
+       "lluvia_canicula_pct": -14.6,
+       "temp_c": 2.63,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IITM-ESM",
+       "lluvia_pct": -1.3,
+       "lluvia_canicula_pct": 3.2,
+       "temp_c": 1.28,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM4-8",
+       "lluvia_pct": 0.4,
+       "lluvia_canicula_pct": -6.0,
+       "temp_c": 1.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "INM-CM5-0",
+       "lluvia_pct": 0.7,
+       "lluvia_canicula_pct": 3.6,
+       "temp_c": 1.39,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "IPSL-CM6A-LR",
+       "lluvia_pct": -31.2,
+       "lluvia_canicula_pct": -48.2,
+       "temp_c": 1.52,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KACE-1-0-G",
+       "lluvia_pct": -11.2,
+       "lluvia_canicula_pct": -21.7,
+       "temp_c": 3.16,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "KIOST-ESM",
+       "lluvia_pct": -14.9,
+       "lluvia_canicula_pct": -19.2,
+       "temp_c": 2.81,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC-ES2L",
+       "lluvia_pct": -9.6,
+       "lluvia_canicula_pct": -22.6,
+       "temp_c": 2.05,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MIROC6",
+       "lluvia_pct": -9.6,
+       "lluvia_canicula_pct": -17.9,
+       "temp_c": 2.51,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-HR",
+       "lluvia_pct": 9.6,
+       "lluvia_canicula_pct": -3.0,
+       "temp_c": 1.41,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MPI-ESM1-2-LR",
+       "lluvia_pct": -5.1,
+       "lluvia_canicula_pct": -8.8,
+       "temp_c": 1.61,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "MRI-ESM2-0",
+       "lluvia_pct": -12.9,
+       "lluvia_canicula_pct": -20.9,
+       "temp_c": 1.73,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NESM3",
+       "lluvia_pct": 16.3,
+       "lluvia_canicula_pct": 15.4,
+       "temp_c": 1.98,
+       "aguanta": {
+        "actual_maiz_frijol": true,
+        "leguminosa_canavalia": true,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-LM",
+       "lluvia_pct": -16.6,
+       "lluvia_canicula_pct": -20.9,
+       "temp_c": 1.97,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "NorESM2-MM",
+       "lluvia_pct": -11.9,
+       "lluvia_canicula_pct": -19.6,
+       "temp_c": 2.12,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "TaiESM1",
+       "lluvia_pct": -23.0,
+       "lluvia_canicula_pct": -28.0,
+       "temp_c": 4.45,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      },
+      {
+       "modelo": "UKESM1-0-LL",
+       "lluvia_pct": -15.1,
+       "lluvia_canicula_pct": -19.6,
+       "temp_c": 3.48,
+       "aguanta": {
+        "actual_maiz_frijol": false,
+        "leguminosa_canavalia": false,
+        "tolerante_sorgo_caupi": true
+       }
+      }
+     ]
+    }
+   }
+  }
+ }
+}

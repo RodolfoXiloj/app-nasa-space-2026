@@ -5,6 +5,7 @@ import Controles from './components/Controles.jsx'
 import PanelSatelite from './components/PanelSatelite.jsx'
 import Clima from './components/Clima.jsx'
 import Rotaciones from './components/Rotaciones.jsx'
+import FuturosNasa from './components/FuturosNasa.jsx'
 import Tarjeta from './components/Tarjeta.jsx'
 import Validacion from './components/Validacion.jsx'
 import Glosario from './components/Glosario.jsx'
@@ -30,6 +31,13 @@ export default function App({ pidInicial = null }) {
   const [error, setError] = useState(null)
   const [pestana, setPestana] = useState('parcela')
   const [validacion, setValidacion] = useState(null)
+  const [futuros, setFuturos] = useState(null)
+
+  useEffect(() => {
+    cargarJSON('data/futuros_nasa.json')
+      .then(setFuturos)
+      .catch(() => setFuturos(null))
+  }, [])
 
   useEffect(() => {
     cargarJSON('data/validacion.json')
@@ -142,6 +150,7 @@ export default function App({ pidInicial = null }) {
           {res && (
             <>
               <Rotaciones res={res} lluvia={lluvia} temp={temp} prioridad={prioridad} />
+              <FuturosNasa futuros={futuros} pid={res.parcela?.id} cultivo={cultivo} />
               <Tarjeta res={res} lluvia={lluvia} temp={temp} prioridad={prioridad} />
               {vacios.txt?.length > 0 && (
                 <details className="pendientes no-imprimir">

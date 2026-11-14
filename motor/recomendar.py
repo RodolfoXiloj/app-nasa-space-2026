@@ -215,7 +215,11 @@ def verificar_campos_reto(res: dict) -> None:
                 raise ContratoIncompleto(f"La rotación {r.get('id')} no tiene '{k}'")
 
 
-def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", base: str | None = None) -> dict:
+def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", base: str | None = None,
+               escenarios_extra: list[tuple[float, float]] | None = None) -> dict:
+    """escenarios_extra: pares (lluvia %, +°C) que se evalúan además de la rejilla fija, por ejemplo los
+    cambios que proyecta cada modelo de NASA NEX-GDDP-CMIP6 (motor/futuros.py). Sus resultados van en
+    res["escenarios_extra"] y no tocan el contrato, el bloque farmer ni los textos de la tarjeta."""
     p = datos.parcela(pid, base)
     cultivos = datos.cultivos(base)
     rotaciones = datos.rotaciones(base)
@@ -241,6 +245,10 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
     series = {}
     for ll in LLUVIA_PCT:
         for tt in TEMP_C:
+            s = clima.serie_escenario(diario, p["lat"], ll, tt)
+            series[(ll, tt)] = (s, clima.canicula(s, anios))
+    for ll, tt in escenarios_extra or []:
+        if (ll, tt) not in series:
             s = clima.serie_escenario(diario, p["lat"], ll, tt)
             series[(ll, tt)] = (s, clima.canicula(s, anios))
     comparacion = clima.comparar(diario_power, chirps_c, anios[0], anios[-1])
@@ -405,6 +413,15 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
     if p.get("provisional"):
         pendientes.append("Coordenada provisional: falta validar que el píxel sea agrícola")
 
+    extra = None
+    if escenarios_extra:
+        extra = {id_escenario(ll, tt): {
+            "lluvia_pct": ll, "temp_c": tt,
+            "canicula_anios_racha_larga": series[(ll, tt)][1]["anios_racha_larga"],
+            "rotaciones": {ev["rot"]["id"]: {"puntajes": ev["escenarios"][id_escenario(ll, tt)]["puntajes"],
+                                             "deficit_mediano_pct": ev["escenarios"][id_escenario(ll, tt)]["deficit"]["mediana_pct"]}
+                           for ev in elegidas}} for ll, tt in escenarios_extra}
+
     res = {
         "version_contrato": VERSION_CONTRATO,
         "meta": {"tipo": "calculado", "generado": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -433,4 +450,6 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
     res["texto_tarjeta"] = redaccion.texto_tarjeta(res)
     res["audio"]["texto"] = res["texto_tarjeta"]
     ingles.agregar(res, base)
+    if extra is not None:
+        res["escenarios_extra"] = extra  # fuera del contrato: solo lo usa motor/futuros.py
     return res

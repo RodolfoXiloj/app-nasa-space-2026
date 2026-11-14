@@ -1,6 +1,12 @@
 # Google Earth Engine: phase-two integration guide
 
-**Status: not implemented.** This is planned as phase two, to be done only if there is time. Nothing in the repo imports or calls Earth Engine today, and no dependency, key or project ID has been added.
+**Status: first product done (NEX-GDDP-CMIP6 climate futures, 14 Nov 2026).** SMAP L4 and land cover below are still not implemented. Nothing in the repo imports or calls Earth Engine: the futures were precomputed in the Earth Engine Code Editor with `pipeline/gee/cmip6_cambios.js`, the exported CSV is in `data/cache/cmip6/`, and `python -m pipeline.clientes.cmip6` turns it into `data/cache/cmip6/cambios.json` with `cache.guardar`. No dependency, key or project ID was added.
+
+### Done: NASA NEX-GDDP-CMIP6 climate futures
+
+- **What:** for each plot, model and scenario (SSP2-4.5, SSP5-8.5), mean May-October rain, June-August rain and May-October mean temperature, 2041-2060 against 1995-2014 (`NASA/GDDP-CMIP6`, 0.25°). 33 models in SSP2-4.5 (HadGEM3-GC31-MM has no SSP2-4.5) and 34 in SSP5-8.5.
+- **How it is used:** `python -m motor.futuros` applies each model's change to the observed daily series with `clima.serie_escenario`, the same as the fixed scenarios, and repeats the water balance of the 3 rotations. A rotation «holds» in a future if its water score is equal to or higher than today's rotation with today's climate. Output: `web/public/data/futuros_nasa.json`, shown in Evidence under the rotations (`FuturosNasa.jsx`). It does not change the contract, the `farmer` block, the card text or the audio.
+- **Limits:** delta method on mean rain and temperature, not a change in the number of rainy days; Jocotán, Camotán and San Juan Ermita share one 0.25° cell, so they share the projected changes; the drought-tolerant rotation already starts with a higher water score, which favors it in the count.
 
 The one fixed rule: **Earth Engine is never called live**, not from the web and not from the engine (`motor/`). It is only used offline, by the pipeline, to **precompute files in `data/cache/`**, the same way as every other source. The app must keep working with no network, and `npm run sin-red` must keep passing.
 

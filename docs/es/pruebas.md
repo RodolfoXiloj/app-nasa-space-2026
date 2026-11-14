@@ -44,6 +44,28 @@ Esta rama solo cambia documentos, `requirements.txt` y `render.yaml`. Las corrid
 
 Antes de la fila del entorno limpio, un primer entorno limpio sin Pillow (sin hora anotada) falló 3 pruebas de `tests/test_pipeline.py` (`test_lzw_igual_que_pillow`, `test_lzw_con_muchos_codigos`, `test_lector_ligero_lee_solo_hasta_la_columna`) con «ModuleNotFoundError: No module named 'PIL'». Por eso Pillow ahora es una línea obligatoria de `requirements.txt`.
 
+## Futuros de NASA NEX-GDDP-CMIP6 (rama `carril-g-earth-engine`): sábado 14 nov 2026
+
+Corrido en una copia del repo sin los binarios (mp3, png, pdf). Las 23 fallas son todas por esos archivos que faltan en esa copia (`test_audio_frases`, `test_audio_ia`, `test_slides`) y fallan igual sin este cambio. Falta repetir las 4 pruebas en una copia completa antes de unir.
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 15:39 | Pruebas automáticas | `python -m pytest -q` | 202 pasan, 23 fallan solo por binarios ausentes; `tests/test_futuros.py` 3 de 3 |
+| 15:39 | Humo de la web | `cd web && npm run smoke` | «ok futuros_nasa (5 parcelas)»; las únicas fallas son mp3 ausentes |
+| 15:39 | Build | `cd web && npm run build` | ✅ |
+| 15:39 | Evidence a 1280 y 390 px | Playwright, `#evidence` | Sección visible en inglés, sin desplazamiento horizontal a 390 px |
+| Pendiente | Sin red | `cd web && npm run sin-red` | Sin correr: necesita los mp3 |
+
+Repetido en una copia completa de la rama en `2403e3f` (con mp3, png y pdf), en Linux con Chromium sin interfaz (`NAVEGADOR` apuntando a Chromium con `--no-sandbox`):
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 15:54 | Pruebas automáticas | `python -m pytest -q` | ✅ 225 pasan |
+| 15:55 | Humo de la web | `cd web && npm run smoke` | ✅ «Prueba de humo de la web: sin fallas» |
+| 15:55 | Build | `cd web && npm run build` | ✅ |
+| 15:58 | Sin red | `cd web && npm run sin-red` | ✅ 23 de 23 |
+| 15:59 | PDF de las diapositivas | `python web/scripts/slides_pdf.py` | ✅ 7 páginas (tope 7), con la diapositiva 4 de futuros |
+
 ## Audio en inglés unido a `main`: sábado 14 nov 2026
 
 Unión en un commit de la rama `entrega-audio-en` sobre `main` (con el kit, los documentos y las diapositivas). Cambios de la unión: el kit ofrece `audio/{parcela}.frases.en.mp3` en «Download audio» cuando el idioma es inglés (si falta, el de español); el botón Escuchar ya no se reinicia al cambiar de idioma y, si estaba sonando, sigue con el mp3 del idioma nuevo. Mismo equipo y versiones. Horas de `date`.

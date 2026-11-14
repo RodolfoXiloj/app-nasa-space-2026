@@ -168,7 +168,8 @@ def test_validacion_es_idempotente():
 
 
 # ---------------------------------------------------------------- archivos publicados
-PUBLICADOS = sorted(p.name for p in WEB.glob("*.json") if p.name != "ejemplo.json") if WEB.exists() else []
+# futuros_nasa.json (motor/futuros.py) no lleva bloques es/en: sus textos visibles salen de web/src/i18n.
+PUBLICADOS = sorted(p.name for p in WEB.glob("*.json") if p.name not in ("ejemplo.json", "futuros_nasa.json")) if WEB.exists() else []
 
 
 @pytest.mark.parametrize("nombre", PUBLICADOS)

@@ -11,6 +11,7 @@ Start with the [project README](../README.md). The documents below are in Englis
 | [impact.md](impact.md) | The problem in numbers: every impact figure with its year, scope, source and URL, and the figures left out |
 | [existing-tools.md](existing-tools.md) | What already exists (ASIS, ZARC, Agroclimatic Technical Boards, FEWS NET/IPC, WFP, GLAM, Plantix) and what Milpa does not claim |
 | [chorti.md](chorti.md) | Ch'orti' recording script for native speakers: the phrases, the empty `caa` slot and the rules |
+| [judge-qa.md](judge-qa.md) | Likely judge questions with short answers, each backed by a number in the repo |
 
 ## How the tool decides and how we checked it
 

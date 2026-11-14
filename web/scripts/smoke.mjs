@@ -30,7 +30,7 @@ try {
   }
   const obsMod = await server.ssrLoadModule('/src/components/Observacion2026.jsx')
   const dir = join(raiz, 'public', 'data')
-  const archivos = readdirSync(dir).filter((f) => f.endsWith('.json') && !['parcelas.json', 'validacion.json'].includes(f))
+  const archivos = readdirSync(dir).filter((f) => f.endsWith('.json') && !['parcelas.json', 'validacion.json', 'futuros_nasa.json'].includes(f))
   let validacion = null
   try {
     validacion = JSON.parse(readFileSync(join(dir, 'validacion.json'), 'utf-8'))
@@ -113,6 +113,27 @@ try {
     }
   }
   console.log(`audio de la tarjeta en inglés con etiqueta de IA: ${tarjetasEn} mp3`)
+  // Futuros de NASA (python -m motor.futuros): una sección por parcela, si el archivo existe.
+  try {
+    const futuros = JSON.parse(readFileSync(join(dir, 'futuros_nasa.json'), 'utf-8'))
+    const Futuros = await comp('FuturosNasa')
+    for (const p of Object.keys(futuros.parcelas)) {
+      const html = renderToString(React.createElement(Futuros, { futuros, pid: p }))
+      if (html.length < 200) throw new Error(`salida vacía para ${p}`)
+      if (!html.includes('futuros-rotaciones')) throw new Error(`sin rotaciones para ${p}`)
+      for (const cultivo of ['maiz_solo', 'sorgo']) {
+        const ajeno = renderToString(React.createElement(Futuros, { futuros, pid: p, cultivo }))
+        if (ajeno !== '') throw new Error(`futuros de maíz con frijol mostrados para ${cultivo} en ${p}`)
+      }
+    }
+    console.log(`ok futuros_nasa (${Object.keys(futuros.parcelas).length} parcelas)`)
+  } catch (e) {
+    if (e.code === 'ENOENT') console.log('(sin futuros_nasa.json: corra python -m motor.futuros)')
+    else {
+      fallas++
+      console.error(`FALLA futuros_nasa: ${e.message}`)
+    }
+  }
   const indice = JSON.parse(readFileSync(join(dir, 'parcelas.json'), 'utf-8'))
   for (const p of indice.parcelas) {
     for (const ruta of Object.values(p.archivos)) {

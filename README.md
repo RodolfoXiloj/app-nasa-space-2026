@@ -28,6 +28,7 @@ The technical view for the extension worker loads only when someone opens it:
 - Map of the five plots with NASA GIBS true-colour layers stored in the site for offline use, plus Sentinel-2 imagery when there is a connection.
 - What the satellite sees, the climate of the area, and the three rotations side by side. Each rotation carries the five fields the challenge asks for: why, evidence, benefits, information gaps and risks. Each also has water, soil and pest scores, a confidence level with its reason, and a 12-month calendar.
 - Scenarios: rainfall at 0, −10, −20 or −30 % and temperature at +1.5 °C, recomputed in the browser from values the engine already calculated.
+- NASA climate futures: the three rotations tested against the rain and temperature change that each NASA NEX-GDDP-CMIP6 model projects for 2041–2060 (33 models in SSP2-4.5, 34 in SSP5-8.5), with the same water balance. At the five plots, today's maize and beans keeps today's water score in only 2 to 9 futures; the drought-tolerant option holds in 32 to 34.
 - A farmer card that can be played as audio and printed or saved as PDF.
 - A “NASA product → decision” table, a “Where it fails” panel, the validation tab, and the glossary and sources.
 
@@ -79,7 +80,10 @@ The exported JSON, mp3 and subtitle files in `web/public/` are already in the re
 ```bash
 python -m pipeline.validacion.validar   # POWER vs CHIRPS, 2018 drought test, 2026 observation -> web/public/data/validacion.json
 python -m motor.exportar                # engine -> web/public/data/*.json
+python -m motor.futuros                 # NASA NEX-GDDP-CMIP6 futures -> web/public/data/futuros_nasa.json
 ```
+
+The climate futures were precomputed offline in the Earth Engine Code Editor with `pipeline/gee/cmip6_cambios.js` (nothing calls Earth Engine live). To rebuild the cache from the exported CSV: `python -m pipeline.clientes.cmip6 data/cache/cmip6/milpa_cmip6_cambios.csv`. See [docs/earth-engine.md](docs/earth-engine.md).
 
 To download the data again (network needed; slow):
 
@@ -134,6 +138,7 @@ Known limits:
 | SMAP SPL3SMP_E v6 (9 km, daily, top 0-5 cm; through AppEEARS) | Separate soil-moisture check next to the 2018 test (not part of the “up to 2017” run), the 2026 observation and the confidence level. It describes the ~9 km landscape, not the plot |
 | SRTM GL3 (90 m) | Slope of the 90 m cell that contains each plot |
 | NASA GIBS | True-colour MODIS layer stored in the site for the offline map |
+| NASA NEX-GDDP-CMIP6 (0.25°, daily, bias-corrected; precomputed offline in Google Earth Engine) | Change in May-October rain, June-August rain and mean temperature for 2041-2060 against 1995-2014 in each model (33 under SSP2-4.5, 34 under SSP5-8.5): how many of those futures each rotation holds, in Evidence. Each model is compared only with its own past; it changes mean rain and temperature, not the number of rainy days |
 
 ## Other data and references
 

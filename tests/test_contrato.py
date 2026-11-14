@@ -68,7 +68,7 @@ def test_aviso_de_que_no_reemplaza_al_tecnico(resultado_sintetico):
     assert "no reemplaza" in resultado_sintetico["texto_tarjeta"]
 
 
-@pytest.mark.parametrize("ruta", sorted(p for p in WEB_DATA.glob("*.json") if p.name not in ("parcelas.json", "validacion.json")),
+@pytest.mark.parametrize("ruta", sorted(p for p in WEB_DATA.glob("*.json") if p.name not in ("parcelas.json", "validacion.json", "futuros_nasa.json")),
                          ids=lambda p: p.name)
 def test_cada_json_exportado_cumple_el_esquema(ruta):
     obj = json.loads(ruta.read_text(encoding="utf-8"))
