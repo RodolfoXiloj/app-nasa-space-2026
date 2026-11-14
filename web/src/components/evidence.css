@@ -99,10 +99,12 @@
   color: #2f6b33; /* 5.8:1 sobre el azul claro (antes 4.5:1 justo) */
 }
 
-/* Las fuentes del glosario tienen URL largas: se parten para no abrir scroll horizontal a 360 px. */
+/* Las fuentes del glosario y las notas de la validación tienen URL largas: se parten para no abrir scroll
+   horizontal a 360 px. */
 .fuentes li,
 .fuentes p,
-.glosario dd {
+.glosario dd,
+.lista-compacta li {
   overflow-wrap: anywhere;
 }
 

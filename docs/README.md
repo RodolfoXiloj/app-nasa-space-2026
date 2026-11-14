@@ -19,6 +19,7 @@ Start with the [project README](../README.md). The documents below are in Englis
 |---|---|
 | [thresholds.md](thresholds.md) | The confirmed traffic-light thresholds, the four states and the 3-point tie rule |
 | [validation.md](validation.md) | POWER against CHIRPS, the 2018 drought test with its hits and misses against years with documented losses, and the July-August 2026 observation |
+| [canicula-sensitivity.md](canicula-sensitivity.md) | How much the canícula fact changes with the CHIRPS daily split: “sat” (IMERG, used by the engine) against “rnl” (ERA5), 5 plots, 2001-2025. Generated; Spanish copy in [es/sensibilidad-canicula.md](es/sensibilidad-canicula.md) |
 | [tests.md](tests.md) | Log of every test that really ran, and the tests still pending |
 | [pictos.md](pictos.md) | The SVG pictograms, what each one stands for and its comprehension question (English and Spanish) |
 | [earth-engine.md](earth-engine.md) | Phase-two plan (not implemented): Google Earth Engine only to precompute `data/cache/`, never live |

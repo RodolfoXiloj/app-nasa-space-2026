@@ -59,9 +59,10 @@ EVIDENCIA_2026 = [
      "url": "https://www.prensalibre.com/guatemala/comunitario/sequia-golpea-el-maiz-estudio-documenta-graves-perdidas-en-36-mil-hogares-del-corredor-seco/",
      "cita": ("En el corredor seco guatemalteco, 36 mil 431 hogares reportan serios daños en sus cosechas de maíz, "
               "según una evaluación de Oxfam, organizaciones socias y Acción contra el Hambre."),
-     "nota": ("Ámbito según la nota: el corredor seco de Guatemala, sin lista de departamentos ni municipios. La nota "
-              "no aclara si son hogares evaluados o una estimación; el estudio completo abarca Guatemala, Honduras y "
-              "El Salvador. No se atribuye a Chiquimula ni a Zacapa.")},
+     "nota": ("Ámbito según la nota: el corredor seco de Guatemala, sin lista de departamentos ni municipios. "
+              "Según la nota, el estudio incorporó 4260 participantes, representativos de unos 91 121 hogares: los "
+              "36 431 hogares son una estimación representativa, no un conteo. El estudio completo abarca Guatemala, "
+              "Honduras y El Salvador. No se atribuye a Chiquimula ni a Zacapa.")},
     {"id": "canal_antigua_2026_09_25", "relacion": "independiente: conteo oficial de familias afectadas",
      "fuente": "Canal Antigua, 25 sep 2026",
      "url": "https://canalantigua.tv/2026/09/25/sequia-persiste-pese-a-alivio-temporal-de-lluvias-113-mil-familias-siguen-afectadas-en-chiquimula-y-jutiapa/",
@@ -69,6 +70,48 @@ EVIDENCIA_2026 = [
      "nota": "Ámbito según la nota: «15 municipios de Chiquimula y Jutiapa, bajo alerta roja por la sequía». No da cifras de Zacapa."},
 ]
 ANIO_OBSERVACION = 2026
+NOTA_SMAP_2018 = ("Anomalía de SMAP de 2018 = julio-agosto de 2018 frente a los demás años con SMAP (desde 2015, "
+                  "incluidos años posteriores a 2018). SMAP no entra en la corrida «con lo que se sabía hasta 2017»: esa "
+                  "corrida solo usa el déficit de agua con la lluvia de CHIRPS.")
+# Años con pérdidas de cosecha documentadas en fuentes públicas (docs/validation.md, data/fuentes.yaml). La lista se
+# tomó entera después de la prueba, sin elegirla para el resultado: guarda también los años que el motor no marca.
+# Las reglas y los umbrales son los mismos; aquí solo se cuentan las marcas de `sequia_2018.anios` contra esta lista.
+PERDIDAS_DOCUMENTADAS = [
+    {"anio": 2009, "fuente_ids": ["fao_pma_2010"],
+     "que_documenta": "Chiquimula perdió 30 642 de 38 201 manzanas de maíz",
+     "ambito": "Departamento de Chiquimula"},
+    {"anio": 2010, "fuente_ids": ["fao_chorti"],
+     "que_documenta": "Pérdidas parciales o totales de maíz y frijol (pérdidas documentadas; la causa no está en "
+                      "nuestras notas)",
+     "ambito": "Comunidades ch'orti' de Camotán, Jocotán y Olopa"},
+    {"anio": 2015, "fuente_ids": ["fao_chorti"],
+     "que_documenta": "Pérdidas parciales o totales de maíz y frijol",
+     "ambito": "Comunidades ch'orti' de Camotán, Jocotán y Olopa"},
+    {"anio": 2016, "fuente_ids": ["fao_chorti"],
+     "que_documenta": "Pérdidas parciales o totales de maíz y frijol",
+     "ambito": "Comunidades ch'orti' de Camotán, Jocotán y Olopa"},
+    {"anio": 2018, "fuente_ids": ["fao_giews_2018", "fao_chorti"],
+     "que_documenta": "Estimación preliminar del MAGA de 175 126 ha de pérdidas de cultivos, sobre todo maíz y frijol, "
+                      "y 1 290 785 personas afectadas, al 13 de agosto de 2018; también pérdidas parciales o totales en "
+                      "las comunidades ch'orti'",
+     "ambito": "Guatemala; comunidades ch'orti' de Camotán, Jocotán y Olopa"},
+    {"anio": 2019, "fuente_ids": ["maga_smc_2019", "oxfam_2019"],
+     "que_documenta": "96 512 familias afectadas, 14 830 de ellas en Chiquimula; Oxfam midió pérdidas promedio de "
+                      "78.1 % en maíz y 70.4 % en frijol en 201 comunidades monitoreadas, 23 de ellas en Jocotán, "
+                      "Camotán, San Juan Ermita y Olopa",
+     "ambito": "Guatemala y Chiquimula (MAGA); 201 comunidades monitoreadas (Oxfam)"},
+    {"anio": 2023, "fuente_ids": ["siinsan_2023", "fews_net_2023"],
+     "que_documenta": "53 129.82 ha de maíz y frijol dañadas y 101 184 familias afectadas; FEWS NET informó pérdidas "
+                      "de al menos el 50 % en la Primera para agricultores de subsistencia",
+     "ambito": "75 municipios, entre ellos de Chiquimula y Zacapa (SIINSAN); Guatemala (FEWS NET)"},
+]
+NOTAS_PERDIDAS = [
+    "La lista de siete años se tomó entera de fuentes públicas después de la prueba, no se eligió para el resultado: "
+    "guarda todos los años con pérdidas documentadas que encontramos, también los que el motor no marca.",
+    "2010 figura como año con pérdidas documentadas, no como sequía: la causa no está en nuestras notas.",
+    "Las fuentes tienen ámbitos distintos (el país, un departamento o las comunidades ch'orti') y ninguna mide nuestros "
+    "cinco puntos.",
+]
 MESES_OBSERVACION = (7, 8)
 ANIO_INICIO_PRUEBA = 2006
 ROTACION_ACTUAL = "actual_maiz_frijol"
@@ -258,8 +301,9 @@ def observacion_2026(anio: int = ANIO_OBSERVACION, meses: tuple[int, ...] = MESE
         "titulo": f"Observación preliminar: julio-agosto {anio}",
         "resumen": resumen,
         "limites": [
-            f"Es una observación del pasado, no un pronóstico. El motor usa 2001-2025: {anio} no entra en los puntajes, "
-            "la confianza ni el audio.",
+            f"Es una observación del pasado, no un pronóstico. La lluvia y la humedad de {anio} no entran en los "
+            f"puntajes, la confianza ni el audio: el clima del motor es 2001-2025. Los focos de enero a mayo de {anio} "
+            "sí cuentan en el hecho de quema.",
             "Preliminar: el Climate Hazards Center recalcula CHIRPS cada mes y SMAP puede reprocesarse. Los meses de "
             f"{anio} vienen de la carpeta del producto final (no de prelim/); se guarda la fecha de cada archivo.",
             f"SMAP: {len(smap)} celdas de 9 km con dato ({sum(len(x['parcelas']) for x in smap)} parcelas"
@@ -273,6 +317,39 @@ def observacion_2026(anio: int = ANIO_OBSERVACION, meses: tuple[int, ...] = MESE
         "smap_sin_dato": sin_smap,
         "reportes_publicos": EVIDENCIA_2026,
     }
+
+
+def _fuentes_por_id() -> dict[str, dict]:
+    return {f["id"]: f for f in datos.yaml_de("fuentes.yaml")["fuentes"]}
+
+
+def _y(anios: list[int], conj: str = "y") -> str:
+    """2016, 2019 y 2023 (o «ni» en una negación)."""
+    xs = [str(a) for a in anios]
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + f" {conj} " + xs[-1]
+
+
+def perdidas_documentadas(parcelas: list[dict]) -> dict:
+    """Marcas de riesgo alto de cada parcela (2006-2025) contra los 7 años con pérdidas documentadas."""
+    fuentes = _fuentes_por_id()
+    lista = sorted(x["anio"] for x in PERDIDAS_DOCUMENTADAS)
+    anios = [{**x, "fuentes": [{"id": i, "nombre": fuentes[i]["nombre"], "url": fuentes[i]["url"]}
+                               for i in x["fuente_ids"]]} for x in PERDIDAS_DOCUMENTADAS]
+    por_parcela = []
+    for p in parcelas:
+        prueba = [m["anio"] for m in p["sequia_2018"]["anios"]]
+        marcados = [m["anio"] for m in p["sequia_2018"]["anios"] if m["riesgo_alto"]]
+        aciertos = [a for a in marcados if a in lista]
+        falsas = [a for a in marcados if a not in lista]
+        fallos = [a for a in lista if a in prueba and a not in marcados]
+        por_parcela.append({"id": p["id"], "municipio": p["municipio"], "anios_marcados": marcados,
+                            "aciertos": len(aciertos), "anios_aciertos": aciertos,
+                            "falsas_alarmas": len(falsas), "anios_falsas_alarmas": falsas,
+                            "fallos": len(fallos), "anios_fallos": fallos,
+                            "n_anios": len(prueba), "periodo": f"{min(prueba)}-{max(prueba)}" if prueba else None})
+    sin_marcar = [a for a in lista if por_parcela and all(a in x["anios_fallos"] for x in por_parcela)]
+    return {"anios": anios, "parcelas": por_parcela, "anios_sin_marcar_en_ninguna_parcela": sin_marcar,
+            "notas": NOTAS_PERDIDAS}
 
 
 def validar() -> dict:
@@ -299,14 +376,18 @@ def validar() -> dict:
         "regla_5_1": {"parcelas_con_senal_2018": con_2018, "minimo": 3, "se_activa": regla,
                       "efecto": "La confianza de las recomendaciones de agua baja a «baja»." if regla else "Ninguno."},
         "evidencia_publica_2018": EVIDENCIA_2018,
+        "perdidas_documentadas": perdidas_documentadas(parcelas),
         "observacion_2026": observacion_2026(),
         "parcelas": parcelas,
         "notas": [
-            "CHIRPS no es medición en tierra: mezcla satélite y estaciones. Las estaciones de INSIVUMEH quedan como vacío.",
+            "CHIRPS no es medición en tierra: mezcla satélite y estaciones. Según su README, CHIRPS v3 ya mezcla "
+            "estaciones de INSIVUMEH (https://data.chc.ucsb.edu/products/CHIRPS/v3.0/README-CHIRPSv3.0.txt); falta una "
+            "comparación independiente con estaciones.",
             "POWER: celda de 0.5° x 0.625° (~50 km). CHIRPS: 0.05° (~5 km).",
             "La lluvia del motor es el total mensual de CHIRPS repartido con los días de POWER.",
             "Riesgo alto = déficit del año mayor que el percentil 75 de los años anteriores (desde 2001).",
             "Señal de NDVI = anomalía de julio-septiembre de -1 desviación estándar o menos.",
+            NOTA_SMAP_2018,
         ],
     }
     destino = datos.RAIZ / "web" / "public" / "data" / "validacion.json"
@@ -357,6 +438,29 @@ def escribir_md(v: dict) -> None:
                  f"{_s(s2['anomalia_ndvi_2018_de'])} DE | {_s(s2['anomalia_smap_2018_de'])} DE | "
                  f"{s2['aciertos']} · {s2['falsas_alarmas']} · {s2['fallos']} ({s2['n_anios']}) | "
                  f"{_s(s2['spearman_deficit_vs_ndvi'])} ({s2['n_spearman']}) |")
+    pd = v.get("perdidas_documentadas")
+    if pd:
+        L += ["", "### Aciertos y fallos contra los años con pérdidas documentadas", "",
+              "La columna «Aciertos · falsas alarmas · fallos» de arriba cuenta contra los cuatro años secos listados "
+              "antes de la prueba (" + _y(ANIOS_SECOS) + "). Aquí se cuenta contra una lista más larga: "
+              f"{len(pd['anios'])} años con pérdidas de cosecha documentadas en fuentes públicas. La regla y los "
+              "umbrales son los mismos; no se volvió a correr ni se ajustó nada.", "",
+              "| Parcela | Años marcados como riesgo alto | Aciertos | Falsas alarmas | Fallos |",
+              "|---|---|---|---|---|"]
+        for x in pd["parcelas"]:
+            L.append(f"| {x['municipio']} | {', '.join(str(a) for a in x['anios_marcados']) or '—'} | "
+                     + " | ".join(f"{x[k]}" + (f" ({', '.join(str(a) for a in x['anios_' + k])})" if x["anios_" + k] else "")
+                                  for k in ("aciertos", "falsas_alarmas", "fallos")) + " |")
+        if pd["anios_sin_marcar_en_ninguna_parcela"]:
+            L += ["", f"El motor no marca {_y(pd['anios_sin_marcar_en_ninguna_parcela'], 'ni')} en ninguna parcela."]
+        L += ["", "Los años con pérdidas documentadas:", "",
+              "| Año | Qué documenta la fuente | Ámbito | Fuente |", "|---|---|---|---|"]
+        for a in pd["anios"]:
+            L.append(f"| {a['anio']} | {a['que_documenta']} | {a['ambito']} | "
+                     + "; ".join(f"{f['nombre']}, {f['url']}" for f in a["fuentes"]) + " |")
+        L += ["", "Notas:", ""] + [f"- {n}" for n in pd["notas"]] + [
+            "- Para reproducirlo: en `web/public/data/validacion.json`, `perdidas_documentadas.parcelas[]` sale de los "
+            "`anio` de `parcelas[].sequia_2018.anios[]` con `riesgo_alto` en `true`."]
     e = v.get("evidencia_publica_2018") or {}
     if e:
         L += ["", "### Evidencia pública de la sequía de 2018", "",
@@ -384,11 +488,11 @@ def escribir_md(v: dict) -> None:
         L += ["", "Límites:", ""] + [f"- {t}" for t in o["limites"]]
     L += ["", "## Notas y límites", ""] + [f"- {n}" for n in v["notas"]] + [
         "- SMAP: SPL3SMP_E.006 por AppEEARS, solo datos con calidad recomendada. Camotán no tiene ninguno; Jocotán y "
-        "San Juan Ermita comparten la celda de 9 km.",
-        "- Anomalía de SMAP de 2018 = julio-agosto de 2018 frente a los demás años con SMAP (desde 2015, incluidos años "
-        "posteriores a 2018). SMAP no entra en la corrida «con lo que se sabía hasta 2017»: esa corrida solo usa el "
-        "déficit de agua con la lluvia de CHIRPS.",
-        "- Las 5 parcelas son puntos de ejemplo elegidos con NDVI e imagen Sentinel-2, no verificados en campo; ver docs/es/estado.md.", ""]
+        "San Juan Ermita comparten la celda de 9 km. SMAP mide los primeros 0-5 cm del suelo y describe unos 9 km del "
+        "paisaje, no la parcela.",
+        "- Las 5 parcelas son puntos de ejemplo elegidos con NDVI e imagen Sentinel-2, no verificados en campo; ver docs/es/estado.md.",
+        "- El hecho de canícula depende de cómo CHIRPS reparte la lluvia por día: la comparación de «sat» (IMERG) con "
+        "«rnl» (ERA5) está en [es/sensibilidad-canicula.md](es/sensibilidad-canicula.md).", ""]
     ruta = datos.RAIZ / "docs" / "validacion.md"
     ruta.write_text(chr(10).join(L), encoding="utf-8")
 

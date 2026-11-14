@@ -1,1 +1,1 @@
-{"procedencia": {"producto": "pipeline/validacion/validar.py", "fecha": "2026-11-14T17:31:40Z"}, "datos": {"regla_5_1": {"parcelas_con_senal_2018": 5, "minimo": 3, "se_activa": false, "efecto": "Ninguno."}}}
+{"procedencia": {"producto": "pipeline/validacion/validar.py", "fecha": "2026-11-14T22:51:45Z"}, "datos": {"regla_5_1": {"parcelas_con_senal_2018": 5, "minimo": 3, "se_activa": false, "efecto": "Ninguno."}}}

@@ -2,7 +2,7 @@
 
 export const OBS_LIMITES = {
   en: [
-    'This is a look at the past, not a forecast. The 2026 rain and soil-moisture figures do not enter scores, confidence or audio: the climate record the engine scores with is 2001–2025. Fire detections from January–May 2026 do count in the fire fact.',
+    "It is an observation of the past, not a prediction. The 2026 rain and soil moisture do not enter the scores, the confidence or the audio: the engine's climate is 2001-2025. Fire detections from January to May 2026 do count in the fire fact.",
     'Preliminary: the Climate Hazards Center revises CHIRPS monthly and SMAP may be reprocessed. 2026 months come from the final product folder (not prelim/); each file date is recorded.',
     'SMAP: 3 cells with data (4 plots; Jocotán and San Juan Ermita share a cell); no recommended-quality data: Camotán. With 12 years, “lowest” is all we state—we do not report a percentile.',
     'Plots are example points chosen from space—not verified in the field.',
@@ -199,8 +199,8 @@ export function whereItFails(loc) {
     },
     {
       limit: 'Dry-spell counts depend on how CHIRPS splits rain by day',
-      figure: 'Only the “sat” version (IMERG split) is used; the Climate Hazards Center asks to test against “rnl” (ERA5)',
-      source: 'data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt',
+      figure: 'The engine uses “sat” (IMERG split). With “rnl” (ERA5), 14 plot-years have a dry spell of more than 15 days in 2001–2025 against 8 with “sat”; the two agree on 7 of the 15 either one flags, and the colour changes in 3 of 5 plots (Jocotán yellow→red, Olopa green→yellow, San Juan Ermita yellow→red)',
+      source: 'docs/canicula-sensitivity.md · data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt',
     },
     {
       limit: 'The drought rule misses years with documented losses',
@@ -286,8 +286,8 @@ export function whereItFails(loc) {
     },
     {
       limit: 'Las rachas secas dependen de cómo CHIRPS reparte la lluvia por día',
-      figure: 'Solo se usa la versión “sat” (reparto IMERG); el Climate Hazards Center pide comparar con “rnl” (ERA5)',
-      source: 'data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt',
+      figure: 'El motor usa “sat” (reparto IMERG). Con “rnl” (ERA5), 14 parcela-años tienen una racha seca de más de 15 días en 2001–2025, contra 8 con “sat”; coinciden en 7 de los 15 que marca alguna de las dos, y el color cambia en 3 de 5 parcelas (Jocotán amarillo→rojo, Olopa verde→amarillo, San Juan Ermita amarillo→rojo)',
+      source: 'docs/es/sensibilidad-canicula.md · data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt',
     },
     {
       limit: 'La regla de sequía no marca años con pérdidas documentadas',

@@ -18,7 +18,7 @@ Two datasets would add something the cache does not have today:
 
 | Dataset | GEE collection ID | What it adds |
 |---|---|---|
-| NASA SMAP L4 Global 3-hourly 9 km surface and root-zone soil moisture (SPL4SMGP, version 8) | `NASA/SMAP/SPL4SMGP/008` | Root-zone moisture, and a gap-free series |
+| NASA SMAP L4 Global 3-hourly 9 km soil moisture (SPL4SMGP, version 8): surface layer and a deeper modelled layer (0-100 cm) | `NASA/SMAP/SPL4SMGP/008` | Modelled moisture down to 1 m, and a gap-free series |
 | ESA WorldCover 10 m v200 (map of 2021, 11 classes) | `ESA/WorldCover/v200` | Land-cover class at the plot pixel |
 | Dynamic World V1 (10 m, near real time since 2015, 9 classes with probabilities) | `GOOGLE/DYNAMICWORLD/V1` | Land-cover class through time, per season |
 
@@ -31,7 +31,7 @@ Today `data/cache/smap/{plot}.json` comes from `pipeline/clientes/appeears_smap.
 - **Camotán has no SMAP value.** Its 9 km cell never reaches recommended quality, so the engine falls back to the labeled MERRA-2 model value and confidence is «low».
 - **Only the top ~5 cm.** L3 is a radiometer retrieval of surface moisture, not the root zone, which is what the crop uses.
 
-SMAP L4 is a model with SMAP data assimilated. It has no quality gaps and gives root-zone moisture, so Camotán would get a value and every plot would get a root-zone series. Be honest about the limits in the card and in `docs/validation.md`:
+SMAP L4 is a model with SMAP data assimilated. It has no quality gaps and models moisture down to 1 m (0-100 cm), so Camotán would get a value and every plot would get a series for the layer the crop roots use. Be honest about the limits in the card and in `docs/validation.md`:
 
 - L4 is **still 9 km**. It does not separate plots that share a cell (Jocotán and San Juan Ermita share one today). It is not more precise per plot in space.
 - L4 is a **model product**. It is not the same thing as an L3 retrieval and must be labeled that way, the same as the MERRA-2 fallback is labeled today.
@@ -140,7 +140,7 @@ dw = (ee.ImageCollection("GOOGLE/DYNAMICWORLD/V1")
       .select("label").mode())
 dw_seca = dw.sampleRegions(collection=puntos, scale=10, geometries=False).getInfo()
 
-# SMAP L4: daily mean of the 3-hourly root-zone moisture, July-August of one year.
+# SMAP L4: daily mean of the 3-hourly 0-100 cm moisture, July-August of one year.
 l4 = (ee.ImageCollection("NASA/SMAP/SPL4SMGP/008")
       .filterDate("2025-07-01", "2025-09-01")
       .select(["sm_surface", "sm_rootzone"]))        # verify band names for version 8

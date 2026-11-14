@@ -127,8 +127,12 @@ TEXTOS = {
     "Ninguno.": "None.",
     "La confianza de las recomendaciones de agua baja a «baja».":
         "Confidence of the water recommendations drops to «low».",
-    "CHIRPS no es medición en tierra: mezcla satélite y estaciones. Las estaciones de INSIVUMEH quedan como vacío.":
-        "CHIRPS is not a ground measurement: it blends satellite and stations. INSIVUMEH stations remain a gap.",
+    "CHIRPS no es medición en tierra: mezcla satélite y estaciones. Según su README, CHIRPS v3 ya mezcla estaciones de "
+    "INSIVUMEH (https://data.chc.ucsb.edu/products/CHIRPS/v3.0/README-CHIRPSv3.0.txt); falta una comparación "
+    "independiente con estaciones.":
+        "CHIRPS is not a ground measurement: it blends satellite and stations. According to its README, CHIRPS v3 already "
+        "blends INSIVUMEH stations (https://data.chc.ucsb.edu/products/CHIRPS/v3.0/README-CHIRPSv3.0.txt); an "
+        "independent comparison against stations is still missing.",
     "POWER: celda de 0.5° x 0.625° (~50 km). CHIRPS: 0.05° (~5 km).":
         "POWER: 0.5° x 0.625° cell (~50 km). CHIRPS: 0.05° (~5 km).",
     "La lluvia del motor es el total mensual de CHIRPS repartido con los días de POWER.":
@@ -137,6 +141,46 @@ TEXTOS = {
         "High risk = a year's deficit above percentile 75 of the previous years (since 2001).",
     "Señal de NDVI = anomalía de julio-septiembre de -1 desviación estándar o menos.":
         "NDVI signal = a July-September anomaly of -1 standard deviation or less.",
+    "Anomalía de SMAP de 2018 = julio-agosto de 2018 frente a los demás años con SMAP (desde 2015, incluidos años "
+    "posteriores a 2018). SMAP no entra en la corrida «con lo que se sabía hasta 2017»: esa corrida solo usa el déficit "
+    "de agua con la lluvia de CHIRPS.":
+        "SMAP 2018 anomaly = July-August 2018 against the other SMAP years (since 2015, including years after 2018). "
+        "SMAP is not part of the «what was known up to 2017» run: that run uses only the water deficit with CHIRPS rain.",
+    # perdidas_documentadas (pipeline/validacion/validar.py)
+    "Chiquimula perdió 30 642 de 38 201 manzanas de maíz": "Chiquimula lost 30 642 of 38 201 manzanas of maize",
+    "Departamento de Chiquimula": "Chiquimula department",
+    "Pérdidas parciales o totales de maíz y frijol (pérdidas documentadas; la causa no está en nuestras notas)":
+        "Partial or total maize and bean losses (documented losses; the cause is not in our notes)",
+    "Pérdidas parciales o totales de maíz y frijol": "Partial or total maize and bean losses",
+    "Comunidades ch'orti' de Camotán, Jocotán y Olopa": "Ch'orti' communities of Camotán, Jocotán and Olopa",
+    "Estimación preliminar del MAGA de 175 126 ha de pérdidas de cultivos, sobre todo maíz y frijol, y 1 290 785 "
+    "personas afectadas, al 13 de agosto de 2018; también pérdidas parciales o totales en las comunidades ch'orti'":
+        "Preliminary MAGA estimate of 175 126 ha of crop losses, mainly maize and beans, and 1 290 785 people affected, "
+        "as of 13 August 2018; also partial or total losses in the Ch'orti' communities",
+    "Guatemala; comunidades ch'orti' de Camotán, Jocotán y Olopa":
+        "Guatemala; Ch'orti' communities of Camotán, Jocotán and Olopa",
+    "96 512 familias afectadas, 14 830 de ellas en Chiquimula; Oxfam midió pérdidas promedio de 78.1 % en maíz y "
+    "70.4 % en frijol en 201 comunidades monitoreadas, 23 de ellas en Jocotán, Camotán, San Juan Ermita y Olopa":
+        "96 512 families affected, 14 830 of them in Chiquimula; Oxfam measured average losses of 78.1 % in maize and "
+        "70.4 % in beans across 201 monitored communities, 23 of them in Jocotán, Camotán, San Juan Ermita and Olopa",
+    "Guatemala y Chiquimula (MAGA); 201 comunidades monitoreadas (Oxfam)":
+        "Guatemala and Chiquimula (MAGA); 201 monitored communities (Oxfam)",
+    "53 129.82 ha de maíz y frijol dañadas y 101 184 familias afectadas; FEWS NET informó pérdidas de al menos el 50 % "
+    "en la Primera para agricultores de subsistencia":
+        "53 129.82 ha of maize and beans damaged and 101 184 families affected; FEWS NET reported Primera losses of at "
+        "least 50 % for subsistence farmers",
+    "75 municipios, entre ellos de Chiquimula y Zacapa (SIINSAN); Guatemala (FEWS NET)":
+        "75 municipalities, including some in Chiquimula and Zacapa (SIINSAN); Guatemala (FEWS NET)",
+    "La lista de siete años se tomó entera de fuentes públicas después de la prueba, no se eligió para el resultado: "
+    "guarda todos los años con pérdidas documentadas que encontramos, también los que el motor no marca.":
+        "The list of seven years was taken whole from public sources after the test, not picked to fit the result: it "
+        "keeps every year with documented losses that we found, including the ones the engine does not flag.",
+    "2010 figura como año con pérdidas documentadas, no como sequía: la causa no está en nuestras notas.":
+        "2010 is listed as a year with documented losses, not as a drought: the cause is not in our notes.",
+    "Las fuentes tienen ámbitos distintos (el país, un departamento o las comunidades ch'orti') y ninguna mide nuestros "
+    "cinco puntos.":
+        "The sources differ in scope (the country, a department or the Ch'orti' communities), and none of them measures "
+        "our five points.",
     "FAO GIEWS Update – Central America, 27 de agosto de 2018": "FAO GIEWS Update – Central America, 27 August 2018",
     "Estimación del MAGA del 13 ago 2018 citada por FAO GIEWS; no hay porcentaje de pérdida solo para Guatemala.":
         "MAGA estimate of 13 Aug 2018 cited by FAO GIEWS; there is no loss percentage for Guatemala alone.",
@@ -158,12 +202,14 @@ TEXTOS = {
         "It agrees with CHIRPS, but it is not an independent confirmation: the report does not say which product the "
         "figure comes from, and its rain map (figure 1) is from the Climate Hazards Center, the same group that produces "
         "CHIRPS. It refers only to August and to the whole Dry Corridor.",
-    "Ámbito según la nota: el corredor seco de Guatemala, sin lista de departamentos ni municipios. La nota no aclara "
-    "si son hogares evaluados o una estimación; el estudio completo abarca Guatemala, Honduras y El Salvador. No se "
+    "Ámbito según la nota: el corredor seco de Guatemala, sin lista de departamentos ni municipios. Según la nota, el "
+    "estudio incorporó 4260 participantes, representativos de unos 91 121 hogares: los 36 431 hogares son una "
+    "estimación representativa, no un conteo. El estudio completo abarca Guatemala, Honduras y El Salvador. No se "
     "atribuye a Chiquimula ni a Zacapa.":
-        "Scope according to the article: Guatemala's dry corridor, with no list of departments or municipalities. The "
-        "article does not say whether these are assessed households or an estimate; the full study covers Guatemala, "
-        "Honduras and El Salvador. It is not attributed to Chiquimula or Zacapa.",
+        "Scope according to the article: Guatemala's dry corridor, with no list of departments or municipalities. "
+        "According to the article, the study included 4260 participants, representative of about 91 121 households: the "
+        "36 431 households are a representative estimate, not a count. The full study covers Guatemala, Honduras and "
+        "El Salvador. It is not attributed to Chiquimula or Zacapa.",
     "Ámbito según la nota: «15 municipios de Chiquimula y Jutiapa, bajo alerta roja por la sequía». No da cifras de Zacapa.":
         "Scope according to the article, quoted in Spanish: «15 municipios de Chiquimula y Jutiapa, bajo alerta roja por "
         "la sequía» (municipalities of Chiquimula and Jutiapa at the top drought level). It gives no figures for Zacapa.",
@@ -184,10 +230,12 @@ PATRONES = [
     (r"Años con canícula de más de (\d+) días secos", "Years with a canícula of more than {0} dry days"),
     (r"de (\d+) años", "of {0} years"),
     (r"Observación preliminar: julio-agosto (\d{4})", "Preliminary observation: July-August {0}"),
-    (r"Es una observación del pasado, no un pronóstico\. El motor usa (\d{4}-\d{4}): (\d{4}) no entra en los puntajes, "
-     r"la confianza ni el audio\.",
-     "It is an observation of the past, not a prediction. The engine uses {0}: {1} does not enter the scores, the "
-     "confidence or the audio."),
+    (r"Es una observación del pasado, no un pronóstico\. La lluvia y la humedad de (\d{4}) no entran en los puntajes, "
+     r"la confianza ni el audio: el clima del motor es (\d{4}-\d{4})\. Los focos de enero a mayo de (\d{4}) sí cuentan "
+     r"en el hecho de quema\.",
+     "It is an observation of the past, not a prediction. The {0} rain and soil moisture do not enter the scores, the "
+     "confidence or the audio: the engine's climate is {1}. Fire detections from January to May {2} do count in the "
+     "fire fact."),
     (r"Preliminar: el Climate Hazards Center recalcula CHIRPS cada mes y SMAP puede reprocesarse\. Los meses de (\d{4}) "
      r"vienen de la carpeta del producto final \(no de prelim/\); se guarda la fecha de cada archivo\.",
      "Preliminary: the Climate Hazards Center recomputes CHIRPS every month and SMAP may be reprocessed. The {0} months "
@@ -560,6 +608,14 @@ def validacion(v: dict, base: str | None = None) -> dict:
             _t_campos(x, ("carpeta",))
         for x in o.get("reportes_publicos", []):
             _t_campos(x, ("fuente", "nota", "relacion", "cita"))
+    pd = v.get("perdidas_documentadas")
+    if pd:
+        fuentes_en = {f["id"]: (f.get("en") or {}).get("nombre") for f in datos.yaml_de("fuentes.yaml", base)["fuentes"]}
+        _t_campos(pd, ("notas",))
+        for a in pd.get("anios", []):
+            _t_campos(a, ("que_documenta", "ambito"))
+            for f in a.get("fuentes", []):
+                bilingue(f, {"nombre": fuentes_en.get(f.get("id"))})
     nombres = {p["id"]: (p.get("en") or {}).get("nombre") for p in datos.parcelas(base)}
     for p in v.get("parcelas", []):
         bilingue(p, {"nombre": nombres.get(p.get("id"))})
