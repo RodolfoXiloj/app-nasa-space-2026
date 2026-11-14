@@ -38,7 +38,7 @@ Ningún carril los cambia sin avisar a Rodolfo, que los integra al unir:
 - `web/src/App.jsx` y `web/src/main.jsx`: aquí se conecta la vista del agricultor como primera pantalla y la vista «Evidence».
 - `web/package.json` y `web/package-lock.json`: nada de dependencias nuevas sin acuerdo.
 - `web/scripts/smoke.mjs` y `web/scripts/sin-red.mjs`: cada carril propone sus comprobaciones nuevas y Rodolfo las une.
-- `docs/pruebas.md`: solo se agregan filas al final de la sección del día, con hora real.
+- `docs/es/pruebas.md`: solo se agregan filas al final de la sección del día, con hora real.
 
 ## Reglas
 

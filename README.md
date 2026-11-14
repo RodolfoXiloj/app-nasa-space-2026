@@ -1,20 +1,37 @@
 # Milpa Resiliente
 
-**NASA Space Apps Challenge 2026 · Guatemala · Challenge “Field Shift: Adapting Farms with NASA Data”** · Team “A dream”
+**NASA Space Apps Challenge 2026 · Guatemala · Challenge “Field Shift: Adapting Farms with NASA Data”** · Team “A dream”: Rodolfo Xiloj, Mario and Iván.
 
 > The satellite already knows how your plot has been used. We show which crop rotation holds up better in the next *canícula* (mid-summer dry spell) and why, so the extension worker and the farmer can decide together.
 
-Milpa Resiliente is a static website for agricultural extension workers in Guatemala's Dry Corridor. It covers five plots in Chiquimula and Zacapa: Jocotán, Camotán, Olopa, San Juan Ermita and Zacapa. For each plot it shows:
-
-1. **What the satellite sees**: months of bare soil and crop cycles from MODIS NDVI (Normalized Difference Vegetation Index, 250 m). Nearby fires come from FIRMS (Fire Information for Resource Management System), with the VIIRS sensor at 375 m.
-2. **Three rotations side by side**: the current practice, the best legume or cover-crop option, and the best drought-tolerant option.
-   Each one carries the five fields the challenge asks for: why, evidence, benefits, information gaps and risks. Each one also has water, soil and pest scores, a confidence level with its reason, and a 12-month calendar.
-3. **Scenarios**: rainfall at 0, −10, −20 or −30 % and temperature at +1.5 °C. The browser recomputes them from values the engine already calculated.
-4. **A card for the farmer**: it can be played as audio (a synthetic voice, labelled as AI-generated) and printed or saved as PDF.
+Milpa Resiliente is a static website for farmers and agricultural extension workers in Guatemala's Dry Corridor. It covers five example plots in Chiquimula and Zacapa: Jocotán, Camotán, Olopa, San Juan Ermita and Zacapa. The whole site is in English and Spanish, with an EN/ES selector; English is the default.
 
 It supports the extension worker and the farmer; it does not replace them. Planting dates are **quoted, never calculated**. They come from ZARC (Zonificación Agroclimática del Riesgo), a tool from FAO and Guatemala's Ministry of Agriculture (MAGA).
 
-**Preliminary observation, not a forecast**: in July and August 2026, the five plots got 20 % to 26 % of their 1991–2025 median rainfall. That's the lowest since 1991 (CHIRPS v3, final monthly product). The engine uses 2001–2025 and leaves 2026 out of every score.
+## What you see
+
+### 1. The farmer view (first screen)
+
+- **A traffic light of three facts** the satellite saw on the plot, always in the same order:
+  - **Bare soil:** months with bare soil or little plant cover, from MODIS NDVI (Normalized Difference Vegetation Index, 250 m), 2021-2025.
+  - **Fire near the plot:** years with a fire within 500 m, from FIRMS (Fire Information for Resource Management System), VIIRS sensor at 375 m, 2012-2026.
+  - **Long dry spell (canícula):** years with more than 15 dry days in a row, from daily CHIRPS v3 split with NASA GPM IMERG, 2001-2025.
+- **Four states that never rely on colour alone.** Each has a shape, a word and a pictogram: green circle “Good”, yellow triangle “Watch”, red square “Repeats”, and gray “The satellite can't see well here” when a source has no data. There is no orange and no word “alert”: in Guatemala those belong to official CONRED alerts. The thresholds were confirmed by the team ([docs/thresholds.md](docs/thresholds.md)).
+- **Pictograms** drawn as SVG: bare or covered soil with a 12-month wheel, and fire or sun with one dot per year. They read the same in colour, in grey and on a black-and-white photocopy ([docs/pictos.md](docs/pictos.md)).
+- **Options to talk over with the technician:** the current practice, the best legume or cover-crop option and the best drought-tolerant option. If two options are 3 points apart or less, the view says they are even and shows them in no order.
+- **A “Listen” button:** a short audio in Spanish with subtitles in Spanish or English. The voice is synthetic and labelled as AI-generated.
+
+### 2. Evidence (one tap away)
+
+The technical view for the extension worker loads only when someone opens it:
+
+- Map of the five plots with Sentinel-2 imagery and NASA GIBS layers that also work offline.
+- What the satellite sees, the climate of the area, and the three rotations side by side. Each rotation carries the five fields the challenge asks for: why, evidence, benefits, information gaps and risks. Each also has water, soil and pest scores, a confidence level with its reason, and a 12-month calendar.
+- Scenarios: rainfall at 0, −10, −20 or −30 % and temperature at +1.5 °C, recomputed in the browser from values the engine already calculated.
+- A farmer card that can be played as audio and printed or saved as PDF.
+- A “NASA product → decision” table, a “Where it fails” panel, the validation tab, and the glossary and sources.
+
+**Preliminary observation, not a forecast:** in July and August 2026, the five plots got 20 % to 26 % of their 1991–2025 median rainfall. That's the lowest since 1991 (CHIRPS v3, final monthly product). The engine uses 2001–2025 and leaves 2026 out of every score ([docs/validation.md](docs/validation.md)).
 
 ## How it works
 
@@ -22,20 +39,20 @@ It supports the extension worker and the farmer; it does not replace them. Plant
 parcelas.yaml → pipeline/precargar → data/cache/ → motor/recomendar → motor/exportar → web/public/data → static site
 ```
 
-- **Static first**: the site needs no server, keys or third-party network to show the plots. Only the base map (OpenStreetMap) and the Sentinel-2 image need internet. The NASA GIBS layers are stored in the site, and without internet the map switches to the stored layer by itself.
-- **One engine in plain Python**: standard library plus PyYAML, with no network. It returns the JSON defined in `contracts/recomendacion.schema.json`.
-- **Cache inside the repo**: `data/cache/`. Each file records its provenance: URL, download date, product and version. The pipeline uses the network only with `MILPA_ONLINE=1`.
-- **AI doesn't write numbers**: texts come from deterministic templates. A validator rejects any number that is not in the engine's JSON and any planting date that does not come from ZARC.
+- **Static first:** the site needs no server, keys or third-party network to show the plots. Only the base map (OpenStreetMap) and the Sentinel-2 image need internet. The NASA GIBS layers are stored in the site, and without internet the map switches to the stored layer by itself.
+- **One engine in plain Python:** standard library plus PyYAML, with no network. It returns the JSON defined in `contracts/recomendacion.schema.json`, including the `farmer` block with the traffic light.
+- **Cache inside the repo:** `data/cache/`. Each file records its provenance: URL, download date, product and version. The pipeline uses the network only with `MILPA_ONLINE=1`.
+- **AI doesn't write numbers:** texts in both languages come from deterministic templates. A validator rejects any number that is not in the engine's JSON and any planting date that does not come from ZARC.
 
 | Folder | Contents | Owner |
 |---|---|---|
 | `contracts/` | JSON schema (contract v1) and a hand-written example | Rodolfo |
-| `data/` | Plots, rotations, crops (FAO-56 Kc), ZARC quotes, glossary, sources and cache | Iván (YAML) · Mario (cache) |
+| `data/` | Plots, rotations, crops (FAO-56 Kc), ZARC quotes, traffic-light thresholds, glossary, sources and cache | Iván (YAML) · Mario (cache) |
 | `pipeline/` | Data clients with cache: POWER, ORNL (NDVI), FIRMS, CHIRPS, SMAP (AppEEARS), SRTM, SoilGrids, GIBS | Mario |
-| `motor/` | Detection, climate, scores, confidence, ZARC, text templates, export | Rodolfo |
-| `web/` | Vite + React + react-leaflet + Recharts | Team |
-| `tests/` | Contract, number validator, ZARC, engine with synthetic data, pipeline, validation | Everyone |
-| `docs/` | Status, test log, validation, AI use (in Spanish for now) | Everyone |
+| `motor/` | Detection, climate, scores, confidence, traffic light, ZARC, text templates in Spanish and English, phrase audio, export | Rodolfo |
+| `web/` | Vite + React + react-leaflet + Recharts: farmer view, Evidence and pictograms | Team |
+| `tests/` | Contract, number validator, ZARC, traffic light, English texts, phrase audio, engine with synthetic data, pipeline, validation | Everyone |
+| `docs/` | Documentation in English, with the Spanish team notes in `docs/es/` ([docs/README.md](docs/README.md)) | Everyone |
 | `api/` | Placeholder for an optional live API. Not built and not part of the submission | None |
 
 ## How to run it
@@ -57,7 +74,7 @@ npm run smoke      # renders every component with every exported JSON; checks th
 npm run sin-red    # after the build: opens the site in Edge with no internet access
 ```
 
-The exported JSON files in `web/public/data/` are already in the repo, so the web runs without downloading anything. To rebuild them from the cache (no network):
+The exported JSON, mp3 and subtitle files in `web/public/` are already in the repo, so the web runs without downloading anything. To rebuild the JSON from the cache (no network):
 
 ```bash
 python -m pipeline.validacion.validar   # POWER vs CHIRPS, 2018 drought test, 2026 observation -> web/public/data/validacion.json
@@ -73,52 +90,58 @@ MILPA_ONLINE=1 python -m pipeline.clientes.chirps --diario        # CHIRPS v3 da
 MILPA_ONLINE=1 python -m pipeline.clientes.firms --reciente 2026  # 2026 fires: needs FIRMS_MAP_KEY in .env
 MILPA_ONLINE=1 python -m pipeline.clientes.appeears_smap todo     # SMAP: needs EARTHDATA_USERNAME and _PASSWORD
 MILPA_ONLINE=1 python -m pipeline.capas                           # GIBS tiles for the offline map
-MILPA_ONLINE=1 python -m motor.exportar --audio                   # also the mp3 files, with edge-tts
+MILPA_ONLINE=1 python -m motor.exportar --audio                   # also the mp3 and subtitle files, with edge-tts
 ```
 
 In PowerShell, use `$env:MILPA_ONLINE='1'; python ...` instead of `MILPA_ONLINE=1 python ...`.
 
 Keys (`FIRMS_MAP_KEY`, `EARTHDATA_USERNAME`, `EARTHDATA_PASSWORD`) go in a local `.env` copied from `.env.example`. `.env` is in `.gitignore`. The pipeline reads the keys without printing them. The engine and the static site need none.
 
-## Status and what is pending
+## Status
 
-Working today (every real test run is logged in `docs/pruebas.md`):
+Done (test runs are logged in [docs/tests.md](docs/tests.md)):
 
-- Cached data for the five plots, the engine, the contract and the validation (`docs/validacion.md`).
-- The technical web view, in Spanish: map, satellite panel, three rotations, scenarios, farmer card with audio and PDF, validation tab, glossary and sources.
+- Cached data for the five plots, the engine, the contract and the validation.
+- The farmer view as the first screen: three-fact traffic light with confirmed thresholds, pictograms, options with the tie rule, and the Listen button with subtitles.
+- Evidence in English and Spanish: map, satellite panel, three rotations, scenarios, farmer card with audio and PDF, product-to-decision table, “Where it fails” panel, validation, glossary and sources.
+- Offline map layers and an automated offline test.
 
-Pending:
+Still to do:
 
-- **Website in English**: the web, the docs and the audio are in Spanish today.
-- **“For the farmer” view**: the first screen, with a three-fact traffic light, pictograms, a short audio with subtitles and a printable sheet. The traffic-light thresholds are a proposal waiting for the team's confirmation (`docs/umbrales.md`).
-- **Agronomist review**: of the scoring rules and the eight rotation templates. Not done yet.
-- **Comprehension test**: with adult users. Not done yet.
-- **Real phone test**: including TalkBack (`docs/prueba-telefono.md`). Not done yet.
-- **Field check of the five points**: they were chosen from NDVI and Sentinel-2 imagery and have not been verified on the ground.
-- **Public deployment**: the site isn't deployed yet.
+- **Agronomist review** of the scoring rules and the eight rotation templates.
+- **Comprehension test** of the pictograms, the traffic-light words and the audio with adult users.
+- **Real phone test**, including TalkBack (Android's screen reader).
+- **Field check of the five points:** they were chosen from NDVI and Sentinel-2 imagery and have not been verified on the ground.
+- **Public deployment** of the static site.
 
 Known limits:
 
-- Camotán has no SMAP value with recommended quality.
+- Camotán has no SMAP value of recommended quality.
 - NASA POWER puts four of the five plots in the same ~50 km cell.
 - ZARC doesn't publish planting windows by municipality.
+- The audio voice is Spanish only; English listeners get English subtitles.
 
-## Data sources
+## NASA data
 
-All sources and their citations are in `data/fuentes.yaml` and in the “Glosario y fuentes” tab of the site. NASA data: MODIS MOD13Q1 (via ORNL DAAC), FIRMS VIIRS, NASA POWER, SMAP SPL3SMP_E (via AppEEARS), SRTM, NASA GIBS and GPM IMERG. Other sources: CHIRPS v3, SoilGrids, Sentinel-2 cloudless, FAO-56 and FAO-33, ZARC (FAO–MAGA) and OpenStreetMap.
+| Product | What it is used for |
+|---|---|
+| MODIS MOD13Q1 NDVI, 250 m (through ORNL DAAC) | Bare-soil months and crop cycles: the “soil” fact |
+| FIRMS VIIRS S-NPP, 375 m | Fires near the plot: the “fire” fact |
+| GPM IMERG | Splits CHIRPS pentads into days for the “canícula” fact |
+| NASA POWER | Temperature, reference evapotranspiration and daily rain pattern; compared against CHIRPS in the validation |
+| SMAP SPL3SMP_E (through AppEEARS) | Soil moisture: 2018 drought test, 2026 observation and confidence |
+| SRTM | Slope of each plot |
+| NASA GIBS | True-colour MODIS layer for the offline map |
+
+## Other data and references
+
+- **Data:** CHIRPS v3 (Climate Hazards Center), SoilGrids (ISRIC), Sentinel-2 cloudless (EOX), OpenStreetMap, FAO-56 and FAO-33 (crop coefficients and yield response), FAO-66, ZARC (FAO–MAGA), and the public reports cited in [docs/validation.md](docs/validation.md). Every source and its citation is in `data/fuentes.yaml` and in the glossary and sources tab of the site.
+- **Software:** [React](https://react.dev/), [Leaflet](https://leafletjs.com/) with react-leaflet, [Recharts](https://recharts.org/), [Vite](https://vite.dev/), [edge-tts](https://github.com/rany2/edge-tts) for the synthetic voice and [PyYAML](https://pyyaml.org/).
 
 ## AI use
 
-The audio uses a synthetic voice (edge-tts). It is labelled next to the player and in the ID3 tags of each mp3. AI use by the team is declared in `docs/uso-ia.md`.
+An AI coding agent wrote most of the code, the texts and the SVG pictograms under the team's direction and review. The team decided the scope, the thresholds and the validation. The audio uses a synthetic voice (edge-tts), labelled next to the player and in the ID3 tags of each mp3. Full declaration: [docs/ai-use.md](docs/ai-use.md).
 
 ## License
 
-MIT, see `LICENSE`. Data keep the license and citation of their source.
-
-## En español
-
-Milpa Resiliente es una web estática para el extensionista agrícola del Corredor Seco de Guatemala. Muestra cinco parcelas de Chiquimula y Zacapa. Para cada una compara tres rotaciones con datos de satélite de la NASA y otras fuentes citadas. Apoya al técnico y al agricultor; no los reemplaza.
-
-- **Cómo correrla:** `pip install -r requirements.txt`, luego `python -m pytest`. Para la web: `cd web`, `npm install` y `npm run dev`.
-- **Qué falta:** la web en inglés, la vista «Para el agricultor», la revisión de un agrónomo, la prueba de comprensión, la prueba en un teléfono real y el despliegue público.
-- **Documentación del equipo:** `docs/estado.md`, `docs/pruebas.md` y `docs/memoria/` (empiece por `Inicio.md`).
+MIT, see [LICENSE](LICENSE). Data keep the license and citation of their source.

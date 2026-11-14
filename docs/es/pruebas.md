@@ -53,7 +53,7 @@ Todavía no se pueden hacer, así que no tienen hora ni resultado:
 
 | Prueba | Estado |
 |---|---|
-| Teléfono real (Android o iPhone), con la lista de `docs/prueba-telefono.md` | Pendiente |
+| Teléfono real (Android o iPhone), con la lista de `docs/es/prueba-telefono.md` | Pendiente |
 | TalkBack (lector de pantalla de Android) en el teléfono | Pendiente |
 | Revisión con un agrónomo o extensionista de las reglas de puntaje y las 8 plantillas | Pendiente |
 | Prueba de comprensión con personas usuarias (tarjeta y audio) | Pendiente |
@@ -69,4 +69,4 @@ El registro anterior también daba como hechas, con horas planeadas, estas prueb
 - La web con internet en Edge sin interfaz (sin proxy).
 - Las capturas de `docs/capturas/` y su verificación (audio, consola, desborde de la tarjeta a 360, 390 y 1366 px).
 - La prueba negativa de la verificación de audio del humo (quitar un mp3 y ver que falle).
-- `graphify update .` y la revisión de los `[[enlaces]]` de `docs/memoria/`.
+- `graphify update .` y la revisión de los `[[enlaces]]` de `docs/es/memoria/`.

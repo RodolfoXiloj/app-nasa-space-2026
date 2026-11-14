@@ -8,16 +8,16 @@ Step 3 of the plan (ideas A3, A7 and A9). Code in `web/src/pictos/`. Screenshot 
 
 ## Cómo están hechos / How they are made
 
-- SVG propios, dibujados para este proyecto. Sin IA, sin juegos de íconos de terceros y sin dependencias nuevas.
-  Our own SVGs, drawn for this project. No AI, no third-party icon sets and no new dependencies.
+- SVG hechos para este proyecto. Un agente de código de IA escribió el código SVG bajo la dirección del equipo, que revisó cada dibujo; ver `docs/ai-use.md`. Sin juegos de íconos de terceros y sin dependencias nuevas.
+  SVGs made for this project. An AI coding agent wrote the SVG code under the team's direction, and the team reviewed every drawing; see `docs/ai-use.md`. No third-party icon sets and no new dependencies.
 - Una sola línea gruesa en `currentColor` y rellenos solo en negro sólido. Se leen igual en color, en grises y en fotocopia en blanco y negro. Ningún dibujo depende del color.
   One thick line in `currentColor`, and fills only in solid black. They read the same in colour, in greyscale and on a black-and-white photocopy. No drawing depends on colour.
 - Cada uno lleva un `<title>` en español o inglés según la prop `lang`, para lectores de pantalla. Con `decorativo` se ocultan (`aria-hidden`).
   Each one has a Spanish or English `<title>`, chosen by the `lang` prop, for screen readers. With `decorativo` they are hidden (`aria-hidden`).
 - Todas las cantidades llegan por props. Los componentes no traen cifras propias.
   All quantities come in through props. The components carry no numbers of their own.
-- Todavía no se usan en las vistas: se conectan al unir los carriles.
-  They are not used in the views yet: they get wired in when the lanes are merged.
+- La vista del agricultor usa `SueloDesnudo`, `SueloCubierto`, `Fuego`, `Sol`, `RuedaMeses` y `PuntosAnios` en las tarjetas de los 3 hechos (`web/src/agricultor/VistaAgricultor.jsx`). Los demás solo están en la galería.
+  The farmer view uses `SueloDesnudo`, `SueloCubierto`, `Fuego`, `Sol`, `RuedaMeses` and `PuntosAnios` in the 3 fact cards (`web/src/agricultor/VistaAgricultor.jsx`). The others are only in the gallery.
 
 Galería de desarrollo: `npm run dev` y abrir `/src/pictos/galeria.html`. Lee los JSON de `web/public/data/` y no entra en el build.
 Development gallery: `npm run dev` and open `/src/pictos/galeria.html`. It reads the JSON files in `web/public/data/` and is not part of the build.

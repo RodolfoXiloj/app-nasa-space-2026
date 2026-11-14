@@ -1,6 +1,6 @@
 # Prueba en un teléfono real
 
-Milpa Resiliente es un **prototipo local de referencia**: no se publica ni se entrega. Esta prueba sirve la web desde la laptop por la red Wi-Fi de la casa u oficina y la abre en un teléfono.
+Esta prueba sirve la web desde la laptop por la red Wi-Fi de la casa u oficina y la abre en un teléfono.
 
 ## 1. Levantar la web en la red local (laptop, PowerShell)
 
@@ -20,7 +20,7 @@ Para detenerla: `Ctrl+C`.
 - El teléfono debe estar **en la misma red Wi-Fi** que la laptop.
 - Si Windows pregunta, **permitir Node.js en redes privadas**. Si el teléfono no abre la página, revisar que el perfil de esa red Wi-Fi sea «Privada».
 
-**Sin comprobar todavía** (no hay corrida real registrada en `docs/pruebas.md`). Desde la laptop, contra su IP local, revisar que:
+**Sin comprobar todavía** (no hay corrida real registrada en `docs/es/pruebas.md`). Desde la laptop, contra su IP local, revisar que:
 - la página, los JSON, los mp3 y las capas respondan;
 - los mp3 acepten pedidos por partes (206), que el iPhone necesita para reproducir audio.
 
@@ -60,7 +60,7 @@ Anotar el modelo del teléfono, el navegador, ✅ o ❌ en cada punto, y una cap
 ### Modo sin conexión
 - **En el teléfono no hay modo sin conexión:** la web no tiene *service worker*. Si se corta el Wi-Fi, lo ya abierto sigue visible, pero no carga parcelas nuevas.
 - **Sin internet, pero con la laptop en la misma red:** desconectar el cable de internet del router y dejar su Wi-Fi encendido. La web sigue abriendo desde la laptop, y el mapa debe pasar solo a la capa guardada con el aviso «Sin internet: se muestra la capa guardada…». Es opcional.
-- **La prueba sin red completa se hace en la laptop.** Pasó 14 de 14 el 14 nov 2026 a las 12:10 (Guatemala; ver `docs/pruebas.md`):
+- **La prueba sin red completa se hace en la laptop.** Pasó 14 de 14 el 14 nov 2026 a las 12:10 (Guatemala; ver `docs/es/pruebas.md`):
 
   ```powershell
   cd web
@@ -84,4 +84,4 @@ Anotar el modelo del teléfono, el navegador, ✅ o ❌ en cada punto, y una cap
 | Audio | | | |
 | Sin internet (opcional) | | | |
 
-Al terminar, pasar los resultados a `docs/pruebas.md`.
+Al terminar, pasar los resultados a `docs/es/pruebas.md`.

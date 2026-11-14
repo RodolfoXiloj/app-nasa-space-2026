@@ -1,6 +1,6 @@
 # Revisión del plan contra el repo
 
-> **Superado (registrado en el commit `60c981b`, 14 nov 2026):** Rodolfo decidió que este repo **no se entrega**; queda como prototipo local de referencia. Lo de entrega (Render, push, slides, video, página en inglés) ya no aplica. Lo que mejoraba el funcionamiento se aplicó: ver `docs/estado.md` y `docs/pruebas.md`.
+> Lo que mejoraba el funcionamiento se aplicó: ver `docs/es/estado.md` y `docs/es/pruebas.md`.
 
 En el repo desde el commit `60c981b` (14 nov 2026). Solo revisión: en este turno no se cambió código. Esta revisión se conserva como referencia documental.
 
@@ -9,7 +9,7 @@ En el repo desde el commit `60c981b` (14 nov 2026). Solo revisión: en este turn
 - **Fuente que manda según ese plan:** `docs/evaluacion-milpa-ajustada.txt`.
 - **Plan original:** `docs/plan-original-sin-ajustes.md`.
 - **Contrato JSON:** `contracts/recomendacion.schema.json` y `recomendacion.ejemplo.json`.
-- **Estado del trabajo:** `docs/estado.md`, `docs/pruebas.md` y el repo en el commit `63356c7`.
+- **Estado del trabajo:** `docs/es/estado.md`, `docs/es/pruebas.md` y el repo en el commit `63356c7`.
 
 **Orden que fijó Rodolfo**
 1. Prueba en teléfono (sección 4).
@@ -83,7 +83,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 
 | Ítem del plan | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
-| Compuerta 0: leer los recursos oficiales de Field Shift y las guías de jueces y de entrega | **Falta, no consta** | Ni `docs/memoria` ni el README la registran. Hoy no se pudieron abrir las páginas oficiales: error de certificado al leerlas | Que Rodolfo o Iván lean la Project Submission Guide y la Judging Guide en el navegador (pendiente) |
+| Compuerta 0: leer los recursos oficiales de Field Shift y las guías de jueces y de entrega | **Falta, no consta** | Ni `docs/es/memoria` ni el README la registran. Hoy no se pudieron abrir las páginas oficiales: error de certificado al leerlas | Que Rodolfo o Iván lean la Project Submission Guide y la Judging Guide en el navegador (pendiente) |
 | **Inicio del trabajo y reglas del evento** | **Por confirmar con la organización** | Todos los commits de este repo son del 14 nov 2026 (`git log`): dicen cuándo entró cada cosa al repo, no cuándo se hizo | Confirmar las reglas con el organizador antes de publicar. Las fechas de la documentación son las de esos commits |
 | H1-H4: datos, motor, 5 parcelas, validación y audio | Hecho, salvo la web pública | `2c1fbf8`, `a02250c`, `63356c7` | Despliegue (H2 y H3 lo pedían en URL pública) |
 | Reparto validado con Mario e Iván | Falta | Las tareas de datos y web las hizo el asistente | Pendiente: reunión de 15 min; cada quien revisa lo de su carpeta |
@@ -115,17 +115,17 @@ Plan (sección 8), más las reglas de Space Apps que están en `docs/` y la [gu�
 | **Video de 30 s o menos**, o **slides de 7 o menos** contando la portada | Falta | — | Las slides van **en inglés**. Un video en español necesita **subtítulos en inglés**. Pasar del límite deja el proyecto fuera del juzgamiento global |
 | Archivos alojados fuera y enlace que abra sin iniciar sesión | Falta | — | YouTube, Drive o GitHub; probar cada enlace en incógnito |
 | Página del proyecto en inglés | Falta | — | `docs/project-page-en.md` como borrador; Rodolfo revisa la parte técnica |
-| Uso de IA (Super Intelligence) declarado | Parcial | `docs/uso-ia.md` | Que cada integrante anote lo suyo; incluirlo en la página y en la última slide |
+| Uso de IA (Super Intelligence) declarado | Parcial | `docs/es/uso-ia.md` | Que cada integrante anote lo suyo; incluirlo en la página y en la última slide |
 | Citar cada fuente usada | Parcial | `data/fuentes.yaml` y la pestaña «Glosario y fuentes» | Falta IMERG (GPM) |
 | Aviso de que apoya y no reemplaza al técnico | Hecho | Campo `aviso` del JSON y tarjeta | — |
-| Formulario enviado por el dueño del equipo, con una segunda persona revisando | Falta | — | Domingo; plazo: **15 nov a las 11:59 p.m. hora local**; meta interna, 10:00 p.m. |
+| Formulario enviado por el dueño del equipo, con una segunda persona revisando | Falta | — | Domingo; plazo: **15 nov a las 12:00, hora de Guatemala** |
 
 ## 2. Decisión 2026: ¿mostrar que julio-agosto 2026 fue el más seco del registro?
 
 ### Qué dicen nuestros datos (consultados el 14 nov 2026)
 
 - **CHIRPS v3 mensual:** julio y agosto de 2026 suman entre 44 mm (Zacapa) y 106 mm (Olopa), entre 20 % y 26 % de la mediana de 1991-2025. Es la menor suma de 1991-2026 en las 5 parcelas: cerca de la mitad del mínimo anterior, que fue 2018 (en Olopa, 1997).
-- **SMAP (SPL3SMP_E):** la humedad de julio-agosto 2026 es la más baja de los 12 años con dato (percentil 8) en las 4 parcelas que tienen SMAP.
+- **SMAP (SPL3SMP_E):** la humedad de julio-agosto 2026 es la más baja de los 12 años con dato en las 3 celdas de 9 km que tienen SMAP (4 parcelas). Con 12 años no se da percentil.
 
 ### Qué dicen los reportes públicos
 
@@ -158,11 +158,11 @@ Plan (sección 8), más las reglas de Space Apps que están en `docs/` y la [gu�
 - **Riesgo de exagerar:** las cifras de pérdidas son de encuestas y prensa, no de la herramienta. No se pueden presentar como resultado propio.
 - **Riesgo de último minuto:** agregarlo toca la web el día de la entrega. Debe ser una pieza aislada que no cambie puntajes ni confianza.
 
-### Recomendación: **sí, como «alerta preliminar» aparte**
+### Recomendación: **sí, como «observación preliminar» aparte**
 
 Mostrarlo, pero sin tocar el motor:
 
-1. **Dónde:** una tarjeta en la pestaña Validación, debajo de 2018, con el título «Alerta preliminar: julio-agosto 2026». No va en la tarjeta del agricultor, ni en el audio, ni en los puntajes.
+1. **Dónde:** una tarjeta en la pestaña Validación, debajo de 2018, con el título «Observación preliminar: julio-agosto 2026». No se usa la palabra «alerta». No va en la tarjeta del agricultor, ni en el audio, ni en los puntajes.
 2. **Qué dice:** los dos datos propios (CHIRPS de 20 % a 26 % de lo normal y SMAP en el mínimo de 12 años), la fecha de consulta, una línea «dato preliminar, puede cambiar» y «el motor usa 2001-2025; 2026 no entra en sus cálculos».
 3. **Fuentes enlazadas:** FEWS NET y Prensa Libre como mínimo, las dos verificadas.
 4. **Cómo se hace:** un JSON generado por el pipeline, para que el validador de números revise las cifras; no texto escrito a mano. Va con una prueba y una fila en `pruebas.md`.
@@ -170,9 +170,9 @@ Mostrarlo, pero sin tocar el motor:
 
 Texto propuesto:
 
-> **Alerta preliminar: julio-agosto 2026.** Según CHIRPS v3 (consultado el 14 nov 2026), en julio y agosto de 2026 llovió entre el 20 % y el 26 % de lo normal en las 5 parcelas: lo menos desde 1991. SMAP registra la humedad del suelo más baja de sus 12 años en 4 parcelas. FEWS NET reportó para el Corredor Seco entre 5 % y 25 % de la lluvia normal y pérdidas de más de 50 % para agricultores de subsistencia. Dato preliminar: CHIRPS y SMAP recientes pueden revisarse. El motor usa 2001-2025; 2026 no entra en sus cálculos.
+> **Observación preliminar: julio-agosto 2026.** Según CHIRPS v3 (consultado el 14 nov 2026), en julio y agosto de 2026 llovió entre el 20 % y el 26 % de lo normal en las 5 parcelas: lo menos desde 1991. SMAP registra la humedad del suelo más baja de sus 12 años en 3 de 3 celdas con dato. FEWS NET reportó para el Corredor Seco entre 5 % y 25 % de la lluvia normal y pérdidas de más de 50 % para agricultores de subsistencia. Dato preliminar: CHIRPS y SMAP recientes pueden revisarse. El motor usa 2001-2025; 2026 no entra en sus cálculos.
 
-En inglés: *Preliminary alert: July-August 2026. CHIRPS v3 (accessed 13 Nov 2026) shows 20-26 % of normal rainfall at the 5 plots, the lowest since 1991; SMAP shows the lowest soil moisture in its 12-year record at 4 plots. FEWS NET reported 5-25 % of normal rainfall in the Dry Corridor and losses above 50 % for subsistence farmers. Preliminary data, subject to revision; the engine uses 2001-2025.*
+En inglés: *Preliminary observation, not a forecast: July-August 2026. CHIRPS v3 (accessed 14 Nov 2026) shows 20-26 % of normal rainfall at the 5 plots, the lowest since 1991; SMAP shows the lowest soil moisture in its 12-year record in 3 of 3 cells with data. FEWS NET reported 5-25 % of normal rainfall in the Dry Corridor and losses above 50 % for subsistence farmers. Preliminary data, subject to revision; the engine uses 2001-2025.*
 
 ## 3. Qué significa cada pendiente humano
 
@@ -232,7 +232,7 @@ En inglés: *Preliminary alert: July-August 2026. CHIRPS v3 (accessed 13 Nov 202
 - [ ] ¿Coinciden con el satélite los meses desnudos, los ciclos por año y las quemas?
 - [ ] Pendiente: plano, ladera suave o ladera fuerte
 - [ ] Coordenada del teléfono y 5 fotos con fecha, con permiso de uso
-- [ ] Resultado anotado en `docs/memoria/Puntos definitivos de las parcelas.md`: confirmado, verosímil a distancia, o mover el punto
+- [ ] Resultado anotado en `docs/es/memoria/Puntos definitivos de las parcelas.md`: confirmado, verosímil a distancia, o mover el punto
 - [ ] Si no se confirma: la tarjeta y la página dicen «punto de ejemplo, no verificado en campo»
 
 ### 3.2 «Que un agrónomo revise las reglas de puntaje y las 8 plantillas»
@@ -283,7 +283,7 @@ Cada plantilla trae `beneficios`, `vacios`, `riesgos` y `fuente`, que el agróno
 - [ ] Agrónomo o extensionista identificado (MAGA, ICTA, CUNORI-USAC en Chiquimula u ONG de la zona); anotar su nombre y rol con su permiso
 - [ ] Enviarle la web, más la tarjeta impresa en PDF de Jocotán y de Zacapa, más este resumen
 - [ ] 30 min: preguntas 1 a 10
-- [ ] Respuestas anotadas, con fecha, en una nota nueva (por ejemplo `docs/memoria/Revisión agronómica.md`)
+- [ ] Respuestas anotadas, con fecha, en una nota nueva (por ejemplo `docs/es/memoria/Revisión agronómica.md`)
 - [ ] Cambios acordados aplicados en `motor/puntaje.py`, `data/rotaciones.yaml` y `data/cultivos.yaml`, con pruebas, validación y exportación de nuevo
 - [ ] Si no se logra antes del domingo: la web y la página ya dicen «Reglas de la opción sin revisar por un agrónomo»; dejarlo así y mencionarlo en las slides
 
@@ -339,4 +339,4 @@ Falta comprobar el firewall desde otro equipo.
   - **No aplica en el teléfono:** la web no tiene modo sin conexión (no hay *service worker*). Si se corta el Wi-Fi, lo ya abierto sigue visible, pero no carga parcelas nuevas.
   - La prueba sin red del plan (12.4) se hace **en la laptop:** apagar el Wi-Fi de la laptop, correr `npx vite preview` y abrir `http://localhost:4173/`. Revisar que abran las 5 parcelas, que suene el audio y que se pueda imprimir. El mapa base no carga; se usa «Color real MODIS (sin red)».
 
-Después de la prueba, sus resultados se anotan en `docs/pruebas.md`. La prueba con **datos móviles** queda pendiente, con la URL de Render (plan, 12.5).
+Después de la prueba, sus resultados se anotan en `docs/es/pruebas.md`. La prueba con **datos móviles** queda pendiente, con la URL de Render (plan, 12.5).

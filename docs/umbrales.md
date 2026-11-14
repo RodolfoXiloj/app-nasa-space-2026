@@ -4,7 +4,7 @@
 
 Escrita el sábado 14 nov 2026. Todas las cifras salen de `data/cache/`: se corrió `motor.recomendar.recomendar()` en memoria para las 5 parcelas (maíz con frijol, prioridad agua), sin escribir archivos. Coinciden con los JSON de `web/public/data/`.
 
-**Aviso de honestidad:** estos cortes se proponen después de ver los conteos de las 5 parcelas, no antes. Se declara así en la web y en las slides. El agrónomo los revisa (`docs/revision-plan.md`, sección 3.2).
+**Aviso de honestidad:** estos cortes se proponen después de ver los conteos de las 5 parcelas, no antes. Se declara así en la web y en las slides. El agrónomo los revisa (`docs/es/revision-plan.md`, sección 3.2).
 
 ## Qué mide el semáforo
 
