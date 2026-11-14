@@ -142,7 +142,29 @@ body { margin: 0; }
 .agr .agr-hecho--rojo { background: var(--agr-tinte-rojo); }
 .agr .agr-hecho--gris { background: var(--agr-tinte-gris); }
 .agr .agr-hecho-texto { min-width: 0; }
-.agr .agr-hecho-nombre { margin: 0; font-size: 1.0625rem; font-weight: 700; line-height: 1.3; color: var(--agr-tinta); }
+.agr .agr-hecho-nombre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--agr-tinta);
+}
+/* Dibujos de web/src/pictos/: una tinta (currentColor) para que se lean igual en gris o fotocopia */
+.agr .agr-hecho-icono { flex: none; color: var(--agr-tinta); }
+.agr .agr-hecho-dibujo {
+  --picto-desnudo: var(--agr-tinta);
+  --picto-poca: var(--agr-tinta);
+  --picto-cubierto: var(--agr-papel);
+  --picto-marca: var(--agr-tinta);
+  --picto-fondo: var(--agr-papel);
+  margin: 12px 0 4px;
+  color: var(--agr-tinta);
+  max-width: 100%;
+}
+.agr .agr-hecho-dibujo svg { max-width: 100%; height: auto; }
 .agr .agr-hecho-estado {
   margin: 2px 0 4px;
   font-family: var(--agr-compacta);
@@ -175,6 +197,15 @@ body { margin: 0; }
 /* Opciones: sin orden ni ganadora salvo que el motor diga que una se separa */
 .agr .agr-opciones { padding-top: 28px; }
 .agr .agr-opciones-estado { margin: 4px 0 10px; }
+.agr .agr-opciones-estado--gris {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--agr-tinte-gris);
+  font-weight: 600;
+}
+.agr .agr-opciones-estado--gris .agr-senal { flex: none; width: 40px; height: 40px; }
 .agr .agr-lista-opciones { list-style: none; margin: 0; padding: 0; }
 .agr .agr-opcion {
   display: flex;

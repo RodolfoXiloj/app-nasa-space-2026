@@ -1,10 +1,32 @@
 // Vista «Para el agricultor»: la primera pantalla. Lee solo el bloque `farmer` del JSON (motor/farmer.py)
-// y el nombre de las rotaciones. No calcula estados: si un estado viene en null, lo dibuja en gris y dice
-// por qué. Los tres hechos van siempre en el mismo orden y lugar: suelo, quema, canícula.
+// y el nombre de las rotaciones. No calcula estados: el color de cada hecho es el del semáforo que el
+// motor ya aplicó con data/umbrales_semaforo.yaml (verde, amarillo, rojo; gris solo si falta el dato).
+// Nunca solo color: cada estado lleva su forma, su palabra y el dibujo del hecho. Los tres hechos van
+// siempre en el mismo orden y lugar: suelo, quema, canícula.
+// Los objetos del JSON se normalizan al entrar ({} o []) para no repetir `?.`, que el build convierte en
+// código largo: la primera pantalla tiene que pesar poco.
 import Senal, { claseSenal } from './Senal.jsx'
+import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
+import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
+import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { IDIOMAS, NOMBRE_IDIOMA, TEXTOS } from './textos.js'
 
 const ORDEN = ['suelo', 'quema', 'canicula']
+const ESTADOS = ['verde', 'amarillo', 'rojo', 'gris']
+
+// Texto del motor en el idioma elegido: el JSON trae `campo` en español y `campo_en` en inglés.
+// Si falta el inglés, va el español marcado con lang="es".
+function TextoMotor({ obj, campo, idioma }) {
+  const en = obj[campo + '_en']
+  return idioma === 'en' && en ? <span>{en}</span> : <span lang="es">{obj[campo]}</span>
+}
+
+// Dibujo del tema de cada hecho (web/src/pictos/iconos.jsx). El suelo sale cubierto solo cuando el
+// satélite no vio ningún mes desnudo ni con poca cobertura.
+function IconoHecho({ id, estado, meses, poca }) {
+  const Icono = id === 'quema' ? Fuego : id === 'canicula' ? Sol : estado === 'verde' && !meses.length && !poca.length ? SueloCubierto : SueloDesnudo
+  return <Icono size={32} decorativo className="agr-hecho-icono" />
+}
 
 function Idiomas({ idioma, setIdioma }) {
   const t = TEXTOS[idioma]
@@ -19,49 +41,55 @@ function Idiomas({ idioma, setIdioma }) {
   )
 }
 
-function Hecho({ id, hecho, frase, idioma, sinResumen }) {
+function Hecho({ id, hecho, frase, idioma, sinResumen, palabras }) {
   const t = TEXTOS[idioma]
-  // Un estado que no es uno de los 4 del contrato se trata como null: sin color y sin adivinar.
-  const conocido = ['verde', 'amarillo', 'rojo', 'gris'].includes(hecho?.estado)
-  const clave = sinResumen ? 'sinResumen' : conocido ? hecho.estado : 'pendiente'
-  const meses = hecho?.meses || []
-  const poca = hecho?.meses_poca_cobertura || []
-  const tieneConteo = hecho && hecho.valor != null && hecho.de != null
+  // Un estado fuera de los 4 del contrato (o null) es un dato que falta: va en gris, sin adivinar.
+  const estado = !sinResumen && ESTADOS.includes(hecho.estado) ? hecho.estado : 'gris'
+  const gris = estado === 'gris'
+  const palabra = sinResumen ? t.estados.sinResumen : (palabras[estado] || {})[idioma] || t.estados[estado]
+  const meses = hecho.meses || []
+  const poca = hecho.meses_poca_cobertura || []
+  const { valor, de } = hecho
+  const tieneConteo = !gris && valor != null && de != null
+  const p = (txt, clase = 'agr-hecho-detalle') => <p className={clase}>{txt}</p>
   return (
-    <li className={`agr-hecho agr-hecho--${claseSenal(hecho?.estado)}`} data-hecho={id} data-estado={hecho?.estado ?? 'null'}>
-      <Senal estado={hecho?.estado} />
+    <li className={`agr-hecho agr-hecho--${claseSenal(estado)}`} data-hecho={id} data-estado={estado}>
+      <Senal estado={estado} />
       <div className="agr-hecho-texto">
-        <h3 className="agr-hecho-nombre">{t.hechos[id]}</h3>
-        <p className="agr-hecho-estado">{t.estados[clave]}</p>
-        {clave !== 'pendiente' && t.explicaEstado[clave] && <p className="agr-hecho-explica">{t.explicaEstado[clave]}</p>}
-        {hecho?.estado === 'gris' && hecho.motivo_gris && (
-          <p className="agr-hecho-detalle">
-            {t.motivoGris} <span lang="es">{hecho.motivo_gris}</span>
-          </p>
+        <h3 className="agr-hecho-nombre">
+          <IconoHecho id={id} estado={estado} meses={meses} poca={poca} />
+          <span>{t.hechos[id]}</span>
+        </h3>
+        {p(palabra, 'agr-hecho-estado')}
+        {!sinResumen && p(t.explicaEstado[estado], 'agr-hecho-explica')}
+        {gris && hecho.motivo_gris && p(<>{t.motivoGris} <TextoMotor obj={hecho} campo="motivo_gris" idioma={idioma} /></>)}
+        {/* Cantidad como dibujo: rueda de 12 meses para el suelo, puntos de años para quema y canícula.
+            En gris la rueda va punteada con «?» y no se dibujan años: no se adivina. */}
+        {!sinResumen && id === 'suelo' && (
+          <RuedaMeses className="agr-hecho-dibujo" desnudos={meses} poca={poca} sinDatos={gris} lang={idioma} size={184} />
         )}
-        {frase ? (
-          <p className="agr-hecho-conteo">{frase}</p>
-        ) : (
-          tieneConteo && <p className="agr-hecho-conteo">{t.conteo[id](hecho.valor, hecho.de)}.</p>
+        {tieneConteo && id !== 'suelo' && de > 0 && (
+          <PuntosAnios className="agr-hecho-dibujo" tipo={id} marcados={valor} total={de} lang={idioma} size={26} leyenda={false} />
         )}
-        {id === 'suelo' && meses.length > 0 && <p className="agr-hecho-detalle">{t.detalleMeses.suelo(meses)}</p>}
-        {id === 'suelo' && poca.length > 0 && <p className="agr-hecho-detalle">{t.detalleMeses.pocaCobertura(poca)}</p>}
-        {id === 'quema' && meses.length > 0 && <p className="agr-hecho-detalle">{t.detalleMeses.quema(meses)}</p>}
-        {id === 'canicula' && tieneConteo && hecho.valor > 0 && <p className="agr-hecho-detalle">{t.detalleMeses.canicula()}</p>}
-        {hecho?.fuente_ids?.length > 0 && hecho.periodo && <p className="agr-hecho-fuente">{t.fuente(hecho.fuente_ids, hecho.periodo)}</p>}
+        {frase ? p(frase, 'agr-hecho-conteo') : tieneConteo && p(`${t.conteo[id](valor, de)}.`, 'agr-hecho-conteo')}
+        {!gris && id === 'suelo' && meses.length > 0 && p(t.detalleMeses.suelo(meses))}
+        {!gris && id === 'suelo' && poca.length > 0 && p(t.detalleMeses.pocaCobertura(poca))}
+        {!gris && id === 'quema' && meses.length > 0 && p(t.detalleMeses.quema(meses))}
+        {id === 'canicula' && tieneConteo && valor > 0 && p(t.detalleMeses.canicula())}
+        {hecho.periodo && (hecho.fuente_ids || []).length > 0 && p(t.fuente(hecho.fuente_ids, hecho.periodo), 'agr-hecho-fuente')}
       </div>
     </li>
   )
 }
 
 // Tipo de opción en el idioma elegido y, en español, el nombre que trae el JSON (el JSON no trae nombres en inglés).
-function Opcion({ id, rot, idioma, as: Tag = 'li', clase = '' }) {
+function Opcion({ id, rot = {}, idioma, as: Tag = 'li', clase = '' }) {
   const t = TEXTOS[idioma]
-  let nombre = idioma === 'es' && rot?.nombre ? rot.nombre.replace(/^Lo que hace hoy:\s*/, '') : null
+  let nombre = idioma === 'es' && rot.nombre ? rot.nombre.replace(/^Lo que hace hoy:\s*/, '') : null
   if (nombre) nombre = nombre[0].toUpperCase() + nombre.slice(1)
   return (
     <Tag className={`agr-opcion ${clase}`.trim()}>
-      <span className="agr-opcion-tipo">{t.tipos[rot?.tipo] || id}</span>
+      <span className="agr-opcion-tipo">{t.tipos[rot.tipo] || id}</span>
       {nombre && <span className="agr-opcion-nombre">{nombre}</span>}
     </Tag>
   )
@@ -71,18 +99,29 @@ function Opciones({ farmer, rotaciones, idioma }) {
   const t = TEXTOS[idioma]
   const op = farmer.opciones
   const porId = Object.fromEntries((rotaciones || []).map((r) => [r.id, r]))
-  const estado = op.estado
-  // Empate: las opciones parejas, sin orden. `empatadas` es opcional en el contrato; si no viene, son las alternativas.
-  const mostradas = estado === 'empate' && Array.isArray(op.empatadas) ? op.empatadas : op.alternativas
+  const margen = (farmer.umbrales || {}).margen_empate ?? 3
+  // Sin regla aplicada (umbrales en «pendiente») no se compara: se muestra como el gris, sin ganadora.
+  const estado = ['empate', 'una_destaca', 'gris'].includes(op.estado) ? op.estado : 'sinComparar'
+  // Empate (puntajes a `margen` puntos o menos, en cadena): las opciones parejas, en el orden del motor y
+  // sin ganadora. En Olopa la práctica actual entra al empate y salen las tres.
+  const empatadas = op.empatadas || []
+  const mostradas = estado === 'empate' && empatadas.length ? empatadas : op.alternativas
   const destaca = estado === 'una_destaca' && porId[op.destaca] ? op.destaca : null
-  const lista = (estado === 'pendiente' ? [op.actual, ...op.alternativas] : mostradas).filter((id) => id !== destaca)
+  const lista = (estado === 'sinComparar' ? [op.actual, ...op.alternativas] : mostradas).filter((id) => id !== destaca)
   const muestraHoy = op.actual !== destaca && !lista.includes(op.actual)
+  const enGris = estado === 'gris' || estado === 'sinComparar'
   return (
-    <section className={`agr-opciones agr-opciones--${estado}`} aria-labelledby="agr-opciones-titulo">
+    <section className={`agr-opciones agr-opciones--${estado}`} aria-labelledby="agr-opciones-titulo" data-opciones={estado}>
       <h2 id="agr-opciones-titulo" className="agr-subtitulo">{t.opcionesTitulo}</h2>
-      <p className="agr-opciones-estado">
-        {estado === 'empate' ? t.opciones.empate(lista.length) : t.opciones[estado]}
+      <p className={`agr-opciones-estado${enGris ? ' agr-opciones-estado--gris' : ''}`}>
+        {enGris && <Senal estado="gris" />}
+        <span>{estado === 'empate' ? t.opciones.empate(lista.length, margen) : t.opciones[estado]}</span>
       </p>
+      {estado === 'gris' && op.motivo_gris && (
+        <p className="agr-hecho-detalle">
+          {t.motivoGris} <TextoMotor obj={op} campo="motivo_gris" idioma={idioma} />
+        </p>
+      )}
       {destaca && <Opcion id={destaca} rot={porId[destaca]} idioma={idioma} as="p" clase="agr-opcion--destaca" />}
       <ul className="agr-lista-opciones">
         {lista.map((id) => (
@@ -95,7 +134,7 @@ function Opciones({ farmer, rotaciones, idioma }) {
         <h3 className="agr-confianza-titulo">{t.confianzaTitulo}</h3>
         <p className="agr-confianza-nivel">{t.confianza[op.confianza.nivel] || op.confianza.nivel}</p>
         <p className="agr-hecho-detalle">
-          {t.motivo} <span lang="es">{op.confianza.motivo}</span>
+          {t.motivo} <TextoMotor obj={op.confianza} campo="motivo" idioma={idioma} />
         </p>
       </div>
     </section>
@@ -104,15 +143,16 @@ function Opciones({ farmer, rotaciones, idioma }) {
 
 export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid, res, cargando, error, onEvidencia }) {
   const t = TEXTOS[idioma]
-  const parcela = indice?.find((p) => p.id === pid)
-  const farmer = res?.farmer || null
+  const parcelas = indice || []
+  const parcela = parcelas.find((p) => p.id === pid)
+  const farmer = (res && res.farmer) || null
+  const f = farmer || {}
   const sinResumen = Boolean(res) && !farmer
-  // Estados en null: el motivo se dice una vez arriba de la lista, no en cada hecho.
-  const hayPendientes = Boolean(farmer?.hechos?.some((h) => !['verde', 'amarillo', 'rojo', 'gris'].includes(h.estado)))
-  const hechos = Object.fromEntries((farmer?.hechos || []).map((h) => [h.id, h]))
-  const frases = farmer?.frases || []
-  const fraseDe = (id) => frases.find((f) => f.hecho === id)?.[idioma] || null
-  const disponibles = (indice || []).filter((p) => p.disponible)
+  // Palabra de cada estado tal como la fija data/umbrales_semaforo.yaml (viene en el JSON del motor).
+  const palabras = (f.umbrales || {}).estados || {}
+  const hechos = Object.fromEntries((f.hechos || []).map((h) => [h.id, h]))
+  const fraseDe = (id) => ((f.frases || []).find((x) => x.hecho === id) || {})[idioma] || null
+  const disponibles = parcelas.filter((p) => p.disponible)
 
   return (
     <div className="agr">
@@ -122,7 +162,7 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
       </header>
 
       <main className="agr-cuerpo">
-        {res?.meta?.tipo === 'ejemplo' && <p className="agr-banda" role="status">{t.ejemplo}</p>}
+        {res && res.meta && res.meta.tipo === 'ejemplo' && <p className="agr-banda" role="status">{t.ejemplo}</p>}
 
         {disponibles.length > 0 && (
           <div className="agr-parcela">
@@ -149,12 +189,11 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
             {error && <p className="agr-banda agr-banda--error" role="alert">{t.errorDatos}</p>}
             {parcela && !parcela.disponible && <p className="agr-banda">{t.noDisponible}</p>}
             {sinResumen && <p className="agr-banda">{t.sinResumen}</p>}
-            {hayPendientes && <p className="agr-banda">{t.explicaEstado.pendiente}</p>}
           </div>
           {(farmer || sinResumen) && (
             <ul className="agr-lista-hechos">
               {ORDEN.map((id) => (
-                <Hecho key={id} id={id} hecho={hechos[id]} frase={fraseDe(id)} idioma={idioma} sinResumen={sinResumen} />
+                <Hecho key={id} id={id} hecho={hechos[id] || {}} frase={fraseDe(id)} idioma={idioma} sinResumen={sinResumen} palabras={palabras} />
               ))}
             </ul>
           )}

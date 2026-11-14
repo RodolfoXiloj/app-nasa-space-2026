@@ -2,11 +2,18 @@
 // toque (#evidence en la dirección). Evidence se carga con import() solo al abrirla, con el mapa y las
 // gráficas; la primera pantalla no las descarga.
 import { Component, Suspense, lazy, useEffect, useRef, useState, useSyncExternalStore } from 'react'
-import { cargarJSON } from '../lib/datos.js'
 import { getLocale, setLocale, subscribeLocale } from '../i18n/store.js'
 import VistaAgricultor from './VistaAgricultor.jsx'
 import { TEXTOS } from './textos.js'
 import './agricultor.css'
+
+// Lee un JSON de public/. Es el mismo cargarJSON de lib/datos.js, copiado aquí a propósito: si esta vista
+// importara lib/datos.js, ese archivo (con los puntajes que solo usa Evidence) iría en la primera pantalla.
+const cargarJSON = (ruta) =>
+  fetch(import.meta.env.BASE_URL + ruta).then((r) => {
+    if (!r.ok) throw new Error(`${ruta} (${r.status})`)
+    return r.json()
+  })
 
 const Evidencia = lazy(() => import('./Evidencia.jsx'))
 const HASH_EVIDENCIA = '#evidence'
@@ -61,7 +68,7 @@ export default function Inicio() {
     }
     window.scrollTo(0, 0)
     const destino = vista === 'evidencia' ? botonVolver.current : document.querySelector('.agr-evidencia')
-    destino?.focus({ preventScroll: true })
+    if (destino) destino.focus({ preventScroll: true })
   }, [vista])
 
   useEffect(() => {
@@ -80,8 +87,8 @@ export default function Inicio() {
   }, [])
 
   useEffect(() => {
-    const parcela = indice?.find((p) => p.id === pid)
-    if (!parcela?.disponible) return
+    const parcela = (indice || []).find((p) => p.id === pid)
+    if (!parcela || !parcela.disponible) return
     let vigente = true
     setCargando(true)
     setError(false)

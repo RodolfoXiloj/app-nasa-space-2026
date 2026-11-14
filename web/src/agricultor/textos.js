@@ -2,16 +2,12 @@
 // mismas claves. Las cifras nunca van escritas aquí: llegan del bloque `farmer` del JSON y se
 // insertan con las funciones de abajo.
 
+// Nombres de los meses: los mismos de los pictogramas (web/src/pictos/textos.js), una sola copia.
+import { MESES } from '../pictos/textos.js'
+
 // El idioma activo vive en web/src/i18n/store.js (uno solo para toda la web, inglés por defecto).
 export const IDIOMAS = ['en', 'es']
 export const NOMBRE_IDIOMA = { en: 'English', es: 'Español' }
-
-const MESES = {
-  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
-    'November', 'December'],
-  es: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre',
-    'noviembre', 'diciembre'],
-}
 
 // Nombres propios de las fuentes de cada hecho; iguales en los dos idiomas.
 export const FUENTES = {
@@ -36,6 +32,12 @@ function meses(idioma, ms) {
 // Guion que no se parte: «2012‑2026» queda en una sola línea.
 const periodoEntero = (p) => String(p).replace(/-/g, '‑')
 
+// Años con el hecho visto: misma frase para la quema y para la canícula.
+const anios = {
+  en: (v, de) => (v === 0 ? `Not seen in ${de} years` : `Seen in ${v} of ${de} years`),
+  es: (v, de) => (v === 0 ? `No se vio en ${de} años` : `Se vio en ${v} de ${de} años`),
+}
+
 function fuentes(idioma, ids) {
   return unir(ids.map((id) => FUENTES[id] || id), idioma === 'en' ? 'and' : 'y')
 }
@@ -55,7 +57,6 @@ export const TEXTOS = {
       amarillo: 'Watch',
       rojo: 'Repeats',
       gris: "The satellite can't see well here",
-      pendiente: 'No color yet',
       sinResumen: 'Not in this data file yet',
     },
     explicaEstado: {
@@ -63,12 +64,11 @@ export const TEXTOS = {
       amarillo: 'It saw it a few times.',
       rojo: 'It saw it often.',
       gris: 'Data from this source is missing, so we do not guess.',
-      pendiente: 'No color yet: the traffic-light cut-offs are not applied to this data file.',
     },
     conteo: {
       suelo: (v, de) => (v === 0 ? `Not seen in any of the ${de} months of the year` : `Seen in ${v} of the ${de} months of the year`),
-      quema: (v, de) => (v === 0 ? `Not seen in ${de} years` : `Seen in ${v} of ${de} years`),
-      canicula: (v, de) => (v === 0 ? `Not seen in ${de} years` : `Seen in ${v} of ${de} years`),
+      quema: anios.en,
+      canicula: anios.en,
     },
     detalleMeses: {
       suelo: (ms) => `Bare: ${meses('en', ms)}.`,
@@ -77,7 +77,7 @@ export const TEXTOS = {
       canicula: () => 'Between June and August.',
     },
     fuente: (ids, periodo) => `Source: ${fuentes('en', ids)}, ${periodoEntero(periodo)}.`,
-    motivoGris: 'Reason (in Spanish):',
+    motivoGris: 'Reason:',
     opcionesTitulo: 'Options to talk over with your technician',
     tipos: {
       actual: 'What you do today',
@@ -86,14 +86,15 @@ export const TEXTOS = {
     },
     sinOrden: 'In no particular order.',
     opciones: {
-      pendiente: 'The tie rule is not applied to this data file yet, so no option is marked as the best.',
-      empate: (n) => `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} options come out even. None stands out enough.`,
+      empate: (n, margen) =>
+        `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} options come out even: their scores are ${margen} points or less apart. None stands out.`,
       una_destaca: 'One option stands out from the others:',
       gris: 'We do not compare the options here because confidence is low.',
+      sinComparar: 'This data file does not compare the options.',
     },
     confianzaTitulo: 'How sure we are',
     confianza: { alta: 'High', media: 'Medium', baja: 'Low' },
-    motivo: 'Why (in Spanish):',
+    motivo: 'Why:',
     aviso: 'This is not an official alert; talk to your technician.',
     evidencia: 'See the evidence',
     evidenciaDetalle: 'Map, charts, sources and limits',
@@ -121,7 +122,6 @@ export const TEXTOS = {
       amarillo: 'Atención',
       rojo: 'Se repite',
       gris: 'El satélite no ve bien aquí',
-      pendiente: 'Sin color todavía',
       sinResumen: 'Aún no está en este archivo de datos',
     },
     explicaEstado: {
@@ -129,12 +129,11 @@ export const TEXTOS = {
       amarillo: 'Lo vio pocas veces.',
       rojo: 'Lo vio seguido.',
       gris: 'Faltan datos de esta fuente; no se adivina.',
-      pendiente: 'Sin color todavía: los cortes del semáforo aún no están aplicados en este archivo de datos.',
     },
     conteo: {
       suelo: (v, de) => (v === 0 ? `No se vio en ninguno de los ${de} meses del año` : `Se vio en ${v} de los ${de} meses del año`),
-      quema: (v, de) => (v === 0 ? `No se vio en ${de} años` : `Se vio en ${v} de ${de} años`),
-      canicula: (v, de) => (v === 0 ? `No se vio en ${de} años` : `Se vio en ${v} de ${de} años`),
+      quema: anios.es,
+      canicula: anios.es,
     },
     detalleMeses: {
       suelo: (ms) => `Desnudo: ${meses('es', ms)}.`,
@@ -152,10 +151,11 @@ export const TEXTOS = {
     },
     sinOrden: 'Sin orden.',
     opciones: {
-      pendiente: 'La regla de empate aún no está aplicada en este archivo de datos; por eso ninguna opción se marca como la mejor.',
-      empate: (n) => `${n === 2 ? 'Dos' : n === 3 ? 'Tres' : n} opciones quedan parejas. Ninguna se separa lo suficiente.`,
+      empate: (n, margen) =>
+        `${n === 2 ? 'Dos' : n === 3 ? 'Tres' : n} opciones quedan parejas: sus puntajes se separan ${margen} puntos o menos. Ninguna se separa lo suficiente.`,
       una_destaca: 'Una opción se separa de las demás:',
       gris: 'Aquí no comparamos las opciones porque la confianza es baja.',
+      sinComparar: 'Este archivo de datos no compara las opciones.',
     },
     confianzaTitulo: 'Qué tan seguros estamos',
     confianza: { alta: 'Alta', media: 'Media', baja: 'Baja' },
