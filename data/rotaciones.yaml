@@ -125,13 +125,14 @@ rotaciones:
       - "La canavalia y el rastrojo cubren el suelo en la época seca."
       - "La canavalia es leguminosa: aporta nitrógeno y materia orgánica."
       - "Sin quema, el suelo guarda más humedad y se lava menos, como recomienda la Mesa Técnica Agroclimática de Chiquimula."
+      - "Suelo cubierto y cero quema son también la base de Kuxur Rum («mi tierra húmeda» en ch'orti'), el sistema que FAO y el MAGA promovieron en Chiquimula."
     vacios:
       - "El consumo de agua de la canavalia no se calcula: no tiene coeficiente de cultivo en FAO-56."
     riesgos:
       - "Siembre la canavalia junto con el maíz o hasta unas dos semanas después, como indica ICTA, y vigile que no le haga sombra al maíz."
       - "En un ensayo de CIMMYT en San Juan Ermita, el primer año dejar de quemar no subió la cosecha: el beneficio es de mediano plazo."
       - "Dejar el rastrojo en pie choca con la costumbre de pastorear o quemar: hay que acordarlo con la familia."
-    fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 3 (maíz asociado con canavalia); MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 (cobertura y no quema); CIMMYT, Menú tecnológico maíz y frijol en el Oriente de Guatemala, 2024, p. 4"
+    fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 3 (maíz asociado con canavalia); MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 (cobertura y no quema); CIMMYT, Menú tecnológico maíz y frijol en el Oriente de Guatemala, 2024, p. 4; FAO, sistema agroforestal Kuxur Rum en Chiquimula"
     en:
       nombre: "Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble"
       nombre_corto: "maize with jack bean"
@@ -139,6 +140,7 @@ rotaciones:
         - "Jack bean and stubble cover the soil in the dry season."
         - "Jack bean is a legume: it adds nitrogen and organic matter."
         - "Without burning, the soil keeps more moisture and washes away less, as the Chiquimula Agroclimatic Technical Board recommends."
+        - "Covered soil and no burning are also the basis of Kuxur Rum (“my humid land” in Ch'orti'), the system FAO and MAGA promoted in Chiquimula."
       vacios:
         - "Jack bean water use is not calculated: it has no crop coefficient in FAO-56."
       riesgos:
@@ -161,18 +163,20 @@ rotaciones:
     beneficios:
       - "El ayote cubre el suelo entre el maíz y frena la erosión en la temporada de lluvia."
       - "Tres cultivos en la misma parcela reparten el riesgo: si uno falla, quedan los otros."
+      - "Suelo cubierto y cero quema son también la base de Kuxur Rum («mi tierra húmeda» en ch'orti'), el sistema que FAO y el MAGA promovieron en Chiquimula."
     vacios:
       - "El consumo de agua del ayote no se calcula aparte: va asociado al maíz."
     riesgos:
       - "El ayote necesita espacio: con mucha densidad de maíz compite por luz."
       - "Dejar el rastrojo en pie choca con la costumbre de pastorear o quemar: hay que acordarlo con la familia."
-    fuente: "MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 («Rotar cultivos o policultivos como por ejemplo ayote, maíz y frijol»)"
+    fuente: "MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 («Rotar cultivos o policultivos como por ejemplo ayote, maíz y frijol»); FAO, sistema agroforestal Kuxur Rum en Chiquimula"
     en:
       nombre: "Full milpa: maize, beans and squash in primera, beans in postrera and standing stubble"
       nombre_corto: "full milpa"
       beneficios:
         - "Squash covers the soil between the maize and slows erosion in the rainy season."
         - "Three crops in the same plot spread the risk: if one fails, the others remain."
+        - "Covered soil and no burning are also the basis of Kuxur Rum (“my humid land” in Ch'orti'), the system FAO and MAGA promoted in Chiquimula."
       vacios:
         - "Squash water use is not calculated separately: it is grown with the maize."
       riesgos:
@@ -193,19 +197,21 @@ rotaciones:
     beneficios:
       - "El gandul es un arbusto leguminoso de raíz profunda que sigue verde cuando ya no llueve."
       - "Da grano y forraje en la época seca y protege el suelo."
+      - "Suelo cubierto y cero quema son también la base de Kuxur Rum («mi tierra húmeda» en ch'orti'), el sistema que FAO y el MAGA promovieron en Chiquimula."
     vacios:
       - "El consumo de agua del gandul no se calcula: no tiene coeficiente de cultivo en FAO-56."
       - "Sin postrera de frijol: la familia cambia frijol por gandul ese año."
     riesgos:
       - "El gandul ocupa la parcela varios meses: se pierde la postrera de frijol."
       - "Hay que protegerlo del ganado en la época seca."
-    fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 4 (mucuna, gandul y frijol cachito se adaptan al corredor seco)"
+    fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 4 (mucuna, gandul y frijol cachito se adaptan al corredor seco); FAO, sistema agroforestal Kuxur Rum en Chiquimula"
     en:
       nombre: "Maize with pigeon pea in primera; the pigeon pea stays green in the dry season"
       nombre_corto: "maize with pigeon pea"
       beneficios:
         - "Pigeon pea is a deep-rooted legume shrub that stays green after the rains stop."
         - "It gives grain and fodder in the dry season and protects the soil."
+        - "Covered soil and no burning are also the basis of Kuxur Rum (“my humid land” in Ch'orti'), the system FAO and MAGA promoted in Chiquimula."
       vacios:
         - "Pigeon pea water use is not calculated: it has no crop coefficient in FAO-56."
         - "No bean postrera: the family swaps beans for pigeon pea that year."

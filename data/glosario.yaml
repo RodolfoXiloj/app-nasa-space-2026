@@ -4,8 +4,8 @@ glosario:
     definicion: "Índice de verdor que calcula el satélite con la luz que reflejan las plantas. Cerca de cero es suelo desnudo; cuanto más alto, más verde y tupida está la parcela."
     en: {termino: "NDVI", definicion: "Greenness index the satellite computes from the light plants reflect. Near zero is bare soil; the higher it is, the greener and denser the plot."}
   - termino: Suelo desnudo
-    definicion: "Meses en que el satélite ve muy poco verde en la parcela. Sin cobertura, el sol seca la tierra y la lluvia la arrastra."
-    en: {termino: "Bare soil", definicion: "Months when the satellite sees very little green on the plot. Without cover, the sun dries the ground and the rain washes it away."}
+    definicion: "Meses en que el satélite ve muy poco verde en el cuadro de 250 m que rodea la parcela. Sin cobertura, el sol seca la tierra y la lluvia la arrastra."
+    en: {termino: "Bare soil", definicion: "Months when the satellite sees very little green in the 250 m square around the plot. Without cover, the sun dries the ground and the rain washes it away."}
   - termino: Evapotranspiración
     definicion: "Agua que se va al aire desde el suelo y desde las hojas. Es lo que la planta «gasta» cada día."
     en: {termino: "Evapotranspiration", definicion: "Water that goes into the air from the soil and the leaves. It is what the plant “spends” every day."}
@@ -39,6 +39,9 @@ glosario:
   - termino: Rastrojo en pie
     definicion: "Dejar los restos del cultivo en la parcela después de cosechar, sin quemarlos. Protege el suelo en la época seca."
     en: {termino: "Standing stubble", definicion: "Leaving crop residue on the plot after harvest, without burning it. It protects the soil in the dry season."}
+  - termino: Kuxur Rum
+    definicion: "“Mi tierra húmeda” en ch'orti'. Sistema agroforestal de Chiquimula, promovido por FAO y el MAGA, que mantiene el suelo cubierto todo el año y no quema."
+    en: {termino: "Kuxur Rum", definicion: "“My humid land” in Ch'orti'. An agroforestry system from Chiquimula, promoted by FAO and MAGA, that keeps the soil covered all year and does not burn."}
   - termino: Abono verde
     definicion: "Planta, casi siempre leguminosa, que se siembra para cubrir y alimentar el suelo, no para cosechar."
     en: {termino: "Green manure", definicion: "A plant, almost always a legume, sown to cover and feed the soil, not to harvest."}

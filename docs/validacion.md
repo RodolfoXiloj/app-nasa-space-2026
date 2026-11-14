@@ -77,4 +77,5 @@ Límites:
 - Riesgo alto = déficit del año mayor que el percentil 75 de los años anteriores (desde 2001).
 - Señal de NDVI = anomalía de julio-septiembre de -1 desviación estándar o menos.
 - SMAP: SPL3SMP_E.006 por AppEEARS, solo datos con calidad recomendada. Camotán no tiene ninguno; Jocotán y San Juan Ermita comparten la celda de 9 km.
+- Anomalía de SMAP de 2018 = julio-agosto de 2018 frente a los demás años con SMAP (desde 2015, incluidos años posteriores a 2018). SMAP no entra en la corrida «con lo que se sabía hasta 2017»: esa corrida solo usa el déficit de agua con la lluvia de CHIRPS.
 - Las 5 parcelas son puntos de ejemplo elegidos con NDVI e imagen Sentinel-2, no verificados en campo; ver docs/es/memoria/.
