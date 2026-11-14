@@ -83,7 +83,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 
 | Ítem del plan | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
-| Compuerta 0: leer los recursos oficiales de Field Shift y las guías de jueces y de entrega | **Falta, no consta** | Ni `docs/es/memoria` ni el README la registran. Hoy no se pudieron abrir las páginas oficiales: error de certificado al leerlas | Que Rodolfo o Iván lean la Project Submission Guide y la Judging Guide en el navegador (pendiente) |
+| Compuerta 0: leer los recursos oficiales de Field Shift y las guías de jueces y de entrega | **Falta, no consta** | Ni `docs/es/estado.md` ni el README la registran. Hoy no se pudieron abrir las páginas oficiales: error de certificado al leerlas | Que Rodolfo o Iván lean la Project Submission Guide y la Judging Guide en el navegador (pendiente) |
 | **Inicio del trabajo y reglas del evento** | **Por confirmar con la organización** | Todos los commits de este repo son del 14 nov 2026 (`git log`): dicen cuándo entró cada cosa al repo, no cuándo se hizo | Confirmar las reglas con el organizador antes de publicar. Las fechas de la documentación son las de esos commits |
 | H1-H4: datos, motor, 5 parcelas, validación y audio | Hecho, salvo la web pública | `2c1fbf8`, `a02250c`, `63356c7` | Despliegue (H2 y H3 lo pedían en URL pública) |
 | Reparto validado con Mario e Iván | Falta | Las tareas de datos y web las hizo el asistente | Pendiente: reunión de 15 min; cada quien revisa lo de su carpeta |
@@ -232,7 +232,7 @@ En inglés: *Preliminary observation, not a forecast: July-August 2026. CHIRPS v
 - [ ] ¿Coinciden con el satélite los meses desnudos, los ciclos por año y las quemas?
 - [ ] Pendiente: plano, ladera suave o ladera fuerte
 - [ ] Coordenada del teléfono y 5 fotos con fecha, con permiso de uso
-- [ ] Resultado anotado en `docs/es/memoria/Puntos definitivos de las parcelas.md`: confirmado, verosímil a distancia, o mover el punto
+- [ ] Resultado anotado en `docs/es/estado.md` (sección «Decisiones») y en `data/parcelas.yaml`: confirmado, verosímil a distancia, o mover el punto
 - [ ] Si no se confirma: la tarjeta y la página dicen «punto de ejemplo, no verificado en campo»
 
 ### 3.2 «Que un agrónomo revise las reglas de puntaje y las 8 plantillas»
@@ -283,7 +283,7 @@ Cada plantilla trae `beneficios`, `vacios`, `riesgos` y `fuente`, que el agróno
 - [ ] Agrónomo o extensionista identificado (MAGA, ICTA, CUNORI-USAC en Chiquimula u ONG de la zona); anotar su nombre y rol con su permiso
 - [ ] Enviarle la web, más la tarjeta impresa en PDF de Jocotán y de Zacapa, más este resumen
 - [ ] 30 min: preguntas 1 a 10
-- [ ] Respuestas anotadas, con fecha, en una nota nueva (por ejemplo `docs/es/memoria/Revisión agronómica.md`)
+- [ ] Respuestas anotadas, con fecha, en una nota nueva (por ejemplo `docs/es/revision-agronomica.md`)
 - [ ] Cambios acordados aplicados en `motor/puntaje.py`, `data/rotaciones.yaml` y `data/cultivos.yaml`, con pruebas, validación y exportación de nuevo
 - [ ] Si no se logra antes del domingo: la web y la página ya dicen «Reglas de la opción sin revisar por un agrónomo»; dejarlo así y mencionarlo en las slides
 

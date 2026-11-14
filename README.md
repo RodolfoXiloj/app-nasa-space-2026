@@ -51,7 +51,7 @@ parcelas.yaml → pipeline/precargar → data/cache/ → motor/recomendar → mo
 | `data/` | Plots, rotations, crops (FAO-56 Kc), ZARC quotes, traffic-light thresholds, glossary, sources and cache | Iván (YAML) · Mario (cache) |
 | `pipeline/` | Data clients with cache: POWER, ORNL (NDVI), FIRMS, CHIRPS (monthly, and daily “sat”, which carries IMERG's daily split), SMAP (AppEEARS), SRTM, SoilGrids, GIBS | Mario |
 | `motor/` | Detection, climate, scores, confidence, traffic light, ZARC, text templates in Spanish and English, phrase audio, export | Rodolfo |
-| `web/` | Vite + React + react-leaflet + Recharts: farmer view, Evidence and pictograms | Team |
+| `web/` | Vite + React + react-leaflet + Recharts: farmer view, Evidence and pictograms | Rodolfo Xiloj |
 | `tests/` | Contract, number validator, ZARC, traffic light, English texts, phrase audio, engine with synthetic data, pipeline, validation | Everyone |
 | `docs/` | Documentation in English, with the Spanish team notes in `docs/es/` ([docs/README.md](docs/README.md)) | Everyone |
 | `api/` | Placeholder for an optional live API. Not built and not part of the submission | None |

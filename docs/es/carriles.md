@@ -9,7 +9,7 @@ Las 4 ramas salen de `main` al terminar el paso 0. Todavía no hay worktrees: se
 | Carril | Rama | Qué hace | Quién | Skills |
 |---|---|---|---|---|
 | A | `carril-a-motor` | Semáforo de 3 hechos con los umbrales confirmados, regla de empate, frases, audio por frases con subtítulos, pruebas | Opus, con Rodolfo (motor) y Mario (audio y regresión) | — |
-| B | `carril-b-agricultor` | Vista «Para el agricultor» como primera pantalla, reproductor propio, subtítulos, narración visual | Opus | `frontend-design`, `accessibility` (como reglas de diseño) |
+| B | `carril-b-agricultor` | Vista «Para el agricultor» como primera pantalla, reproductor propio, subtítulos, narración visual | Opus, con Rodolfo Xiloj | `frontend-design`, `accessibility` (como reglas de diseño) |
 | C | `carril-c-evidence` | Vista «Evidence» en inglés, tabla «NASA product → decision», panel «Where it fails» | Composer 2.5 o Antigravity; Opus revisa | `writing-guidelines` |
 | D | `carril-d-pictos` | Pictogramas SVG, rueda de 12 gajos, 15 puntos, píxel en manzanas | Opus; una persona decide si se entienden | `frontend-design` |
 

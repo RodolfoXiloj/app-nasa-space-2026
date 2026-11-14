@@ -155,4 +155,3 @@ El registro anterior también daba como hechas, con horas planeadas, estas prueb
 - La web con internet en Edge sin interfaz (sin proxy).
 - Las capturas de `docs/capturas/` y su verificación (audio, consola, desborde de la tarjeta a 360, 390 y 1366 px).
 - La prueba negativa de la verificación de audio del humo (quitar un mp3 y ver que falle).
-- `graphify update .` y la revisión de los `[[enlaces]]` de `docs/es/memoria/`.

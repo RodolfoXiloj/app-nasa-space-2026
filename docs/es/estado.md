@@ -1,12 +1,12 @@
 # Estado de Milpa Resiliente
 
-Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest, humo, build y sin red: todas pasan). Este es el repo de entrega de NASA Space Apps 2026. Tiene remoto privado en GitHub y todavía no está desplegado. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/es/pruebas.md`, junto con las pendientes; las decisiones y los hallazgos, en `docs/es/memoria/` (empezar por `Inicio.md`).
+Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest, humo, build y sin red: todas pasan). Este es el repo de entrega de NASA Space Apps 2026. Tiene remoto privado en GitHub y todavía no está desplegado. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/es/pruebas.md`, junto con las pendientes.
 
 ## Qué funciona
 
 | Pieza | Estado |
 |---|---|
-| Parcelas | **5 puntos propuestos como definitivos**, elegidos con NDVI y revisados con imagen Sentinel-2, cada uno en un píxel distinto de CHIRPS (`data/parcelas.yaml`). Detalle y dudas en `docs/es/memoria/Puntos definitivos de las parcelas.md` |
+| Parcelas | **5 puntos propuestos como definitivos**, elegidos con NDVI y revisados con imagen Sentinel-2, cada uno en un píxel distinto de CHIRPS (`data/parcelas.yaml`). Detalle y dudas en «Decisiones», más abajo |
 | Datos sin clave | POWER 1991-2025 · NDVI MOD13Q1 2001-2025 de las 5 parcelas · FIRMS 2012-2025 · **CHIRPS v3 mensual 1991-2025** y **diario de junio a agosto 2001-2025** (lectura por rangos HTTP con decodificador LZW propio, sin rasterio) · CHIRPS v3 de julio y agosto 2026, aparte, solo para la observación de 2026 · SRTM · SoilGrids (REST, con respaldo WCS; el respaldo no tiene corrida real registrada) · teselas GIBS para el mapa sin red |
 | Datos con clave (`.env`) | Earthdata Login (usuario en `.env`; la contraseña solo por tarjeta segura, nunca en disco del repo) · **FIRMS 2026** con `FIRMS_MAP_KEY`: producto estándar hasta el 31 jul y NRT después; 270 focos en la zona; ya entra al motor (15 años observados) |
 | SMAP | **SPL3SMP_E.006 por AppEEARS, 31 mar 2015 a 13 nov 2026** (tarea `7c0fd22c…`; datos en el repo desde el commit `41ec4eb`, 14 nov 2026). Solo datos con calidad recomendada. Mediana de jul-ago: Jocotán y San Juan Ermita 0.247 m³/m³ (comparten la celda de 9 km), Olopa 0.274 y Zacapa 0.206. **Camotán no tiene SMAP:** su celda nunca alcanza la calidad recomendada (3007 mediciones descartadas); el motor lo dice así y usa el modelo MERRA-2 rotulado. Confianza de agua: Jocotán y San Juan Ermita «alta», Olopa «media», Zacapa «baja» (POWER se desvía 55 % de CHIRPS) y Camotán «baja» (sin SMAP) |
@@ -15,7 +15,6 @@ Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest
 | Biblioteca | 8 plantillas con fuentes verificadas (ICTA, MAGA, CIMMYT, FAO, Bioversity): 3 actuales, maíz con canavalia, milpa completa, maíz con gandul, sorgo con caupí y maíz ICTA B-5. Kc y Ky verificados contra FAO-56 y FAO-66 |
 | Web | Observación de 2026 en la primera pantalla, con enlace al detalle en Validación; pestaña Validación completa; capas «sin red», y **sin internet el mapa pasa solo a la capa guardada**; Sentinel-2 en línea; rótulo de voz sintética junto al reproductor. Prueba sin red automática: `npm run sin-red` (14 de 14 el 14 nov 2026, 12:10). Prueba en teléfono: `docs/es/prueba-telefono.md` (pendiente) |
 | Futuros de NASA | **NEX-GDDP-CMIP6** precalculado en Earth Engine (`pipeline/gee/cmip6_cambios.js`, sin llamadas en vivo): cambio de lluvia de mayo-octubre y junio-agosto y de temperatura, 2041-2060 contra 1995-2014, por modelo y parcela (33 modelos en SSP2-4.5, 34 en SSP5-8.5). `python -m motor.futuros` lo aplica con el mismo balance de agua y escribe `web/public/data/futuros_nasa.json`; Evidence lo muestra debajo de las rotaciones. No cambia el contrato, el bloque `farmer`, la tarjeta ni el audio |
-| Memoria y grafo | `docs/es/memoria/` (30 notas con enlaces) y `graphify-out/` (grafo del código con Graphify, sin LLM) |
 
 ## Lo que dicen los datos
 
@@ -44,7 +43,7 @@ Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest
 
 ## Decisiones (revisar con el equipo)
 
-1. **Puntos de las parcelas.** Ver la tabla en `docs/es/memoria/Puntos definitivos de las parcelas.md`. Camotán y Olopa se eligieron con criterio relajado: muestran «poca cobertura», no suelo desnudo. La parcela de Olopa puede caer en Esquipulas, y la de Zacapa puede ser bosque seco.
+1. **Puntos de las parcelas.** Coordenadas en `data/parcelas.yaml`. Camotán y Olopa se eligieron con criterio relajado: muestran «poca cobertura», no suelo desnudo. La parcela de Olopa puede caer en Esquipulas, y la de Zacapa puede ser bosque seco.
 2. **Lluvia del motor = CHIRPS.** Total mensual de CHIRPS (~5 km). En junio-agosto, CHIRPS diario 'sat' (péntadas repartidas con NASA IMERG); el resto del año, repartido con los días de POWER. La temperatura sigue siendo de POWER.
 3. **Calibración de la detección** (antes de correr 2018): el suelo desnudo sigue en NDVI < 0.35 y se agregó «poca cobertura» de 0.35 a 0.45, que resta la mitad.
 4. **Duraciones de cultivo** con fuente: maíz de 125 días (FAO-56 Tabla 11), ICTA B-5 de 90 días y sorgo ICTA Blanco de 100 días. El frijol de postrera (80 días) y el caupí (75) siguen siendo supuestos.
@@ -89,5 +88,4 @@ MILPA_ONLINE=1 python -m motor.exportar --audio             # JSON y mp3 de la w
 python -m motor.exportar --etiquetar                        # solo las etiquetas ID3 de IA de los mp3
 python -m pytest
 cd web && npm install && npm run smoke && npm run build && npm run sin-red
-graphify update .                                           # grafo del código
 ```

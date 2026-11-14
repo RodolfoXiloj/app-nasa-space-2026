@@ -116,4 +116,4 @@ Limits:
 - High risk = the year's deficit is above the 75th percentile of the previous years (from 2001).
 - NDVI signal = July-September anomaly of -1 standard deviation or less.
 - SMAP: SPL3SMP_E.006 through AppEEARS, recommended-quality data only. Camotán has none; Jocotán and San Juan Ermita share the 9 km cell. SMAP measures the top 0-5 cm of soil and describes about 9 km of landscape, not the plot.
-- The 5 plots are example points chosen with NDVI and Sentinel-2 imagery, not verified in the field; see [es/memoria/](es/memoria/Inicio.md).
+- The 5 plots are example points chosen with NDVI and Sentinel-2 imagery, not verified in the field; see [es/estado.md](es/estado.md).

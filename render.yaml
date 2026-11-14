@@ -1,5 +1,5 @@
 # Render Blueprint: free static site built from web/ (it does not sleep and needs no secrets).
-# Not deployed yet. Deployment is the last step (owner: the team): connect the repository in Render and check
+# Not deployed yet. Deployment is the last step (owner: Rodolfo): connect the repository in Render and check
 # that rootDir and staticPublishPath stay as below. Fallback: GitHub Pages with the same web/dist.
 services:
   - type: web

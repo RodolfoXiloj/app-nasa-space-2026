@@ -137,4 +137,3 @@ The earlier log also listed these tests and tasks as done, with planned times. T
 - The web with internet in headless Edge (no proxy).
 - The screenshots in `docs/capturas/` and their checks (audio, console, card overflow at 360, 390 and 1366 px).
 - The negative test of the smoke test's audio check (remove an mp3 and see it fail).
-- `graphify update .` and the review of the `[[links]]` in `docs/es/memoria/`.

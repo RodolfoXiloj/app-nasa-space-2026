@@ -42,4 +42,3 @@ The team worked in Spanish. These files stay in Spanish:
 | [es/impacto.md](es/impacto.md) | Spanish copy of [impact.md](impact.md) |
 | [es/herramientas-existentes.md](es/herramientas-existentes.md) | Spanish copy of [existing-tools.md](existing-tools.md) |
 | [es/chorti.md](es/chorti.md) | Spanish copy of [chorti.md](chorti.md) |
-| [es/memoria/Inicio.md](es/memoria/Inicio.md) | Decisions and findings, one note each, linked with `[[...]]`. Start here |

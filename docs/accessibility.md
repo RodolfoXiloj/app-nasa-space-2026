@@ -46,7 +46,7 @@ Already in place and kept: language buttons with `aria-pressed` and their own `l
 
 The yellow and grey fills are close to their own tints (1.3 and 1.1), so these shapes rely on their black outline, which passes. Green and red fills are close to each other (1.1), as they are for anyone with red-green color blindness. That is why each state has a different shape (circle, triangle, square, dashed "?") and a word. We did not change the semaphore colors.
 
-## Still to test on a real phone (with TalkBack)
+## Still to test on a real phone (Rodolfo, with TalkBack)
 
 - TalkBack reading order on the first screen: header, plot, Listen, the three facts, options, kit, Evidence.
 - That each language button is read in its own voice ("English", "Español") and announced as on or off.
