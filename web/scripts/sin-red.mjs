@@ -85,14 +85,14 @@ try {
       ? a.currentSrc.split('/').pop() + ' a ' + a.currentTime.toFixed(1) + ' s; ' + tr.src.split('/').pop() + ', ' + tr.track.cues.length + ' frases' : null })()`), 15000)
   const subtitulo = await ev(`document.querySelector('.agr-subtitulos')?.textContent || ''`)
   await ev(`document.querySelector('#agr-audio').pause()`)
-  anota(/\.frases\.mp3 a /.test(corto || '') && corto.includes('.frases.en.vtt') && subtitulo.length > 0,
-    'Un toque a «Listen»: audio corto local con subtítulos en inglés', `${corto || 'no sonó'}; «${subtitulo}»`)
+  anota(/\.frases(\.en)?\.mp3 a /.test(corto || '') && corto.includes('.frases.en.vtt') && subtitulo.length > 0,
+    'Un toque a «Listen»: audio corto local en inglés con subtítulos en inglés', `${corto || 'no sonó'}; «${subtitulo}»`)
   // 00c. kit comunitario: llega con import() después de pintar; sus 3 botones funcionan sin red
   const kit = await hasta(() => ev(`(() => { const a = document.querySelector('.kit-audio'), w = document.querySelector('.kit-whatsapp')
     return document.querySelector('.kit-imprimir') && a && w ? { audio: a.getAttribute('href'), descarga: a.hasAttribute('download'), wa: w.href } : null })()`), 15000)
   const mp3Kit = kit ? await ev(`fetch(${JSON.stringify(kit.audio)}).then((r) => r.status + ' ' + r.headers.get('content-type'), (e) => 'falló: ' + e.message)`) : ''
-  anota(Boolean(kit) && kit.descarga && /audio\/[a-z_]+\.frases\.mp3$/.test(kit.audio) && mp3Kit.startsWith('200'),
-    'Kit: «Download audio» baja el mp3 corto de la copia local', kit ? `${kit.audio}: ${mp3Kit}` : 'no apareció el kit')
+  anota(Boolean(kit) && kit.descarga && /audio\/[a-z_]+\.frases\.en\.mp3$/.test(kit.audio) && mp3Kit.startsWith('200'),
+    'Kit: «Download audio» baja el mp3 corto en inglés de la copia local', kit ? `${kit.audio}: ${mp3Kit}` : 'no apareció el kit')
   const wa = kit ? new URL(kit.wa) : null
   const textoWa = wa ? wa.searchParams.get('text') || '' : ''
   anota(Boolean(wa) && wa.origin === 'https://wa.me' && wa.pathname === '/' && textoWa.endsWith(URL_APP) && textoWa.includes('not an official alert'),

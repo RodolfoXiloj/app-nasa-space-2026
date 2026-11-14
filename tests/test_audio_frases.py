@@ -35,6 +35,7 @@ def test_las_frases_pasan_el_validador_y_no_dicen_alerta(resultado_sintetico):
 def test_el_audio_solo_lee_las_frases(resultado_sintetico):
     fr = resultado_sintetico["farmer"]["frases"]
     assert frases.texto_audio(fr) == " ".join(f["es"] for f in fr)
+    assert frases.texto_audio(fr, "en") == " ".join(f["en"] for f in fr)
 
 
 def test_sin_umbrales_no_hay_frases(resultado_sintetico):
@@ -214,9 +215,34 @@ def test_audio_corto_dura_de_20_a_30_s_mono_y_declara_ia(pid, res):
     assert "prototipo" not in info["TALB"]
 
 
+@pytest.mark.skipif(not PUBLICADOS, reason="sin audio corto publicado")
+@pytest.mark.parametrize("pid, res", PUBLICADOS, ids=[p for p, _ in PUBLICADOS])
+def test_mp3_corto_en_mono_y_kbps(pid, res):
+    a = res["farmer"]["audio"]["en"]
+    c = audio_frases.cabecera_mp3((WEB / a["mp3"]).read_bytes())
+    assert c["mono"] and c["kbps"] == a["kbps"] and 24 <= a["kbps"] <= 32
+
+
 def test_los_mp3_largos_ya_no_dicen_prototipo_local():
     for ruta in sorted((WEB / "audio").glob("*.mp3")):
         assert "prototipo" not in audio_id3.leer(ruta).get("TALB", ""), ruta.name
+
+
+@pytest.mark.skipif(not PUBLICADOS, reason="sin audio corto publicado")
+@pytest.mark.parametrize("pid, res", PUBLICADOS, ids=[p for p, _ in PUBLICADOS])
+def test_mp3_corto_en_ingles_publicado(pid, res):
+    """Cada parcela con audio en español lleva el mp3 en inglés, con IA y hasta 120 kB."""
+    a = res["farmer"]["audio"]["en"]
+    assert a and a["mp3"].endswith(".frases.en.mp3")
+    assert a["bytes"] <= exportar.MAX_BYTES_FRASES
+    ruta = WEB / a["mp3"]
+    assert a["bytes"] == ruta.stat().st_size
+    info = audio_id3.leer(ruta)
+    assert info["TXXX"][audio_id3.MARCA_IA].startswith("true")
+    assert "not a person" in info["COMM"].lower()
+    assert info["TXXX"][audio_id3.CLAVE_HASH] == audio_id3.hash_texto(
+        frases.texto_audio(res["farmer"]["frases"], "en"))
+    assert a["ia"]["generado_con_ia"] is True
 
 
 def test_la_tarjeta_respeta_la_regla_de_empate():

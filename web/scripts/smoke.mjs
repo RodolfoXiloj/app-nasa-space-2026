@@ -54,6 +54,20 @@ try {
         console.error(`FALLA ${f}: audio ${res.audio.mp3}: ${e.message}`)
       }
     }
+    const audioEn = res.farmer?.audio?.en
+    if (audioEn?.mp3) {
+      try {
+        const mp3 = readFileSync(join(raiz, 'public', audioEn.mp3))
+        if (mp3.length < 1000) throw new Error('mp3 vacío')
+        if (mp3.length > 120_000) throw new Error(`mp3 pesa ${mp3.length} B (máx. 120 kB)`)
+        const cabecera = mp3.subarray(0, 4096).toString('latin1')
+        if (!cabecera.startsWith('ID3') || !cabecera.includes('AI_GENERATED')) throw new Error('sin etiqueta ID3 de IA')
+        if (!audioEn.ia?.generado_con_ia) throw new Error('el JSON no declara la IA del mp3 en inglés')
+      } catch (e) {
+        fallas++
+        console.error(`FALLA ${f}: farmer audio en ${audioEn.mp3}: ${e.message}`)
+      }
+    }
     for (const [nombre, C] of Object.entries(piezas)) {
       for (const [lluvia, temp, prioridad] of escenarios) {
         try {

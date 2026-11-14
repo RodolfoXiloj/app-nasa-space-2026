@@ -18,7 +18,12 @@ def pares(obj, ruta=""):
     """(ruta, texto en español, texto en inglés) de todos los bloques `es`/`en` del objeto."""
     out = []
     if isinstance(obj, dict):
-        if isinstance(obj.get("es"), dict) and isinstance(obj.get("en"), dict):
+        es_b, en_b = obj.get("es"), obj.get("en")
+        if isinstance(es_b, dict) and isinstance(en_b, dict) and es_b.get("mp3"):
+            for slot in ("es", "en", "caa"):
+                if isinstance(obj.get(slot), dict):
+                    out += pares(obj[slot], f"{ruta}/{slot}")
+        elif isinstance(es_b, dict) and isinstance(en_b, dict):
             for c, es in obj["es"].items():
                 en = obj["en"].get(c)
                 if isinstance(es, list):

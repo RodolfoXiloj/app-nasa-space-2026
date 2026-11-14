@@ -6,6 +6,32 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Audio en inglés unido a `main`: sábado 14 nov 2026
+
+Unión en un commit de la rama `entrega-audio-en` sobre `main` (con el kit, los documentos y las diapositivas). Cambios de la unión: el kit ofrece `audio/{parcela}.frases.en.mp3` en «Download audio» cuando el idioma es inglés (si falta, el de español); el botón Escuchar ya no se reinicia al cambiar de idioma y, si estaba sonando, sigue con el mp3 del idioma nuevo. Mismo equipo y versiones. Horas de `date`.
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 14:30:05 a 14:30:13 | Pruebas automáticas | `python -m pytest -q` | ✅ 222 pasan; salida 0 |
+| 14:30:13 a 14:30:15 | Humo de la web | `cd web && npm run smoke` | ✅ «Prueba de humo de la web: sin fallas» |
+| 14:30:15 a 14:30:20 | Build | `cd web && npm run build` | ✅ 523 módulos; JS inicial 173.37 kB (gzip 57.27 kB), ver [../peso.md](../peso.md) |
+| 14:30:20 a 14:30:33 | Sin red | `cd web && npm run sin-red -- <carpeta temp>` | ✅ 23 de 23; «Listen» con `jocotan.frases.en.mp3` y `.frases.en.vtt`; el kit baja `jocotan.frases.en.mp3` (200 audio/mpeg) |
+| 14:30:33 a 14:30:37 | Vista del agricultor a 390 y 412 px | `python web/scripts/agricultor_playwright.py` | ✅ 25 de 25; en inglés suena `jocotan.frases.en.mp3`; al cambiar de idioma con el audio abierto carga la pista del otro idioma |
+| 14:30:37 a 14:30:39 | PDF de las diapositivas | `python web/scripts/slides_pdf.py` | ✅ 7 páginas (tope 7) |
+
+## Audio corto en inglés (rama `entrega-audio-en`, antes del commit de esta entrega)
+
+Equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1. `npm ci` en `web/` (lockfile del repo). Generación de mp3: `MILPA_ONLINE=1 python -m motor.exportar --audio` y después `python -m motor.exportar` para enlazar JSON.
+
+**Qué reproduce Evidence en inglés:** la interfaz (menús, rotaciones, tarjeta, validación) sale en inglés, pero el audio largo de la tarjeta en cada parcela sigue siendo `audio/{parcela}.mp3` con voz **es-GT-MartaNeural** (mismo archivo que en español). El audio corto en inglés (`audio/{parcela}.frases.en.mp3`, voz en-US-JennyNeural) solo lo usa la vista del agricultor con el botón **Listen** en la primera pantalla.
+
+| Qué | Comando | Resultado |
+|---|---|---|
+| Pruebas automáticas | `python -m pytest -q` | ✅ 217 pasan; salida 0 |
+| Humo de la web | `cd web && npm run smoke` | ✅ 16 JSON + `observacion_2026`; sin fallas |
+| Build | `cd web && npm run build` | ✅ vite v6.4.6, 519 módulos, ~3.5 s |
+| Sin red | `cd web && npm run sin-red -- <carpeta temp>` | ✅ 20 de 20; «Listen» con `jocotan.frases.en.mp3` y subtítulos `.frases.en.vtt`; totales de Jocotán 80/88/87 sin cambio |
+
 ## Línea base del paso 0: sábado 14 nov 2026 (commit `15c5130`)
 
 Después de agregar el bloque `farmer` al contrato, el contraste de los bordes y los espacios fijos de `Controles.jsx`. No se regeneraron datos: los JSON y los mp3 de `web/public/` son los mismos de la línea base anterior. Mismo equipo y mismas versiones (Python 3.11.9, pytest 9.0.2, Node v24.15.0, npm 11.12.1). Las horas son las que imprimió `date` al empezar y al terminar cada comando.

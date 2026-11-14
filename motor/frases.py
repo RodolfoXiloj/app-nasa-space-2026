@@ -144,9 +144,9 @@ def construir(res: dict, hechos: list[dict], opciones: dict, umbrales: dict) -> 
     ]
 
 
-def texto_audio(frases: list[dict]) -> str:
-    """Lo único que lee el mp3 corto: el español de las frases, en orden."""
-    return " ".join(f["es"] for f in frases)
+def texto_audio(frases: list[dict], idioma: str = "es") -> str:
+    """Texto que lee el mp3 corto: las frases en el idioma pedido («es» o «en»), en orden."""
+    return " ".join(f[idioma] for f in frases)
 
 
 def _marca(s: float) -> str:

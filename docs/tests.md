@@ -8,6 +8,19 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## English Listen audio merged into `main`: Saturday 14 Nov 2026
+
+The `entrega-audio-en` branch merged as one commit onto `main` (with the kit, the docs and the slides). The short phrase audio now has an English voice (`audio/{plot}.frases.en.mp3`, en-US-JennyNeural) that Listen plays when the locale is English. The longer card audio in Evidence is still the Spanish voice (es-GT-MartaNeural). Merge changes: the kit's "Download audio" offers the English mp3 when the locale is English (Spanish if it is missing); Listen no longer resets when the language changes and, if it was playing, continues with the new language's mp3. Same laptop and versions. Times from `date`.
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 14:30:05 to 14:30:13 | Automated tests | `python -m pytest -q` | ✅ 222 pass; exit 0 |
+| 14:30:13 to 14:30:15 | Web smoke test | `cd web && npm run smoke` | ✅ "Prueba de humo de la web: sin fallas" |
+| 14:30:15 to 14:30:20 | Web build | `cd web && npm run build` | ✅ 523 modules; first-load JS 173.37 kB (gzip 57.27 kB), see [peso.md](peso.md) |
+| 14:30:20 to 14:30:33 | Offline test | `cd web && npm run sin-red -- <temp folder>` | ✅ 23 of 23; Listen plays `jocotan.frases.en.mp3` with `.frases.en.vtt`; the kit downloads `jocotan.frases.en.mp3` (200 audio/mpeg) |
+| 14:30:33 to 14:30:37 | Farmer view at 390 and 412 px | `python web/scripts/agricultor_playwright.py` | ✅ 25 of 25 |
+| 14:30:37 to 14:30:39 | Slides PDF | `python web/scripts/slides_pdf.py` | ✅ 7 pages (limit 7) |
+
 ## Step 0 baseline: Saturday 14 Nov 2026 (commit `15c5130`)
 
 After adding the `farmer` block to the contract, the border contrast and the non-breaking spaces in `Controles.jsx`. No data were regenerated: the JSON files and mp3s in `web/public/` are the same as in the previous baseline. Same laptop and versions (Python 3.11.9, pytest 9.0.2, Node v24.15.0, npm 11.12.1). Times are the ones `date` printed at the start and end of each command.

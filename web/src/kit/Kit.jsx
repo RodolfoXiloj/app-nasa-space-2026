@@ -147,6 +147,8 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
   const lugar = parcela ? `${parcela.municipio}, ${parcela.departamento}` : pid
   const nombre = parcela && ((parcela[idioma] || {}).nombre || (idioma === 'es' ? parcela.nombre : null))
   const texto = href ? resumenWhatsApp({ idioma, lugar, farmer, href }) : ''
+  // El mp3 corto del idioma de la pantalla; si falta el inglés, el español.
+  const mp3 = ((farmer.audio || {})[idioma] || {}).mp3 || `audio/${pid}.frases.mp3`
 
   function imprimir() {
     document.documentElement.classList.add(CLASE)
@@ -159,7 +161,7 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
       <p className="kit-detalle">{k.detalle}</p>
       <div className="kit-botones">
         <button type="button" className="kit-boton kit-imprimir" onClick={imprimir}>{k.imprimir}</button>
-        <a className="kit-boton kit-audio" href={`${import.meta.env.BASE_URL}audio/${pid}.frases.mp3`} download={`${pid}.frases.mp3`}>
+        <a className="kit-boton kit-audio" href={import.meta.env.BASE_URL + mp3} download={mp3.split('/').pop()}>
           {k.audio}
         </a>
         <a className="kit-boton kit-whatsapp" href={`https://wa.me/?text=${encodeURIComponent(texto)}`} target="_blank" rel="noopener noreferrer">

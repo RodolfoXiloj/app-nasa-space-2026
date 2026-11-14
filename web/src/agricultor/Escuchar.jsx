@@ -1,25 +1,27 @@
 // Botón «Escuchar / Listen»: el audio corto por frases del motor (motor/audio_frases.py) con subtítulos
-// en el idioma activo. El mp3 y los .vtt llegan en `farmer.audio.es` del JSON (la voz es en español; en
-// inglés van los subtítulos en inglés). El <audio> lleva preload="none" y la pista se pone al tocar el
-// botón: la primera pantalla no descarga nada de audio. El botón reproduce; pausar y adelantar van en los
-// controles del <audio>, que aparecen al primer toque. Un <audio> no dibuja subtítulos (solo <video>), así
-// que la pista va en modo «hidden» y la frase activa se escribe debajo del botón, visible por defecto.
+// en el idioma activo. `farmer.audio` trae `es` y, si existe, `en`; si en inglés no hay mp3, suena el de español.
+// El <audio> lleva preload="none" y la pista se pone al tocar el botón: la primera pantalla no descarga nada de audio.
 import { useEffect, useRef, useState } from 'react'
 import { TEXTOS } from './textos.js'
 
-export default function Escuchar({ audio, idioma }) {
+export default function Escuchar({ farmerAudio, idioma }) {
   const t = TEXTOS[idioma].escuchar
+  const es = farmerAudio?.es
+  const en = farmerAudio?.en
+  const activo = idioma === 'en' && en?.mp3 ? en : es
+  const audio = activo || es
   const ref = useRef(null)
   const [abierto, setAbierto] = useState(false)
   const [conSubtitulos, setConSubtitulos] = useState(true)
   const [frase, setFrase] = useState('')
   const [fallo, setFallo] = useState(false)
-  const vtt = idioma === 'en' ? audio.subtitulos_en : audio.subtitulos
-  const ia = (audio.ia || {})[idioma] || {}
+  const subtitulos = idioma === 'en'
+    ? (activo?.subtitulos || es.subtitulos_en)
+    : es.subtitulos
+  const declaracionIa = (audio?.ia?.[idioma]?.declaracion) || audio?.ia?.declaracion
 
-  // La pista del idioma activo: al cambiar de idioma React pone otra <track> (key) y esto se vuelve a enganchar.
   useEffect(() => {
-    const el = abierto && ref.current.querySelector('track')
+    const el = abierto && ref.current?.querySelector('track')
     if (!el) return
     const pista = el.track
     const alCambiar = () => setFrase(Array.from(pista.activeCues || [], (c) => c.text).join(' '))
@@ -27,7 +29,23 @@ export default function Escuchar({ audio, idioma }) {
     pista.addEventListener('cuechange', alCambiar)
     alCambiar()
     return () => pista.removeEventListener('cuechange', alCambiar)
-  }, [abierto, vtt])
+  }, [abierto, subtitulos])
+
+  // Al cambiar de idioma cambia el mp3: si estaba sonando, sigue con el del idioma nuevo.
+  // La pausa que provoca el cambio de src no cuenta (llega con el src nuevo).
+  const sonando = useRef(false)
+  const srcSonando = useRef(null)
+  const alSonar = () => {
+    sonando.current = true
+    srcSonando.current = ref.current.getAttribute('src')
+  }
+  const alPausar = () => {
+    if (ref.current.getAttribute('src') === srcSonando.current) sonando.current = false
+  }
+  const mp3 = activo?.mp3 || es?.mp3
+  useEffect(() => {
+    if (sonando.current) ref.current?.play().catch(() => setFallo(true))
+  }, [mp3])
 
   function tocar() {
     const a = ref.current
@@ -36,11 +54,13 @@ export default function Escuchar({ audio, idioma }) {
     a.play().catch(() => setFallo(true))
   }
 
+  if (!es?.mp3) return null
+
   const base = import.meta.env.BASE_URL
+
   return (
     <div className="agr-escuchar">
       <button type="button" className="agr-boton agr-escuchar-boton" aria-controls="agr-audio" onClick={tocar}>
-        {/* Altavoz; el trazo y el tamaño van en agricultor.css */}
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <path d="M3 12h6l8-7v22l-8-7H3z" />
           <path d="M21 11a7 7 0 0 1 0 10m4-14a12 12 0 0 1 0 18" />
@@ -50,8 +70,10 @@ export default function Escuchar({ audio, idioma }) {
           <small>{t.detalle}</small>
         </span>
       </button>
-      <audio id="agr-audio" ref={ref} src={base + audio.mp3} preload="none" controls hidden={!abierto}>
-        {abierto && <track key={vtt} kind="subtitles" src={base + vtt} srcLang={idioma} label={t.subtitulos} default />}
+      <audio id="agr-audio" ref={ref} src={base + mp3} preload="none" controls hidden={!abierto} onPlay={alSonar} onPause={alPausar}>
+        {abierto && (
+          <track key={subtitulos} kind="subtitles" src={base + subtitulos} srcLang={idioma} label={t.subtitulos} default />
+        )}
       </audio>
       {abierto && (
         <>
@@ -63,7 +85,7 @@ export default function Escuchar({ audio, idioma }) {
           <button type="button" className="agr-boton agr-boton--linea" aria-pressed={conSubtitulos} onClick={() => setConSubtitulos(!conSubtitulos)}>
             {t.subtitulos}
           </button>
-          {ia.declaracion && <p className="agr-nota">{ia.declaracion}</p>}
+          {declaracionIa && <p className="agr-nota">{declaracionIa}</p>}
         </>
       )}
       {fallo && (

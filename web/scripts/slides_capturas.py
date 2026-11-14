@@ -51,7 +51,7 @@ def elegir_parcela(pag, pid: str) -> None:
     if pag.input_value("#agr-parcela") != pid:
         pag.select_option("#agr-parcela", pid)
     pag.wait_for_function(
-        f"document.querySelector('#agr-audio')?.getAttribute('src')?.includes('{pid}.frases.mp3')"
+        f"document.querySelector('#agr-audio')?.getAttribute('src')?.includes('{pid}.frases.')"
         f" || document.querySelector('.agr-escuchar') !== null",
         timeout=15000)
     pag.wait_for_function("document.querySelectorAll('.agr-hecho').length === 3", timeout=20000)

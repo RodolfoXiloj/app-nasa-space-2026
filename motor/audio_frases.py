@@ -67,15 +67,15 @@ def unir(pcms: list[bytes]) -> tuple[bytes, list[list[float]], float]:
     return b"".join(partes), tiempos, round(n / TASA_HZ, 3)
 
 
-def codificar(ff: str, pcm: bytes, ruta: Path) -> None:
-    """mp3 mono CBR a KBPS, sin etiquetas propias de ffmpeg (las pone motor/audio_id3.py)."""
+def codificar(ff: str, pcm: bytes, ruta: Path, kbps: int = KBPS) -> None:
+    """mp3 mono CBR a kbps, sin etiquetas propias de ffmpeg (las pone motor/audio_id3.py)."""
     ruta.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run([ff, "-v", "error", "-y", "-f", "s16le", "-ar", str(TASA_HZ), "-ac", "1", "-i", "-",
-                    "-c:a", "libmp3lame", "-b:a", f"{KBPS}k", "-ac", "1", "-ar", str(TASA_HZ),
+                    "-c:a", "libmp3lame", "-b:a", f"{kbps}k", "-ac", "1", "-ar", str(TASA_HZ),
                     "-map_metadata", "-1", "-id3v2_version", "0", str(ruta)], input=pcm, check=True)
 
 
-def sintetizar(frases_es: list[str], ruta: Path, voces: list[str], rate: str) -> dict | None:
+def sintetizar(frases: list[str], ruta: Path, voces: list[str], rate: str, kbps: int = KBPS) -> dict | None:
     """Genera el mp3 de las frases. Devuelve {"voz", "tiempos", "duracion_s"} o None si no se pudo."""
     if os.environ.get("MILPA_ONLINE") != "1":
         return None
@@ -92,13 +92,13 @@ def sintetizar(frases_es: list[str], ruta: Path, voces: list[str], rate: str) ->
         for voz in voces:
             try:
                 pcms = []
-                for i, texto in enumerate(frases_es):
+                for i, texto in enumerate(frases):
                     mp3 = Path(tmp) / f"{voz}_{i}.mp3"
                     asyncio.run(edge_tts.Communicate(texto, voz, rate=rate).save(str(mp3)))
                     pcms.append(recortar(_a_pcm(ff, mp3)))
                 pcm, tiempos, dur = unir(pcms)
-                codificar(ff, pcm, ruta)
-                return {"voz": voz, "tiempos": tiempos, "duracion_s": dur}
+                codificar(ff, pcm, ruta, kbps)
+                return {"voz": voz, "tiempos": tiempos, "duracion_s": dur, "kbps": kbps}
             except Exception as e:  # noqa: BLE001
                 print(f"[audio corto] {voz} falló: {type(e).__name__}: {e}", file=sys.stderr)
     return None

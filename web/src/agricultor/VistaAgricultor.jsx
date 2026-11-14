@@ -156,7 +156,7 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
   const hechos = Object.fromEntries((f.hechos || []).map((h) => [h.id, h]))
   const fraseDe = (id) => ((f.frases || []).find((x) => x.hecho === id) || {})[idioma] || null
   const disponibles = parcelas.filter((p) => p.disponible)
-  const audio = (f.audio || {}).es
+  const farmerAudio = f.audio
 
   return (
     <div className="agr">
@@ -186,7 +186,13 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
         )}
 
         {/* Un toque desde la primera pantalla: el audio corto de esta parcela, con subtítulos. */}
-        {audio && audio.mp3 && !cargando && <Escuchar key={audio.mp3} audio={audio} idioma={idioma} />}
+        {farmerAudio?.es?.mp3 && !cargando && (
+          <Escuchar
+            key={farmerAudio.es.mp3}
+            farmerAudio={farmerAudio}
+            idioma={idioma}
+          />
+        )}
 
         <section className="agr-hechos" aria-labelledby="agr-titulo" aria-busy={cargando || undefined}>
           <h2 id="agr-titulo" className="agr-subtitulo">{t.titulo}</h2>

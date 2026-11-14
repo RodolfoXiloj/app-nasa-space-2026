@@ -102,7 +102,8 @@ def caso(navegador, ancho: int, alto: int, idioma: str, pid_captura: str, captur
         timeout=15000)
     t_audio = pag.evaluate("document.querySelector('#agr-audio').currentTime")
     src = pag.evaluate("document.querySelector('#agr-audio').currentSrc")
-    anota(bool(suena) and toques <= TOPE_TOQUES and src.endswith(".frases.mp3"),
+    ok_src = src.endswith(".frases.mp3") or (idioma == "en" and src.endswith(".frases.en.mp3"))
+    anota(bool(suena) and toques <= TOPE_TOQUES and ok_src,
           f"{pre}: el audio suena en {toques} toque(s) (tope {TOPE_TOQUES})", f"{src.split('/')[-1]} a {t_audio:.1f} s")
 
     pista = pag.wait_for_function(
@@ -136,7 +137,7 @@ def caso(navegador, ancho: int, alto: int, idioma: str, pid_captura: str, captur
         if pid_captura != pag.input_value("#agr-parcela"):
             pag.select_option("#agr-parcela", pid_captura)
             pag.wait_for_function(
-                f"document.querySelector('#agr-audio')?.getAttribute('src')?.includes('{pid_captura}.frases.mp3')",
+                f"document.querySelector('#agr-audio')?.getAttribute('src')?.includes('{pid_captura}.frases.')",
                 timeout=15000)
         # Captura con el audio abierto en la segunda frase (el suelo), pausado, y su subtítulo a la vista.
         pag.locator(".agr-escuchar-boton").tap()

@@ -2,7 +2,7 @@
 
 ## English
 
-Measured on Saturday 14 Nov 2026 at 13:55 (Guatemala), branch `main`, after merging lane A2 (phrase audio and English from the engine) and adding the Listen button with subtitles to the farmer view. Updated the same day at 14:14 on branch `entrega-kit`, with the community kit, and again on `main` after merging the kit, the English docs and the slides.
+Measured on Saturday 14 Nov 2026 at 13:55 (Guatemala), branch `main`, after merging lane A2 (phrase audio and English from the engine) and adding the Listen button with subtitles to the farmer view. Updated the same day at 14:14 on branch `entrega-kit`, with the community kit, again on `main` after merging the kit, the English docs and the slides, and at 14:30 on `main` after merging the English Listen audio.
 
 The first screen is the farmer view. The technical view, Evidence, loads with `import()` only when someone opens it. The map (Leaflet), the charts (Recharts) and their styles load with it.
 
@@ -10,10 +10,10 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 
 **Budget:** the first screen's JavaScript stays at or under about 172 kB.
 
-| What the first screen downloads | Before lane B (`d2730cd`) | Lane B alone | Pictograms (`9d3daed`) | `main` (`b69fe1c`) | With the kit (`entrega-kit`) | `main` with kit, docs and slides |
+| What the first screen downloads | Before lane B (`d2730cd`) | Lane B alone | Pictograms (`9d3daed`) | `main` (`b69fe1c`) | With the kit (`entrega-kit`) | `main` with kit, docs and slides | `main` with English Listen audio |
 |---|---|---|---|---|---|---|
-| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | 171.87 kB (gzip 56.77 kB) | 172.26 kB (gzip 56.91 kB) | **172.68 kB** (gzip 57.03 kB) |
-| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) |
+| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | 171.87 kB (gzip 56.77 kB) | 172.26 kB (gzip 56.91 kB) | 172.68 kB (gzip 57.03 kB) | **173.37 kB** (gzip 57.27 kB) |
+| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) |
 
 | Loads only when Evidence opens | Size |
 |---|---|
@@ -22,9 +22,10 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 
 | Loads with `import()` right after the farmer view paints | Size |
 |---|---|
-| `Kit-*.js`: community kit (print sheet, audio download, WhatsApp) | 5.80 kB (gzip 2.54 kB) |
+| `Kit-*.js`: community kit (print sheet, audio download, WhatsApp) | 5.83 kB (gzip 2.57 kB) |
 | `Kit-*.css`: kit buttons and the black-and-white print sheet | 2.10 kB (gzip 0.87 kB) |
 
+- **What the 0.69 kB of the English Listen audio pays for:** choosing the Spanish or English mp3 by locale, and resuming playback in the new language when the language changes while the audio plays. It is 1.37 kB over the 172 kB budget; no larger trim was attempted.
 - **What the 0.42 kB on `main` pays for:** the tie text now tells a chain tie (Olopa: 87/90/92) from one where every pair is within the margin, in both languages, plus the moved doc paths in Evidence's source notes. It is slightly over the 172 kB budget.
 - **What the 0.39 kB of the kit pays for:** only the door to the kit (`web/src/kit/index.jsx`, `lazy` plus `Suspense`) and the one line in `VistaAgricultor.jsx`. The kit itself (`web/src/kit/Kit.jsx`, its texts and CSS) is a separate file that the page asks for after the first paint, so it does not delay the three facts. The sheet reuses the pictograms, the month wheel and the year dots that are already in the first load.
 
@@ -35,7 +36,7 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 
 ## Español
 
-Medido el sábado 14 nov 2026 a las 13:55 (Guatemala), rama `main`, después de unir el carril A2 (audio por frases e inglés del motor) y de poner el botón Escuchar con subtítulos en la vista del agricultor. Actualizado el mismo día a las 14:14 en la rama `entrega-kit`, con el kit comunitario, y otra vez en `main` después de unir el kit, los documentos en inglés y las diapositivas.
+Medido el sábado 14 nov 2026 a las 13:55 (Guatemala), rama `main`, después de unir el carril A2 (audio por frases e inglés del motor) y de poner el botón Escuchar con subtítulos en la vista del agricultor. Actualizado el mismo día a las 14:14 en la rama `entrega-kit`, con el kit comunitario, otra vez en `main` después de unir el kit, los documentos en inglés y las diapositivas, y a las 14:30 en `main` después de unir el audio Escuchar en inglés.
 
 La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se carga con `import()` solo cuando alguien la abre. Con ella llegan el mapa (Leaflet), las gráficas (Recharts) y sus estilos.
 
@@ -43,10 +44,10 @@ La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se 
 
 **Tope:** el JavaScript de la primera pantalla no pasa de unos 172 kB.
 
-| Lo que descarga la primera pantalla | Antes del carril B (`d2730cd`) | Solo el carril B | Pictogramas (`9d3daed`) | `main` (`b69fe1c`) | Con el kit (`entrega-kit`) | `main` con kit, docs y diapositivas |
+| Lo que descarga la primera pantalla | Antes del carril B (`d2730cd`) | Solo el carril B | Pictogramas (`9d3daed`) | `main` (`b69fe1c`) | Con el kit (`entrega-kit`) | `main` con kit, docs y diapositivas | `main` con el audio Escuchar en inglés |
 |---|---|---|---|---|---|---|
-| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | 171.87 kB (gzip 56.77 kB) | 172.26 kB (gzip 56.91 kB) | **172.68 kB** (gzip 57.03 kB) |
-| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) |
+| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | 171.87 kB (gzip 56.77 kB) | 172.26 kB (gzip 56.91 kB) | 172.68 kB (gzip 57.03 kB) | **173.37 kB** (gzip 57.27 kB) |
+| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) |
 
 | Se carga solo al abrir Evidence | Tamaño |
 |---|---|
@@ -55,9 +56,10 @@ La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se 
 
 | Se carga con `import()` justo después de pintar la vista del agricultor | Tamaño |
 |---|---|
-| `Kit-*.js`: kit comunitario (hoja para imprimir, descarga del audio, WhatsApp) | 5.80 kB (gzip 2.54 kB) |
+| `Kit-*.js`: kit comunitario (hoja para imprimir, descarga del audio, WhatsApp) | 5.83 kB (gzip 2.57 kB) |
 | `Kit-*.css`: botones del kit y hoja de impresión en blanco y negro | 2.10 kB (gzip 0.87 kB) |
 
+- **Qué pagan los 0.69 kB del audio Escuchar en inglés:** elegir el mp3 en español o en inglés según el idioma, y seguir sonando en el idioma nuevo si se cambia de idioma con el audio sonando. Queda 1.37 kB por encima del tope de 172 kB; no se intentó un recorte grande.
 - **Qué pagan los 0.42 kB en `main`:** el texto del empate ahora distingue el empate en cadena (Olopa: 87/90/92) del empate en que todas las parejas están dentro del margen, en los dos idiomas, y las rutas nuevas de los documentos en las fuentes de Evidence. Queda un poco por encima del tope de 172 kB.
 - **Qué pagan los 0.39 kB del kit:** solo la puerta del kit (`web/src/kit/index.jsx`, `lazy` y `Suspense`) y la línea en `VistaAgricultor.jsx`. El kit (`web/src/kit/Kit.jsx`, sus textos y su CSS) es un archivo aparte que la página pide después del primer pintado, así que no atrasa los tres hechos. La hoja reutiliza los pictogramas, la rueda de meses y los puntos de años que ya están en la carga inicial.
 
