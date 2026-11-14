@@ -10,15 +10,16 @@ import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
 import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { IDIOMAS, NOMBRE_IDIOMA, TEXTOS } from './textos.js'
+import Escuchar from './Escuchar.jsx'
 
 const ORDEN = ['suelo', 'quema', 'canicula']
 const ESTADOS = ['verde', 'amarillo', 'rojo', 'gris']
 
-// Texto del motor en el idioma elegido: el JSON trae `campo` en español y `campo_en` en inglés.
-// Si falta el inglés, va el español marcado con lang="es".
+// Texto del motor en el idioma elegido: el JSON trae `es.campo` y `en.campo` (y, de antes, `campo` en
+// español y `campo_en` en inglés). Si falta el inglés, va el español marcado con lang="es".
 function TextoMotor({ obj, campo, idioma }) {
-  const en = obj[campo + '_en']
-  return idioma === 'en' && en ? <span>{en}</span> : <span lang="es">{obj[campo]}</span>
+  const txt = (obj[idioma] || {})[campo] || (idioma === 'en' ? obj[campo + '_en'] : obj[campo])
+  return txt ? <span lang={idioma}>{txt}</span> : <span lang="es">{obj[campo]}</span>
 }
 
 // Dibujo del tema de cada hecho (web/src/pictos/iconos.jsx). El suelo sale cubierto solo cuando el
@@ -82,10 +83,11 @@ function Hecho({ id, hecho, frase, idioma, sinResumen, palabras }) {
   )
 }
 
-// Tipo de opción en el idioma elegido y, en español, el nombre que trae el JSON (el JSON no trae nombres en inglés).
+// Tipo de opción y nombre que trae el JSON, los dos en el idioma elegido (`es.nombre` / `en.nombre`).
 function Opcion({ id, rot = {}, idioma, as: Tag = 'li', clase = '' }) {
   const t = TEXTOS[idioma]
-  let nombre = idioma === 'es' && rot.nombre ? rot.nombre.replace(/^Lo que hace hoy:\s*/, '') : null
+  let nombre = (rot[idioma] || {}).nombre || (idioma === 'es' && rot.nombre)
+  nombre = nombre ? nombre.replace(/^(Lo que hace hoy|What you do today):\s*/, '') : null
   if (nombre) nombre = nombre[0].toUpperCase() + nombre.slice(1)
   return (
     <Tag className={`agr-opcion ${clase}`.trim()}>
@@ -153,6 +155,7 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
   const hechos = Object.fromEntries((f.hechos || []).map((h) => [h.id, h]))
   const fraseDe = (id) => ((f.frases || []).find((x) => x.hecho === id) || {})[idioma] || null
   const disponibles = parcelas.filter((p) => p.disponible)
+  const audio = (f.audio || {}).es
 
   return (
     <div className="agr">
@@ -174,12 +177,15 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
             </select>
             {parcela && (
               <p className="agr-nota">
-                {idioma === 'es' ? parcela.nombre : t.parcelaEjemplo}
+                {(parcela[idioma] || {}).nombre || (idioma === 'es' ? parcela.nombre : t.parcelaEjemplo)}
                 {parcela.provisional ? `. ${t.ubicacionProvisional}.` : '.'}
               </p>
             )}
           </div>
         )}
+
+        {/* Un toque desde la primera pantalla: el audio corto de esta parcela, con subtítulos. */}
+        {audio && audio.mp3 && !cargando && <Escuchar key={audio.mp3} audio={audio} idioma={idioma} />}
 
         <section className="agr-hechos" aria-labelledby="agr-titulo" aria-busy={cargando || undefined}>
           <h2 id="agr-titulo" className="agr-subtitulo">{t.titulo}</h2>

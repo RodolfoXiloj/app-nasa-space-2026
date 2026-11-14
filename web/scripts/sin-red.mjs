@@ -1,8 +1,9 @@
 // Prueba sin red (plan 12.4) en la laptop, sin apagar el Wi-Fi (cortaría la sesión del asistente):
 // Edge sin interfaz con un proxy inexistente, así que no llega a internet, pero sí al servidor local
 // (Chromium no usa el proxy para 127.0.0.1). Es lo que pasa con el Wi-Fi apagado: la copia local
-// responde y todo lo externo falla. Recorre las 5 parcelas, el audio, las capas «sin red», las
-// pestañas y la impresión a PDF.
+// responde y todo lo externo falla. Recorre el botón «Listen» de la vista del agricultor (audio corto
+// con subtítulos), las 5 parcelas, el audio, las capas «sin red», las pestañas y la impresión a PDF.
+// No hay service worker: sin red, la web y su audio salen de la copia local servida en la laptop.
 // Uso: cd web && npm run build && npm run sin-red   (resultados, captura y PDF en una carpeta temporal)
 import { spawn, execSync } from 'node:child_process'
 import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
@@ -75,6 +76,16 @@ try {
   anota(hechos === 'suelo,quema,canicula' && !diferido(), 'Primera pantalla: vista del agricultor con 3 hechos en orden, sin el mapa', hechos || 'no apareció')
   const idiomaInicio = await ev(`document.documentElement.lang + '/' + document.querySelector('.agr-idioma[aria-pressed="true"]')?.lang`)
   anota(idiomaInicio === 'en/en', 'Idioma por defecto: inglés en la vista del agricultor', idiomaInicio)
+  // 00b. un toque a «Listen»: el audio corto por frases sale de la copia local, con la pista del idioma activo
+  await ev(`document.querySelector('#agr-audio').muted = true`)
+  await ev(`document.querySelector('.agr-escuchar-boton').click()`)
+  const corto = await hasta(() => ev(`(() => { const a = document.querySelector('#agr-audio'); const tr = a && a.querySelector('track')
+    return a && !a.paused && a.currentTime > 0.3 && tr && tr.readyState === 2 && tr.track.cues.length
+      ? a.currentSrc.split('/').pop() + ' a ' + a.currentTime.toFixed(1) + ' s; ' + tr.src.split('/').pop() + ', ' + tr.track.cues.length + ' frases' : null })()`), 15000)
+  const subtitulo = await ev(`document.querySelector('.agr-subtitulos')?.textContent || ''`)
+  await ev(`document.querySelector('#agr-audio').pause()`)
+  anota(/\.frases\.mp3 a /.test(corto || '') && corto.includes('.frases.en.vtt') && subtitulo.length > 0,
+    'Un toque a «Listen»: audio corto local con subtítulos en inglés', `${corto || 'no sonó'}; «${subtitulo}»`)
   await ev(`document.querySelector('.agr-evidencia').click()`)
   await hasta(() => ev(`document.querySelectorAll('.rotacion').length === 3`), 30000)
   anota((await ev(`location.hash`)) === '#evidence' && diferido(), 'Un toque abre Evidence y ahí se descarga el mapa')
