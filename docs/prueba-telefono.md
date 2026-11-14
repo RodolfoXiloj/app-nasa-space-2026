@@ -16,17 +16,17 @@ Para detenerla: `Ctrl+C`.
 
 ## 2. URL para el teléfono
 
-**http://192.168.0.17:4173/**
+**http://192.168.0.17:4173/** (IP anotada en el plan, sin comprobar)
 
-- Es la IP del Wi-Fi de la laptop el 14 nov 2026 a las 21:35. Si cambia, usar la línea `Network: http://192.168.x.x:4173/` que imprime Vite. No usar las que empiezan con `169.254.` ni con `172.22.`.
+- Usar la IP que imprime Vite en la línea `Network: http://192.168.x.x:4173/`. No usar las que empiezan con `169.254.` ni con `172.22.`.
 - El teléfono debe estar **en la misma red Wi-Fi** que la laptop.
 - Si Windows pregunta, **permitir Node.js en redes privadas**. Si el teléfono no abre la página, revisar que el perfil de esa red Wi-Fi sea «Privada».
 
-**Comprobado desde la laptop contra su IP local** (ver `docs/pruebas.md`):
-- la página, los JSON, los mp3 y las capas responden;
-- los mp3 aceptan pedidos por partes, que el iPhone necesita para reproducir audio.
+**Sin comprobar todavía** (no hay corrida real registrada en `docs/pruebas.md`). Desde la laptop, contra su IP local, revisar que:
+- la página, los JSON, los mp3 y las capas respondan;
+- los mp3 acepten pedidos por partes (206), que el iPhone necesita para reproducir audio.
 
-Falta probarlo desde el teléfono: el firewall solo se nota ahí.
+Después, probarlo desde el teléfono: el firewall solo se nota ahí.
 
 ## 3. Qué revisar en el teléfono
 
@@ -62,7 +62,7 @@ Anotar el modelo del teléfono, el navegador, ✅ o ❌ en cada punto, y una cap
 ### Modo sin conexión
 - **En el teléfono no hay modo sin conexión:** la web no tiene *service worker*. Si se corta el Wi-Fi, lo ya abierto sigue visible, pero no carga parcelas nuevas.
 - **Sin internet, pero con la laptop en la misma red:** desconectar el cable de internet del router y dejar su Wi-Fi encendido. La web sigue abriendo desde la laptop, y el mapa debe pasar solo a la capa guardada con el aviso «Sin internet: se muestra la capa guardada…». Es opcional.
-- **La prueba sin red completa se hace en la laptop**, y ya pasó 14 de 14 el 14 nov 2026:
+- **La prueba sin red completa se hace en la laptop.** Pasó 14 de 14 el 14 nov 2026 a las 12:10 (Guatemala; ver `docs/pruebas.md`):
 
   ```powershell
   cd web

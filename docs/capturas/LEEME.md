@@ -4,7 +4,7 @@ Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
 
 Las fechas de trabajo se normalizaron para esta edición; no representan nuevas ejecuciones, consultas ni capturas.
 
-sábado 14 nov 2026, 21:56 (Guatemala). Se tomaron con Edge sin interfaz sobre la web compilada (`npm run build`), servida con `npx vite preview --host 0.0.0.0 --port 4173`, como indica `docs/prueba-telefono.md`.
+Fecha y hora de las capturas: sin registro real (la hora 21:56 que figuraba era planeada). Según el plan, se toman con Edge sin interfaz sobre la web compilada (`npm run build`), servida con `npx vite preview --host 0.0.0.0 --port 4173`, como indica `docs/prueba-telefono.md`.
 - **En línea:** contra la IP local de la laptop.
 - **Sin internet:** contra `127.0.0.1`, con un proxy inexistente.
 
@@ -22,8 +22,8 @@ Hay dos tamaños: escritorio (1366 × 768) y teléfono (390 × 844). Cada captur
 | 12 | Glosario y fuentes | `escritorio-12-glosario-y-fuentes.png` | `telefono-12-glosario-y-fuentes.png` |
 | 13 | Sin internet: el mapa pasa solo a la capa guardada «Color real MODIS», con su aviso | `escritorio-13-sin-internet-mapa-capa-guardada.png` | `telefono-13-sin-internet-mapa-capa-guardada.png` |
 
-**Rehechas el 14 nov 2026, 21:56,** después de pulir detalles visuales:
-- la tabla de la tarjeta ya cabe entera en teléfono, medido a 360 y 390 px;
+**Detalles visuales que se buscaban al rehacerlas** (sin medición ni hora real registradas; revisarlos en las PNG):
+- la tabla de la tarjeta cabe entera en teléfono, a 360 y 390 px;
 - el eje de NDVI marca cada año una vez;
 - las fechas de Fuentes y de Validación ya no se parten;
 - los decimales de la tabla de 2026 son uniformes;

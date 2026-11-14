@@ -2,20 +2,20 @@
 
 Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
 
-Última actualización: sábado 14 nov 2026, ~21:40. **Prototipo local de referencia: no se entrega ni se publica** (decisión de Rodolfo, 14 nov 2026). Esta copia no contiene repositorio Git (`.git`) ni remoto configurado verificable. Cada prueba con su comando, resultado y hora está en `docs/pruebas.md`; las decisiones y los hallazgos, en `docs/memoria/` (empezar por `Inicio.md`).
+Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest, humo, build y sin red: todas pasan). **Prototipo local de referencia: no se entrega ni se publica** (decisión de Rodolfo, 14 nov 2026). Repositorio Git local, sin remoto. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/pruebas.md`, junto con las pendientes; las decisiones y los hallazgos, en `docs/memoria/` (empezar por `Inicio.md`).
 
 ## Qué funciona
 
 | Pieza | Estado |
 |---|---|
 | Parcelas | **5 puntos propuestos como definitivos**, elegidos con NDVI y revisados con imagen Sentinel-2, cada uno en un píxel distinto de CHIRPS (`data/parcelas.yaml`). Detalle y dudas en `docs/memoria/Puntos definitivos de las parcelas.md` |
-| Datos sin clave | POWER 1991-2025 · NDVI MOD13Q1 2001-2025 de las 5 parcelas · FIRMS 2012-2025 · **CHIRPS v3 mensual 1991-2025** y **diario de junio a agosto 2001-2025** (lectura por rangos HTTP con decodificador LZW propio, sin rasterio) · CHIRPS v3 de julio y agosto 2026, aparte, solo para la observación de 2026 · SRTM · SoilGrids (REST, con respaldo WCS probado) · teselas GIBS para el mapa sin red |
+| Datos sin clave | POWER 1991-2025 · NDVI MOD13Q1 2001-2025 de las 5 parcelas · FIRMS 2012-2025 · **CHIRPS v3 mensual 1991-2025** y **diario de junio a agosto 2001-2025** (lectura por rangos HTTP con decodificador LZW propio, sin rasterio) · CHIRPS v3 de julio y agosto 2026, aparte, solo para la observación de 2026 · SRTM · SoilGrids (REST, con respaldo WCS; el respaldo no tiene corrida real registrada) · teselas GIBS para el mapa sin red |
 | Datos con clave (`.env`) | Earthdata Login (usuario en `.env`; la contraseña solo por tarjeta segura, nunca en disco del repo) · **FIRMS 2026** con `FIRMS_MAP_KEY`: producto estándar hasta el 31 jul y NRT después; 270 focos en la zona; ya entra al motor (15 años observados) |
 | SMAP | **SPL3SMP_E.006 por AppEEARS, 31 mar 2015 a 13 nov 2026** (tarea `7c0fd22c…`, lista a las 20:37, ~10 h después del envío). Solo datos con calidad recomendada. Mediana de jul-ago: Jocotán y San Juan Ermita 0.247 m³/m³ (comparten la celda de 9 km), Olopa 0.274 y Zacapa 0.206. **Camotán no tiene SMAP:** su celda nunca alcanza la calidad recomendada (3007 mediciones descartadas); el motor lo dice así y usa el modelo MERRA-2 rotulado. Confianza de agua: Jocotán y San Juan Ermita «alta», Olopa «media», Zacapa «baja» (POWER se desvía 55 % de CHIRPS) y Camotán «baja» (sin SMAP) |
 | Motor | Lluvia corregida con CHIRPS; clase «poca cobertura»; regla 5.1 de la validación conectada a la confianza; rechaza cachés de otra coordenada; referencia de ZARC por departamento rotulada. **Audio:** 5 mp3 (edge-tts, voz es-GT-MartaNeural, ~72 s) con la IA declarada en la web y en etiquetas ID3 (`motor/audio_id3.py`); un mp3 solo se enlaza si fue generado con el texto actual (hash en su etiqueta) |
-| Validación | `python -m pipeline.validacion.validar`: POWER contra CHIRPS, sequía de 2018 y **observación preliminar de julio-agosto 2026** → `web/public/data/validacion.json` y `docs/validacion.md` (se regenera, no se edita a mano). Cotejo de cifras contra la caché: 15 de 15 al azar y 79 de 79 en el conjunto completo |
+| Validación | `python -m pipeline.validacion.validar`: POWER contra CHIRPS, sequía de 2018 y **observación preliminar de julio-agosto 2026** → `web/public/data/validacion.json` y `docs/validacion.md` (se regenera, no se edita a mano). Cotejo de cifras contra la caché (plan 12.6): sin corrida real registrada |
 | Biblioteca | 8 plantillas con fuentes verificadas (ICTA, MAGA, CIMMYT, FAO, Bioversity): 3 actuales, maíz con canavalia, milpa completa, maíz con gandul, sorgo con caupí y maíz ICTA B-5. Kc y Ky verificados contra FAO-56 y FAO-66 |
-| Web | Observación de 2026 en la primera pantalla, con enlace al detalle en Validación; pestaña Validación completa; capas «sin red», y **sin internet el mapa pasa solo a la capa guardada**; Sentinel-2 en línea; rótulo de voz sintética junto al reproductor. Prueba sin red automática: `npm run sin-red` (14 de 14). Prueba en teléfono: `docs/prueba-telefono.md` |
+| Web | Observación de 2026 en la primera pantalla, con enlace al detalle en Validación; pestaña Validación completa; capas «sin red», y **sin internet el mapa pasa solo a la capa guardada**; Sentinel-2 en línea; rótulo de voz sintética junto al reproductor. Prueba sin red automática: `npm run sin-red` (14 de 14 el 14 nov 2026, 12:10). Prueba en teléfono: `docs/prueba-telefono.md` (pendiente) |
 | Memoria y grafo | `docs/memoria/` (30 notas con enlaces) y `graphify-out/` (grafo del código con Graphify, sin LLM) |
 
 ## Lo que dicen los datos
@@ -66,7 +66,7 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 ## Qué falta
 
 **Necesita a Rodolfo o a alguien de la zona**
-- Prueba en un teléfono real con `docs/prueba-telefono.md`: servir en la red local, recorrer la lista y anotar los resultados.
+- Prueba en un teléfono real con `docs/prueba-telefono.md`: servir en la red local, recorrer la lista y anotar los resultados. También pendientes: TalkBack y una prueba de comprensión (ver `docs/pruebas.md`).
 - Confirmar en campo, o con alguien de la zona, los 5 puntos y los límites municipales de Olopa y San Juan Ermita.
 - Revisar con un agrónomo o extensionista las reglas de puntaje y las 8 plantillas (preguntas en `docs/revision-plan.md`, sección 3.2).
 

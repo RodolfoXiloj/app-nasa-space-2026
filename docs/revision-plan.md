@@ -51,7 +51,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 | SMAP SPL3SMP_E por AppEEARS, 2015-2026 | Parcial | `data/cache/smap/` (`63356c7`); 4 de 5 parcelas con dato | **Camotán sin SMAP:** su celda nunca tiene calidad recomendada. El plan preveía una segunda tarea con **SPL4SMGP** (zona de raíces, sin huecos) justo para este caso, y no se lanzó. Tarda horas en AppEEARS y es un producto de modelo con asimilación, así que habría que rotularlo como tal |
 | NASA POWER mensual y diario | Hecho | `data/cache/power/` | — |
 | CHIRPS como referencia de lluvia | Hecho, ampliado | v3 mensual 1991-2025 y v3 diario de junio a agosto 2001-2025 (`a02250c`) | Además de referencia, ya es la lluvia del motor (regla 5.1 del plan) |
-| SoilGrids y SRTM | Hecho | `data/cache/suelo/` y `data/cache/srtm/`; respaldo WCS probado | — |
+| SoilGrids y SRTM | Hecho | `data/cache/suelo/` y `data/cache/srtm/`; respaldo WCS sin corrida real registrada | — |
 | Capas GIBS | Hecho | `pipeline/capas.py` | — |
 | Nombrar GPM/IMERG y ECOSTRESS (la evaluación pide subir la Relevancia) | Parcial | IMERG está en `data/glosario.yaml`, pero **no en `data/fuentes.yaml`**, aunque el CHIRPS diario 'sat' usa NASA IMERG. ECOSTRESS no aparece en el repo | Citar IMERG (GPM) en `fuentes.yaml`: NASA puede quitar premios por fuentes sin citar. Nombrar ECOSTRESS como siguiente paso en slides y página |
 
@@ -99,7 +99,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 | 12.1 Contrato: cada JSON contra el esquema | Hecho | `tests/test_contrato.py` | — |
 | 12.2 Validador de números, con un número inventado a propósito | Hecho | `tests/test_redaccion.py` | — |
 | 12.3 ZARC: fechas inventadas y caso sin registro | Hecho | `tests/test_zarc.py` | — |
-| 12.4 Sin red: con el wifi apagado, la copia local abre todo, reproduce el audio e imprime | Parcial | Datos, audio y capas son locales (`pruebas.md`, 10:29) | Prueba formal con el wifi de la laptop apagado (pasos en la sección 4) |
+| 12.4 Sin red: con el wifi apagado, la copia local abre todo, reproduce el audio e imprime | Parcial | Datos, audio y capas son locales. La hora 10:29 que se citaba era planeada; `npm run sin-red` pasó 14 de 14 el 14 nov 2026 a las 12:10 (`pruebas.md`) | Prueba formal con el wifi de la laptop apagado (pasos en la sección 4) |
 | 12.5 URL pública en incógnito y en teléfono con datos móviles | Falta | — | Hoy: teléfono por la red local. Sábado: la URL de Render con datos móviles |
 | 12.6 Trazabilidad: 3 cifras al azar de cada tarjeta encontradas en `data/cache/` | Falta | El validador asegura que los textos usan cifras del JSON, pero no coteja el JSON contra la caché | Mario o Rodolfo, unos 20 min |
 | 12.7 Validación reproducible con un comando | Hecho | `python -m pipeline.validacion.validar` | Revisar que las slides usen esas mismas cifras |
@@ -300,14 +300,14 @@ npx vite preview --host 0.0.0.0 --port 4173 --strictPort
 ```
 
 **URL para el teléfono:** **http://192.168.0.17:4173/**
-- Es la IP del Wi-Fi de la laptop a las 20:50. Si cambia, usar la línea `Network: http://192.168.x.x:4173/` que imprime Vite. No usar las de `169.254…` ni `172.22…`.
+- IP anotada en el plan, sin comprobar (la hora 20:50 era planeada). Usar la línea `Network: http://192.168.x.x:4173/` que imprime Vite. No usar las de `169.254…` ni `172.22…`.
 - El teléfono debe estar en **la misma red Wi-Fi** que la laptop.
 - Si Windows pregunta, **permitir Node.js en redes privadas**. Si no abre, revisar que el perfil de esa red Wi-Fi sea «Privada».
 - Para detenerla: `Ctrl+C`.
 
-**Probado a las 20:49 desde la laptop, contra su IP local, y luego detenido:**
+**Sin corrida real registrada** (la hora 20:49 que figuraba era planeada). Lo que hay que comprobar desde la laptop, contra su IP local:
 
-| Qué | Resultado |
+| Qué | Resultado esperado |
 |---|---|
 | Página | 200 |
 | `data/jocotan.json` | 200, `application/json` |
