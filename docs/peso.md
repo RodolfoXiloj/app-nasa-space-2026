@@ -2,7 +2,7 @@
 
 ## English
 
-Measured on Saturday 14 Nov 2026 at 13:55 (Guatemala), branch `main`, after merging lane A2 (phrase audio and English from the engine) and adding the Listen button with subtitles to the farmer view.
+Measured on Saturday 14 Nov 2026 at 13:55 (Guatemala), branch `main`, after merging lane A2 (phrase audio and English from the engine) and adding the Listen button with subtitles to the farmer view. Updated the same day at 14:14 on branch `entrega-kit`, with the community kit.
 
 The first screen is the farmer view. The technical view, Evidence, loads with `import()` only when someone opens it. The map (Leaflet), the charts (Recharts) and their styles load with it.
 
@@ -10,15 +10,22 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 
 **Budget:** the first screen's JavaScript stays at or under about 172 kB.
 
-| What the first screen downloads | Before lane B (`d2730cd`) | Lane B alone | Pictograms (`9d3daed`) | Now on `main` |
-|---|---|---|---|---|
-| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | **171.87 kB** (gzip 56.77 kB) |
-| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) |
+| What the first screen downloads | Before lane B (`d2730cd`) | Lane B alone | Pictograms (`9d3daed`) | `main` (`b69fe1c`) | With the kit (`entrega-kit`) |
+|---|---|---|---|---|---|
+| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | 171.87 kB (gzip 56.77 kB) | **172.26 kB** (gzip 56.91 kB) |
+| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) |
 
 | Loads only when Evidence opens | Size |
 |---|---|
-| `Evidencia-*.js`: technical view, map and charts | 651.39 kB (gzip 182.88 kB) |
+| `Evidencia-*.js`: technical view, map and charts | 651.41 kB (gzip 182.90 kB) |
 | `Evidencia-*.css`: Leaflet and technical view styles | 25.38 kB (gzip 9.14 kB) |
+
+| Loads with `import()` right after the farmer view paints | Size |
+|---|---|
+| `Kit-*.js`: community kit (print sheet, audio download, WhatsApp) | 5.77 kB (gzip 2.52 kB) |
+| `Kit-*.css`: kit buttons and the black-and-white print sheet | 2.10 kB (gzip 0.87 kB) |
+
+- **What the 0.39 kB of the kit pays for:** only the door to the kit (`web/src/kit/index.jsx`, `lazy` plus `Suspense`) and the one line in `VistaAgricultor.jsx`. The kit itself (`web/src/kit/Kit.jsx`, its texts and CSS) is a separate file that the page asks for after the first paint, so it does not delay the three facts. The sheet reuses the pictograms, the month wheel and the year dots that are already in the first load.
 
 - **What the 2.07 kB since the pictograms pays for:** the Listen button (`web/src/agricultor/Escuchar.jsx`), its subtitles and its texts, plus reading the engine's English names and reasons from the JSON. The phrase audio is not part of the first load: the `<audio>` uses `preload="none"` and the subtitle track is added on the first tap, so the mp3 (about 105 to 116 kB) and the `.vtt` (under 1 kB) download only then.
 - **What the 7 kB from lane B to the pictograms paid for:** the month wheel, the year dots and the 5 pictograms the farmer view now draws (about 8.3 kB), minus what we trimmed. The farmer view no longer imports `lib/datos.js`, so Evidence's scoring helpers load only with Evidence.
@@ -27,7 +34,7 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 
 ## Español
 
-Medido el sábado 14 nov 2026 a las 13:55 (Guatemala), rama `main`, después de unir el carril A2 (audio por frases e inglés del motor) y de poner el botón Escuchar con subtítulos en la vista del agricultor.
+Medido el sábado 14 nov 2026 a las 13:55 (Guatemala), rama `main`, después de unir el carril A2 (audio por frases e inglés del motor) y de poner el botón Escuchar con subtítulos en la vista del agricultor. Actualizado el mismo día a las 14:14 en la rama `entrega-kit`, con el kit comunitario.
 
 La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se carga con `import()` solo cuando alguien la abre. Con ella llegan el mapa (Leaflet), las gráficas (Recharts) y sus estilos.
 
@@ -35,15 +42,22 @@ La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se 
 
 **Tope:** el JavaScript de la primera pantalla no pasa de unos 172 kB.
 
-| Lo que descarga la primera pantalla | Antes del carril B (`d2730cd`) | Solo el carril B | Pictogramas (`9d3daed`) | Ahora en `main` |
-|---|---|---|---|---|
-| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | **171.87 kB** (gzip 56.77 kB) |
-| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) |
+| Lo que descarga la primera pantalla | Antes del carril B (`d2730cd`) | Solo el carril B | Pictogramas (`9d3daed`) | `main` (`b69fe1c`) | Con el kit (`entrega-kit`) |
+|---|---|---|---|---|---|
+| JavaScript | 770.39 kB (gzip 220.58 kB) | 162.84 kB (gzip 53.32 kB) | 169.80 kB (gzip 56.13 kB) | 171.87 kB (gzip 56.77 kB) | **172.26 kB** (gzip 56.91 kB) |
+| CSS | 24.99 kB (gzip 9.06 kB) | 6.56 kB (gzip 1.81 kB) | 7.17 kB (gzip 1.93 kB) | 8.22 kB (gzip 2.10 kB) | 8.22 kB (gzip 2.10 kB) |
 
 | Se carga solo al abrir Evidence | Tamaño |
 |---|---|
-| `Evidencia-*.js`: vista técnica, mapa y gráficas | 651.39 kB (gzip 182.88 kB) |
+| `Evidencia-*.js`: vista técnica, mapa y gráficas | 651.41 kB (gzip 182.90 kB) |
 | `Evidencia-*.css`: estilos de Leaflet y de la vista técnica | 25.38 kB (gzip 9.14 kB) |
+
+| Se carga con `import()` justo después de pintar la vista del agricultor | Tamaño |
+|---|---|
+| `Kit-*.js`: kit comunitario (hoja para imprimir, descarga del audio, WhatsApp) | 5.77 kB (gzip 2.52 kB) |
+| `Kit-*.css`: botones del kit y hoja de impresión en blanco y negro | 2.10 kB (gzip 0.87 kB) |
+
+- **Qué pagan los 0.39 kB del kit:** solo la puerta del kit (`web/src/kit/index.jsx`, `lazy` y `Suspense`) y la línea en `VistaAgricultor.jsx`. El kit (`web/src/kit/Kit.jsx`, sus textos y su CSS) es un archivo aparte que la página pide después del primer pintado, así que no atrasa los tres hechos. La hoja reutiliza los pictogramas, la rueda de meses y los puntos de años que ya están en la carga inicial.
 
 - **Qué pagan los 2.07 kB desde los pictogramas:** el botón Escuchar (`web/src/agricultor/Escuchar.jsx`), sus subtítulos y sus textos, y leer del JSON los nombres y motivos en inglés del motor. El audio por frases no entra en la carga inicial: el `<audio>` lleva `preload="none"` y la pista de subtítulos se pone al primer toque, así que el mp3 (unos 105 a 116 kB) y el `.vtt` (menos de 1 kB) se descargan solo entonces.
 - **Qué pagaron los 7 kB del carril B a los pictogramas:** la rueda de meses, los puntos de años y los 5 pictogramas que ahora dibuja la vista del agricultor (unos 8.3 kB), menos lo que se recortó. La vista del agricultor ya no importa `lib/datos.js`, así que los puntajes de Evidence se cargan solo con Evidence.

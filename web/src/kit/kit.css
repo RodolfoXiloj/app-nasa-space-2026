@@ -1,0 +1,66 @@
+/* Kit comunitario. Botones en la vista del agricultor; la hoja va en un portal en <body>, oculta en
+   pantalla, y es lo único que se imprime mientras <html> lleva la clase .kit-imprimiendo.
+   Hoja en blanco y negro: tinta negra sobre papel blanco, formas y palabras en lugar de colores. */
+
+.kit { margin: 24px 0 8px; padding-top: 16px; border-top: 3px solid #000; }
+.agr .kit .kit-titulo { margin: 0 0 4px; font-size: 1.25rem; }
+.kit-detalle { margin: 0 0 12px; color: #3b3b3b; }
+.kit-botones { display: flex; flex-wrap: wrap; gap: 8px; }
+.agr .kit .kit-boton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 700;
+  color: #000;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.agr .kit .kit-boton:hover { background: #f1f1f1; }
+.agr .kit .kit-boton:focus-visible { outline: 3px solid #000; outline-offset: 3px; }
+
+.kit-hoja { display: none; }
+
+@media print {
+  html.kit-imprimiendo body > :not(.kit-hoja) { display: none !important; }
+  html.kit-imprimiendo .kit-hoja {
+    display: block;
+    color: #000;
+    background: #fff;
+    font: 10.5pt/1.3 'Segoe UI', Arial, sans-serif;
+    --picto-fondo: #fff;
+    --picto-marca: #000;
+  }
+  .kit { display: none; }
+}
+
+.kit-hoja h1 { margin: 0; font-size: 18pt; }
+.kit-hoja h2 { margin: 10pt 0 4pt; font-size: 12pt; }
+.kit-hoja h3 { display: flex; align-items: center; gap: 4pt; margin: 0; font-size: 11pt; }
+.kit-hoja p { margin: 2pt 0; }
+.kit-hoja-cabeza { border-bottom: 2pt solid #000; padding-bottom: 4pt; }
+.kit-marca { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 9pt; }
+
+.kit-hechos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8pt; margin: 0; padding: 0; list-style: none; }
+.kit-hecho { border: 1.5pt solid #000; padding: 6pt; break-inside: avoid; display: flex; flex-direction: column; gap: 4pt; }
+.kit-hecho-cabeza { display: flex; gap: 6pt; align-items: flex-start; }
+.kit-palabra { font-size: 13pt; font-weight: 800; }
+.kit-icono { flex: none; }
+
+/* Formas del semáforo en tinta: círculo blanco, triángulo con rayas, cuadrado negro, «?» punteado. */
+.kit-hoja .agr-senal { flex: none; width: 34pt; height: 34pt; overflow: visible; }
+.kit-hoja .agr-senal circle,
+.kit-hoja .agr-senal path,
+.kit-hoja .agr-senal rect { stroke: #000; stroke-width: 3; fill: #fff; }
+.kit-hoja .agr-senal--amarillo path { fill: #fff; stroke-width: 5; }
+.kit-hoja .agr-senal--rojo rect { fill: #000; }
+.kit-hoja .agr-senal text { fill: #000; font: 700 26px sans-serif; }
+
+.kit-formas, .kit-fuente { font-size: 8.5pt; }
+.kit-opciones ol { margin: 2pt 0; padding-left: 16pt; }
+.kit-opciones li[data-destaca] { font-weight: 700; }
+.kit-aviso { margin-top: 8pt !important; padding: 5pt 8pt; border: 2pt solid #000; font-weight: 700; font-size: 12pt; }

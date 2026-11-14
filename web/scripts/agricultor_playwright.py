@@ -13,13 +13,17 @@ Levanta `vite preview` en 127.0.0.1:4176 y abre Chromium sin interfaz, con el so
 - carga la <track> del idioma activo (.frases.es.vtt o .frases.en.vtt, con sus frases) y no la del otro;
   los subtítulos se ven debajo del botón;
 - al cambiar de idioma con el audio abierto, se carga la pista del otro idioma.
+Y un caso del kit comunitario a 390 px (web/src/kit/): los botones «Imprimir hoja», «Descargar audio» y
+«Compartir por WhatsApp» existen, la hoja impresa cabe en 1 página y el enlace de WhatsApp está bien formado.
 Sale con código 1 si algo falla.
 """
 from __future__ import annotations
 
+import re
 import subprocess
 import sys
 import time
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -146,6 +150,66 @@ def caso(navegador, ancho: int, alto: int, idioma: str, pid_captura: str, captur
     ctx.close()
 
 
+def caso_kit(navegador, ancho: int = 390, alto: int = 844) -> None:
+    """Kit comunitario a 390 px, en español: botones, hoja de 1 página y enlace de WhatsApp."""
+    pre = f"Kit {ancho} px, es"
+    ctx = navegador.new_context(viewport={"width": ancho, "height": alto}, device_scale_factor=2,
+                                is_mobile=True, has_touch=True)
+    ctx.add_init_script("try { localStorage.setItem('milpa-locale', 'es') } catch (e) {}")
+    pag = ctx.new_page()
+    errores: list[str] = []
+    pag.on("pageerror", lambda e: errores.append(str(e)))
+    pag.goto(URL)
+    pag.wait_for_selector(".kit-imprimir", timeout=20000)
+    pid = pag.input_value("#agr-parcela")
+
+    imprimir = pag.locator(".kit-imprimir")
+    audio = pag.locator(".kit-audio")
+    textos = [imprimir.inner_text(), audio.inner_text(), pag.inner_text(".kit-whatsapp")]
+    ancho_doc = pag.evaluate("document.documentElement.scrollWidth")
+    anota(textos == ["Imprimir hoja", "Descargar audio", "Compartir por WhatsApp"] and ancho_doc <= ancho,
+          f"{pre}: los 3 botones del kit existen, sin desbordar a lo ancho", f"{textos}; ancho {ancho_doc} px")
+    href_audio = audio.get_attribute("href") or ""
+    anota(href_audio.endswith(f"audio/{pid}.frases.mp3") and audio.get_attribute("download") is not None,
+          f"{pre}: «Descargar audio» enlaza al mp3 de la parcela con download", href_audio)
+
+    # WhatsApp: https://wa.me/?text=<resumen + location.href>, sin depender del dominio.
+    wa = pag.get_attribute(".kit-whatsapp", "href") or ""
+    url_wa = urllib.parse.urlsplit(wa)
+    texto = urllib.parse.parse_qs(url_wa.query).get("text", [""])[0]
+    pagina = pag.evaluate("location.href")
+    anota(url_wa.scheme == "https" and url_wa.netloc == "wa.me" and url_wa.path == "/" and list(urllib.parse.parse_qs(url_wa.query)) == ["text"]
+          and texto.strip().endswith(pagina) and "no es una alerta oficial" in texto and texto.count("\n- ") == 3,
+          f"{pre}: enlace de WhatsApp bien formado (wa.me, resumen de 3 hechos y la dirección)", texto.replace("\n", " / ")[:140])
+
+    # Imprimir: el botón pone la clase y llama a print(); la hoja impresa cabe en una sola página.
+    pag.evaluate("() => { window.__impreso = 0; window.print = () => { window.__impreso++ } }")
+    imprimir.tap()
+    clase = pag.evaluate("document.documentElement.classList.contains('kit-imprimiendo') && window.__impreso === 1")
+    pag.emulate_media(media="print")
+    hoja = pag.evaluate("""(() => { const h = document.querySelector('.kit-hoja'); if (!h || getComputedStyle(h).display === 'none') return null;
+        return { hechos: h.querySelectorAll('.kit-hecho').length, formas: h.querySelectorAll('.agr-senal').length,
+                 rueda: h.querySelectorAll('[data-picto^="rueda"], svg').length > 0, texto: h.innerText } })()""")
+    pdf = pag.pdf(format="Letter", print_background=True)
+    paginas = len(re.findall(rb"/Type\s*/Page[^s]", pdf))
+    # Al terminar, la impresión dispara «afterprint» y la hoja se vuelve a esconder: otro toque para A4.
+    vuelve = pag.evaluate("!document.documentElement.classList.contains('kit-imprimiendo')")
+    pag.emulate_media(media="screen")
+    imprimir.tap()
+    pag.emulate_media(media="print")
+    pdf_a4 = pag.pdf(format="A4", print_background=True)
+    paginas_a4 = len(re.findall(rb"/Type\s*/Page[^s]", pdf_a4))
+    anota(bool(clase) and bool(hoja) and hoja["hechos"] == 3 and hoja["formas"] >= 3 and "no es una alerta oficial" in hoja["texto"]
+          and "Opciones para platicar" in hoja["texto"],
+          f"{pre}: «Imprimir hoja» muestra solo la hoja (3 hechos con forma, opciones y aviso)",
+          f"{hoja['hechos']} hechos, {hoja['formas']} formas" if hoja else "la hoja no se ve al imprimir")
+    anota(paginas == 1 and paginas_a4 == 1, f"{pre}: la hoja cabe en 1 página", f"carta {paginas}, A4 {paginas_a4}")
+    anota(vuelve, f"{pre}: después de imprimir, la página vuelve a la vista normal")
+    pag.emulate_media(media="screen")
+    anota(not errores, f"{pre}: sin errores de JavaScript", "; ".join(errores[:2]))
+    ctx.close()
+
+
 def main() -> int:
     capturas = "--capturas" in sys.argv
     vite = subprocess.Popen([
@@ -161,6 +225,10 @@ def main() -> int:
                         caso(navegador, ancho, alto, idioma, pid, capturas)
                     except Exception as e:  # una espera vencida cuenta como falla del caso
                         anota(False, f"{ancho} px, {idioma}: el caso no terminó", str(e).splitlines()[0])
+                try:
+                    caso_kit(navegador)
+                except Exception as e:
+                    anota(False, "Kit 390 px: el caso no terminó", str(e).splitlines()[0])
             finally:
                 navegador.close()
     finally:

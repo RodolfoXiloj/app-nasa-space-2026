@@ -2,7 +2,8 @@
 // Edge sin interfaz con un proxy inexistente, así que no llega a internet, pero sí al servidor local
 // (Chromium no usa el proxy para 127.0.0.1). Es lo que pasa con el Wi-Fi apagado: la copia local
 // responde y todo lo externo falla. Recorre el botón «Listen» de la vista del agricultor (audio corto
-// con subtítulos), las 5 parcelas, el audio, las capas «sin red», las pestañas y la impresión a PDF.
+// con subtítulos), el kit comunitario (hoja de 1 página, audio y WhatsApp), las 5 parcelas, el audio,
+// las capas «sin red», las pestañas y la impresión a PDF.
 // No hay service worker: sin red, la web y su audio salen de la copia local servida en la laptop.
 // Uso: cd web && npm run build && npm run sin-red   (resultados, captura y PDF en una carpeta temporal)
 import { spawn, execSync } from 'node:child_process'
@@ -86,6 +87,23 @@ try {
   await ev(`document.querySelector('#agr-audio').pause()`)
   anota(/\.frases\.mp3 a /.test(corto || '') && corto.includes('.frases.en.vtt') && subtitulo.length > 0,
     'Un toque a «Listen»: audio corto local con subtítulos en inglés', `${corto || 'no sonó'}; «${subtitulo}»`)
+  // 00c. kit comunitario: llega con import() después de pintar; sus 3 botones funcionan sin red
+  const kit = await hasta(() => ev(`(() => { const a = document.querySelector('.kit-audio'), w = document.querySelector('.kit-whatsapp')
+    return document.querySelector('.kit-imprimir') && a && w ? { audio: a.getAttribute('href'), descarga: a.hasAttribute('download'), wa: w.href } : null })()`), 15000)
+  const mp3Kit = kit ? await ev(`fetch(${JSON.stringify(kit.audio)}).then((r) => r.status + ' ' + r.headers.get('content-type'), (e) => 'falló: ' + e.message)`) : ''
+  anota(Boolean(kit) && kit.descarga && /audio\/[a-z_]+\.frases\.mp3$/.test(kit.audio) && mp3Kit.startsWith('200'),
+    'Kit: «Download audio» baja el mp3 corto de la copia local', kit ? `${kit.audio}: ${mp3Kit}` : 'no apareció el kit')
+  const wa = kit ? new URL(kit.wa) : null
+  const textoWa = wa ? wa.searchParams.get('text') || '' : ''
+  anota(Boolean(wa) && wa.origin === 'https://wa.me' && wa.pathname === '/' && textoWa.endsWith(URL_APP) && textoWa.includes('not an official alert'),
+    'Kit: enlace de WhatsApp bien formado (wa.me/?text= con resumen y la dirección local)', textoWa.replace(/\n/g, ' / ').slice(0, 120))
+  await ev(`(() => { window.print = () => {}; document.querySelector('.kit-imprimir').click(); return true })()`)
+  const hojaPdf = await cdp('Page.printToPDF', { printBackground: true })
+  const hojaBytes = Buffer.from(hojaPdf.result?.data || '', 'base64')
+  writeFileSync(join(SP, 'hoja_parcela_sin_red.pdf'), hojaBytes)
+  const paginasHoja = (hojaBytes.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length
+  anota(hojaBytes.subarray(0, 4).toString() === '%PDF' && paginasHoja === 1, 'Kit: «Print sheet» da una hoja de 1 página sin red', `${paginasHoja} página(s), ${Math.round(hojaBytes.length / 1024)} KB`)
+  await ev(`document.documentElement.classList.remove('kit-imprimiendo')`)
   await ev(`document.querySelector('.agr-evidencia').click()`)
   await hasta(() => ev(`document.querySelectorAll('.rotacion').length === 3`), 30000)
   anota((await ev(`location.hash`)) === '#evidence' && diferido(), 'Un toque abre Evidence y ahí se descarga el mapa')

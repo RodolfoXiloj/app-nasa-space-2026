@@ -11,6 +11,7 @@ import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { IDIOMAS, NOMBRE_IDIOMA, TEXTOS } from './textos.js'
 import Escuchar from './Escuchar.jsx'
+import KitParcela from '../kit/index.jsx'
 
 const ORDEN = ['suelo', 'quema', 'canicula']
 const ESTADOS = ['verde', 'amarillo', 'rojo', 'gris']
@@ -208,6 +209,7 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
         {farmer && <Opciones farmer={farmer} rotaciones={res.rotaciones} idioma={idioma} />}
 
         <p className="agr-aviso">{t.aviso}</p>
+        {farmer && <KitParcela idioma={idioma} pid={pid} parcela={parcela} farmer={farmer} rotaciones={res.rotaciones} />}
 
         <button type="button" className="agr-boton agr-evidencia" onClick={onEvidencia}>
           <span className="agr-evidencia-titulo">{t.evidencia}</span>
