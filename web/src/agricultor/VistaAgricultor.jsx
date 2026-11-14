@@ -10,8 +10,12 @@ import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
 import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { IDIOMAS, NOMBRE_IDIOMA, TEXTOS, empateEnCadena } from './textos.js'
-import Escuchar from './Escuchar.jsx'
 import KitParcela from '../kit/index.jsx'
+import { Suspense, lazy } from 'react'
+
+// Escuchar llega con import() justo después de pintar, como el kit: el botón sale un instante después de
+// los hechos y el JS inicial queda bajo el tope de docs/peso.md.
+const Escuchar = lazy(() => import('./Escuchar.jsx'))
 
 const ORDEN = ['suelo', 'quema', 'canicula']
 const ESTADOS = ['verde', 'amarillo', 'rojo', 'gris']
@@ -186,12 +190,10 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
         )}
 
         {/* Un toque desde la primera pantalla: el audio corto de esta parcela, con subtítulos. */}
-        {farmerAudio?.es?.mp3 && !cargando && (
-          <Escuchar
-            key={farmerAudio.es.mp3}
-            farmerAudio={farmerAudio}
-            idioma={idioma}
-          />
+        {farmerAudio && farmerAudio.es && farmerAudio.es.mp3 && !cargando && (
+          <Suspense fallback={null}>
+            <Escuchar key={farmerAudio.es.mp3} farmerAudio={farmerAudio} idioma={idioma} />
+          </Suspense>
         )}
 
         <section className="agr-hechos" aria-labelledby="agr-titulo" aria-busy={cargando || undefined}>

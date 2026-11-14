@@ -2,10 +2,27 @@
 // en el idioma activo. `farmer.audio` trae `es` y, si existe, `en`; si en inglés no hay mp3, suena el de español.
 // El <audio> lleva preload="none" y la pista se pone al tocar el botón: la primera pantalla no descarga nada de audio.
 import { useEffect, useRef, useState } from 'react'
-import { TEXTOS } from './textos.js'
+
+// Textos del botón: viven aquí y no en textos.js porque este archivo llega con import() después de pintar.
+const TEXTOS = {
+  en: {
+    boton: 'Listen',
+    detalle: 'Short audio with subtitles',
+    detalleVozEs: 'Short audio: Spanish voice, English subtitles',
+    subtitulos: 'Subtitles',
+    fallo: 'The audio did not load. Check the connection and try again.',
+  },
+  es: {
+    boton: 'Escuchar',
+    detalle: 'Audio corto, con subtítulos',
+    detalleVozEs: 'Audio corto, con subtítulos',
+    subtitulos: 'Subtítulos',
+    fallo: 'No se cargó el audio. Revise la conexión e intente otra vez.',
+  },
+}
 
 export default function Escuchar({ farmerAudio, idioma }) {
-  const t = TEXTOS[idioma].escuchar
+  const t = TEXTOS[idioma]
   const es = farmerAudio?.es
   const en = farmerAudio?.en
   const activo = idioma === 'en' && en?.mp3 ? en : es
@@ -67,10 +84,10 @@ export default function Escuchar({ farmerAudio, idioma }) {
         </svg>
         <span>
           <b>{t.boton}</b>
-          <small>{t.detalle}</small>
+          <small>{idioma === 'en' && !(en && en.mp3) ? t.detalleVozEs : t.detalle}</small>
         </span>
       </button>
-      <audio id="agr-audio" ref={ref} src={base + mp3} preload="none" controls hidden={!abierto} onPlay={alSonar} onPause={alPausar}>
+      <audio id="agr-audio" ref={ref} src={base + mp3} preload="none" controls aria-label={t.boton} hidden={!abierto} onPlay={alSonar} onPause={alPausar}>
         {abierto && (
           <track key={subtitulos} kind="subtitles" src={base + subtitulos} srcLang={idioma} label={t.subtitulos} default />
         )}
@@ -78,7 +95,7 @@ export default function Escuchar({ farmerAudio, idioma }) {
       {abierto && (
         <>
           {conSubtitulos && (
-            <p className="agr-subtitulos" lang={idioma}>
+            <p className="agr-subtitulos" lang={idioma} aria-live="polite">
               {frase}
             </p>
           )}

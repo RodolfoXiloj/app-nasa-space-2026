@@ -51,7 +51,8 @@ body { margin: 0; }
   touch-action: manipulation;
 }
 .agr .agr-boton:focus-visible,
-.agr .agr-select:focus-visible {
+.agr .agr-select:focus-visible,
+.agr audio:focus-visible {
   outline: 3px solid var(--agr-tinta);
   outline-offset: 3px;
 }
@@ -307,6 +308,11 @@ body { margin: 0; }
 
 .agr.agr-cargando,
 .agr.agr-fallo { min-height: 50vh; padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+
+/* Sin movimiento si el teléfono lo pide: la vista no anima nada, y esto evita que algo nuevo lo haga. */
+@media (prefers-reduced-motion: reduce) {
+  .agr *, .agr *::before, .agr *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
 
 @media (forced-colors: active) {
   .agr .agr-senal circle,
