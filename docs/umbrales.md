@@ -1,6 +1,6 @@
-# Umbrales del semáforo de 3 hechos: PROPUESTA
+# Umbrales del semáforo de 3 hechos: CONFIRMADOS
 
-**Estado: propuesta sin confirmar.** Rodolfo la confirma o la cambia antes de regenerar los datos. Mientras tanto, el motor deja cada estado en `null` y `farmer.umbrales.estado` en `"pendiente"` (`motor/farmer.py`). Esta propuesta no cambia ningún puntaje ni regenera ningún archivo.
+**Estado: Confirmado por Rodolfo, sáb 14 nov.** Se confirmó la propuesta tal cual: gris por hecho, empate si dos opciones difieren 3 puntos o menos, Olopa con las tres opciones sin orden, y las palabras «Bien», «Atención» y «Se repite» ("Good", "Watch", "Repeats"). El motor los aplica desde `data/umbrales_semaforo.yaml` y `motor/farmer.py`, con `farmer.umbrales.estado` en `"confirmado"`. Aplicarlos no cambió ningún puntaje: al regenerar los JSON de las 5 parcelas, los totales siguen iguales.
 
 Escrita el sábado 14 nov 2026. Todas las cifras salen de `data/cache/`: se corrió `motor.recomendar.recomendar()` en memoria para las 5 parcelas (maíz con frijol, prioridad agua), sin escribir archivos. Coinciden con los JSON de `web/public/data/`.
 

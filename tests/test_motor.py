@@ -2,7 +2,7 @@
 import math
 from datetime import date, timedelta
 
-from motor import clima, confianza, deteccion
+from motor import clima, confianza, deteccion, redaccion
 
 
 # ---------------------------------------------------------------- detección
@@ -111,3 +111,13 @@ def test_confianza_niveles():
     assert "SMAP" in confianza.evaluar(90, 5, False)["motivo"]
     m = confianza.evaluar(90, 5, False, detalle_smap="La celda de 9 km de SMAP no tiene ningún dato con calidad recomendada.")
     assert m["nivel"] == "baja" and "calidad recomendada" in m["motivo"] and "falta la descarga" not in m["motivo"]
+
+
+def test_motivo_de_confianza_en_ingles_con_las_mismas_cifras():
+    c = confianza.evaluar(80.9, 55.4, False, detalle_smap="La celda de SMAP no tiene datos (3007 mediciones).",
+                          detalle_smap_en="The SMAP cell has no data (3007 measurements).")
+    assert c["nivel"] == "baja"
+    assert "55.4" in c["motivo_en"] and "3007" in c["motivo_en"]
+    assert sorted(redaccion.numeros_en(c["motivo"])) == sorted(redaccion.numeros_en(c["motivo_en"]))
+    assert all("detalle_en" in k for k in c["criterios"])
+    assert confianza.evaluar(90, 5, True)["motivo_en"] == "All three checks pass."

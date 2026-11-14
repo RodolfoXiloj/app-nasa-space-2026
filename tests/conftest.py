@@ -62,7 +62,8 @@ def _power_cache() -> dict:
 @pytest.fixture(scope="session")
 def base_sintetica(tmp_path_factory) -> str:
     base = tmp_path_factory.mktemp("data")
-    for y in ("rotaciones.yaml", "cultivos.yaml", "zarc_citas.yaml", "glosario.yaml", "fuentes.yaml"):
+    for y in ("rotaciones.yaml", "cultivos.yaml", "zarc_citas.yaml", "glosario.yaml", "fuentes.yaml",
+              "umbrales_semaforo.yaml"):
         shutil.copyfile(RAIZ / "data" / y, base / y)
     (base / "parcelas.yaml").write_text(
         "parcelas:\n  - {id: sint, nombre: Parcela sintética, municipio: Jocotán, departamento: Chiquimula,"

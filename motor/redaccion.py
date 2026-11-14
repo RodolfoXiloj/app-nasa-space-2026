@@ -25,8 +25,12 @@ _RANGO = re.compile(r"([-−+]?\d+(?:\.\d+)?)[-–]([-−+]?\d+(?:\.\d+)?)%?")
 
 # Campos que son texto redactado (se validan) o series crudas (no cuentan como respaldo).
 CAMPOS_TEXTO = {"por_que", "beneficios", "vacios", "riesgos", "texto_tarjeta", "texto", "motivo", "aviso",
-                "glosario", "trazabilidad", "detalle", "nota", "nota_escenario", "cita", "descripcion", "frases"}
+                "glosario", "trazabilidad", "detalle", "nota", "nota_escenario", "cita", "descripcion", "frases",
+                "motivo_en", "detalle_en", "motivo_gris", "motivo_gris_en"}
 CAMPOS_CRUDOS = {"serie", "por_anio", "detecciones", "lluvia_anual_mm"}
+# Reglas fijas del equipo (cortes del semáforo, margen de empate): no son cifras de la parcela y no
+# respaldan ningún número de un texto.
+CAMPOS_REGLAS = {"umbrales"}
 
 
 def numeros_en(texto: str) -> list[str]:
@@ -51,7 +55,7 @@ def _a_float(s: str) -> float:
 def numeros_permitidos(obj, _clave: str | None = None, out: set | None = None) -> set[float]:
     """Todos los números del JSON del motor, salvo los que están dentro de textos redactados."""
     out = set() if out is None else out
-    if _clave in CAMPOS_TEXTO or _clave in CAMPOS_CRUDOS:
+    if _clave in CAMPOS_TEXTO or _clave in CAMPOS_CRUDOS or _clave in CAMPOS_REGLAS:
         return out
     if isinstance(obj, bool) or obj is None:
         return out

@@ -54,6 +54,11 @@ def fuentes(base: str | None = None) -> list[dict]:
     return yaml_de("fuentes.yaml", base)["fuentes"]
 
 
+def umbrales_semaforo(base: str | None = None) -> dict:
+    """Umbrales del semáforo de 3 hechos y margen de empate (data/umbrales_semaforo.yaml)."""
+    return yaml_de("umbrales_semaforo.yaml", base)
+
+
 TOLERANCIA_GRADOS = 1e-4
 
 

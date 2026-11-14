@@ -1,0 +1,51 @@
+# Umbrales del semáforo de 3 hechos y regla de empate de las opciones (bloque `farmer`).
+#
+# Confirmados por Rodolfo el sábado 14 nov 2026, tal como están en docs/umbrales.md.
+# Aviso de honestidad: se fijaron después de ver los conteos de las 5 parcelas, no antes.
+# El agrónomo los revisa (docs/revision-plan.md, sección 3.2). Los aplica motor/farmer.py.
+#
+# El semáforo no usa el puntaje total: cuenta tres hechos observados.
+#   suelo:    meses con NDVI mediano < 0.35 (desnudo) y de 0.35 a 0.45 (poca cobertura), MODIS 2021-2025
+#   quema:    años con foco VIIRS a 500 m o menos, de enero a mayo (FIRMS)
+#   canícula: años con racha de más de 15 días con menos de 2 mm, del 15 jun al 31 ago (CHIRPS diario)
+# Los cortes de NDVI, del radio de quema y de la racha seca viven en motor/deteccion.py y motor/clima.py.
+
+# "pendiente" vuelve al comportamiento anterior: cada estado en null y opciones en "pendiente".
+estado: confirmado
+documento: docs/umbrales.md
+confirmado_por: "Rodolfo, sáb 14 nov 2026"
+
+hechos:
+  suelo:
+    # verde: 0 meses desnudos y 0 de poca cobertura
+    # amarillo: 1 mes desnudo, o 0 desnudos con algún mes de poca cobertura
+    # rojo: 2 meses desnudos o más
+    amarillo_desde: 1
+    rojo_desde: 2
+    # gris: menos de 60 % de compuestos NDVI válidos (el corte de confianza baja de motor/confianza.py),
+    # o algún mes sin mediana
+    gris_pct_validos_menor_que: 60
+  quema:
+    # verde 0 años, amarillo 1 o 2, rojo 3 o más; gris sin datos de FIRMS (0 años observados)
+    amarillo_desde: 1
+    rojo_desde: 3
+  canicula:
+    # verde 0 años, amarillo 1 o 2, rojo 3 o más; gris si la lluvia de junio-agosto no viene de
+    # CHIRPS diario (solo POWER, celda de ~50 km)
+    amarillo_desde: 1
+    rojo_desde: 3
+
+opciones:
+  # Si dos opciones difieren 3 puntos o menos en el total (escenario base), no hay ganadora.
+  # Se aplica entre alternativas y contra la práctica actual, y en cadena: en Olopa la canavalia
+  # empata con la práctica actual y con el maíz ICTA B-5, así que se muestran las tres sin orden.
+  # Con confianza baja, el bloque de opciones va en gris con el motivo.
+  margen_empate: 3
+
+# Nunca solo color: forma, palabra y posición fija. Sin anaranjado y sin la palabra «alerta».
+# Las palabras son un borrador que Iván revisa con la prueba de comprensión.
+estados:
+  verde: {forma: circulo, es: "Bien", en: "Good"}
+  amarillo: {forma: triangulo, es: "Atención", en: "Watch"}
+  rojo: {forma: cuadrado, es: "Se repite", en: "Repeats"}
+  gris: {forma: interrogacion, es: "El satélite no ve bien aquí", en: "The satellite can't see well here"}

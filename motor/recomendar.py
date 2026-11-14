@@ -88,6 +88,17 @@ def _evaluar(rot: dict, ctx: dict, series: dict, actual_rot: dict | None) -> dic
     }
 
 
+def _motivo_smap_en(smap_d: dict) -> str:
+    """Por qué no hay SMAP, en inglés y con las cifras de la caché (el motivo en español viene del pipeline)."""
+    n = smap_d.get("mediciones_sin_calidad_recomendada")
+    if n and not smap_d.get("dias_validos"):
+        return (f"The {smap_d.get('resolucion') or '9 km'} SMAP cell has no recommended-quality data in the whole "
+                f"record ({n} measurements discarded by the quality flag).")
+    if smap_d.get("motivo"):
+        return "SMAP has no usable soil moisture data for this cell."
+    return "No numeric SMAP yet: the AppEEARS download is missing."
+
+
 def frac_quema_actual(det: dict) -> float:
     q = det["quemas"]
     return q["anios_con_quema"] / q["anios_observados"] if q["anios_observados"] else 0.0
@@ -241,6 +252,7 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
     hay_smap = smap_d.get("jul_ago_mediana") is not None
     motivo_smap = None if hay_smap else (smap_d.get("motivo") or
                                          "Sin SMAP numérico todavía: falta la descarga por AppEEARS.")
+    motivo_smap_en = None if hay_smap else _motivo_smap_en(smap_d)
     smap_res = {
         "disponible": hay_smap,
         "fuente_id": "smap" if hay_smap else None,
@@ -300,6 +312,8 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
     r51 = ((val or {}).get("datos") or {}).get("regla_5_1") or {}
     regla_2018 = (f"La prueba de la sequía de 2018 solo mostró señal en {r51['parcelas_con_senal_2018']} parcelas "
                   f"(se pedían {r51['minimo']}): regla 5.1 del plan") if r51.get("se_activa") else None
+    regla_2018_en = (f"The 2018 drought test only showed a signal in {r51['parcelas_con_senal_2018']} plots "
+                     f"({r51['minimo']} were required): rule 5.1 of the plan") if r51.get("se_activa") else None
     ciclos_decl = len(actual_rot["ciclos"])
     ciclos_vistos = det["ciclos"]["mediana"]
     id_seco = id_escenario(min(LLUVIA_PCT), max(TEMP_C))
@@ -313,11 +327,13 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
                 "act": ev_act["escenarios"][id_seco]["deficit"]["mediana_pct"]}
         tctx = dict(ctx, ev=ev, ev_actual=ev_act, es_actual=es_actual, cultivos_sin_ky=sin_ky, escenario_seco=seco,
                     ciclos_discrepan=(ciclos_vistos is not None and ciclos_vistos != ciclos_decl))
-        extras = []
+        extras, extras_en = [], []
         if "supuesto" in str(rot.get("fuente", "")):
             extras.append("Reglas de la opción sin revisar por un agrónomo")
+            extras_en.append("Rules for this option not yet reviewed by an agronomist")
         conf = confianza.evaluar(det["calidad"]["pct_validos"], dif, hay_smap, extras, forzar_baja=regla_2018,
-                                 detalle_smap=ctx["smap"]["nota"].split(" Se muestra")[0] if not hay_smap else None)
+                                 detalle_smap=ctx["smap"]["nota"].split(" Se muestra")[0] if not hay_smap else None,
+                                 extras_en=extras_en, forzar_baja_en=regla_2018_en, detalle_smap_en=motivo_smap_en)
         rot_out.append({
             "id": rot["id"], "nombre": rot["nombre"], "tipo": rot["tipo"], "es_actual": es_actual,
             "descripcion": rot.get("fuente", ""),
@@ -403,5 +419,5 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
     res["texto_tarjeta"] = redaccion.texto_tarjeta(res)
     res["audio"]["texto"] = res["texto_tarjeta"]
     verificar_campos_reto(res)
-    res["farmer"] = farmer.bloque(res)
+    res["farmer"] = farmer.bloque(res, datos.umbrales_semaforo(base))
     return res

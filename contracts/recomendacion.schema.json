@@ -237,7 +237,7 @@
     },
     "farmer": {
       "type": "object",
-      "description": "Vista «Para el agricultor» (opcional en v1). Solo reordena cifras que ya están en deteccion, clima y rotaciones; no trae cifras nuevas. Mientras los umbrales de docs/umbrales.md no estén confirmados, cada estado es null y opciones.estado es «pendiente».",
+      "description": "Vista «Para el agricultor» (opcional en v1). Solo reordena cifras que ya están en deteccion, clima y rotaciones; no trae cifras nuevas. Umbrales confirmados el 14 nov 2026 (docs/umbrales.md, data/umbrales_semaforo.yaml). Con umbrales.estado «pendiente», cada estado es null y opciones.estado es «pendiente».",
       "required": ["version", "umbrales", "hechos", "opciones", "frases", "audio"],
       "properties": {
         "version": { "const": "1" },
@@ -246,8 +246,32 @@
           "properties": {
             "estado": { "enum": ["pendiente", "confirmado"] },
             "documento": { "type": "string" },
-            "margen_empate": { "type": ["number", "null"] }
-          }
+            "margen_empate": { "type": ["number", "null"], "description": "Puntos del total: dos opciones que difieren esto o menos quedan empatadas" },
+            "confirmado_por": { "type": ["string", "null"] },
+            "cortes": {
+              "type": "object",
+              "description": "Cortes de cada hecho (data/umbrales_semaforo.yaml). Son reglas del equipo: no respaldan cifras de los textos",
+              "properties": {
+                "suelo": { "type": "object", "required": ["amarillo_desde", "rojo_desde", "gris_pct_validos_menor_que"] },
+                "quema": { "type": "object", "required": ["amarillo_desde", "rojo_desde"] },
+                "canicula": { "type": "object", "required": ["amarillo_desde", "rojo_desde"] }
+              }
+            },
+            "estados": {
+              "type": "object",
+              "description": "Forma y palabra de cada estado, en español e inglés. No hay anaranjado",
+              "required": ["verde", "amarillo", "rojo", "gris"],
+              "additionalProperties": false,
+              "properties": {
+                "verde": { "$ref": "#/$defs/estado_farmer" },
+                "amarillo": { "$ref": "#/$defs/estado_farmer" },
+                "rojo": { "$ref": "#/$defs/estado_farmer" },
+                "gris": { "$ref": "#/$defs/estado_farmer" }
+              }
+            }
+          },
+          "if": { "properties": { "estado": { "const": "confirmado" } } },
+          "then": { "required": ["margen_empate", "cortes", "estados"], "properties": { "margen_empate": { "type": "number" } } }
         },
         "hechos": {
           "type": "array", "minItems": 3, "maxItems": 3,
@@ -262,14 +286,27 @@
         "opciones": {
           "type": "object", "required": ["estado", "actual", "alternativas", "confianza"],
           "properties": {
-            "estado": { "enum": ["pendiente", "una_destaca", "empate", "gris"], "description": "empate y gris: la vista no muestra ninguna opción como mejor" },
+            "estado": { "enum": ["pendiente", "una_destaca", "empate", "gris"], "description": "empate y gris: la vista no muestra ninguna opción como mejor. gris = confianza baja" },
             "actual": { "type": "string" },
             "alternativas": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+            "destaca": { "type": ["string", "null"], "description": "Solo con estado una_destaca: la opción que supera a todas por más del margen" },
+            "empatadas": { "type": "array", "items": { "type": "string" }, "description": "Opciones sin ganadora entre ellas (en cadena desde la de mayor total). Orden fijo (práctica actual y luego alternativas), no es un ranking; la vista las muestra sin orden" },
+            "regla_puntaje": { "enum": ["empate", "una_destaca", null], "description": "Lo que da la regla de empate con los totales del escenario base, antes de mirar la confianza" },
             "confianza": {
               "type": "object", "required": ["nivel", "motivo"],
-              "properties": { "nivel": { "enum": ["alta", "media", "baja"] }, "motivo": { "type": "string", "minLength": 5 } }
-            }
-          }
+              "properties": { "nivel": { "enum": ["alta", "media", "baja"] }, "motivo": { "type": "string", "minLength": 5 }, "motivo_en": { "type": ["string", "null"] } }
+            },
+            "motivo_gris": { "type": ["string", "null"] },
+            "motivo_gris_en": { "type": ["string", "null"] }
+          },
+          "allOf": [
+            { "if": { "properties": { "estado": { "const": "gris" } } },
+              "then": { "required": ["motivo_gris", "motivo_gris_en"], "properties": { "destaca": { "const": null }, "motivo_gris": { "type": "string", "minLength": 5 }, "motivo_gris_en": { "type": "string", "minLength": 5 } } } },
+            { "if": { "properties": { "estado": { "const": "empate" } } },
+              "then": { "required": ["empatadas"], "properties": { "destaca": { "const": null }, "empatadas": { "minItems": 2 } } } },
+            { "if": { "properties": { "estado": { "const": "una_destaca" } } },
+              "then": { "required": ["destaca"], "properties": { "destaca": { "type": "string" } } } }
+          ]
         },
         "frases": {
           "type": "array",
@@ -312,7 +349,18 @@
         "meses_poca_cobertura": { "type": "array", "items": { "$ref": "#/$defs/mes" } },
         "periodo": { "type": "string" },
         "fuente_ids": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-        "motivo_gris": { "type": ["string", "null"] }
+        "motivo_gris": { "type": ["string", "null"], "description": "Por qué el hecho sale gris (falla su propia fuente), en español" },
+        "motivo_gris_en": { "type": ["string", "null"], "description": "El mismo motivo en inglés" }
+      },
+      "if": { "properties": { "estado": { "const": "gris" } }, "required": ["estado"] },
+      "then": { "required": ["motivo_gris_en"], "properties": { "motivo_gris": { "type": "string", "minLength": 5 }, "motivo_gris_en": { "type": "string", "minLength": 5 } } }
+    },
+    "estado_farmer": {
+      "type": "object", "required": ["forma", "es", "en"],
+      "properties": {
+        "forma": { "enum": ["circulo", "triangulo", "cuadrado", "interrogacion"] },
+        "es": { "type": "string", "minLength": 3 },
+        "en": { "type": "string", "minLength": 3 }
       }
     },
     "audio_farmer": {
@@ -381,7 +429,8 @@
           "properties": {
             "nivel": { "enum": ["alta", "media", "baja"] },
             "motivo": { "type": "string", "minLength": 5 },
-            "criterios": { "type": "array", "items": { "type": "object", "required": ["criterio", "cumple"], "properties": { "criterio": { "type": "string" }, "cumple": { "type": ["boolean", "null"] }, "detalle": { "type": "string" } } } }
+            "motivo_en": { "type": "string", "minLength": 5, "description": "El mismo motivo en inglés, con las mismas cifras" },
+            "criterios": { "type": "array", "items": { "type": "object", "required": ["criterio", "cumple"], "properties": { "criterio": { "type": "string" }, "cumple": { "type": ["boolean", "null"] }, "detalle": { "type": "string" }, "detalle_en": { "type": "string" } } } }
           }
         },
         "calendario": {

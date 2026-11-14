@@ -53,11 +53,16 @@ def test_el_bloque_no_trae_cifras_nuevas(resultado_sintetico):
     assert con_farmer == sin_farmer
 
 
-def test_sin_umbrales_confirmados_no_hay_estados(resultado_sintetico):
-    f = resultado_sintetico["farmer"]
+@pytest.mark.parametrize("umbrales", [None, {"estado": "pendiente"}])
+def test_sin_umbrales_confirmados_no_hay_estados(resultado_sintetico, umbrales):
+    f = farmer.bloque(resultado_sintetico, umbrales)
     assert f["umbrales"] == {"estado": "pendiente", "documento": "docs/umbrales.md"}
     assert all(h["estado"] is None and h["motivo_gris"] is None for h in f["hechos"])
     assert f["opciones"]["estado"] == "pendiente"
+    assert f["opciones"]["destaca"] is None and f["opciones"]["empatadas"] == []
+    con = copy.deepcopy(resultado_sintetico)
+    con["farmer"] = f
+    assert contrato.errores_esquema(con) == []
 
 
 def test_opciones_y_confianza_salen_de_las_rotaciones(resultado_sintetico):
@@ -65,7 +70,8 @@ def test_opciones_y_confianza_salen_de_las_rotaciones(resultado_sintetico):
     op = resultado_sintetico["farmer"]["opciones"]
     assert op["actual"] == rots[0]["id"] and rots[0]["es_actual"]
     assert op["alternativas"] == [r["id"] for r in rots[1:]]
-    assert op["confianza"] == {"nivel": rots[0]["confianza"]["nivel"], "motivo": rots[0]["confianza"]["motivo"]}
+    c = rots[0]["confianza"]
+    assert op["confianza"] == {"nivel": c["nivel"], "motivo": c["motivo"], "motivo_en": c["motivo_en"]}
 
 
 def test_ranura_por_idioma_con_chorti(resultado_sintetico):
@@ -84,6 +90,9 @@ def test_esquema_acepta_los_cuatro_estados(resultado_sintetico, estado):
     ok = copy.deepcopy(resultado_sintetico)
     for h in ok["farmer"]["hechos"]:
         h["estado"] = estado
+        # gris siempre lleva su motivo en los dos idiomas; los demás no
+        h["motivo_gris"], h["motivo_gris_en"] = (("Faltan datos de la fuente", "The source has no data")
+                                                 if estado == "gris" else (None, None))
     assert contrato.errores_esquema(ok) == []
 
 
