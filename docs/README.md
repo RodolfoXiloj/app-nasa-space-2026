@@ -42,3 +42,4 @@ The team worked in Spanish. These files stay in Spanish:
 | [es/impacto.md](es/impacto.md) | Spanish copy of [impact.md](impact.md) |
 | [es/herramientas-existentes.md](es/herramientas-existentes.md) | Spanish copy of [existing-tools.md](existing-tools.md) |
 | [es/chorti.md](es/chorti.md) | Spanish copy of [chorti.md](chorti.md) |
+| [es/pruebas-personas/](es/pruebas-personas/README.md) | Step-by-step guides for the people tests (form and Members, TalkBack, print, audio, figures, pictograms, English read-aloud) and the automated support checks |
