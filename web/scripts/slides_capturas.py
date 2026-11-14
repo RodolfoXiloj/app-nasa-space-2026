@@ -8,7 +8,7 @@ con el idioma en inglés, y guarda en docs/capturas/en/:
 - farmer-390-jocotan.png       primera pantalla de Jocotán: semáforo con ícono y palabra
 - farmer-390-jocotan-audio.png botón «Listen» con el audio pausado y su subtítulo en inglés
 - farmer-390-olopa-tie.png     bloque de opciones de Olopa: empate de las tres, sin orden
-- farmer-390-camotan-grey.png  bloque de opciones de Camotán: gris porque falta el dato de SMAP
+- farmer-390-camotan-grey.png  opciones de Camotán: título, aviso gris y su motivo (falta el dato de SMAP)
 Sale con código 1 si algo falla.
 """
 from __future__ import annotations
@@ -102,8 +102,15 @@ def capturar(navegador) -> list[Path]:
     estado = pag.get_attribute(".agr-opciones", "data-opciones")
     if estado != "gris":
         raise RuntimeError(f"Camotán: se esperaba gris y vino {estado}")
+    # Solo el título, el aviso gris y su motivo: la diapositiva la muestra entera, sin recortarla.
     ruta = SALIDA / "farmer-390-camotan-grey.png"
-    pag.locator(".agr-opciones").screenshot(path=str(ruta))
+    pag.locator(".agr-opciones").scroll_into_view_if_needed()
+    caja = pag.locator(".agr-opciones").bounding_box()
+    motivo = pag.locator(".agr-opciones > .agr-hecho-detalle").first.bounding_box()
+    if not caja or not motivo:
+        raise RuntimeError("Camotán: falta el motivo del gris")
+    pag.screenshot(path=str(ruta), clip={"x": caja["x"], "y": caja["y"], "width": caja["width"],
+                                         "height": motivo["y"] + motivo["height"] - caja["y"]})
     hechas.append(ruta)
 
     ancho_doc = pag.evaluate("document.documentElement.scrollWidth")

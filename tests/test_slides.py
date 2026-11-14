@@ -116,7 +116,7 @@ def test_afirmaciones_sin_data_dato():
     parcelas = ["jocotan", "camotan", "olopa", "san_juan_ermita", "zacapa"]
     jsons = {p: json.loads((DATOS / f"{p}.json").read_text(encoding="utf-8")) for p in parcelas}
     val = json.loads((DATOS / "validacion.json").read_text(encoding="utf-8"))
-    # «No option wins at any of the 5 plots today.»
+    # Ninguna opción destaca hoy en las 5 parcelas.
     assert all(j["farmer"]["opciones"]["destaca"] is None for j in jsons.values())
     # Olopa: las tres opciones empatadas, sin orden.
     assert len(jsons["olopa"]["farmer"]["opciones"]["empatadas"]) == 3
@@ -136,3 +136,17 @@ def test_afirmaciones_sin_data_dato():
     assert jsons["san_juan_ermita"]["farmer"]["hechos"][0]["meses"] == [2, 3, 4]
     # Chiquimula es el departamento de las parcelas citadas en la diapositiva 2.
     assert {jsons[p]["parcela"]["departamento"] for p in ("jocotan", "san_juan_ermita")} == {"Chiquimula"}
+
+
+def test_cifras_de_impacto_y_frases_retiradas():
+    """La diapositiva de impacto lleva las cifras de SESAN y Oxfam; no repite frases retiradas."""
+    texto = HTML.read_text(encoding="utf-8")
+    plano = re.sub(r"<[^>]+>", "", texto)
+    assert "3.2 million" in plano and "78.1" in plano
+    assert "No option wins" not in texto
+    # La cifra de FEWS NET de 2026 («more than 50 %, up to total») se quitó: no se pone otra.
+    assert "more than 50" not in plano and "up to total" not in plano
+    # El equipo de la portada son exactamente estos tres nombres.
+    equipo = re.search(r'<p class="equipo">(.*?)</p>', texto, re.S)
+    nombres = re.sub(r"<[^>]+>", " ", equipo.group(1)).split() if equipo else []
+    assert nombres == ["Team", "“A", "dream”", "Rodolfo", "Xiloj", "·", "Mario", "·", "Iván"]
