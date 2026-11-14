@@ -294,7 +294,7 @@ Cada plantilla trae `beneficios`, `vacios`, `riesgos` y `fuente`, que el agróno
 **Levantar la web en la red local** (PowerShell, en la laptop):
 
 ```powershell
-cd C:\Users\DELL\Desktop\GG\space-apps-2026\web
+cd web
 npm run build
 npx vite preview --host 0.0.0.0 --port 4173 --strictPort
 ```

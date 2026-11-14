@@ -7,7 +7,7 @@ Milpa Resiliente es un **prototipo local de referencia**: no se publica ni se en
 ## 1. Levantar la web en la red local (laptop, PowerShell)
 
 ```powershell
-cd C:\Users\DELL\Desktop\GG\space-apps-2026\web
+cd web
 npm run build
 npx vite preview --host 0.0.0.0 --port 4173 --strictPort
 ```
@@ -65,7 +65,7 @@ Anotar el modelo del teléfono, el navegador, ✅ o ❌ en cada punto, y una cap
 - **La prueba sin red completa se hace en la laptop**, y ya pasó 14 de 14 el 14 nov 2026:
 
   ```powershell
-  cd C:\Users\DELL\Desktop\GG\space-apps-2026\web
+  cd web
   npm run build
   npm run sin-red
   ```
