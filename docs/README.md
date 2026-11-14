@@ -17,6 +17,7 @@ Start with the [project README](../README.md). The documents below are in Englis
 | [validation.md](validation.md) | POWER against CHIRPS, the 2018 drought test and the July-August 2026 observation |
 | [tests.md](tests.md) | Log of every test that really ran, and the tests still pending |
 | [pictos.md](pictos.md) | The SVG pictograms, what each one stands for and its comprehension question (English and Spanish) |
+| [earth-engine.md](earth-engine.md) | Phase-two plan (not implemented): Google Earth Engine only to precompute `data/cache/`, never live |
 | [peso.md](peso.md) | Size of the first screen and what loads later (English and Spanish) |
 | [capturas/LEEME.md](capturas/LEEME.md) | List of the screenshots in `capturas/` (Spanish) |
 
