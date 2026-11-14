@@ -15,7 +15,7 @@ An AI coding agent wrote most of the code, most of the texts and the SVG code of
 | Claude (Anthropic), coding agent | Wrote the SVG code of the pictograms in `web/src/pictos/` | Chose what each drawing stands for and reviewed every drawing. The comprehension test with users is still pending (`docs/pictos.md`) |
 | Claude (Anthropic), research subagent with web search | Found and read sources for crop coefficients (Kc), yield response (Ky), rotations, ZARC and the 2018 losses | Checked each quote against the source document; quotes that could not be checked are labelled "not verified" in `data/fuentes.yaml` |
 | An AI assistant | Compared the project idea with five other ideas before we started building | Chose the idea and the challenge |
-| edge-tts (Microsoft neural voice `es-GT-MartaNeural`) | Reads aloud the text the engine wrote: one mp3 per plot, in Spanish, with Spanish and English subtitles | Decided to label the voice as AI-generated everywhere it plays |
+| edge-tts (Microsoft neural voices `es-GT-MartaNeural` and `en-US-JennyNeural`) | Reads aloud the text the engine wrote: a short phrase mp3 per plot in Spanish and another in English, each with subtitles; the longer card mp3 in Evidence is Spanish only | Decided to label the voice as AI-generated everywhere it plays |
 
 ## What the team decided, not the AI
 

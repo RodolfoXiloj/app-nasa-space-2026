@@ -19,7 +19,7 @@ It supports the extension worker and the farmer; it does not replace them. Plant
 - **Four states that never rely on colour alone.** Each has a shape, a word and a pictogram: green circle “Good”, yellow triangle “Watch”, red square “Repeats”, and gray “The satellite can't see well here” when a source has no data. There is no orange and no word “alert”: in Guatemala those belong to official CONRED alerts. The thresholds were confirmed by the team ([docs/thresholds.md](docs/thresholds.md)).
 - **Pictograms** drawn as SVG: bare or covered soil with a 12-month wheel, and fire or sun with one dot per year. They read the same in colour, in grey and on a black-and-white photocopy ([docs/pictos.md](docs/pictos.md)).
 - **Options to talk over with the technician:** the current practice, the best legume or cover-crop option and the best drought-tolerant option. If two options are 3 points apart or less, the view says they are even and shows them in no order.
-- **A “Listen” button:** a short audio in Spanish with subtitles in Spanish or English. The voice is synthetic and labelled as AI-generated.
+- **A “Listen” button:** a short audio in Spanish or English, to match the screen, with subtitles. The voice is synthetic and labelled as AI-generated.
 
 ### 2. Evidence (one tap away)
 
@@ -119,7 +119,7 @@ Known limits:
 - Camotán has no SMAP value of recommended quality.
 - NASA POWER puts four of the five plots in the same ~50 km cell.
 - ZARC doesn't publish planting windows by municipality.
-- The audio voice is Spanish only; English listeners get English subtitles.
+- The longer card audio in Evidence is Spanish only; the short Listen audio has a Spanish and an English voice.
 
 ## NASA data
 
