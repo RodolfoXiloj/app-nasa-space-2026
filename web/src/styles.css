@@ -4,6 +4,7 @@
   --tinta: #1d2b1a;
   --tinta-suave: #55624f;
   --linea: #ddd7c8;
+  --borde-control: #857d6a; /* borde de botones y menús: 4.1:1 sobre blanco y 3.7:1 sobre el fondo (WCAG 1.4.11, mínimo 3:1) */
   --verde: #3f7d3a;
   --verde-claro: #e3efdc;
   --maiz: #e0b43a;
@@ -29,13 +30,13 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; colo
 h5 { font-size: 0.8rem; text-transform: capitalize; margin: 0.4rem 0 0.2rem; }
 a { color: var(--verde); }
 button {
-  font: inherit; cursor: pointer; border: 1px solid var(--linea); background: var(--papel); color: var(--tinta);
+  font: inherit; cursor: pointer; border: 1px solid var(--borde-control); background: var(--papel); color: var(--tinta);
   padding: 0.35rem 0.75rem; border-radius: 999px;
 }
 button:hover { border-color: var(--verde); }
 button.activa { background: var(--verde); color: #fff; border-color: var(--verde); }
 button:disabled { opacity: 0.5; cursor: not-allowed; }
-select { font: inherit; padding: 0.35rem; border-radius: 6px; border: 1px solid var(--linea); background: var(--papel); width: 100%; }
+select { font: inherit; padding: 0.35rem; border-radius: 6px; border: 1px solid var(--borde-control); background: var(--papel); width: 100%; }
 
 .app { max-width: 1280px; margin: 0 auto; padding: 0 16px 32px; }
 
