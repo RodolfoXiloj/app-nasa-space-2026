@@ -1,6 +1,6 @@
 # Parámetros de cultivo que usa el motor para la demanda de agua.
 #
-# Verificado el 13 nov 2026 contra los documentos (ver docs/memoria/ y data/fuentes.yaml):
+# Verificado el 13 nov 2026 contra los documentos (ver docs/es/memoria/ y data/fuentes.yaml):
 # - Kc: FAO-56, Tabla 12 (Allen et al., 1998), https://www.fao.org/4/x0490e/x0490e0b.htm.
 #   Los cuatro juegos (maíz, frijol seco, sorgo, caupí) coinciden con la tabla. Kc final 0.35 de maíz y
 #   caupí = grano secado en el campo (notas 11 y 6 de la tabla). La tabla vale para clima subhúmedo

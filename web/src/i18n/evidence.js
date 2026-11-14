@@ -1,4 +1,4 @@
-// Step 6: product → decision and unified limits (figures from validation JSON, docs/umbrales.md, docs/estado.md).
+// Step 6: product → decision and unified limits (figures from validation JSON, docs/umbrales.md, docs/es/estado.md).
 
 export const OBS_LIMITES = {
   en: [
@@ -160,7 +160,7 @@ export function whereItFails(loc) {
     {
       limit: 'NASA POWER rain shares one ~50 km cell',
       figure: 'Jocotán, Camotán, San Juan Ermita, Zacapa in same cell; JJA bias −22.1% to +55.4% vs CHIRPS',
-      source: 'docs/estado.md · validacion.json titular_power_chirps',
+      source: 'docs/es/estado.md · validacion.json titular_power_chirps',
     },
     {
       limit: 'Jocotán and San Juan Ermita share one SMAP 9 km cell',
@@ -217,7 +217,7 @@ export function whereItFails(loc) {
     {
       limit: 'La lluvia de NASA POWER comparte una celda ~50 km',
       figure: 'Jocotán, Camotán, San Juan Ermita y Zacapa en la misma celda; sesgo JJA −22,1 % a +55,4 % vs CHIRPS',
-      source: 'docs/estado.md · validacion.json titular_power_chirps',
+      source: 'docs/es/estado.md · validacion.json titular_power_chirps',
     },
     {
       limit: 'Jocotán y San Juan Ermita comparten una celda SMAP de 9 km',

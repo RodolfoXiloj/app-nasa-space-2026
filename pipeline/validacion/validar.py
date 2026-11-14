@@ -385,7 +385,7 @@ def escribir_md(v: dict) -> None:
     L += ["", "## Notas y límites", ""] + [f"- {n}" for n in v["notas"]] + [
         "- SMAP: SPL3SMP_E.006 por AppEEARS, solo datos con calidad recomendada. Camotán no tiene ninguno; Jocotán y "
         "San Juan Ermita comparten la celda de 9 km.",
-        "- Las 5 parcelas son puntos de ejemplo elegidos con NDVI e imagen Sentinel-2, no verificados en campo; ver docs/memoria/.", ""]
+        "- Las 5 parcelas son puntos de ejemplo elegidos con NDVI e imagen Sentinel-2, no verificados en campo; ver docs/es/memoria/.", ""]
     ruta = datos.RAIZ / "docs" / "validacion.md"
     ruta.write_text(chr(10).join(L), encoding="utf-8")
 

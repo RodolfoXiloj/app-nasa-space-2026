@@ -1,6 +1,6 @@
 # 5 parcelas de ejemplo del Corredor Seco (Chiquimula y Zacapa).
 #
-# Puntos PROPUESTOS COMO DEFINITIVOS el 13 nov 2026 (ver docs/estado.md y docs/memoria/):
+# Puntos PROPUESTOS COMO DEFINITIVOS el 13 nov 2026 (ver docs/es/estado.md y docs/es/memoria/):
 #  1. Filtro de NDVI por píxel (pipeline/elegir_punto.py): NDVI seco (6 mar-23 abr) < 0.35,
 #     NDVI de lluvia (29 ago-16 oct) >= 0.60, amplitud >= 0.30 y 6 de 9 vecinos iguales, 2022-2024.
 #     Donde no hubo ningún píxel así en +-6 km (Camotán, Olopa) se relajó a NDVI seco < 0.45 y
