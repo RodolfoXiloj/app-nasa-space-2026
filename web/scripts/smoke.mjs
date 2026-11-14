@@ -1,0 +1,102 @@
+// Prueba de humo: renderiza cada componente (salvo el mapa, que necesita navegador) con cada JSON
+// de public/data/ y falla si alguno revienta. Uso: npm run smoke
+import { readdirSync, readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import { createServer } from 'vite'
+
+const raiz = join(dirname(fileURLToPath(import.meta.url)), '..')
+// optimizeDeps.noDiscovery: sin el escaneo de dependencias del servidor de desarrollo, que corre en
+// paralelo y fallaba al cerrar el servidor («Request is outdated»).
+const server = await createServer({
+  root: raiz,
+  logLevel: 'error',
+  server: { middlewareMode: true },
+  appType: 'custom',
+  optimizeDeps: { noDiscovery: true, include: [] },
+})
+let fallas = 0
+try {
+  const comp = async (n) => (await server.ssrLoadModule(`/src/components/${n}.jsx`)).default
+  const piezas = {
+    PanelSatelite: await comp('PanelSatelite'),
+    Clima: await comp('Clima'),
+    Rotaciones: await comp('Rotaciones'),
+    Tarjeta: await comp('Tarjeta'),
+    Validacion: await comp('Validacion'),
+    Glosario: await comp('Glosario'),
+  }
+  const obsMod = await server.ssrLoadModule('/src/components/Observacion2026.jsx')
+  const dir = join(raiz, 'public', 'data')
+  const archivos = readdirSync(dir).filter((f) => f.endsWith('.json') && !['parcelas.json', 'validacion.json'].includes(f))
+  let validacion = null
+  try {
+    validacion = JSON.parse(readFileSync(join(dir, 'validacion.json'), 'utf-8'))
+  } catch {
+    console.log('(sin validacion.json: la pestaña Validación se prueba vacía)')
+  }
+  if (!archivos.length) throw new Error('No hay JSON en public/data: corra python -m motor.exportar')
+  const escenarios = [[0, 0, 'agua'], [-30, 1.5, 'suelo'], [-20, 0, 'plagas']]
+  for (const f of archivos) {
+    const res = JSON.parse(readFileSync(join(dir, f), 'utf-8'))
+    if (res.audio?.mp3) {
+      try {
+        const mp3 = readFileSync(join(raiz, 'public', res.audio.mp3))
+        if (mp3.length < 1000) throw new Error('mp3 vacío')
+        // Declaración de IA: etiqueta ID3 con la marca AI_GENERATED y texto en el JSON (motor/exportar.py).
+        const cabecera = mp3.subarray(0, 4096).toString('latin1')
+        if (!cabecera.startsWith('ID3') || !cabecera.includes('AI_GENERATED')) throw new Error('sin etiqueta ID3 de IA')
+        if (!res.audio.ia?.generado_con_ia || !res.audio.ia?.declaracion) throw new Error('el JSON no declara la IA')
+      } catch (e) {
+        fallas++
+        console.error(`FALLA ${f}: audio ${res.audio.mp3}: ${e.message}`)
+      }
+    }
+    for (const [nombre, C] of Object.entries(piezas)) {
+      for (const [lluvia, temp, prioridad] of escenarios) {
+        try {
+          const html = renderToString(React.createElement(C, { res, lluvia, temp, prioridad, validacion }))
+          if (html.length < 50) throw new Error('salida vacía')
+        } catch (e) {
+          fallas++
+          console.error(`FALLA ${f} · ${nombre} · ${lluvia}/${temp}/${prioridad}: ${e.message}`)
+        }
+      }
+    }
+    console.log(`ok ${f}`)
+  }
+  if (validacion?.observacion_2026) {
+    try {
+      const o = validacion.observacion_2026
+      const linea = renderToString(React.createElement(obsMod.LineaObservacion2026, { obs: o, onDetalle: () => {} }))
+      const detalle = renderToString(React.createElement(obsMod.default, { obs: o }))
+      if (linea.length < 50 || detalle.length < 200) throw new Error('salida vacía')
+      // Nuestro texto no la llama «alerta» (las citas de reportes públicos pueden nombrar una alerta oficial).
+      if (/alerta/i.test(linea + o.titulo + o.resumen + o.limites.join(' '))) throw new Error('usa la palabra «alerta»')
+      console.log('ok observacion_2026')
+    } catch (e) {
+      fallas++
+      console.error(`FALLA observación 2026: ${e.message}`)
+    }
+  }
+  const indice = JSON.parse(readFileSync(join(dir, 'parcelas.json'), 'utf-8'))
+  for (const p of indice.parcelas) {
+    for (const ruta of Object.values(p.archivos)) {
+      try {
+        readFileSync(join(raiz, 'public', ruta))
+      } catch {
+        fallas++
+        console.error(`FALLA índice: ${p.id} apunta a ${ruta}, que no existe`)
+      }
+    }
+  }
+} finally {
+  await server.close()
+}
+if (fallas) {
+  console.error(`\n${fallas} fallas`)
+  process.exit(1)
+}
+console.log('\nPrueba de humo de la web: sin fallas')

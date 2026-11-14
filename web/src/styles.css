@@ -1,0 +1,192 @@
+:root {
+  --fondo: #f7f4ec;
+  --papel: #ffffff;
+  --tinta: #1d2b1a;
+  --tinta-suave: #55624f;
+  --linea: #ddd7c8;
+  --verde: #3f7d3a;
+  --verde-claro: #e3efdc;
+  --maiz: #e0b43a;
+  --suelo: #a8754a;
+  --suelo-oscuro: #8a5a2b;
+  --lluvia: #5b8fb9;
+  --alta: #2e7d32;
+  --media: #c79100;
+  --baja: #b23c17;
+  --radio: 10px;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--tinta);
+  background: var(--fondo);
+  line-height: 1.45;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fondo); }
+h1, h2, h3, h4, h5 { line-height: 1.2; margin: 0 0 0.4rem; }
+h2 { font-size: 1.2rem; }
+h3 { font-size: 0.95rem; margin-top: 0.8rem; color: var(--tinta-suave); }
+h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--tinta-suave); }
+h5 { font-size: 0.8rem; text-transform: capitalize; margin: 0.4rem 0 0.2rem; }
+a { color: var(--verde); }
+button {
+  font: inherit; cursor: pointer; border: 1px solid var(--linea); background: var(--papel); color: var(--tinta);
+  padding: 0.35rem 0.75rem; border-radius: 999px;
+}
+button:hover { border-color: var(--verde); }
+button.activa { background: var(--verde); color: #fff; border-color: var(--verde); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+select { font: inherit; padding: 0.35rem; border-radius: 6px; border: 1px solid var(--linea); background: var(--papel); width: 100%; }
+
+.app { max-width: 1280px; margin: 0 auto; padding: 0 16px 32px; }
+
+.cabecera { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; justify-content: space-between; padding: 18px 0 12px; border-bottom: 3px solid var(--maiz); }
+.cabecera h1 { font-size: 1.8rem; color: var(--verde); }
+.lema { margin: 0; max-width: 680px; color: var(--tinta-suave); }
+.pestanas { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.banda-ejemplo { background: #fff4d1; border: 1px solid var(--maiz); padding: 0.5rem 0.8rem; border-radius: 8px; margin: 12px 0; font-weight: 600; }
+.banda-error { background: #fde4dc; border: 1px solid var(--baja); padding: 0.5rem 0.8rem; border-radius: 8px; margin: 12px 0; }
+.banda-ok { background: #e6f2e6; border: 1px solid var(--alta); padding: 0.5rem 0.8rem; border-radius: 8px; margin: 12px 0; }
+.banda-obs { background: #eef3f8; border: 1px solid var(--lluvia); padding: 0.55rem 0.8rem; border-radius: 8px; margin: 12px 0; font-size: 0.92rem; }
+.enlace { background: none; border: none; padding: 3px 0; color: var(--verde); text-decoration: underline; cursor: pointer; font: inherit; }
+.sin-corte { white-space: nowrap; }
+.nota-ia { flex-basis: 100%; font-size: 0.78rem; color: var(--tinta-suave); margin: 0.35rem 0 0; }
+.titulares li { font-size: 0.95rem; font-weight: 600; }
+.tabla-scroll { overflow-x: auto; }
+.tabla-datos { width: 100%; border-collapse: collapse; font-size: 0.84rem; min-width: 640px; }
+.tabla-datos th, .tabla-datos td { border-bottom: 1px solid var(--linea); padding: 5px 6px; text-align: left; vertical-align: top; }
+.tabla-datos th { font-size: 0.78rem; color: var(--tinta-suave); }
+code { background: var(--fondo); padding: 0 4px; border-radius: 4px; font-size: 0.85em; }
+
+.contenido { padding-top: 14px; display: grid; gap: 16px; }
+.dos-columnas { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+.fila-superior { display: grid; grid-template-columns: minmax(300px, 5fr) minmax(300px, 6fr); gap: 16px; }
+.columna-mapa, .columna-datos { display: grid; gap: 16px; align-content: start; min-width: 0; }
+
+.panel, .controles, .rotacion, .tarjeta, .tarjeta-vacia, .pendientes {
+  background: var(--papel); border: 1px solid var(--linea); border-radius: var(--radio); padding: 14px 16px; min-width: 0;
+}
+.sub { margin: 0 0 0.6rem; color: var(--tinta-suave); font-size: 0.88rem; }
+.nota { font-size: 0.8rem; color: var(--tinta-suave); margin: 0.5rem 0 0; }
+.etiqueta { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.1rem 0.5rem; border-radius: 999px; background: var(--verde-claro); color: var(--verde); margin-right: 0.3rem; }
+.etiqueta.aviso { background: #fff4d1; color: #7a5a00; margin-left: 0.4rem; }
+.etiqueta.nasa { background: #e1ebf5; color: #1f4f7a; margin-left: 0.4rem; }
+
+.mapa { height: 400px; display: flex; flex-direction: column; }
+.mapa .leaflet-container { flex: 1; border-radius: var(--radio); border: 1px solid var(--linea); }
+.nota-mapa { font-size: 0.75rem; color: var(--tinta-suave); margin: 0.35rem 0 0; }
+
+.controles { display: grid; gap: 10px; }
+.campo { display: grid; gap: 4px; font-size: 0.85rem; font-weight: 600; }
+.segmentado { border: 0; padding: 0; margin: 0; }
+.segmentado legend { font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; }
+.segmentado div { display: flex; flex-wrap: wrap; gap: 6px; }
+.segmentado button { font-size: 0.85rem; }
+
+.cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+.cifra { background: var(--fondo); border-radius: 8px; padding: 8px 10px; display: grid; }
+.cifra strong { font-size: 1.5rem; color: var(--verde); }
+.cifra span { font-size: 0.82rem; font-weight: 600; }
+.cifra small { font-size: 0.75rem; color: var(--tinta-suave); }
+.grafica { width: 100%; min-width: 0; }
+.lista-compacta { padding-left: 1.1rem; margin: 0.4rem 0 0; font-size: 0.88rem; }
+.lista-compacta li { margin-bottom: 0.3rem; }
+
+.titulo-seccion { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.8rem; }
+.rejilla-rotaciones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.rotacion { display: grid; gap: 8px; align-content: start; border-top: 5px solid var(--linea); }
+.rotacion.tipo-actual { border-top-color: var(--suelo); }
+.rotacion.tipo-leguminosa_cobertura { border-top-color: var(--verde); }
+.rotacion.tipo-tolerante_sequia { border-top-color: var(--maiz); }
+.rotacion.mejor { box-shadow: 0 0 0 2px var(--verde); }
+.rotacion h3 { color: var(--tinta); font-size: 1rem; margin-top: 0.3rem; }
+.mejor-etq { background: var(--verde); color: #fff; }
+.puntaje-total { display: flex; align-items: baseline; gap: 0.5rem; }
+.puntaje-total strong { font-size: 2.2rem; color: var(--verde); }
+.puntaje-total span { color: var(--tinta-suave); font-size: 0.85rem; }
+.barra { display: grid; grid-template-columns: 56px 1fr 30px; align-items: center; gap: 6px; font-size: 0.85rem; }
+.barra-fondo { background: var(--fondo); border-radius: 999px; height: 9px; overflow: hidden; }
+.barra-relleno { background: var(--verde); height: 100%; }
+.barra b { text-align: right; }
+.deficit { font-size: 0.85rem; margin: 0; }
+.confianza { border-radius: 8px; padding: 6px 10px; font-size: 0.82rem; display: grid; gap: 2px; border-left: 4px solid; }
+.confianza.nivel-alta { border-color: var(--alta); background: #e6f2e6; }
+.confianza.nivel-media { border-color: var(--media); background: #fbf2d6; }
+.confianza.nivel-baja { border-color: var(--baja); background: #fbe7df; }
+.bloque p { margin: 0; font-size: 0.9rem; }
+.bloque ul { margin: 0; padding-left: 1.1rem; font-size: 0.88rem; }
+.bloque li { margin-bottom: 0.2rem; }
+.bloque.vacios h4 { color: #7a5a00; }
+.bloque.riesgos h4 { color: var(--baja); }
+.evidencia { font-size: 0.84rem; }
+.evidencia summary { cursor: pointer; font-weight: 600; }
+.evidencia table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+.evidencia th, .evidencia td { text-align: left; border-bottom: 1px solid var(--linea); padding: 4px 4px; vertical-align: top; }
+.evidencia td small { color: var(--tinta-suave); }
+.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.calendario { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 2px; }
+.mes { position: relative; height: 34px; border-radius: 4px; display: flex; align-items: flex-end; justify-content: center; font-size: 0.68rem; padding-bottom: 2px; }
+.mes-nombre { font-weight: 600; }
+.estado-cultivo { background: #6fa35f; color: #fff; }
+.estado-cobertura { background: #2f6b33; color: #fff; }
+.estado-rastrojo { background: #d9c79e; color: var(--tinta); }
+.estado-desnudo { background: var(--suelo); color: #fff; }
+.estado-quema { background: #c0392b; color: #fff; }
+.alerta, .con-alerta-muestra { position: absolute; top: 1px; right: 3px; font-weight: 800; color: var(--maiz); text-shadow: 0 0 2px #000; font-style: normal; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 12px; font-size: 0.78rem; color: var(--tinta-suave); margin-top: 8px; }
+.leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; }
+.leyenda .con-alerta-muestra { position: static; }
+
+.tarjeta-agricultor { display: grid; gap: 10px; }
+.tarjeta-acciones { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; }
+.tarjeta-acciones div { display: flex; gap: 8px; flex-wrap: wrap; }
+.tarjeta { border: 2px solid var(--verde); }
+.tarjeta header { border-bottom: 2px solid var(--maiz); margin-bottom: 8px; }
+.tarjeta header p { margin: 0 0 6px; color: var(--tinta-suave); font-size: 0.88rem; }
+.tabla-tarjeta { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 6px 0 10px; }
+.tabla-tarjeta th, .tabla-tarjeta td { border-bottom: 1px solid var(--linea); padding: 5px 6px; text-align: left; vertical-align: top; }
+.tabla-tarjeta small { color: var(--tinta-suave); }
+.fila-mejor { background: var(--verde-claro); }
+.aviso-tarjeta { font-weight: 600; background: #fff4d1; padding: 6px 10px; border-radius: 6px; }
+.fuentes-tarjeta { font-size: 0.75rem; color: var(--tinta-suave); }
+.solo-imprimir { display: none; }
+
+.pendientes summary { cursor: pointer; font-weight: 600; }
+.pendientes ul { margin: 0.5rem 0 0; font-size: 0.88rem; }
+.tarjeta-vacia { color: var(--tinta-suave); }
+
+.glosario div { margin-bottom: 0.6rem; }
+.glosario dt { font-weight: 700; }
+.glosario dd { margin: 0; font-size: 0.9rem; }
+.fuentes { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.fuentes p { margin: 0.2rem 0; font-size: 0.85rem; }
+.fuentes small { overflow-wrap: anywhere; }
+
+.pie { margin-top: 24px; font-size: 0.8rem; color: var(--tinta-suave); border-top: 1px solid var(--linea); padding-top: 10px; }
+
+@media (max-width: 980px) {
+  .fila-superior { grid-template-columns: 1fr; }
+  .rejilla-rotaciones { grid-template-columns: 1fr; }
+}
+
+/* Teléfono: la tabla de la tarjeta cabe entera (columna «Confianza» incluida) desde 360 px, y los
+   botones tienen un área de toque más cómoda. */
+@media (max-width: 480px) {
+  .tarjeta { padding: 12px 10px; }
+  .tabla-tarjeta { font-size: 0.82rem; }
+  .tabla-tarjeta th, .tabla-tarjeta td { padding: 5px 3px; }
+  .tabla-tarjeta th { font-size: 0.74rem; }
+  button:not(.enlace), select { min-height: 40px; }
+}
+
+/* Impresión: solo la tarjeta del agricultor, en blanco y negro legible */
+@media print {
+  :root, body { background: #fff; }
+  .no-imprimir, .fila-superior, .rotaciones, .pendientes, .cabecera, .pie, .banda-ejemplo { display: none !important; }
+  .app { max-width: none; padding: 0; }
+  .contenido { padding: 0; }
+  .tarjeta { border: 1px solid #000; }
+  .solo-imprimir { display: inline; }
+  a { color: #000; text-decoration: none; }
+}
