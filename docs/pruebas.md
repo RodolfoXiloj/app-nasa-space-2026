@@ -6,6 +6,20 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Línea base del paso 0: sábado 14 nov 2026 (commit `15c5130`)
+
+Después de agregar el bloque `farmer` al contrato, el contraste de los bordes y los espacios fijos de `Controles.jsx`. No se regeneraron datos: los JSON y los mp3 de `web/public/` son los mismos de la línea base anterior. Mismo equipo y mismas versiones (Python 3.11.9, pytest 9.0.2, Node v24.15.0, npm 11.12.1). Las horas son las que imprimió `date` al empezar y al terminar cada comando.
+
+| Fecha y hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 14 nov 2026, 12:58:16 a 12:58:21 | Pruebas automáticas | `python -m pytest -rs` | ✅ 98 pasan, 0 fallan, 0 omitidas (3.83 s); salida 0. Son las 79 anteriores más 19 nuevas de `tests/test_farmer.py` |
+| 14 nov 2026, 12:58:25 a 12:58:56 | Prueba de humo de la web | `cd web && npm run smoke` | ✅ 16 de 16 JSON «ok» y `observacion_2026` «ok»; «Prueba de humo de la web: sin fallas»; salida 0 |
+| 14 nov 2026, 12:58:56 a 12:59:07 | Build de la web | `cd web && npm run build` | ✅ vite v6.4.6, 498 módulos, «built in 10.00s»; JS de 770.39 kB (220.58 kB con gzip) y CSS de 24.99 kB; salida 0 |
+| 14 nov 2026, 12:59:11 a 12:59:23 | Prueba sin red (Edge sin interfaz, sobre el build anterior) | `cd web && npm run sin-red -- <carpeta temporal fuera del repo>` | ✅ «14 de 14 comprobaciones pasan»; salida 0. Las mismas 14 comprobaciones de abajo; audio de 71 a 73 s y PDF de 61 KB |
+| 14 nov 2026, 12:59:29 | Procesos después de las pruebas | `Get-NetTCPConnection` (puertos 4173, 4174 y 9334) + búsqueda de procesos de Edge sin interfaz y de vite + `git status --short` | ✅ ningún puerto escuchando, ningún proceso de Edge sin interfaz ni de vite; árbol de trabajo sin cambios |
+
+Antes de esta línea base, el mismo 14 nov 2026 (sin hora anotada), se corrió `motor.recomendar.recomendar()` en memoria para las 5 parcelas, sin escribir archivos: el bloque `farmer` cumple el esquema y `contrato.errores_textos` no da errores en ninguna. Esas corridas dan las cifras de `docs/umbrales.md`.
+
 ## Línea base: sábado 14 nov 2026 (commit `d84918b`)
 
 Equipo: laptop con Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0 y npm 11.12.1. No se instaló nada: `web/node_modules` ya estaba en el repo. Las horas son las que imprimió `date` al empezar y al terminar cada comando.
