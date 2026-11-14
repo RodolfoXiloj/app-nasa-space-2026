@@ -1,8 +1,8 @@
 # Revisión del plan contra el repo
 
-> **Superado (registrado en el commit `3e48dbe`, 14 nov 2026):** Rodolfo decidió que este repo **no se entrega**; queda como prototipo local de referencia. Lo de entrega (Render, push, slides, video, página en inglés) ya no aplica. Lo que mejoraba el funcionamiento se aplicó: ver `docs/estado.md` y `docs/pruebas.md`.
+> **Superado (registrado en el commit `60c981b`, 14 nov 2026):** Rodolfo decidió que este repo **no se entrega**; queda como prototipo local de referencia. Lo de entrega (Render, push, slides, video, página en inglés) ya no aplica. Lo que mejoraba el funcionamiento se aplicó: ver `docs/estado.md` y `docs/pruebas.md`.
 
-En el repo desde el commit `3e48dbe` (14 nov 2026). Solo revisión: en este turno no se cambió código. Esta revisión se conserva como referencia documental.
+En el repo desde el commit `60c981b` (14 nov 2026). Solo revisión: en este turno no se cambió código. Esta revisión se conserva como referencia documental.
 
 **Qué se comparó**
 - **Plan final:** el plan aprobado de Fable está en el hilo de T3 «Plan: Milpa Resiliente (NASA Space Apps 2026)», ítem `proposed_plan`. No hay copia en `docs/`.
@@ -14,7 +14,7 @@ En el repo desde el commit `3e48dbe` (14 nov 2026). Solo revisión: en este turn
 **Orden que fijó Rodolfo**
 1. Prueba en teléfono (sección 4).
 2. Decisiones y ajustes (secciones 2 y 3, y la tabla).
-3. Repo: hecho (Git local, commit `f0b3c40`, 14 nov 2026). Render y primer push: pendientes.
+3. Repo: hecho (Git local, commit `aaab0bb`, 14 nov 2026). Render y primer push: pendientes.
 4. Al final: slides, video de 30 s y página en inglés.
 
 ## 1. Plan contra el repo

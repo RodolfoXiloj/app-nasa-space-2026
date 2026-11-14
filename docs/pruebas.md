@@ -2,11 +2,11 @@
 
 Solo se anotan corridas reales: cada una con la fecha y la hora en que se corrió (Guatemala, UTC−6), el comando y el resultado tal como lo imprimió.
 
-**Corrección del 14 nov 2026:** la versión anterior de este archivo tenía filas con horas del sábado 14 nov 2026 (de 09:17 a 21:58). Eran horarios planeados, no pruebas hechas, y se quitaron. Siguen en el historial de git (commit `6c684ad` y anteriores) solo como referencia del plan, no como resultados.
+**Corrección del 14 nov 2026:** la versión anterior de este archivo tenía filas con horas del sábado 14 nov 2026 (de 09:17 a 21:58). Eran horarios planeados, no pruebas hechas, y se quitaron. Siguen en el historial de git (commit `d84918b` y anteriores) solo como referencia del plan, no como resultados.
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
-## Línea base: sábado 14 nov 2026 (commit `6c684ad`)
+## Línea base: sábado 14 nov 2026 (commit `d84918b`)
 
 Equipo: laptop con Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0 y npm 11.12.1. No se instaló nada: `web/node_modules` ya estaba en el repo. Las horas son las que imprimió `date` al empezar y al terminar cada comando.
 
