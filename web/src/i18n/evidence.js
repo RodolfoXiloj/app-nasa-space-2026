@@ -2,7 +2,7 @@
 
 export const OBS_LIMITES = {
   en: [
-    'This is a look at the past, not a forecast. The engine uses 2001–2025: 2026 does not enter scores, confidence, or audio.',
+    'This is a look at the past, not a forecast. The 2026 rain and soil-moisture figures do not enter scores, confidence or audio: the climate record the engine scores with is 2001–2025. Fire detections from January–May 2026 do count in the fire fact.',
     'Preliminary: the Climate Hazards Center revises CHIRPS monthly and SMAP may be reprocessed. 2026 months come from the final product folder (not prelim/); each file date is recorded.',
     'SMAP: 3 cells with data (4 plots; Jocotán and San Juan Ermita share a cell); no recommended-quality data: Camotán. With 12 years, “lowest” is all we state—we do not report a percentile.',
     'Plots are example points chosen from space—not verified in the field.',
@@ -13,7 +13,7 @@ export const OBS_2026 = {
   en: {
     titulo: 'Preliminary observation: July–August 2026',
     resumen:
-      'In July and August 2026, rainfall was 20% to 26% of normal (1991–2025 median) at all 5 plots, per CHIRPS v3—the lowest since 1991 in 5 of 5. SMAP shows the lowest July–August root-zone moisture in 12 years at 3 of 3 grid cells with data.',
+      'In July and August 2026, rainfall was 20% to 26% of normal (1991–2025 median) at all 5 plots, per CHIRPS v3—the lowest since 1991 in 5 of 5. SMAP shows the lowest July–August surface soil moisture (top 5 cm) in 12 years at 3 of 3 9 km cells with data.',
   },
   es: {
     titulo: 'Observación preliminar: julio-agosto 2026',
@@ -25,13 +25,13 @@ export const OBS_2026 = {
 export function productDecisions(loc) {
   const en = [
     {
-      product: 'MODIS MOD13Q1 (250 m, 16-day)',
+      product: 'MODIS MOD13Q1 (250 m cell around the plot, 16-day)',
       decision: 'Bare-soil months, low-cover months, greenness cycles → soil score and “What the satellite sees”',
       source: 'motor/deteccion.py · web/public/data/*.json',
     },
     {
       product: 'VIIRS S-NPP active fire (FIRMS, 375 m)',
-      decision: 'Fire years within 500 m (Jan–May) → plague score and fire counts',
+      decision: 'Fire years within 500 m (Jan–May) → Fire fact and soil score (burning lowers it)',
       source: 'motor/deteccion.py → detectar_quemas',
     },
     {
@@ -40,7 +40,7 @@ export function productDecisions(loc) {
       source: 'motor/clima.py · pipeline/validacion/',
     },
     {
-      product: 'CHIRPS v3 daily “sat” (IMERG daily split)',
+      product: 'CHIRPS v3 daily “sat” (IMERG’s daily split arrives inside it; IMERG is not downloaded directly)',
       decision: 'Canícula dry spells (>15 days, <2 mm/day, 15 Jun–31 Aug)',
       source: 'motor/clima.py → SUPUESTOS',
     },
@@ -50,13 +50,13 @@ export function productDecisions(loc) {
       source: 'motor/clima.py · validacion.json',
     },
     {
-      product: 'SMAP SPL3SMP_E (9 km) or MERRA-2 GWETROOT fallback',
+      product: 'SMAP SPL3SMP_E (9 km, top 5 cm) or MERRA-2 GWETROOT fallback',
       decision: 'July–August soil moisture context; low-confidence flag when SMAP missing',
       source: 'motor/confianza.py · observacion_2026 in validacion.json',
     },
     {
-      product: 'SRTM 30 m',
-      decision: 'Slope % → soil score multiplier above 15%',
+      product: 'SRTM GL3 (90 m)',
+      decision: 'Slope % of the 90 m cell → soil score multiplier above 15%',
       source: 'motor/puntaje.py',
     },
     {
@@ -77,13 +77,13 @@ export function productDecisions(loc) {
   ]
   const es = [
     {
-      product: 'MODIS MOD13Q1 (250 m, cada 16 días)',
+      product: 'MODIS MOD13Q1 (celda de 250 m alrededor de la parcela, cada 16 días)',
       decision: 'Meses de suelo desnudo, poca cobertura, ciclos de verdor → puntaje de suelo y panel del satélite',
       source: 'motor/deteccion.py · web/public/data/*.json',
     },
     {
       product: 'VIIRS S-NPP focos activos (FIRMS, 375 m)',
-      decision: 'Años con quema a ≤500 m (ene–may) → puntaje de plagas y conteos de quema',
+      decision: 'Años con quema a ≤500 m (ene–may) → hecho de quema y puntaje de suelo (la quema lo baja)',
       source: 'motor/deteccion.py → detectar_quemas',
     },
     {
@@ -92,7 +92,7 @@ export function productDecisions(loc) {
       source: 'motor/clima.py · pipeline/validacion/',
     },
     {
-      product: 'CHIRPS v3 diario “sat” (reparto diario IMERG)',
+      product: 'CHIRPS v3 diario “sat” (el reparto diario de IMERG viene dentro; IMERG no se descarga aparte)',
       decision: 'Rachas de canícula (>15 días, <2 mm/día, 15 jun–31 ago)',
       source: 'motor/clima.py → SUPUESTOS',
     },
@@ -102,13 +102,13 @@ export function productDecisions(loc) {
       source: 'motor/clima.py · validacion.json',
     },
     {
-      product: 'SMAP SPL3SMP_E (9 km) o respaldo MERRA-2 GWETROOT',
+      product: 'SMAP SPL3SMP_E (9 km, primeros 5 cm) o respaldo MERRA-2 GWETROOT',
       decision: 'Contexto de humedad jul–ago; confianza baja cuando falta SMAP',
       source: 'motor/confianza.py · observacion_2026 en validacion.json',
     },
     {
-      product: 'SRTM 30 m',
-      decision: 'Pendiente % → multiplicador de suelo arriba de 15 %',
+      product: 'SRTM GL3 (90 m)',
+      decision: 'Pendiente % de la celda de 90 m → multiplicador de suelo arriba de 15 %',
       source: 'motor/puntaje.py',
     },
     {
@@ -139,7 +139,7 @@ export function whereItFails(loc) {
     },
     {
       limit: 'MODIS pixel mixes milpa with neighbors',
-      figure: '250 m × 250 m ≈ 6.25 ha (~9 city blocks)',
+      figure: '250 m × 250 m ≈ 6.25 ha (~9 manzanas, the local land unit)',
       source: 'docs/umbrales.md · motor/deteccion.py',
     },
     {
@@ -186,6 +186,36 @@ export function whereItFails(loc) {
       limit: 'SMAP “lowest in 12 years” is not a percentile',
       figure: 'With 12 years, only rank “lowest” is stated—no percentile rank',
       source: 'validacion.json → observacion_2026.limites (3rd bullet)',
+    },
+    {
+      limit: 'A family farms far less than one pixel',
+      figure: 'About 0.35 ha per family on average (FAO/WFP 2010) against 6.25 ha for a MODIS pixel, 9 km for SMAP and 90 m for SRTM',
+      source: 'https://www.fao.org/4/ak344s/ak344s00.htm',
+    },
+    {
+      limit: 'Two sensors are being retired',
+      figure: 'Suomi NPP (FIRMS VIIRS) stopped delivering new data in early November 2026; Terra (MODIS) is being switched off in late 2026–early 2027. The record stays valid; updates would use VIIRS on NOAA-20 and NOAA-21',
+      source: 'NASA Earthdata notices (earthdata.nasa.gov/data/alerts-outages)',
+    },
+    {
+      limit: 'Dry-spell counts depend on how CHIRPS splits rain by day',
+      figure: 'Only the “sat” version (IMERG split) is used; the Climate Hazards Center asks to test against “rnl” (ERA5)',
+      source: 'data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt',
+    },
+    {
+      limit: 'The drought rule misses years with documented losses',
+      figure: 'It does not flag 2016, 2019 or 2023 at any plot; 2–3 false alarms in 20 test years',
+      source: 'validacion.json → parcelas[].sequia_2018.anios',
+    },
+    {
+      limit: 'A fire detection is a pixel centre, not the fire’s exact place',
+      figure: '~375 m pixel against a 500 m radius',
+      source: 'earthdata.nasa.gov/data/tools/firms/faq',
+    },
+    {
+      limit: 'Not an early-warning system',
+      figure: 'It complements ZARC and the Agroclimatic Technical Boards; planting dates are quoted, not computed',
+      source: 'motor/zarc.py',
     },
   ]
   const es = [
@@ -243,6 +273,36 @@ export function whereItFails(loc) {
       limit: '«El más bajo en 12 años» en SMAP no es un percentil',
       figure: 'Con 12 años solo se dice rango «el más bajo»; sin percentil',
       source: 'validacion.json → observacion_2026.limites (3er viñeta)',
+    },
+    {
+      limit: 'Una familia siembra mucho menos que un píxel',
+      figure: 'Unas 0,35 ha por familia en promedio (FAO/PMA 2010) frente a 6,25 ha de un píxel MODIS, 9 km de SMAP y 90 m de SRTM',
+      source: 'https://www.fao.org/4/ak344s/ak344s00.htm',
+    },
+    {
+      limit: 'Dos sensores se están retirando',
+      figure: 'Suomi NPP (VIIRS de FIRMS) dejó de dar datos nuevos a inicios de noviembre de 2026; Terra (MODIS) se apaga entre fines de 2026 e inicios de 2027. El registro sigue valiendo; las actualizaciones usarían VIIRS de NOAA-20 y NOAA-21',
+      source: 'Avisos de NASA Earthdata (earthdata.nasa.gov/data/alerts-outages)',
+    },
+    {
+      limit: 'Las rachas secas dependen de cómo CHIRPS reparte la lluvia por día',
+      figure: 'Solo se usa la versión “sat” (reparto IMERG); el Climate Hazards Center pide comparar con “rnl” (ERA5)',
+      source: 'data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/readme.txt',
+    },
+    {
+      limit: 'La regla de sequía no marca años con pérdidas documentadas',
+      figure: 'No marca 2016, 2019 ni 2023 en ninguna parcela; 2–3 falsas alarmas en 20 años de prueba',
+      source: 'validacion.json → parcelas[].sequia_2018.anios',
+    },
+    {
+      limit: 'Un foco de quema es el centro de un píxel, no el lugar exacto del fuego',
+      figure: 'Píxel de ~375 m frente a un radio de 500 m',
+      source: 'earthdata.nasa.gov/data/tools/firms/faq',
+    },
+    {
+      limit: 'No es un sistema de alerta temprana',
+      figure: 'Complementa a ZARC y a las Mesas Técnicas Agroclimáticas; las fechas de siembra se citan, no se calculan',
+      source: 'motor/zarc.py',
     },
   ]
   return loc === 'es' ? es : en
