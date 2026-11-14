@@ -15,11 +15,11 @@ function Barra({ etiqueta, valor }) {
   )
 }
 
-function Lista({ titulo, items, clase }) {
+function Lista({ titulo, items, clase, lang }) {
   return (
     <div className={`bloque ${clase}`}>
       <h4>{titulo}</h4>
-      <ul>
+      <ul lang={lang}>
         {items.map((txt, i) => (
           <li key={i}>{txt}</li>
         ))}
@@ -35,6 +35,8 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
   const pts = res.rotaciones.map((r) => puntajes(res, r.id, lluvia, temp, prioridad))
   const mejor = Math.max(...pts.map((p) => p.total))
   const esBase = lluvia === 0 && temp === 0
+  // Los textos del motor (nombre, por qué, listas, evidencia) vienen en español: en inglés se marcan lang="es".
+  const langMotor = loc === 'es' ? undefined : 'es'
   return (
     <section className="rotaciones">
       <div className="titulo-seccion">
@@ -52,7 +54,7 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
               <header>
                 <span className="etiqueta">{dict.tipo[r.tipo]}</span>
                 {p.total === mejor && <span className="etiqueta mejor-etq">{t('rotaciones.bestScore')}</span>}
-                <h3>{r.nombre}</h3>
+                <h3 lang={langMotor}>{r.nombre}</h3>
               </header>
               <div className="puntaje-total">
                 <strong>{p.total}</strong>
@@ -70,16 +72,16 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
                 <b>
                   {t('rotaciones.confidence')} {r.confianza.nivel}
                 </b>
-                <span>{r.confianza.motivo}</span>
+                <span lang={langMotor}>{r.confianza.motivo}</span>
               </div>
               <div className="bloque por-que">
                 <h4>{t('rotaciones.why')}</h4>
-                <p>{r.por_que}</p>
+                <p lang={langMotor}>{r.por_que}</p>
               </div>
               <Calendario12 calendario={r.calendario} />
-              <Lista titulo={t('rotaciones.benefits')} items={r.beneficios} clase="beneficios" />
-              <Lista titulo={t('rotaciones.gaps')} items={r.vacios} clase="vacios" />
-              <Lista titulo={t('rotaciones.risks')} items={r.riesgos} clase="riesgos" />
+              <Lista titulo={t('rotaciones.benefits')} items={r.beneficios} clase="beneficios" lang={langMotor} />
+              <Lista titulo={t('rotaciones.gaps')} items={r.vacios} clase="vacios" lang={langMotor} />
+              <Lista titulo={t('rotaciones.risks')} items={r.riesgos} clase="riesgos" lang={langMotor} />
               <details className="evidencia">
                 <summary>{t('rotaciones.evidence', { n: r.evidencia.length })}</summary>
                 <table>
@@ -90,7 +92,7 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
                       <th>{t('rotaciones.colSource')}</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody lang={langMotor}>
                     {r.evidencia.map((e, j) => (
                       <tr key={j}>
                         <td>{e.dato}</td>
@@ -118,8 +120,8 @@ export default function Rotaciones({ res, lluvia, temp, prioridad }) {
                   ['plagas', t('rotaciones.pests')],
                 ].map(([k, label]) => (
                   <div key={k}>
-                    <h5>{label}</h5>
-                    <ul>
+                    <h4>{label}</h4>
+                    <ul lang={langMotor}>
                       {r.trazabilidad[k].map((txt, j) => (
                         <li key={j}>{txt}</li>
                       ))}

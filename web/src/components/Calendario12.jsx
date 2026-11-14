@@ -7,23 +7,30 @@ export default function Calendario12({ calendario }) {
   const t = useT()
   const estados = messages[loc]?.estado || messages.en.estado
   return (
-    <div className="calendario" role="table" aria-label={t('cal.table')}>
+    // Una lista de 12 meses: cada mes dice su estado en texto (no solo con el color) para el lector de pantalla.
+    <ul className="calendario" aria-label={t('cal.table')} style={{ listStyle: 'none', padding: 0, margin: 0 }}>
       {calendario.map((m) => (
-        <div
+        <li
           key={m.mes}
           className={`mes estado-${m.estado}${m.alertas.length ? ' con-alerta' : ''}`}
           title={[estados[m.estado], m.cultivo, ...m.alertas].filter(Boolean).join(' · ')}
-          role="cell"
         >
-          <span className="mes-nombre">{mesCorto(m.mes, loc)}</span>
+          <span className="mes-nombre" aria-hidden="true">
+            {mesCorto(m.mes, loc)}
+          </span>
           {m.alertas.length > 0 && (
-            <span className="alerta" aria-label={t('cal.ariaMark')}>
+            <span className="alerta" aria-hidden="true">
               !
             </span>
           )}
-        </div>
+          <span className="sr-solo">
+            {[(messages[loc] || messages.en).mesLargo[m.mes - 1], estados[m.estado], m.cultivo, m.alertas.length ? `${t('cal.ariaMark')}: ${m.alertas.join(', ')}` : '']
+              .filter(Boolean)
+              .join(', ')}
+          </span>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 
@@ -32,7 +39,7 @@ export function LeyendaCalendario() {
   const t = useT()
   const estados = messages[loc]?.estado || messages.en.estado
   return (
-    <div className="leyenda">
+    <div className="leyenda" aria-hidden="true">
       {Object.entries(estados).map(([k, v]) => (
         <span key={k}>
           <i className={`estado-${k}`} /> {v}

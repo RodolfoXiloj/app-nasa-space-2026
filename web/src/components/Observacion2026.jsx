@@ -47,7 +47,7 @@ export default function Observacion2026({ obs }) {
       <p>{copy.resumen}</p>
 
       <h3>{t('obs.rainTitle')}</h3>
-      <div className="tabla-scroll">
+      <div className="tabla-scroll" role="region" aria-label={t('a11y.table', { titulo: t('obs.rainTitle') })} tabIndex={0}>
         <table className="tabla-datos">
           <thead>
             <tr>
@@ -81,7 +81,7 @@ export default function Observacion2026({ obs }) {
       {obs.smap_celdas?.length > 0 && (
         <>
           <h3>{t('obs.smapTitle')}</h3>
-          <div className="tabla-scroll">
+          <div className="tabla-scroll" role="region" aria-label={t('a11y.table', { titulo: t('obs.smapTitle') })} tabIndex={0}>
             <table className="tabla-datos">
               <thead>
                 <tr>

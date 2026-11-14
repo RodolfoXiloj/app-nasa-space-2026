@@ -9,7 +9,7 @@ export default function ProductoDecision() {
     <section className="panel" id="producto-decision">
       <h2>{t('validacion.productTitle')}</h2>
       <p className="sub">{t('validacion.productSub')}</p>
-      <div className="tabla-scroll">
+      <div className="tabla-scroll" role="region" aria-label={t('a11y.table', { titulo: t('validacion.productTitle') })} tabIndex={0}>
         <table className="tabla-datos">
           <thead>
             <tr>

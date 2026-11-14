@@ -15,7 +15,7 @@ export default function Glosario({ res }) {
       <section className="panel">
         <h2>{t('glosario.terms')}</h2>
         {loc === 'en' && <p className="sub">{t('glosario.dataEs')}</p>}
-        <dl className="glosario">
+        <dl className="glosario" lang={loc === 'es' ? undefined : 'es'}>
           {res.glosario.map((g) => (
             <div key={g.termino}>
               <dt>{g.termino}</dt>

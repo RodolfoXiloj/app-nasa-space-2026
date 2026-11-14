@@ -17,6 +17,26 @@ export default function PanelSatelite({ res }) {
     poca: poca.includes(m.mes),
   }))
   const p = res.parcela
+  const validos = serie.filter((x) => x.ndvi != null)
+  const bajo = validos.reduce((a, b) => (b.ndvi < a.ndvi ? b : a), validos[0] || {})
+  const alto = validos.reduce((a, b) => (b.ndvi > a.ndvi ? b : a), validos[0] || {})
+  const resumenSerie = t('a11y.ndviChart', {
+    desde: serie[0]?.fecha ?? t('common.dash'),
+    hasta: serie[serie.length - 1]?.fecha ?? t('common.dash'),
+    n: validos.length,
+    min: bajo.ndvi?.toFixed(2) ?? t('common.dash'),
+    fmin: bajo.fecha ?? t('common.dash'),
+    max: alto.ndvi?.toFixed(2) ?? t('common.dash'),
+    fmax: alto.fecha ?? t('common.dash'),
+    umbral: d.umbral_desnudo_ndvi,
+  })
+  const resumenMensual = t('a11y.monthlyChart', {
+    lista: mensual.map((m) => `${m.mes} ${m.ndvi == null ? t('common.dash') : m.ndvi.toFixed(2)}`).join(', '),
+    desnudo: d.umbral_desnudo_ndvi,
+    desnudos: d.meses_desnudos.length ? listaMesesI18n(d.meses_desnudos, loc) : t('a11y.none'),
+    poca: d.umbral_poca_cobertura_ndvi ?? t('common.dash'),
+    pocos: poca.length ? listaMesesI18n(poca, loc) : t('a11y.none'),
+  })
 
   return (
     <section className="panel">
@@ -71,7 +91,7 @@ export default function PanelSatelite({ res }) {
       </div>
 
       <h3>{t('panel.ndviTitle')}</h3>
-      <div className="grafica">
+      <div className="grafica" role="img" aria-label={resumenSerie}>
         <ResponsiveContainer width="100%" height={170}>
           <LineChart data={serie} margin={{ top: 6, right: 8, left: -18, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e3dfd3" />
@@ -85,7 +105,7 @@ export default function PanelSatelite({ res }) {
       </div>
       <p className="nota">{t('panel.ndviNote', { umbral: d.umbral_desnudo_ndvi })}</p>
       <h3>{t('panel.monthlyTitle', { periodo: d.periodo })}</h3>
-      <div className="grafica">
+      <div className="grafica" role="img" aria-label={resumenMensual}>
         <ResponsiveContainer width="100%" height={130}>
           <BarChart data={mensual} margin={{ top: 6, right: 8, left: -18, bottom: 0 }}>
             <XAxis dataKey="mes" fontSize={11} />
@@ -93,11 +113,11 @@ export default function PanelSatelite({ res }) {
             <Tooltip formatter={(v) => (v == null ? t('common.noData') : v.toFixed(2))} />
             <ReferenceLine y={d.umbral_desnudo_ndvi} stroke="#8a5a2b" strokeDasharray="4 3" />
             {d.umbral_poca_cobertura_ndvi != null && (
-              <ReferenceLine y={d.umbral_poca_cobertura_ndvi} stroke="#b8913f" strokeDasharray="2 3" />
+              <ReferenceLine y={d.umbral_poca_cobertura_ndvi} stroke="#8f6d1f" strokeDasharray="2 3" />
             )}
             <Bar dataKey="ndvi" isAnimationActive={false}>
               {mensual.map((m) => (
-                <Cell key={m.mes} fill={m.desnudo ? '#a8754a' : m.poca ? '#d9b26f' : '#6fa35f'} />
+                <Cell key={m.mes} fill={m.desnudo ? '#8a5a2b' : m.poca ? '#9c7a1c' : '#3f7d3a'} />
               ))}
             </Bar>
           </BarChart>

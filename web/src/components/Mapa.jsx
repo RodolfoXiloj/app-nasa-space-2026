@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { CircleMarker, LayersControl, MapContainer, TileLayer, Tooltip, useMap } from 'react-leaflet'
+import { CircleMarker, LayersControl, MapContainer, TileLayer, Tooltip, ZoomControl, useMap } from 'react-leaflet'
 import { BASE } from '../lib/datos.js'
 import { useT } from '../i18n/useT.js'
 
@@ -11,11 +11,30 @@ const ATRIB_S2 =
 
 const COLORES = { alta: '#2e7d32', media: '#c79100', baja: '#b23c17', pendiente: '#7a7a7a' }
 
+const menosMovimiento = () =>
+  typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
 function Volar({ destino }) {
   const map = useMap()
   useEffect(() => {
-    if (destino) map.flyTo(destino, Math.max(map.getZoom(), 11), { duration: 0.8 })
+    if (!destino) return
+    const zoom = Math.max(map.getZoom(), 11)
+    // Con movimiento reducido el mapa salta al punto, sin vuelo animado.
+    if (menosMovimiento()) map.setView(destino, zoom, { animate: false })
+    else map.flyTo(destino, zoom, { duration: 0.8 })
   }, [destino, map])
+  return null
+}
+
+// Leaflet pone «Layers» en inglés al botón de capas: aquí lleva el nombre en el idioma activo.
+function NombreCapas({ nombre }) {
+  const map = useMap()
+  useEffect(() => {
+    const boton = map.getContainer().querySelector('.leaflet-control-layers-toggle')
+    if (!boton) return
+    boton.setAttribute('aria-label', nombre)
+    boton.setAttribute('title', nombre)
+  }, [map, nombre])
   return null
 }
 
@@ -51,6 +70,7 @@ function RespaldoSinRed({ enLinea, guardada, avisar }) {
 
 export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
   const t = useT()
+  const quieto = menosMovimiento()
   const enLinea = useRef(null)
   const guardada = useRef(null)
   const [sinRed, setSinRed] = useState(false)
@@ -63,71 +83,100 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
       : []
 
   return (
-    <div className="mapa" role="region" aria-label={t('mapa.region')}>
-      <MapContainer center={[14.82, -89.45]} zoom={10} scrollWheelZoom={false} style={{ height: '100%', width: '100%' }}>
-        <LayersControl position="topright">
-          <LayersControl.BaseLayer checked name={t('mapa.osm')}>
-            <TileLayer
-              ref={enLinea}
-              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              maxZoom={18}
-            />
-          </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer name={t('mapa.s2')}>
-            <TileLayer
-              url="https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/{z}/{y}/{x}.jpg"
-              attribution={ATRIB_S2}
-              maxZoom={17}
-            />
-          </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer name={t('mapa.modisOffline')}>
-            <TileLayer
-              ref={guardada}
-              url={local('color_real_seca', 'jpg')}
-              bounds={CAJA}
-              minNativeZoom={7}
-              maxNativeZoom={9}
-              maxZoom={16}
-              attribution={ATRIB_GIBS}
-            />
-          </LayersControl.BaseLayer>
-          <LayersControl.Overlay name={t('mapa.ndviDry')}>
-            <TileLayer url={local('ndvi_seca', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
-          </LayersControl.Overlay>
-          <LayersControl.Overlay name={t('mapa.ndviWet')}>
-            <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
-          </LayersControl.Overlay>
-        </LayersControl>
-        {puntos.map((p) => {
-          const nivel = p.disponible ? p.resumen?.confianza || 'media' : 'pendiente'
-          const activa = p.id === seleccion
-          return (
-            <CircleMarker
-              key={p.id}
-              center={[p.lat, p.lon]}
-              radius={activa ? 11 : 8}
-              pathOptions={{ color: '#1d2b1a', weight: activa ? 3 : 1.5, fillColor: COLORES[nivel], fillOpacity: 0.9 }}
-              eventHandlers={{ click: () => p.id !== '__ejemplo__' && onSeleccion(p.id) }}
-            >
-              <Tooltip direction="top">
-                <strong>{p.nombre}</strong>
-                <br />
-                {p.disponible ? `${t('mapa.confidence')} ${nivel}` : t('mapa.noDataYet')}
+    <>
+      <div className="mapa" role="region" aria-label={t('mapa.region')}>
+        <MapContainer
+          center={[14.82, -89.45]}
+          zoom={10}
+          scrollWheelZoom={false}
+          zoomControl={false}
+          zoomAnimation={!quieto}
+          fadeAnimation={!quieto}
+          markerZoomAnimation={!quieto}
+          style={{ height: '100%', width: '100%' }}
+        >
+          <ZoomControl key={t('a11y.zoomIn')} position="topleft" zoomInTitle={t('a11y.zoomIn')} zoomOutTitle={t('a11y.zoomOut')} />
+          <LayersControl position="topright">
+            <LayersControl.BaseLayer checked name={t('mapa.osm')}>
+              <TileLayer
+                ref={enLinea}
+                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                maxZoom={18}
+              />
+            </LayersControl.BaseLayer>
+            <LayersControl.BaseLayer name={t('mapa.s2')}>
+              <TileLayer
+                url="https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/{z}/{y}/{x}.jpg"
+                attribution={ATRIB_S2}
+                maxZoom={17}
+              />
+            </LayersControl.BaseLayer>
+            <LayersControl.BaseLayer name={t('mapa.modisOffline')}>
+              <TileLayer
+                ref={guardada}
+                url={local('color_real_seca', 'jpg')}
+                bounds={CAJA}
+                minNativeZoom={7}
+                maxNativeZoom={9}
+                maxZoom={16}
+                attribution={ATRIB_GIBS}
+              />
+            </LayersControl.BaseLayer>
+            <LayersControl.Overlay name={t('mapa.ndviDry')}>
+              <TileLayer url={local('ndvi_seca', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
+            </LayersControl.Overlay>
+            <LayersControl.Overlay name={t('mapa.ndviWet')}>
+              <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
+            </LayersControl.Overlay>
+          </LayersControl>
+          {puntos.map((p) => {
+            const nivel = p.disponible ? p.resumen?.confianza || 'media' : 'pendiente'
+            const activa = p.id === seleccion
+            return (
+              <CircleMarker
+                key={p.id}
+                center={[p.lat, p.lon]}
+                radius={activa ? 11 : 8}
+                pathOptions={{ color: '#1d2b1a', weight: activa ? 3 : 1.5, fillColor: COLORES[nivel], fillOpacity: 0.9 }}
+                eventHandlers={{ click: () => p.id !== '__ejemplo__' && onSeleccion(p.id) }}
+              >
+                <Tooltip direction="top">
+                  <strong>{p.nombre}</strong>
+                  <br />
+                  {p.disponible ? `${t('mapa.confidence')} ${t(`a11y.nivel.${nivel}`)}` : t('mapa.noDataYet')}
+                  {p.provisional ? ` · ${t('mapa.provisional')}` : ''}
+                </Tooltip>
+              </CircleMarker>
+            )
+          })}
+          <Volar destino={destino} />
+          <NombreCapas nombre={t('a11y.layers')} />
+          <RespaldoSinRed enLinea={enLinea} guardada={guardada} avisar={setSinRed} />
+        </MapContainer>
+        {sinRed && (
+          <p className="nota-mapa aviso-sin-red" role="status">
+            {t('mapa.offlineNote')}
+          </p>
+        )}
+        <p className="nota-mapa">{t('mapa.footnote')}</p>
+      </div>
+      {/* El color del círculo no es la única señal: la misma información, en texto. */}
+      <details className="mapa-texto">
+        <summary>{t('a11y.mapList', { n: puntos.length })}</summary>
+        <ul>
+          {puntos.map((p) => {
+            const nivel = p.disponible ? p.resumen?.confianza || 'media' : null
+            return (
+              <li key={p.id}>
+                <b>{p.nombre}</b>:{' '}
+                {nivel ? `${t('mapa.confidence')} ${t(`a11y.nivel.${nivel}`)}` : t('mapa.noDataYet')}
                 {p.provisional ? ` · ${t('mapa.provisional')}` : ''}
-              </Tooltip>
-            </CircleMarker>
-          )
-        })}
-        <Volar destino={destino} />
-        <RespaldoSinRed enLinea={enLinea} guardada={guardada} avisar={setSinRed} />
-      </MapContainer>
-      {sinRed && (
-        <p className="nota-mapa aviso-sin-red" role="status">
-          {t('mapa.offlineNote')}
-        </p>
-      )}
-      <p className="nota-mapa">{t('mapa.footnote')}</p>
-    </div>
+              </li>
+            )
+          })}
+        </ul>
+      </details>
+    </>
   )
 }

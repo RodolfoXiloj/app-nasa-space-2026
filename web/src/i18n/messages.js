@@ -223,6 +223,27 @@ export const messages = {
       colFigure: 'Figure',
       colSource: 'Source',
     },
+    a11y: {
+      ndviChart:
+        'Line chart of greenness (NDVI) from {desde} to {hasta}: {n} cloud-free composites, lowest {min} ({fmin}), highest {max} ({fmax}). Dashed line: bare soil below {umbral}.',
+      monthlyChart:
+        'Bar chart of median NDVI by month: {lista}. Bare soil (below {desnudo}): {desnudos}. Low cover (below {poca}): {pocos}.',
+      climaChart: 'Normal monthly rain (bars) and reference evapotranspiration ET0 (line), in mm: {lista}.',
+      climaItem: '{mes} rain {lluvia}, ET0 {et0}',
+      scatterChart:
+        'Scatter plot of {n} July–August months in {muni}, POWER rain against CHIRPS rain in mm: {arriba} points above the dashed line of perfect agreement (POWER rains more) and {abajo} below or on it.',
+      droughtChart:
+        'Water deficit of the current rotation by year in {muni}, {desde} to {hasta}. 2018: {d2018} %. Years the engine marked high risk: {riesgo}. A second line shows the July–September NDVI anomaly.',
+      riskYears: 'Years marked high risk (yellow bars): {lista}. 2018 is the red bar.',
+      none: 'none',
+      mapList: 'Plots on the map, as text ({n})',
+      table: '{titulo}: table, scroll sideways to see every column',
+      zoomIn: 'Zoom in',
+      zoomOut: 'Zoom out',
+      layers: 'Map layers',
+      alerts: 'flags',
+      nivel: { alta: 'high', media: 'medium', baja: 'low' },
+    },
     glosario: {
       terms: 'What does it mean?',
       sources: 'Sources and citations',
@@ -453,6 +474,27 @@ export const messages = {
       colLimit: 'Límite',
       colFigure: 'Cifra',
       colSource: 'Fuente',
+    },
+    a11y: {
+      ndviChart:
+        'Gráfica de línea del verdor (NDVI) de {desde} a {hasta}: {n} compuestos sin nube, el más bajo {min} ({fmin}) y el más alto {max} ({fmax}). Línea punteada: suelo desnudo bajo {umbral}.',
+      monthlyChart:
+        'Gráfica de barras de la mediana del NDVI por mes: {lista}. Suelo desnudo (bajo {desnudo}): {desnudos}. Poca cobertura (bajo {poca}): {pocos}.',
+      climaChart: 'Lluvia normal por mes (barras) y evapotranspiración de referencia ET0 (línea), en mm: {lista}.',
+      climaItem: '{mes} lluvia {lluvia}, ET0 {et0}',
+      scatterChart:
+        'Gráfica de puntos de {n} meses de julio y agosto en {muni}, lluvia de POWER contra lluvia de CHIRPS en mm: {arriba} puntos arriba de la línea punteada del acuerdo perfecto (POWER da más lluvia) y {abajo} abajo o sobre ella.',
+      droughtChart:
+        'Déficit de agua de la rotación actual por año en {muni}, de {desde} a {hasta}. 2018: {d2018} %. Años que el motor marcó de riesgo alto: {riesgo}. Una segunda línea muestra la anomalía del NDVI de julio a septiembre.',
+      riskYears: 'Años marcados de riesgo alto (barras amarillas): {lista}. 2018 es la barra roja.',
+      none: 'ninguno',
+      mapList: 'Parcelas del mapa, en texto ({n})',
+      table: '{titulo}: tabla, deslice de lado para ver todas las columnas',
+      zoomIn: 'Acercar',
+      zoomOut: 'Alejar',
+      layers: 'Capas del mapa',
+      alerts: 'avisos',
+      nivel: { alta: 'alta', media: 'media', baja: 'baja' },
     },
     glosario: {
       terms: '¿Qué significa?',

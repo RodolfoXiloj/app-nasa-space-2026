@@ -9,7 +9,7 @@ export default function DondeFalla() {
     <section className="panel" id="donde-falla">
       <h2>{t('validacion.failsTitle')}</h2>
       <p className="sub">{t('validacion.failsSub')}</p>
-      <div className="tabla-scroll">
+      <div className="tabla-scroll" role="region" aria-label={t('a11y.table', { titulo: t('validacion.failsTitle') })} tabIndex={0}>
         <table className="tabla-datos">
           <thead>
             <tr>

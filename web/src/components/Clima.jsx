@@ -9,6 +9,9 @@ export default function Clima({ res }) {
   const s = res.smap
   const datos = c.lluvia_mensual_normal_mm.map((v, i) => ({ mes: mesCorto(i + 1, loc), lluvia: v, et0: c.et0_mensual_normal_mm[i] }))
   const can = c.canicula
+  const resumen = t('a11y.climaChart', {
+    lista: datos.map((x) => t('a11y.climaItem', { mes: x.mes, lluvia: x.lluvia, et0: x.et0 })).join('; '),
+  })
   let smapExtra = ''
   if (s.disponible && s.puesto_ultimo) {
     smapExtra =
@@ -22,7 +25,7 @@ export default function Clima({ res }) {
       <p className="sub">
         {c.periodo} · {c.resolucion}
       </p>
-      <div className="grafica">
+      <div className="grafica" role="img" aria-label={resumen}>
         <ResponsiveContainer width="100%" height={170}>
           <ComposedChart data={datos} margin={{ top: 6, right: 8, left: -14, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e3dfd3" />

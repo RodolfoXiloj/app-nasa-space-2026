@@ -128,6 +128,23 @@ export default function Validacion({ res, validacion }) {
   const anios = (sel?.sequia_2018?.anios || []).map((a) => ({ ...a, es2018: a.anio === 2018 }))
   const r51 = validacion.regla_5_1
   const localeEs = loc === 'es'
+  const arriba = dispersion.filter((d) => d.power > d.chirps).length
+  const resumenPuntos = t('a11y.scatterChart', {
+    n: dispersion.length,
+    muni: sel?.municipio,
+    arriba,
+    abajo: dispersion.length - arriba,
+  })
+  const riesgo = anios.filter((a) => a.riesgo_alto && !a.es2018).map((a) => a.anio)
+  const listaRiesgo = riesgo.length ? riesgo.join(', ') : t('a11y.none')
+  const a2018 = anios.find((a) => a.es2018)
+  const resumenSequia = t('a11y.droughtChart', {
+    muni: sel?.municipio,
+    desde: anios[0]?.anio ?? t('common.dash'),
+    hasta: anios[anios.length - 1]?.anio ?? t('common.dash'),
+    d2018: a2018?.deficit_pct ?? t('common.dash'),
+    riesgo: listaRiesgo,
+  })
 
   return (
     <main className="contenido">
@@ -153,11 +170,11 @@ export default function Validacion({ res, validacion }) {
       <section className="panel">
         <h2>{t('validacion.powerTitle')}</h2>
         <p className="sub">{t('validacion.powerSub')}</p>
-        <div className="tabla-scroll">
+        <div className="tabla-scroll" role="region" aria-label={t('a11y.table', { titulo: t('validacion.powerTitle') })} tabIndex={0}>
           <TablaPowerChirps val={validacion} t={t} />
         </div>
         <h3>{t('validacion.chartTitle', { muni: sel?.municipio })}</h3>
-        <div className="grafica">
+        <div className="grafica" role="img" aria-label={resumenPuntos}>
           <ResponsiveContainer width="100%" height={260}>
             <ScatterChart margin={{ top: 8, right: 12, left: 0, bottom: 14 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e3dfd3" />
@@ -186,7 +203,7 @@ export default function Validacion({ res, validacion }) {
         <p className="sub">
           {t('validacion.droughtSub', { lista: (sel?.sequia_2018?.anios_secos_conocidos || []).join(', ') })}
         </p>
-        <div className="tabla-scroll">
+        <div className="tabla-scroll" role="region" aria-label={t('a11y.table', { titulo: t('validacion.droughtTitle') })} tabIndex={0}>
           <Tabla2018 val={validacion} t={t} />
         </div>
         {validacion.evidencia_publica_2018 && (
@@ -203,7 +220,7 @@ export default function Validacion({ res, validacion }) {
           </div>
         )}
         <h3>{t('validacion.chart2', { muni: sel?.municipio })}</h3>
-        <div className="grafica">
+        <div className="grafica" role="img" aria-label={resumenSequia}>
           <ResponsiveContainer width="100%" height={260}>
             <ComposedChart data={anios} margin={{ top: 8, right: 8, left: -6, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e3dfd3" />
@@ -214,7 +231,7 @@ export default function Validacion({ res, validacion }) {
               <Legend wrapperStyle={{ fontSize: 11 }} />
               <Bar yAxisId="d" dataKey="deficit_pct" name={t('validacion.serieDeficit')} isAnimationActive={false}>
                 {anios.map((a) => (
-                  <Cell key={a.anio} fill={a.es2018 ? '#b23c17' : a.riesgo_alto ? '#c79100' : '#5b8fb9'} />
+                  <Cell key={a.anio} fill={a.es2018 ? '#b23c17' : a.riesgo_alto ? '#a67c00' : '#5b8fb9'} />
                 ))}
               </Bar>
               <Line
@@ -240,6 +257,7 @@ export default function Validacion({ res, validacion }) {
           </ResponsiveContainer>
         </div>
         <p className="nota">{t('validacion.chart2Note')}</p>
+        <p className="nota">{t('a11y.riskYears', { lista: listaRiesgo })}</p>
         <h3>{t('validacion.notes')}</h3>
         <ul className="lista-compacta">
           {validacion.notas.map((n) => (

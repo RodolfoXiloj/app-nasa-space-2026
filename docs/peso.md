@@ -2,7 +2,7 @@
 
 ## English
 
-Measured on Saturday 14 Nov 2026 at 13:55 (Guatemala), branch `main`, after merging lane A2 (phrase audio and English from the engine) and adding the Listen button with subtitles to the farmer view. Updated the same day at 14:14 on branch `entrega-kit`, with the community kit, again on `main` after merging the kit, the English docs and the slides, at 14:30 on `main` after merging the English Listen audio, and again the same day on branch `entrega-a11y`, with Listen loaded after the first paint.
+Measured on Saturday 14 Nov 2026 at 13:55 (Guatemala), branch `main`, after merging lane A2 (phrase audio and English from the engine) and adding the Listen button with subtitles to the farmer view. Updated the same day at 14:14 on branch `entrega-kit`, with the community kit, again on `main` after merging the kit, the English docs and the slides, at 14:30 on `main` after merging the English Listen audio, again the same day on branch `entrega-a11y`, with Listen loaded after the first paint, and on branch `entrega-a11y-evidence`, with the accessibility pass on Evidence.
 
 The first screen is the farmer view. The technical view, Evidence, loads with `import()` only when someone opens it. The map (Leaflet), the charts (Recharts) and their styles load with it.
 
@@ -17,8 +17,8 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 
 | Loads only when Evidence opens | Size |
 |---|---|
-| `Evidencia-*.js`: technical view, map and charts | 651.42 kB (gzip 182.90 kB) |
-| `Evidencia-*.css`: Leaflet and technical view styles | 25.38 kB (gzip 9.14 kB) |
+| `Evidencia-*.js`: technical view, map and charts | 657.80 kB (gzip 184.77 kB); 651.42 kB (gzip 182.90 kB) before `entrega-a11y-evidence` |
+| `Evidencia-*.css`: Leaflet and technical view styles | 27.89 kB (gzip 9.73 kB); 25.38 kB (gzip 9.14 kB) before |
 
 | Loads with `import()` right after the farmer view paints | Size |
 |---|---|
@@ -26,6 +26,7 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 | `Kit-*.css`: kit buttons and the black-and-white print sheet | 2.10 kB (gzip 0.87 kB) |
 | `Escuchar-*.js`: the Listen button, its subtitles and its texts | 2.71 kB (gzip 1.24 kB) |
 
+- **Evidence accessibility (`entrega-a11y-evidence`) does not touch the first screen:** its JavaScript stays at 170.90 kB and its CSS at 8.40 kB. Evidence grows by 6.38 kB of JavaScript (text alternatives for the five charts and the map in both languages, map zoom and layer names, the calendar read as a list) and 2.51 kB of CSS (48 px targets, focus ring, contrast, calendar textures, reduced motion), and it still loads with `import()` only when someone opens it (see `docs/accessibility.md`, "Evidence view").
 - **Back under the budget (`entrega-a11y`):** the Listen button (`web/src/agricultor/Escuchar.jsx`) and its texts now load with `import()` right after the farmer view paints, like the kit. The first screen's JavaScript drops to 170.90 kB, 1.10 kB under the 172 kB budget, with no feature removed. The button shows up a moment after the three facts. The 0.18 kB of CSS pays for the reduced-motion rule and the focus ring on the audio player (see `docs/accessibility.md`).
 - **What the 0.69 kB of the English Listen audio pays for:** choosing the Spanish or English mp3 by locale, and resuming playback in the new language when the language changes while the audio plays. It is 1.37 kB over the 172 kB budget; no larger trim was attempted.
 - **What the 0.42 kB on `main` pays for:** the tie text now tells a chain tie (Olopa: 87/90/92) from one where every pair is within the margin, in both languages, plus the moved doc paths in Evidence's source notes. It is slightly over the 172 kB budget.
@@ -38,7 +39,7 @@ The first screen is the farmer view. The technical view, Evidence, loads with `i
 
 ## Español
 
-Medido el sábado 14 nov 2026 a las 13:55 (Guatemala), rama `main`, después de unir el carril A2 (audio por frases e inglés del motor) y de poner el botón Escuchar con subtítulos en la vista del agricultor. Actualizado el mismo día a las 14:14 en la rama `entrega-kit`, con el kit comunitario, otra vez en `main` después de unir el kit, los documentos en inglés y las diapositivas, a las 14:30 en `main` después de unir el audio Escuchar en inglés, y otra vez el mismo día en la rama `entrega-a11y`, con Escuchar cargado después del primer pintado.
+Medido el sábado 14 nov 2026 a las 13:55 (Guatemala), rama `main`, después de unir el carril A2 (audio por frases e inglés del motor) y de poner el botón Escuchar con subtítulos en la vista del agricultor. Actualizado el mismo día a las 14:14 en la rama `entrega-kit`, con el kit comunitario, otra vez en `main` después de unir el kit, los documentos en inglés y las diapositivas, a las 14:30 en `main` después de unir el audio Escuchar en inglés, otra vez el mismo día en la rama `entrega-a11y`, con Escuchar cargado después del primer pintado, y en la rama `entrega-a11y-evidence`, con la revisión de accesibilidad de Evidence.
 
 La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se carga con `import()` solo cuando alguien la abre. Con ella llegan el mapa (Leaflet), las gráficas (Recharts) y sus estilos.
 
@@ -53,8 +54,8 @@ La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se 
 
 | Se carga solo al abrir Evidence | Tamaño |
 |---|---|
-| `Evidencia-*.js`: vista técnica, mapa y gráficas | 651.42 kB (gzip 182.90 kB) |
-| `Evidencia-*.css`: estilos de Leaflet y de la vista técnica | 25.38 kB (gzip 9.14 kB) |
+| `Evidencia-*.js`: vista técnica, mapa y gráficas | 657.80 kB (gzip 184.77 kB); 651.42 kB (gzip 182.90 kB) antes de `entrega-a11y-evidence` |
+| `Evidencia-*.css`: estilos de Leaflet y de la vista técnica | 27.89 kB (gzip 9.73 kB); 25.38 kB (gzip 9.14 kB) antes |
 
 | Se carga con `import()` justo después de pintar la vista del agricultor | Tamaño |
 |---|---|
@@ -62,6 +63,7 @@ La primera pantalla es la vista del agricultor. La vista técnica, Evidence, se 
 | `Kit-*.css`: botones del kit y hoja de impresión en blanco y negro | 2.10 kB (gzip 0.87 kB) |
 | `Escuchar-*.js`: el botón Escuchar, sus subtítulos y sus textos | 2.71 kB (gzip 1.24 kB) |
 
+- **La accesibilidad de Evidence (`entrega-a11y-evidence`) no toca la primera pantalla:** su JavaScript sigue en 170.90 kB y su CSS en 8.40 kB. Evidence crece 6.38 kB de JavaScript (alternativas en texto de las cinco gráficas y del mapa en los dos idiomas, nombres del zoom y de las capas del mapa, el calendario leído como lista) y 2.51 kB de CSS (objetivos de 48 px, foco visible, contraste, texturas del calendario, movimiento reducido), y sigue llegando con `import()` solo cuando alguien la abre (ver `docs/accessibility.md`, «Evidence view»).
 - **De nuevo bajo el tope (`entrega-a11y`):** el botón Escuchar (`web/src/agricultor/Escuchar.jsx`) y sus textos ahora llegan con `import()` justo después de pintar la vista del agricultor, como el kit. El JavaScript de la primera pantalla baja a 170.90 kB, 1.10 kB bajo el tope de 172 kB, sin quitar ninguna función. El botón aparece un instante después de los tres hechos. Los 0.18 kB de CSS pagan la regla de movimiento reducido y el foco visible del reproductor de audio (ver `docs/accessibility.md`).
 - **Qué pagan los 0.69 kB del audio Escuchar en inglés:** elegir el mp3 en español o en inglés según el idioma, y seguir sonando en el idioma nuevo si se cambia de idioma con el audio sonando. Queda 1.37 kB por encima del tope de 172 kB; no se intentó un recorte grande.
 - **Qué pagan los 0.42 kB en `main`:** el texto del empate ahora distingue el empate en cadena (Olopa: 87/90/92) del empate en que todas las parejas están dentro del margen, en los dos idiomas, y las rutas nuevas de los documentos en las fuentes de Evidence. Queda un poco por encima del tope de 172 kB.

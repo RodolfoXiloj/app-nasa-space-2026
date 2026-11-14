@@ -50,6 +50,8 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
   }
 
   const stripToday = t('tarjeta.stripToday')
+  // Textos del motor en español: en la vista en inglés llevan lang="es".
+  const langMotor = loc === 'es' ? undefined : 'es'
 
   return (
     <section className="tarjeta-agricultor">
@@ -78,7 +80,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
       </div>
       <div className="tarjeta">
         <header>
-          <h2>{t('tarjeta.header', { municipio: p.municipio, depto: p.departamento })}</h2>
+          <h3>{t('tarjeta.header', { municipio: p.municipio, depto: p.departamento })}</h3>
           <p>
             {t('tarjeta.parcelLine', {
               lat: p.lat,
@@ -129,18 +131,20 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
           </tbody>
         </table>
         <p>
-          <b>{t('tarjeta.whyBest')}</b> {mejor.r.por_que}
+          <b>{t('tarjeta.whyBest')}</b> <span lang={langMotor}>{mejor.r.por_que}</span>
         </p>
         <p>
-          <b>{t('tarjeta.planting')}</b> {res.zarc.texto}{' '}
+          <b>{t('tarjeta.planting')}</b> <span lang={langMotor}>{res.zarc.texto}</span>{' '}
           <span className="solo-imprimir">({res.zarc.enlace})</span>
           <a className="no-imprimir" href={res.zarc.enlace} target="_blank" rel="noreferrer">
             {t('common.seeZarc')}
           </a>
           <br />
-          <small>{res.zarc.nota_escenario}</small>
+          <small lang={langMotor}>{res.zarc.nota_escenario}</small>
         </p>
-        <p className="aviso-tarjeta">{res.aviso}</p>
+        <p className="aviso-tarjeta" lang={langMotor}>
+          {res.aviso}
+        </p>
         <p className="fuentes-tarjeta">
           {t('tarjeta.sources', {
             nasa: res.fuentes
