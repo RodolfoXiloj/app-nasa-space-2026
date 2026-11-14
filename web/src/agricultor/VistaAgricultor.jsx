@@ -17,6 +17,8 @@ import { Suspense, lazy } from 'react'
 // Escuchar llega con import() justo después de pintar, como el kit: el botón sale un instante después de
 // los hechos y el JS inicial queda bajo el tope de docs/peso.md.
 const Escuchar = lazy(() => import('./Escuchar.jsx'))
+// La línea de julio-agosto 2026 (lluvia observada frente a la mediana 1991-2025) llega igual, con import().
+const Linea2026 = lazy(() => import('./Linea2026.jsx'))
 
 const ORDEN = ['suelo', 'quema', 'canicula']
 const ESTADOS = ['verde', 'amarillo', 'rojo', 'gris']
@@ -187,6 +189,13 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
               </p>
             )}
           </div>
+        )}
+
+        {/* Julio-agosto 2026 en esta parcela: observado, no es un pronóstico (data/validacion.json). */}
+        {parcela && parcela.disponible && (
+          <Suspense fallback={null}>
+            <Linea2026 pid={pid} idioma={idioma} />
+          </Suspense>
         )}
 
         {/* Un toque desde la primera pantalla: el audio corto de esta parcela, con subtítulos. */}

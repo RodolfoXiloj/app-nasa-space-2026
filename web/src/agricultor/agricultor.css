@@ -108,6 +108,17 @@ body { margin: 0; }
 }
 .agr .agr-nota { margin-top: 6px; color: var(--agr-tinta-suave); font-size: 1rem; }
 
+/* Julio-agosto 2026 (Linea2026.jsx): una línea de registro, en tinta y papel, sin color de aviso. El
+   texto dice que es observado y no un pronóstico; la raya gris solo la separa del selector. */
+.agr .agr-linea2026 {
+  margin-top: 12px;
+  padding: 8px 0 8px 12px;
+  border-left: 4px solid var(--agr-tinta-suave);
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+.agr .agr-linea2026-nota { font-style: normal; font-weight: 700; }
+
 /* Escuchar: botón grande arriba, a un toque desde la primera pantalla. Los subtítulos los escribe la vista
    (un <audio> no los dibuja) en letra grande, negro sobre blanco con borde. */
 .agr .agr-escuchar { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding-top: 16px; }

@@ -18,12 +18,17 @@ Accesibilidad (docs/accessibility.md), a 360, 390 y 412 px en es y en: sin scrol
 salga por la orilla; botones principales de 48 x 48 px o más; <html lang> sigue al selector y el foco se queda
 en el botón de idioma y en el selector de parcela; cada botón, enlace y select tiene nombre accesible; el
 orden de tabulación es el de la pantalla y cada parada tiene foco visible.
+Línea de julio-agosto 2026 (web/src/agricultor/Linea2026.jsx), a 360, 390 y 412 px en es y en: una por parcela,
+con el porcentaje de la mediana 1991-2025 que trae public/data/validacion.json, «observado, no es un pronóstico» /
+«observed, not a forecast», texto real con el lang del idioma activo y visible para el lector de pantalla, sin
+«alerta»/«alert» y en tinta gris (nada naranja); sus textos no van en el JS inicial (llega con import()).
 Y un caso del kit comunitario a 390 px (web/src/kit/): los botones «Imprimir hoja», «Descargar audio» y
 «Compartir por WhatsApp» existen, la hoja impresa cabe en 1 página y el enlace de WhatsApp está bien formado.
 Sale con código 1 si algo falla.
 """
 from __future__ import annotations
 
+import json
 import re
 import subprocess
 import sys
@@ -44,6 +49,12 @@ CASOS = [(390, 844, "es", "jocotan"), (412, 915, "en", "olopa")]
 ANCHOS_A11Y = [(360, 780), (390, 844), (412, 915)]
 
 resultados: list[tuple[bool, str, str]] = []
+
+# Porcentaje de la mediana de julio-agosto 2026 por parcela, del mismo JSON que sirve el sitio.
+_OBS = json.loads((WEB / "public" / "data" / "validacion.json").read_text(encoding="utf-8"))["observacion_2026"]
+PCT_2026 = {f["id"]: f["pct_de_la_mediana"] for f in _OBS["lluvia_chirps"]}
+REF_2026 = {f["id"]: f["periodo_referencia"] for f in _OBS["lluvia_chirps"]}
+NOTA_2026 = {"es": "Observado, no es un pronóstico.", "en": "Observed, not a forecast."}
 
 
 def anota(ok: bool, que: str, detalle: str = "") -> None:
@@ -194,6 +205,64 @@ JS_SALIDOS = """(ancho) => [...document.querySelectorAll('.agr *')].filter((e) =
   .slice(0, 4).map((e) => e.tagName.toLowerCase() + '.' + String(e.className.baseVal ?? e.className).split(' ').pop() + ' «' + (e.textContent || '').slice(0, 30) + '»')"""
 
 
+JS_LINEA = r"""() => { const e = document.querySelector('.agr-linea2026'); if (!e) return null;
+    const s = getComputedStyle(e), r = e.getBoundingClientRect();
+    let oculto = false;
+    for (let a = e; a; a = a.parentElement) if (a.getAttribute('aria-hidden') === 'true' || a.hidden) oculto = true;
+    return { pid: e.dataset.linea2026, pct: Number(e.dataset.pct), lang: e.lang, texto: e.innerText.replace(/\s+/g, ' ').trim(),
+             crudo: e.textContent, oculto, ancho: r.width, derecha: r.right, n: document.querySelectorAll('.agr-linea2026').length,
+             colores: [s.color, s.borderLeftColor, s.backgroundColor,
+                       ...[...e.querySelectorAll('*')].map((h) => getComputedStyle(h).color)] } }"""
+
+
+def _naranja(color: str) -> bool:
+    """True si el color (rgb/rgba) tiene tono naranja o ámbar visible."""
+    m = re.findall(r"[\d.]+", color)
+    if len(m) < 3 or (len(m) > 3 and float(m[3]) == 0):
+        return False
+    r, g, b = (float(x) / 255 for x in m[:3])
+    mx, mn = max(r, g, b), min(r, g, b)
+    if mx - mn < 0.15:
+        return False
+    if mx == r:
+        tono = (60 * ((g - b) / (mx - mn))) % 360
+    elif mx == g:
+        tono = 60 * ((b - r) / (mx - mn) + 2)
+    else:
+        tono = 60 * ((r - g) / (mx - mn) + 4)
+    return 15 <= tono <= 50
+
+
+def comprobar_linea(pag, pre: str, idioma: str, ancho: int) -> None:
+    """La línea de julio-agosto 2026 de la parcela elegida, en el idioma activo."""
+    pid = pag.input_value("#agr-parcela")
+    pag.wait_for_function(
+        "([p, l]) => { const e = document.querySelector('.agr-linea2026'); return e && e.dataset.linea2026 === p && e.lang === l }",
+        arg=[pid, idioma], timeout=15000)
+    li = pag.evaluate(JS_LINEA)
+    pct = PCT_2026.get(pid)
+    num = f"{pct} %"
+    fallas = []
+    if li["n"] != 1:
+        fallas.append(f"{li['n']} líneas")
+    if li["pct"] != pct or num not in li["crudo"]:
+        fallas.append(f"cifra {li['pct']} en vez de {pct}")
+    if REF_2026.get(pid) not in li["crudo"]:
+        fallas.append("sin la mediana de referencia")
+    if NOTA_2026[idioma] not in li["texto"]:
+        fallas.append("sin «observado, no es un pronóstico»")
+    if re.search(r"alert", li["texto"], re.I):
+        fallas.append("dice alerta/alert")
+    if li["lang"] != idioma or li["oculto"] or not li["texto"]:
+        fallas.append(f"lang {li['lang']}, oculto {li['oculto']}")
+    if li["derecha"] > ancho + 0.5:
+        fallas.append(f"se sale por la orilla ({li['derecha']:.0f} px)")
+    naranjas = [c for c in li["colores"] if _naranja(c)]
+    if naranjas:
+        fallas.append(f"color naranja {naranjas}")
+    anota(not fallas, f"{pre}: línea julio-agosto 2026 de {pid}", "; ".join(fallas) or li["texto"])
+
+
 def caso_a11y(navegador, ancho: int, alto: int, idioma: str) -> None:
     """Ancho, objetivos táctiles, nombres accesibles, lang, foco y tabulación de la vista del agricultor."""
     otro = "en" if idioma == "es" else "es"
@@ -208,6 +277,7 @@ def caso_a11y(navegador, ancho: int, alto: int, idioma: str) -> None:
     pag.wait_for_function("document.querySelectorAll('.agr-hecho').length === 3", timeout=20000)
     pag.wait_for_selector(".agr-escuchar-boton", timeout=20000)
     pag.wait_for_selector(".kit-imprimir", timeout=20000)
+    comprobar_linea(pag, pre, idioma, ancho)
 
     ancho_doc = pag.evaluate("document.documentElement.scrollWidth")
     salidos = pag.evaluate(JS_SALIDOS, ancho)
@@ -251,6 +321,7 @@ def caso_a11y(navegador, ancho: int, alto: int, idioma: str) -> None:
     pag.focus(f".agr-idioma[lang='{otro}']")
     pag.keyboard.press("Enter")
     pag.wait_for_function("(o) => document.documentElement.lang === o", arg=otro, timeout=5000)
+    comprobar_linea(pag, pre + f" -> {otro}", otro, ancho)
     foco = pag.evaluate("document.activeElement.getAttribute('lang') + '|' + document.activeElement.getAttribute('aria-pressed')")
     nombre_otro = pag.evaluate("document.querySelector('.agr-escuchar-boton b').textContent")
     pag.focus(f".agr-idioma[lang='{idioma}']")
@@ -270,6 +341,7 @@ def caso_a11y(navegador, ancho: int, alto: int, idioma: str) -> None:
         "(p) => (document.querySelector('#agr-audio')?.getAttribute('src') || '').includes(p + '.frases.')",
         arg=nueva, timeout=15000)
     foco = pag.evaluate("document.activeElement.id")
+    comprobar_linea(pag, pre, idioma, ancho)
     anota(foco == "agr-parcela", f"{pre}: al cambiar de parcela el foco se queda en el selector",
           f"{actual} -> {nueva}; foco en #{foco}")
 
@@ -342,8 +414,18 @@ def caso_kit(navegador, ancho: int = 390, alto: int = 844) -> None:
     ctx.close()
 
 
+def linea_fuera_del_js_inicial() -> None:
+    """Los textos de la línea 2026 no van en los <script> que carga index.html: llegan con import()."""
+    html = (WEB / "dist" / "index.html").read_text(encoding="utf-8")
+    iniciales = re.findall(r'<script[^>]+src="[^"]*?(assets/[^"]+\.js)"', html)
+    dentro = [a for a in iniciales if any(n in (WEB / "dist" / a).read_text(encoding="utf-8") for n in NOTA_2026.values())]
+    anota(bool(iniciales) and not dentro, "Línea 2026 fuera del JS inicial (llega con import())",
+          ", ".join(dentro) or ", ".join(iniciales))
+
+
 def main() -> int:
     capturas = "--capturas" in sys.argv
+    linea_fuera_del_js_inicial()
     vite = subprocess.Popen([
         "node", "node_modules/vite/bin/vite.js", "preview", "--host", "127.0.0.1", "--port", str(PUERTO), "--strictPort",
     ], cwd=WEB, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
