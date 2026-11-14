@@ -8,13 +8,16 @@ Start with the [project README](../README.md). The documents below are in Englis
 |---|---|
 | [project-page-en.md](project-page-en.md) | Draft of every field of the Space Apps submission form |
 | [ai-use.md](ai-use.md) | How the team used AI and what the team decided itself |
+| [impact.md](impact.md) | The problem in numbers: every impact figure with its year, scope, source and URL, and the figures left out |
+| [existing-tools.md](existing-tools.md) | What already exists (ASIS, ZARC, Agroclimatic Technical Boards, FEWS NET/IPC, WFP, GLAM, Plantix) and what Milpa does not claim |
+| [chorti.md](chorti.md) | Ch'orti' recording script for native speakers: the phrases, the empty `caa` slot and the rules |
 
 ## How the tool decides and how we checked it
 
 | Document | What it has |
 |---|---|
 | [thresholds.md](thresholds.md) | The confirmed traffic-light thresholds, the four states and the 3-point tie rule |
-| [validation.md](validation.md) | POWER against CHIRPS, the 2018 drought test and the July-August 2026 observation |
+| [validation.md](validation.md) | POWER against CHIRPS, the 2018 drought test with its hits and misses against years with documented losses, and the July-August 2026 observation |
 | [tests.md](tests.md) | Log of every test that really ran, and the tests still pending |
 | [pictos.md](pictos.md) | The SVG pictograms, what each one stands for and its comprehension question (English and Spanish) |
 | [earth-engine.md](earth-engine.md) | Phase-two plan (not implemented): Google Earth Engine only to precompute `data/cache/`, never live |
@@ -35,4 +38,7 @@ The team worked in Spanish. These files stay in Spanish:
 | [es/prueba-telefono.md](es/prueba-telefono.md) | Checklist for the real-phone test |
 | [es/carriles.md](es/carriles.md) | Work lanes and the files each lane could touch |
 | [es/uso-ia.md](es/uso-ia.md) | Spanish working log of AI use |
+| [es/impacto.md](es/impacto.md) | Spanish copy of [impact.md](impact.md) |
+| [es/herramientas-existentes.md](es/herramientas-existentes.md) | Spanish copy of [existing-tools.md](existing-tools.md) |
+| [es/chorti.md](es/chorti.md) | Spanish copy of [chorti.md](chorti.md) |
 | [es/memoria/Inicio.md](es/memoria/Inicio.md) | Decisions and findings, one note each, linked with `[[...]]`. Start here |

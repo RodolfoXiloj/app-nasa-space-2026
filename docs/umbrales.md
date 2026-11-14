@@ -13,7 +13,7 @@ Tres hechos observados, no un riesgo ni un pronóstico. El semáforo **no usa el
 | Hecho | Qué cuenta | Fuente y período | Regla del motor que ya existe |
 |---|---|---|---|
 | Suelo | Meses con NDVI mediano < 0.35 (suelo desnudo) y meses de 0.35 a 0.45 (poca cobertura) | MODIS MOD13Q1, 250 m, 2021-2025 | `motor/deteccion.py` → `UMBRALES` |
-| Quema | Años con al menos un foco VIIRS de confianza nominal o alta a 500 m o menos, de enero a mayo | FIRMS VIIRS S-NPP, 375 m, 2012-2026 (15 años) | `motor/deteccion.py` → `detectar_quemas` |
+| Quema | Años con al menos un foco VIIRS de confianza nominal o alta a 500 m o menos, de enero a mayo | FIRMS VIIRS S-NPP, 375 m, 2012-2026 (15 años; de 2026 solo cuenta enero-mayo, del producto estándar de S-NPP) | `motor/deteccion.py` → `detectar_quemas` |
 | Canícula | Años con una racha de más de 15 días con menos de 2 mm por día, del 15 jun al 31 ago | CHIRPS v3 diario (reparto con IMERG), 2001-2025 (25 años) | `motor/clima.py` → `SUPUESTOS` |
 
 ## Los conteos reales
@@ -44,9 +44,11 @@ Tres hechos observados, no un riesgo ni un pronóstico. El semáforo **no usa el
   - 3 de 15 es 1 de cada 5 años: quema en años distintos, no un solo evento.
   - Uno o dos años pueden ser una quema vecina: el radio de 500 m y el píxel de 375 m de VIIRS incluyen terreno de al lado.
   - El verde dice «no se vio quema», no «no hubo quema»: VIIRS pasa pocas veces al día y no ve quemas breves o bajo nubes (nota de `detectar_quemas`).
+  - De 2026 solo cuenta enero-mayo, del producto estándar de Suomi NPP. Todos los datos de FIRMS del registro son de Suomi NPP.
 - **Canícula, rojo con 3 años o más de 25.**
   - El mismo corte que la quema, para que la regla se explique igual: «en tres años distintos o más».
   - La racha de más de 15 días y el día seco de 2 mm son los del plan (`motor/clima.py`). No se recalibraron.
+  - El día seco (menos de 2 mm) y la racha de más de 15 días son decisiones del equipo, no una definición oficial. Como referencia, CONRED describe la canícula con una duración de 5 a 10 días en promedio (https://conred.gob.gt/que-es-la-canicula/); FEWS NET informó de 11 a 20 días seguidos sin lluvia en 2026 (https://fews.net/es/latin-america-and-caribbean/guatemala/actualizacion-de-la-perspectiva-de-seguridad-alimentaria/agosto-2026) y Oxfam, un promedio de 25 en 2019 (https://reliefweb.int/attachments/017ed79d-0dfa-3d24-a502-3474f5d9ddb7/Informe%20d%C3%A9fict%20de%20lluvias%202019.pdf).
   - El semáforo usa el registro observado (escenario base), no los escenarios de −10 a −30 %.
 - **Gris, por hecho y no por parcela.** Cada hecho se pone gris solo si falla su propia fuente:
   - Suelo: el corte de 60 % de compuestos válidos es el que ya usa `motor/confianza.py` para la confianza baja.
@@ -76,12 +78,14 @@ Las 5 parcelas quedan distintas entre sí, que es lo que el puntaje total no log
 | Gris | Signo de interrogación, borde punteado | «El satélite no ve bien aquí» / "The satellite can't see well here" | Faltan datos de esa fuente; no se adivina |
 
 - Nunca solo color: forma, palabra, ícono y posición fija (suelo, quema, canícula, siempre en ese orden).
-- Sin anaranjado y sin la palabra «alerta»: en Guatemala son los colores de las alertas de CONRED. El esquema rechaza cualquier estado fuera de estos 4.
+- La vista evita el anaranjado y la palabra «alerta», para que no se confunda con los niveles de alerta públicos de CONRED (verde, amarillo, anaranjado y rojo; https://conred.gob.gt/conozca-los-niveles-de-alerta-y-su-significado/); cada estado lleva además una forma y una palabra, así que nunca depende solo del color. El esquema rechaza cualquier estado fuera de estos 4.
 - La vista y el audio dicen: «esto no es una alerta oficial; hable con su técnico».
 
 ## Regla de empate (opciones)
 
 **Propuesta: si dos opciones difieren 3 puntos o menos en el total, no hay ganadora.** La vista dice «dos opciones para platicar con su técnico» y las muestra sin orden.
+
+El motor aplica el margen en cadena (`motor/farmer.py` → `empatadas`): se parte de la opción con el total más alto y entra al grupo empatado toda opción a 3 puntos o menos de alguna que ya está en él. Por eso en Olopa (87, 90 y 92) las tres quedan parejas.
 
 Por qué 3 puntos:
 

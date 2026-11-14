@@ -6,6 +6,44 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Rama `entrega-impacto-1` sobre `main` (`4fdf64f`): sábado 14 nov 2026
+
+Mientras se trabajaba esta rama, `main` recibió tres commits (`61bf817`, `b69bcd1` y `4fdf64f`: audio de la tarjeta en inglés, diapositivas y fuentes). La rama se rebasó sobre `4fdf64f`, sin archivos en común, y todos los comandos se corrieron otra vez sobre la rama rebasada con los cambios de esta rama. Mismo equipo y versiones que la sección siguiente; `web/node_modules` viene del `npm ci` anotado ahí. Horas de `date` (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 16:11:47 a 16:11:57 | Pruebas automáticas | `python -m pytest -q` | ✅ solo puntos, hasta «[100%]», sin fallas; salida 0 |
+| 16:11:57 a 16:12:06 | Humo de la web | `cd web && npm run smoke` | ✅ 16 JSON «ok», `observacion_2026` «ok» y «audio de la tarjeta en inglés con etiqueta de IA: 5 mp3»; «Prueba de humo de la web: sin fallas»; salida 0 |
+| 16:12:06 a 16:12:14 | Build | `cd web && npm run build` | ✅ «523 modules transformed», «built in 6.11s»; JS inicial `index` 170.90 kB (gzip 56.50 kB), JS de Evidence 657.80 kB (gzip 184.77 kB); salida 0 |
+| 16:12:14 a 16:12:28 | Sin red | `cd web && npm run sin-red -- <carpeta temporal fuera del repo>` | ✅ «23 de 23 comprobaciones pasan»; salida 0 |
+| 16:12:28 a 16:12:37 | Vista del agricultor y kit a 360, 390 y 412 px | `python web/scripts/agricultor_playwright.py` | ✅ «77 de 77 comprobaciones pasan»; salida 0 |
+| 16:12:37 a 16:12:49 | Vista Evidence a 390 y 412 px | `python web/scripts/evidence_playwright.py` | ✅ «109 de 109 comprobaciones pasan»; salida 0 |
+| 16:12:49 a 16:12:50 | PDF de las diapositivas | `cd web && python scripts/slides_pdf.py` | ✅ «docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)»; «python-pptx no está instalado: no se genera .pptx»; salida 0. El PDF reescrito se restauró con `git checkout` |
+| Justo después, antes de las 16:13:17 | Pruebas automáticas con el total | `python -m pytest` | ✅ «226 passed in 9.53s» |
+| Justo después, antes de las 16:13:17 | Lo mismo en el entorno limpio fuera del repo | `python -m pytest -q` (con el Python del entorno limpio) | ✅ salida 0 |
+
+## Rama `entrega-impacto-1`, primera pasada sobre `eed0b1f`: sábado 14 nov 2026
+
+Esta rama solo cambia documentos, `requirements.txt` y `render.yaml`. Las corridas de la web y del navegador de abajo se hicieron en la rama en el commit `eed0b1f` (el mismo de `main`), antes de esos cambios; las tres últimas filas se corrieron después. Mismo equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. El worktree no tenía `web/node_modules`, así que primero se corrió `npm ci`. Las horas son las que imprimió `date` al empezar y al terminar cada comando (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 15:57:47 a 15:57:56 | Instalar las dependencias de la web | `cd web && npm ci` | ✅ «added 108 packages, and audited 109 packages in 8s»; «found 0 vulnerabilities»; salida 0 |
+| 15:57:56 a 15:58:15 | Pruebas automáticas | `python -m pytest -q` | ✅ solo puntos, hasta «[100%]», sin fallas; con `addopts = "-q"` en `pyproject.toml` este comando no imprime el total; salida 0 |
+| 15:58:15 a 15:58:19 | Humo de la web | `cd web && npm run smoke` | ✅ 16 JSON «ok» y `observacion_2026` «ok»; «Prueba de humo de la web: sin fallas»; salida 0 |
+| 15:58:19 a 15:58:27 | Build | `cd web && npm run build` | ✅ vite v6.4.6, «523 modules transformed», «built in 5.98s»; JS inicial `index` 170.90 kB (gzip 56.50 kB), JS de Evidence 657.80 kB (gzip 184.77 kB); salida 0 |
+| 15:58:27 a 15:58:46 | Sin red | `cd web && npm run sin-red -- <carpeta temporal fuera del repo>` | ❌ «21 de 23 comprobaciones pasan»; salida 1. Las dos marcadas «NO»: el audio de la tarjeta de San Juan Ermita («suena 0.0 s de 67 s») y «Español elegido en Evidence sigue al volver a la vista del agricultor» (imprimió «en: What the satellite saw on this plot») |
+| 16:01:02 a 16:01:16 | Sin red, repetida sin cambiar nada | `cd web && npm run sin-red -- <otra carpeta temporal>` | ✅ «23 de 23 comprobaciones pasan»; salida 0. No se encontró la causa de las dos fallas de la primera corrida |
+| 15:58:46 a 15:58:57 | Vista del agricultor y kit a 360, 390 y 412 px | `python web/scripts/agricultor_playwright.py` | ✅ «77 de 77 comprobaciones pasan»; salida 0 |
+| 15:58:57 a 15:59:09 | Vista Evidence a 390 y 412 px | `python web/scripts/evidence_playwright.py` | ✅ «109 de 109 comprobaciones pasan»; salida 0 |
+| 15:59:09 a 15:59:11 | PDF de las diapositivas | `cd web && python scripts/slides_pdf.py` | ✅ «docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)»; «python-pptx no está instalado: no se genera .pptx»; salida 0. El comando reescribió `docs/slides/milpa-resiliente.pdf`; se restauró con `git checkout` |
+| 15:59:48 a 16:00:46 | Entorno limpio fuera del repo | `python -m venv <carpeta temporal>`, `pip install -r requirements.txt`, `python -m pytest -q` | ✅ instaló PyYAML 6.0.3, requests 2.34.2, pytest 9.2.0, jsonschema 4.26.0 y Pillow 13.0.0; solo puntos, hasta «[100%]», sin fallas |
+| 16:08:43 a 16:08:52 | Pruebas automáticas, después de los cambios de esta rama | `python -m pytest -q` | ✅ solo puntos, hasta «[100%]», sin fallas; salida 0 |
+| 16:08:52 a 16:09:01 | Lo mismo, en el entorno limpio | `python -m pytest -q` (con el Python del entorno limpio) | ✅ solo puntos, hasta «[100%]», sin fallas; salida 0 |
+| Justo después (sin hora anotada) | Pruebas automáticas con el total | `python -m pytest` | ✅ «222 passed in 8.10s» |
+
+Antes de la fila del entorno limpio, un primer entorno limpio sin Pillow (sin hora anotada) falló 3 pruebas de `tests/test_pipeline.py` (`test_lzw_igual_que_pillow`, `test_lzw_con_muchos_codigos`, `test_lector_ligero_lee_solo_hasta_la_columna`) con «ModuleNotFoundError: No module named 'PIL'». Por eso Pillow ahora es una línea obligatoria de `requirements.txt`.
+
 ## Audio en inglés unido a `main`: sábado 14 nov 2026
 
 Unión en un commit de la rama `entrega-audio-en` sobre `main` (con el kit, los documentos y las diapositivas). Cambios de la unión: el kit ofrece `audio/{parcela}.frases.en.mp3` en «Download audio» cuando el idioma es inglés (si falta, el de español); el botón Escuchar ya no se reinicia al cambiar de idioma y, si estaba sonando, sigue con el mp3 del idioma nuevo. Mismo equipo y versiones. Horas de `date`.

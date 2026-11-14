@@ -1,15 +1,15 @@
-# Motor (motor/): solo biblioteca estándar de Python 3.11+, más PyYAML para leer data/*.yaml.
+# Required: engine, pipeline and tests (Python 3.11+).
+# Engine (motor/): Python standard library plus PyYAML to read data/*.yaml.
 pyyaml>=6.0
-
-# Pipeline de datos (pipeline/)
+# Data pipeline (pipeline/): downloads with cache; tests import pipeline/cache.py.
 requests>=2.31
-
-# Pruebas y validación del contrato
+# Tests and contract validation.
 pytest>=8.0
 jsonschema>=4.20
+# CHIRPS GeoTIFF tests (tests/test_pipeline.py) and pipeline/imagen_punto.py.
+Pillow>=10.0
 
-# Opcionales (sábado): CHIRPS y audio
-# rasterio>=1.3   # leer GeoTIFF de CHIRPS; respaldo: Pillow o tifffile
-# edge-tts>=6.1   # mp3 de la tarjeta al exportar
-# fastapi>=0.110  # API en vivo (extra)
-# uvicorn>=0.29
+# Optional: install only for the task named next to each one.
+# edge-tts>=6.1      # only to regenerate the mp3 files (python -m motor.exportar --audio)
+# playwright>=1.40   # web/scripts/*.py (farmer view, Evidence, slide screenshots) and the slides PDF
+# python-pptx>=0.6   # optional in web/scripts/slides_pdf.py: also writes a .pptx if installed

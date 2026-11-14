@@ -2,7 +2,7 @@
 
 **NASA Space Apps Challenge 2026 · Guatemala · Challenge “Field Shift: Adapting Farms with NASA Data”** · Team “A dream”: Rodolfo Xiloj, Mario and Iván.
 
-> The satellite already knows how your plot has been used. We show which crop rotation holds up better in the next *canícula* (mid-summer dry spell) and why, so the extension worker and the farmer can decide together.
+> NASA satellite records turned into three facts a farmer can see and hear, for the milpa in Guatemala's Dry Corridor. Next to them, three crop rotations to talk over with the extension worker, with the evidence and its limits in plain sight.
 
 Milpa Resiliente is a static website for farmers and agricultural extension workers in Guatemala's Dry Corridor. It covers five example plots in Chiquimula and Zacapa: Jocotán, Camotán, Olopa, San Juan Ermita and Zacapa. The whole site is in English and Spanish, with an EN/ES selector; English is the default.
 
@@ -12,26 +12,26 @@ It supports the extension worker and the farmer; it does not replace them. Plant
 
 ### 1. The farmer view (first screen)
 
-- **A traffic light of three facts** the satellite saw on the plot, always in the same order:
-  - **Bare soil:** months with bare soil or little plant cover, from MODIS NDVI (Normalized Difference Vegetation Index, 250 m), 2021-2025.
-  - **Fire near the plot:** years with a fire within 500 m, from FIRMS (Fire Information for Resource Management System), VIIRS sensor at 375 m, 2012-2026.
+- **A traffic light of three facts** the satellite saw around the plot, always in the same order:
+  - **Bare soil:** months with bare soil or little plant cover in the 250 m cell around the plot, from MODIS NDVI (Normalized Difference Vegetation Index), 2021-2025.
+  - **Fire near the plot:** years with a satellite fire detection within 500 m, January to May, from FIRMS (Fire Information for Resource Management System), VIIRS sensor at 375 m, 2012-2026.
   - **Long dry spell (canícula):** years with more than 15 dry days in a row, from daily CHIRPS v3 split with NASA GPM IMERG, 2001-2025.
-- **Four states that never rely on colour alone.** Each has a shape, a word and a pictogram: green circle “Good”, yellow triangle “Watch”, red square “Repeats”, and gray “The satellite can't see well here” when a source has no data. There is no orange and no word “alert”: in Guatemala those belong to official CONRED alerts. The thresholds were confirmed by the team ([docs/thresholds.md](docs/thresholds.md)).
-- **Pictograms** drawn as SVG: bare or covered soil with a 12-month wheel, and fire or sun with one dot per year. They read the same in colour, in grey and on a black-and-white photocopy ([docs/pictos.md](docs/pictos.md)).
-- **Options to talk over with the technician:** the current practice, the best legume or cover-crop option and the best drought-tolerant option. If two options are 3 points apart or less, the view says they are even and shows them in no order.
+- **Four states that never rely on colour alone.** Each has a shape, a word and a pictogram: green circle “Good”, yellow triangle “Watch”, red square “Repeats”, and gray “The satellite can't see well here” when a source has no data. The view avoids orange and the word “alert”, so it is not mistaken for CONRED's public alert levels (green, yellow, orange and red); every state also carries a shape and a word, so it never relies on colour. The thresholds were confirmed by the team ([docs/thresholds.md](docs/thresholds.md)).
+- **Pictograms** drawn as SVG: bare or covered soil with a 12-month wheel, and fire or sun with one dot per year. They are designed to read the same in colour, in grey and on a black-and-white photocopy; the photocopy check is still pending ([docs/pictos.md](docs/pictos.md)).
+- **Options to talk over with the extension worker:** the current practice, the best legume or cover-crop option and the best drought-tolerant option. Options within 3 points of one another are shown as even, in no order, instead of naming a winner; the rule works as a chain, so in Olopa (87, 90 and 92) all three count as even.
 - **A “Listen” button:** a short audio in Spanish or English, to match the screen, with subtitles. The voice is synthetic and labelled as AI-generated.
 
 ### 2. Evidence (one tap away)
 
 The technical view for the extension worker loads only when someone opens it:
 
-- Map of the five plots with Sentinel-2 imagery and NASA GIBS layers that also work offline.
+- Map of the five plots with NASA GIBS true-colour layers stored in the site for offline use, plus Sentinel-2 imagery when there is a connection.
 - What the satellite sees, the climate of the area, and the three rotations side by side. Each rotation carries the five fields the challenge asks for: why, evidence, benefits, information gaps and risks. Each also has water, soil and pest scores, a confidence level with its reason, and a 12-month calendar.
 - Scenarios: rainfall at 0, −10, −20 or −30 % and temperature at +1.5 °C, recomputed in the browser from values the engine already calculated.
 - A farmer card that can be played as audio and printed or saved as PDF.
 - A “NASA product → decision” table, a “Where it fails” panel, the validation tab, and the glossary and sources.
 
-**Preliminary observation, not a forecast:** in July and August 2026, the five plots got 20 % to 26 % of their 1991–2025 median rainfall. That's the lowest since 1991 (CHIRPS v3, final monthly product). The engine uses 2001–2025 and leaves 2026 out of every score ([docs/validation.md](docs/validation.md)).
+**Preliminary observation, not a forecast:** in July and August 2026, the five plots got 20 % to 26 % of their 1991–2025 median rainfall. That's the lowest since 1991 (CHIRPS v3, final monthly product). The 2026 rain and soil-moisture figures are an observation only: the climate record the engine scores with is 2001–2025. The one place 2026 does enter is the fire record, where detections from January to May 2026 count ([docs/validation.md](docs/validation.md)).
 
 ## How it works
 
@@ -48,7 +48,7 @@ parcelas.yaml → pipeline/precargar → data/cache/ → motor/recomendar → mo
 |---|---|---|
 | `contracts/` | JSON schema (contract v1) and a hand-written example | Rodolfo |
 | `data/` | Plots, rotations, crops (FAO-56 Kc), ZARC quotes, traffic-light thresholds, glossary, sources and cache | Iván (YAML) · Mario (cache) |
-| `pipeline/` | Data clients with cache: POWER, ORNL (NDVI), FIRMS, CHIRPS, SMAP (AppEEARS), SRTM, SoilGrids, GIBS | Mario |
+| `pipeline/` | Data clients with cache: POWER, ORNL (NDVI), FIRMS, CHIRPS (monthly, and daily “sat”, which carries IMERG's daily split), SMAP (AppEEARS), SRTM, SoilGrids, GIBS | Mario |
 | `motor/` | Detection, climate, scores, confidence, traffic light, ZARC, text templates in Spanish and English, phrase audio, export | Rodolfo |
 | `web/` | Vite + React + react-leaflet + Recharts: farmer view, Evidence and pictograms | Team |
 | `tests/` | Contract, number validator, ZARC, traffic light, English texts, phrase audio, engine with synthetic data, pipeline, validation | Everyone |
@@ -57,7 +57,7 @@ parcelas.yaml → pipeline/precargar → data/cache/ → motor/recomendar → mo
 
 ## How to run it
 
-Requirements: Python 3.11+ and Node 20+.
+Requirements: Python 3.11+ and Node 20+. The browser scripts in `web/scripts/*.py` also need Playwright, and the audio is only regenerated with edge-tts; both are optional and listed in [requirements.txt](requirements.txt).
 
 ```bash
 pip install -r requirements.txt
@@ -118,24 +118,26 @@ Known limits:
 
 - Camotán has no SMAP value of recommended quality.
 - NASA POWER puts four of the five plots in the same ~50 km cell.
-- ZARC doesn't publish planting windows by municipality.
-- The longer card audio in Evidence is Spanish only; the short Listen audio has a Spanish and an English voice.
+- ZARC computes the best planting week by municipality inside MAGA-DIGEGR, but those windows are not published; we quote the public departmental reference.
+- Scale: a Dry Corridor family farms about 0.35 ha on average, while one MODIS pixel covers 6.25 ha, a SMAP cell 9 km and an SRTM cell 90 m. The tool describes the land around the plot, not the plot.
+- Sensor continuity: Suomi NPP stopped delivering new data in early November 2026 and Terra is being retired, so updates would move to VIIRS on NOAA-20 and NOAA-21 (and to VIIRS vegetation indices for NDVI).
+- The Evidence page still plays the longer card audio in Spanish only: the English card mp3 is already generated, but the page does not play it yet. The short Listen audio has a Spanish and an English voice.
 
 ## NASA data
 
 | Product | What it is used for |
 |---|---|
-| MODIS MOD13Q1 NDVI, 250 m (through ORNL DAAC) | Bare-soil months and crop cycles: the “soil” fact |
-| FIRMS VIIRS S-NPP, 375 m | Fires near the plot: the “fire” fact |
-| GPM IMERG | Splits CHIRPS pentads into days for the “canícula” fact |
-| NASA POWER | Temperature, reference evapotranspiration and daily rain pattern; compared against CHIRPS in the validation |
-| SMAP SPL3SMP_E (through AppEEARS) | Soil moisture: 2018 drought test, 2026 observation and confidence |
-| SRTM | Slope of each plot |
-| NASA GIBS | True-colour MODIS layer for the offline map |
+| MODIS MOD13Q1 NDVI v061, 250 m, every 16 days (through ORNL DAAC) | Bare-soil or low-cover months in the 250 m cell around the plot (the “soil” fact) and the NDVI signal in the 2018 test. Terra is being retired; the method transfers to VIIRS vegetation indices |
+| FIRMS VIIRS 375 m active fires (Suomi NPP, 2012-2026) | Years with a detection within 500 m, January to May (the “fire” fact). Each detection is the centre of a ~375 m pixel; small or short fires can be missed. S-NPP stopped delivering new data in early November 2026 |
+| GPM IMERG Late V07 (0.1°) | Used through CHIRPS v3 daily “sat”, which splits each pentad into days with IMERG's pattern; not downloaded directly. Not yet tested against the ERA5-based “rnl” version |
+| NASA POWER (about 50 km) | Temperature, reference evapotranspiration and the daily pattern that splits monthly CHIRPS rain outside June-August; compared against CHIRPS in the validation |
+| SMAP SPL3SMP_E v6 (9 km, daily, top 0-5 cm; through AppEEARS) | Separate soil-moisture check next to the 2018 test (not part of the “up to 2017” run), the 2026 observation and the confidence level. It describes the ~9 km landscape, not the plot |
+| SRTM GL3 (90 m) | Slope of the 90 m cell that contains each plot |
+| NASA GIBS | True-colour MODIS layer stored in the site for the offline map |
 
 ## Other data and references
 
-- **Data:** CHIRPS v3 (Climate Hazards Center), SoilGrids (ISRIC), Sentinel-2 cloudless (EOX), OpenStreetMap, FAO-56 and FAO-33 (crop coefficients and yield response), FAO-66, ZARC (FAO–MAGA), and the public reports cited in [docs/validation.md](docs/validation.md). Every source and its citation is in `data/fuentes.yaml` and in the glossary and sources tab of the site.
+- **Data:** CHIRPS v3 (Climate Hazards Center, UC Santa Barbara; Funk et al., 2026, Scientific Data 13, 718, doi:10.1038/s41597-026-07096-4), SoilGrids (ISRIC), Sentinel-2 cloudless (EOX), OpenStreetMap, FAO-56 and FAO-33 (crop coefficients and yield response), FAO-66, ZARC (FAO–MAGA), and the public reports cited in [docs/validation.md](docs/validation.md). The impact figures and their URLs are in [docs/impact.md](docs/impact.md); the tools that already exist, in [docs/existing-tools.md](docs/existing-tools.md); the Ch'orti' recording script, in [docs/chorti.md](docs/chorti.md). Every source and its citation is in `data/fuentes.yaml` and in the glossary and sources tab of the site.
 - **Software:** [React](https://react.dev/), [Leaflet](https://leafletjs.com/) with react-leaflet, [Recharts](https://recharts.org/), [Vite](https://vite.dev/), [edge-tts](https://github.com/rany2/edge-tts) for the synthetic voice and [PyYAML](https://pyyaml.org/).
 
 ## AI use

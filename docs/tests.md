@@ -8,6 +8,44 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## Branch `entrega-impacto-1` on top of `main` (`4fdf64f`): Saturday 14 Nov 2026
+
+While this branch was in progress, `main` gained three commits (`61bf817`, `b69bcd1` and `4fdf64f`: English card audio, slides and sources). The branch was rebased onto `4fdf64f`, with no file in common, and every command was run again on the rebased branch with this branch's changes. Same laptop and versions as the next section; `web/node_modules` comes from the `npm ci` logged there. Times from `date` (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 16:11:47 to 16:11:57 | Automated tests | `python -m pytest -q` | ✅ only dots, up to "[100%]", no failure; exit 0 |
+| 16:11:57 to 16:12:06 | Web smoke test | `cd web && npm run smoke` | ✅ 16 JSON files "ok", `observacion_2026` "ok" and "audio de la tarjeta en inglés con etiqueta de IA: 5 mp3"; "Prueba de humo de la web: sin fallas"; exit 0 |
+| 16:12:06 to 16:12:14 | Web build | `cd web && npm run build` | ✅ "523 modules transformed", "built in 6.11s"; first-load JS `index` 170.90 kB (gzip 56.50 kB), Evidence JS 657.80 kB (gzip 184.77 kB); exit 0 |
+| 16:12:14 to 16:12:28 | Offline test | `cd web && npm run sin-red -- <temp folder outside the repo>` | ✅ "23 de 23 comprobaciones pasan"; exit 0 |
+| 16:12:28 to 16:12:37 | Farmer view and kit at 360, 390 and 412 px | `python web/scripts/agricultor_playwright.py` | ✅ "77 de 77 comprobaciones pasan"; exit 0 |
+| 16:12:37 to 16:12:49 | Evidence view at 390 and 412 px | `python web/scripts/evidence_playwright.py` | ✅ "109 de 109 comprobaciones pasan"; exit 0 |
+| 16:12:49 to 16:12:50 | Slides PDF | `cd web && python scripts/slides_pdf.py` | ✅ "docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)"; "python-pptx no está instalado: no se genera .pptx"; exit 0. The rewritten PDF was restored with `git checkout` |
+| Right after, before 16:13:17 | Automated tests with the total | `python -m pytest` | ✅ "226 passed in 9.53s" |
+| Right after, before 16:13:17 | The same in the clean environment outside the repo | `python -m pytest -q` (with the clean environment's Python) | ✅ exit 0 |
+
+## Branch `entrega-impacto-1`, first pass on `eed0b1f`: Saturday 14 Nov 2026
+
+This branch changes only documents, `requirements.txt` and `render.yaml`. The web and browser runs below were made on the branch at commit `eed0b1f` (the same as `main`), before those changes; the last three rows ran after them. Same laptop: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. The worktree had no `web/node_modules`, so `npm ci` ran first. Times are the ones `date` printed at the start and end of each command (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 15:57:47 to 15:57:56 | Install the web dependencies | `cd web && npm ci` | ✅ "added 108 packages, and audited 109 packages in 8s"; "found 0 vulnerabilities"; exit 0 |
+| 15:57:56 to 15:58:15 | Automated tests | `python -m pytest -q` | ✅ only dots, up to "[100%]", no failure; with `addopts = "-q"` in `pyproject.toml` this command prints no total; exit 0 |
+| 15:58:15 to 15:58:19 | Web smoke test | `cd web && npm run smoke` | ✅ 16 JSON files "ok" and `observacion_2026` "ok"; "Prueba de humo de la web: sin fallas"; exit 0 |
+| 15:58:19 to 15:58:27 | Web build | `cd web && npm run build` | ✅ vite v6.4.6, "523 modules transformed", "built in 5.98s"; first-load JS `index` 170.90 kB (gzip 56.50 kB), Evidence JS 657.80 kB (gzip 184.77 kB); exit 0 |
+| 15:58:27 to 15:58:46 | Offline test | `cd web && npm run sin-red -- <temp folder outside the repo>` | ❌ "21 de 23 comprobaciones pasan"; exit 1. The two checks marked "NO": the San Juan Ermita card audio ("suena 0.0 s de 67 s"), and "Español elegido en Evidence sigue al volver a la vista del agricultor" (it printed "en: What the satellite saw on this plot") |
+| 16:01:02 to 16:01:16 | Offline test, repeated with nothing changed | `cd web && npm run sin-red -- <another temp folder>` | ✅ "23 de 23 comprobaciones pasan"; exit 0. The cause of the two failures in the first run was not found |
+| 15:58:46 to 15:58:57 | Farmer view and kit at 360, 390 and 412 px | `python web/scripts/agricultor_playwright.py` | ✅ "77 de 77 comprobaciones pasan"; exit 0 |
+| 15:58:57 to 15:59:09 | Evidence view at 390 and 412 px | `python web/scripts/evidence_playwright.py` | ✅ "109 de 109 comprobaciones pasan"; exit 0 |
+| 15:59:09 to 15:59:11 | Slides PDF | `cd web && python scripts/slides_pdf.py` | ✅ "docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)"; "python-pptx no está instalado: no se genera .pptx"; exit 0. The command rewrote `docs/slides/milpa-resiliente.pdf`; it was restored with `git checkout` |
+| 15:59:48 to 16:00:46 | Clean environment outside the repo | `python -m venv <temp folder>`, `pip install -r requirements.txt`, `python -m pytest -q` | ✅ installed PyYAML 6.0.3, requests 2.34.2, pytest 9.2.0, jsonschema 4.26.0 and Pillow 13.0.0; only dots, up to "[100%]", no failure |
+| 16:08:43 to 16:08:52 | Automated tests, after this branch's changes | `python -m pytest -q` | ✅ only dots, up to "[100%]", no failure; exit 0 |
+| 16:08:52 to 16:09:01 | The same, in the clean environment | `python -m pytest -q` (with the clean environment's Python) | ✅ only dots, up to "[100%]", no failure; exit 0 |
+| Right after (no time logged) | Automated tests with the total | `python -m pytest` | ✅ "222 passed in 8.10s" |
+
+Before the clean-environment row, a first clean environment without Pillow (no time logged) failed 3 tests in `tests/test_pipeline.py` (`test_lzw_igual_que_pillow`, `test_lzw_con_muchos_codigos`, `test_lector_ligero_lee_solo_hasta_la_columna`) with "ModuleNotFoundError: No module named 'PIL'". That is why Pillow is now a required line in `requirements.txt`.
+
 ## English Listen audio merged into `main`: Saturday 14 Nov 2026
 
 The `entrega-audio-en` branch merged as one commit onto `main` (with the kit, the docs and the slides). The short phrase audio now has an English voice (`audio/{plot}.frases.en.mp3`, en-US-JennyNeural) that Listen plays when the locale is English. The longer card audio in Evidence is still the Spanish voice (es-GT-MartaNeural). Merge changes: the kit's "Download audio" offers the English mp3 when the locale is English (Spanish if it is missing); Listen no longer resets when the language changes and, if it was playing, continues with the new language's mp3. Same laptop and versions. Times from `date`.
@@ -20,6 +58,19 @@ The `entrega-audio-en` branch merged as one commit onto `main` (with the kit, th
 | 14:30:20 to 14:30:33 | Offline test | `cd web && npm run sin-red -- <temp folder>` | ✅ 23 of 23; Listen plays `jocotan.frases.en.mp3` with `.frases.en.vtt`; the kit downloads `jocotan.frases.en.mp3` (200 audio/mpeg) |
 | 14:30:33 to 14:30:37 | Farmer view at 390 and 412 px | `python web/scripts/agricultor_playwright.py` | ✅ 25 of 25 |
 | 14:30:37 to 14:30:39 | Slides PDF | `python web/scripts/slides_pdf.py` | ✅ 7 pages (limit 7) |
+
+## Short English audio (branch `entrega-audio-en`, before the commit of this delivery)
+
+Setup: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1. `npm ci` in `web/` (the repo's lockfile). mp3 generation: `MILPA_ONLINE=1 python -m motor.exportar --audio` and then `python -m motor.exportar` to link the JSON files.
+
+**What Evidence plays in English:** the interface (menus, rotations, card, validation) is in English, but the longer card audio of each plot is still `audio/{plot}.mp3` with the **es-GT-MartaNeural** voice (the same file as in Spanish). The short English audio (`audio/{plot}.frases.en.mp3`, en-US-JennyNeural voice) is used only by the farmer view, with the **Listen** button on the first screen.
+
+| What | Command | Result |
+|---|---|---|
+| Automated tests | `python -m pytest -q` | ✅ 217 pass; exit 0 |
+| Web smoke test | `cd web && npm run smoke` | ✅ 16 JSON files + `observacion_2026`; no failures |
+| Build | `cd web && npm run build` | ✅ vite v6.4.6, 519 modules, ~3.5 s |
+| Offline test | `cd web && npm run sin-red -- <temp folder>` | ✅ 20 of 20; Listen with `jocotan.frases.en.mp3` and `.frases.en.vtt` subtitles; Jocotán totals 80/88/87 unchanged |
 
 ## Step 0 baseline: Saturday 14 Nov 2026 (commit `15c5130`)
 

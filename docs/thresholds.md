@@ -15,7 +15,7 @@ Three observed facts. It is not a risk score and not a forecast. The traffic lig
 | Fact | What it counts | Source and period | Engine rule |
 |---|---|---|---|
 | Soil | Months with median NDVI < 0.35 (bare soil) and months from 0.35 to 0.45 (little cover) | MODIS MOD13Q1, 250 m, 2021-2025 | `motor/deteccion.py` → `UMBRALES` |
-| Fire | Years with at least one VIIRS hotspot of nominal or high confidence within 500 m, January to May | FIRMS VIIRS S-NPP, 375 m, 2012-2026 (15 years) | `motor/deteccion.py` → `detectar_quemas` |
+| Fire | Years with at least one VIIRS hotspot of nominal or high confidence within 500 m, January to May | FIRMS VIIRS S-NPP, 375 m, 2012-2026 (15 years; 2026 counts January to May only, from the S-NPP standard product) | `motor/deteccion.py` → `detectar_quemas` |
 | Canícula | Years with a run of more than 15 days under 2 mm per day, 15 June to 31 August | CHIRPS v3 daily (split with IMERG), 2001-2025 (25 years) | `motor/clima.py` → `SUPUESTOS` |
 
 ## The real counts
@@ -46,9 +46,11 @@ Three observed facts. It is not a risk score and not a forecast. The traffic lig
   - 3 of 15 is 1 year in 5: fire in different years, not a single event.
   - One or two years can be a neighbour's fire: the 500 m radius and the 375 m VIIRS pixel include the land next door.
   - Green says "no fire was seen", not "there was no fire": VIIRS passes a few times a day and misses short fires or fires under clouds (note in `detectar_quemas`).
+  - 2026 counts only January to May, from the standard product of Suomi NPP. All FIRMS data in the record are Suomi NPP.
 - **Canícula, red with 3 years or more out of 25.**
   - The same cut as fire, so the rule is explained the same way: "in three different years or more".
   - The run of more than 15 days and the 2 mm dry day are the plan's. They were not recalibrated.
+  - The dry day (under 2 mm) and the run of more than 15 days are team decisions, not an official definition. For reference, CONRED describes the canícula as lasting 5 to 10 days on average (https://conred.gob.gt/que-es-la-canicula/); FEWS NET reported 11 to 20 consecutive dry days in 2026 (https://fews.net/es/latin-america-and-caribbean/guatemala/actualizacion-de-la-perspectiva-de-seguridad-alimentaria/agosto-2026) and Oxfam an average of 25 in 2019 (https://reliefweb.int/attachments/017ed79d-0dfa-3d24-a502-3474f5d9ddb7/Informe%20d%C3%A9fict%20de%20lluvias%202019.pdf).
   - The traffic light uses the observed record (base scenario), not the −10 to −30 % scenarios.
 - **Gray per fact, not per plot.** A fact turns gray only if its own source fails:
   - Soil: the 60 % valid-composite cut is the one `motor/confianza.py` already uses for low confidence.
@@ -78,12 +80,14 @@ The 5 plots all come out different, which the total score does not achieve.
 | Gray | Question mark, dotted border | "The satellite can't see well here" / «El satélite no ve bien aquí» | Data from that source are missing; nothing is guessed |
 
 - Never colour alone: shape, word, icon and a fixed position (soil, fire, canícula, always in that order).
-- No orange and no word "alert": in Guatemala those belong to the official CONRED alerts. The schema rejects any state outside these 4.
+- The view avoids orange and the word "alert", so it is not mistaken for CONRED's public alert levels (green, yellow, orange and red; https://conred.gob.gt/conozca-los-niveles-de-alerta-y-su-significado/); every state also carries a shape and a word, so it never relies on colour. The schema rejects any state outside these 4.
 - The view and the audio say: "this is not an official alert; talk with your extension worker".
 
 ## Tie rule (options)
 
 **If two options differ by 3 points or less in the total, there is no winner.** The view says "two options to talk over with your extension worker" and shows them in no order.
+
+The engine applies the margin as a chain (`motor/farmer.py` → `empatadas`): starting from the option with the highest total, any option within 3 points of one already in the even group joins it. That is why in Olopa (87, 90 and 92) all three count as even.
 
 Why 3 points:
 

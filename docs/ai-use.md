@@ -4,7 +4,7 @@ The Space Apps 2026 guide asks every team to say how it used AI (the form calls 
 
 ## In one paragraph
 
-An AI coding agent wrote most of the code, most of the texts and the SVG code of the pictograms. It always worked under the direction of the team, and the team reviewed what it produced. The team decided the scope, the traffic-light thresholds, the tie rule, the five plots and how to validate the engine. The voice in the audio is synthetic (edge-tts). No AI produces any number that the farmer or the extension worker sees.
+An AI coding agent (Claude, by Anthropic) wrote most of the code, most of the texts in both languages and the SVG code of the pictograms, always under the team's direction and review. A research agent with web search found the agronomic sources and, on 14 November, the impact figures and the status of each sensor; every figure we use carries its URL, and the ones that could not be confirmed were left out. Before building, an AI assistant compared this idea with five others; the team chose. The team decided the scope, the five plots, the traffic-light thresholds, the tie rule and the validation rule. The audio uses synthetic voices (edge-tts: es-GT-MartaNeural and en-US-JennyNeural), labelled as AI-generated next to the player and in each mp3's tags. No AI produces any number the user sees: numbers come from the data and from rules in code, and texts come from fixed templates checked by a validator that rejects any number that is not in the engine's output. It is the same text as the SI field of the submission form ([project-page-en.md](project-page-en.md)).
 
 ## What the AI did
 
@@ -14,8 +14,10 @@ An AI coding agent wrote most of the code, most of the texts and the SVG code of
 | Claude (Anthropic), coding agent | Wrote most of the texts: the card templates, the English texts in `motor/ingles.py`, the web copy, the README and the docs | Read and corrected them; decided what the farmer view says and what it never says (no "alert", no forecast) |
 | Claude (Anthropic), coding agent | Wrote the SVG code of the pictograms in `web/src/pictos/` | Chose what each drawing stands for and reviewed every drawing. The comprehension test with users is still pending (`docs/pictos.md`) |
 | Claude (Anthropic), research subagent with web search | Found and read sources for crop coefficients (Kc), yield response (Ky), rotations, ZARC and the 2018 losses | Checked each quote against the source document; quotes that could not be checked are labelled "not verified" in `data/fuentes.yaml` |
+| Claude (Anthropic), research agent with web search (14 Nov 2026) | Found the impact figures, the tools that already exist and the status of each sensor (Suomi NPP, Terra, CHIRPS v3, POWER) | Decided which figures to use; the ones the agent marked as uncertain were left out. Each figure has its URL in [impact.md](impact.md) |
 | An AI assistant | Compared the project idea with five other ideas before we started building | Chose the idea and the challenge |
-| edge-tts (Microsoft neural voices `es-GT-MartaNeural` and `en-US-JennyNeural`) | Reads aloud the text the engine wrote: a short phrase mp3 per plot in Spanish and another in English, each with subtitles; the longer card mp3 in Evidence is Spanish only | Decided to label the voice as AI-generated everywhere it plays |
+| Claude (Anthropic), coding agent (14 Nov 2026) | Reviewed the documents for consistency with the code and the data and drafted the corrections | Rodolfo approves each merge into `main` |
+| edge-tts (Microsoft neural voices `es-GT-MartaNeural` and `en-US-JennyNeural`) | Reads aloud the text the engine wrote: a short phrase mp3 per plot in Spanish and another in English, each with subtitles; and a longer card mp3 per plot in Spanish and in English (the Evidence page still plays only the Spanish one) | Decided to label the voice as AI-generated everywhere it plays |
 
 ## What the team decided, not the AI
 
@@ -40,3 +42,4 @@ An AI coding agent wrote most of the code, most of the texts and the SVG code of
 
 - An agronomist or extension worker has not reviewed the scoring rules and the eight rotation templates yet.
 - The pictograms have not passed the comprehension test with users yet.
+- A person has not yet re-opened every page behind the impact figures added on 14 November.
