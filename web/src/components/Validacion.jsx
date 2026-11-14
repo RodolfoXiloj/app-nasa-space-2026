@@ -15,6 +15,7 @@ import {
   ZAxis,
 } from 'recharts'
 import { useLocale, useT } from '../i18n/useT.js'
+import { leerMotor } from '../i18n/motor.js'
 import DondeFalla from './DondeFalla.jsx'
 import Observacion2026 from './Observacion2026.jsx'
 import ProductoDecision from './ProductoDecision.jsx'
@@ -128,6 +129,8 @@ export default function Validacion({ res, validacion }) {
   const anios = (sel?.sequia_2018?.anios || []).map((a) => ({ ...a, es2018: a.anio === 2018 }))
   const r51 = validacion.regla_5_1
   const localeEs = loc === 'es'
+  // Textos del pipeline de validación en el idioma activo (bloques `en` de validacion.json).
+  const v = (obj, campo) => leerMotor(obj, campo, loc).txt
   const arriba = dispersion.filter((d) => d.power > d.chirps).length
   const resumenPuntos = t('a11y.scatterChart', {
     n: dispersion.length,
@@ -155,11 +158,11 @@ export default function Validacion({ res, validacion }) {
           <span className="sin-corte">{validacion.generado}</span>
         </p>
         <div className={r51.se_activa ? 'banda-error' : 'banda-ok'}>
-          {t('validacion.rule51', { min: r51.minimo, n: r51.parcelas_con_senal_2018, efecto: r51.efecto })}
+          {t('validacion.rule51', { min: r51.minimo, n: r51.parcelas_con_senal_2018, efecto: v(r51, 'efecto') })}
         </div>
         <ul className="lista-compacta titulares">
-          {validacion.titular_power_chirps && <li>{validacion.titular_power_chirps}</li>}
-          <li>{validacion.titular_2018}</li>
+          {validacion.titular_power_chirps && <li>{v(validacion, 'titular_power_chirps')}</li>}
+          <li>{v(validacion, 'titular_2018')}</li>
         </ul>
       </section>
 
@@ -210,7 +213,7 @@ export default function Validacion({ res, validacion }) {
           <div className="banda-ok">
             <b>{t('validacion.publicEvidence')}</b>{' '}
             {t('validacion.publicBody', {
-              fuente: validacion.evidencia_publica_2018.fuente,
+              fuente: v(validacion.evidencia_publica_2018, 'fuente'),
               ha: validacion.evidencia_publica_2018.guatemala_ha_perdidas.toLocaleString(localeEs ? 'es-GT' : 'en-US'),
               pers: validacion.evidencia_publica_2018.guatemala_personas_afectadas.toLocaleString(localeEs ? 'es-GT' : 'en-US'),
             })}{' '}
@@ -260,7 +263,7 @@ export default function Validacion({ res, validacion }) {
         <p className="nota">{t('a11y.riskYears', { lista: listaRiesgo })}</p>
         <h3>{t('validacion.notes')}</h3>
         <ul className="lista-compacta">
-          {validacion.notas.map((n) => (
+          {v(validacion, 'notas').map((n) => (
             <li key={n}>{n}</li>
           ))}
         </ul>

@@ -2,6 +2,7 @@
 
 import { OBS_2026, OBS_LIMITES } from '../i18n/evidence.js'
 import { useLocale, useT } from '../i18n/useT.js'
+import { leerMotor } from '../i18n/motor.js'
 
 const mm = (v) => `${Number(v).toFixed(1)} mm`
 const hum = (v) => Number(v).toFixed(3)
@@ -117,14 +118,20 @@ export default function Observacion2026({ obs }) {
 
       <h3>{t('obs.reports')}</h3>
       <ul className="lista-compacta">
-        {obs.reportes_publicos.map((e) => (
-          <li key={e.id}>
-            <a href={e.url} target="_blank" rel="noreferrer">
-              {e.fuente}
-            </a>{' '}
-            ({e.relacion}): «{e.cita}». {e.nota}
-          </li>
-        ))}
+        {obs.reportes_publicos.map((e) => {
+          // Fuente, relación, cita y nota en el idioma activo; en inglés la cita va traducida y rotulada.
+          const [fuente, relacion, cita, nota] = ['fuente', 'relacion', 'cita', 'nota'].map((c) => leerMotor(e, c, loc))
+          const lang = (x) => (x.lang !== loc ? x.lang : undefined)
+          return (
+            <li key={e.id}>
+              <a href={e.url} target="_blank" rel="noreferrer" lang={lang(fuente)}>
+                {fuente.txt}
+              </a>{' '}
+              (<span lang={lang(relacion)}>{relacion.txt}</span>): «<span lang={lang(cita)}>{cita.txt}</span>».{' '}
+              <span lang={lang(nota)}>{nota.txt}</span>
+            </li>
+          )
+        })}
       </ul>
 
       <h3>{t('obs.limits')}</h3>

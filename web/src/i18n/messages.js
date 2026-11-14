@@ -37,6 +37,7 @@ export const messages = {
     controles: {
       plot: 'Plot',
       noData: '(no data)',
+      example: 'Example (Jocotán)',
       crop: 'Crop declared by the extensionist',
       priority: 'Family priority',
       rainScenario: 'Rain scenario',
@@ -91,10 +92,10 @@ export const messages = {
       powerChirps:
         'July–August rain: NASA POWER {power} mm/mo and CHIRPS {chirps} mm/mo ({sesgo} %, r = {r}, n = {n} months).',
       smapOk:
-        'SMAP root-zone moisture (Jul–Aug, {periodo}): median {hum} m³/m³.{extra}',
+        'SMAP surface soil moisture (top 5 cm, Jul–Aug, {periodo}): median {hum} m³/m³.{extra}',
       smapLowest: ' In {anio} it was the lowest of {n} SMAP years.',
       smapRank: ' In {anio} it ranked {puesto} of {n} years from lowest to highest.',
-      smapFallback: 'Root-zone moisture Jul–Aug: {val} ({unidad}, {etiq}, {periodo}). {nota}',
+      smapFallback: 'MERRA-2 GWETROOT soil wetness (backup for SMAP), Jul–Aug: {val} ({unidad}, {etiq}, {periodo}). {nota}',
     },
     rotaciones: {
       title: 'Three rotations compared',
@@ -112,7 +113,7 @@ export const messages = {
       why: 'Why',
       benefits: 'Benefits',
       gaps: 'Information gaps',
-      risks: 'Risks the technician should check',
+      risks: 'Risks the extension worker should check',
       evidence: 'Evidence ({n} data points)',
       colData: 'Data',
       colValue: 'Value',
@@ -205,7 +206,7 @@ export const messages = {
       colSpearman: 'Spearman deficit vs NDVI (n)',
       publicEvidence: 'Public evidence:',
       publicBody:
-        '{fuente}: Guatemala lost {ha} ha of maize and beans and {pers} people were affected; Chiquimula among the hardest-hit departments.',
+        '{fuente}: Guatemala reported {ha} ha of crop losses, mainly maize and beans, and {pers} people affected; Chiquimula among the hardest-hit departments.',
       chart2: 'Water deficit of the current rotation in {muni} and greenness anomaly',
       serieDeficit: 'Year deficit (%)',
       serieThreshold: 'Threshold from prior years (%)',
@@ -249,10 +250,26 @@ export const messages = {
       sources: 'Sources and citations',
       resolution: 'resolution',
       consulted: 'consulted',
-      dataEs: 'Definitions below come from the engine in Spanish.',
+      dataEs: 'Some definitions are only in Spanish in this data file; they are marked as Spanish.',
     },
     parcelaVacia: {
       pending: 'Plot pending: missing in cache {lista}. Run preload and export.',
+    },
+    app: {
+      tabs: { parcela: 'Plot', validacion: 'Validation', glosario: 'Glossary and sources' },
+      sections: 'Sections',
+      tagline:
+        'NASA satellite records turned into three facts a farmer can see and hear, for the milpa in Guatemala’s Dry Corridor.',
+      example: 'EXAMPLE DATA: this file is for building the website; it is not a recommendation.',
+      gaps: 'Fallbacks and data gaps at this plot ({n})',
+      aviso: 'Milpa Resiliente supports, and does not replace, the extension worker or the farmer.',
+      ia:
+        'AI use: an AI assistant helped write this site’s code, texts and pictograms, and the team checked them. The audio is a synthetic AI voice (edge-tts). Scores and figures come from the engine’s templates and fixed rules, not from a language model.',
+      credit:
+        'NASA Space Apps Challenge 2026 · Challenge “Field Shift: Adapting Farms with NASA Data” · Team “A dream”, Guatemala.',
+      build: 'Contract {contrato} · engine {motor} · generated {generado}',
+      quoteEs: 'quote in Spanish',
+      traceEs: 'Some lines are only in Spanish in this data file.',
     },
   },
   es: {
@@ -291,6 +308,7 @@ export const messages = {
     controles: {
       plot: 'Parcela',
       noData: '(sin datos)',
+      example: 'Ejemplo (Jocotán)',
       crop: 'Cultivo que declara el extensionista',
       priority: 'Prioridad de la familia',
       rainScenario: 'Escenario de lluvia',
@@ -344,7 +362,7 @@ export const messages = {
       powerChirps:
         'Lluvia de julio–agosto: NASA POWER {power} mm/mes y CHIRPS {chirps} mm/mes ({sesgo} %, r = {r}, n = {n} meses).',
       smapOk:
-        'Humedad del suelo SMAP (julio–agosto, {periodo}): mediana de {hum} m³/m³.{extra}',
+        'Humedad superficial del suelo SMAP (primeros 5 cm, julio–agosto, {periodo}): mediana de {hum} m³/m³.{extra}',
       smapLowest: ' En {anio} fue la más baja de los {n} años con SMAP.',
       smapRank: ' En {anio} quedó en el puesto {puesto} de {n} años, de la más baja a la más alta.',
       smapFallback: 'Humedad de raíz julio–agosto: {val} ({unidad}, {etiq}, {periodo}). {nota}',
@@ -457,7 +475,7 @@ export const messages = {
       colSpearman: 'Spearman déficit vs NDVI (n)',
       publicEvidence: 'Evidencia pública:',
       publicBody:
-        '{fuente}: en Guatemala se perdieron {ha} ha de maíz y frijol y hubo {pers} personas afectadas; Chiquimula entre los departamentos más afectados.',
+        '{fuente}: Guatemala reportó {ha} ha de cultivos perdidos, sobre todo maíz y frijol, y {pers} personas afectadas; Chiquimula entre los departamentos más afectados.',
       chart2: 'Déficit de agua de la rotación actual en {muni} y anomalía de verdor',
       serieDeficit: 'Déficit del año (%)',
       serieThreshold: 'Umbral con años anteriores (%)',
@@ -505,6 +523,22 @@ export const messages = {
     },
     parcelaVacia: {
       pending: 'Parcela pendiente: falta en la caché {lista}. Corra la precarga y la exportación.',
+    },
+    app: {
+      tabs: { parcela: 'Parcela', validacion: 'Validación', glosario: 'Glosario y fuentes' },
+      sections: 'Secciones',
+      tagline:
+        'Registros satelitales de la NASA convertidos en tres hechos que el agricultor puede ver y escuchar, para la milpa del Corredor Seco de Guatemala.',
+      example: 'DATOS DE EJEMPLO: este archivo sirve para desarrollar la web; no es una recomendación.',
+      gaps: 'Respaldos y vacíos de datos en esta parcela ({n})',
+      aviso: 'Milpa Resiliente apoya, no reemplaza, al técnico ni al agricultor.',
+      ia:
+        'Uso de IA: un asistente de IA ayudó a escribir el código, los textos y los pictogramas de este sitio, y el equipo los revisó. El audio es voz sintética generada con IA (edge-tts). Los puntajes y las cifras salen de plantillas y reglas fijas del motor, no de un modelo de lenguaje.',
+      credit:
+        'NASA Space Apps Challenge 2026 · Reto «Field Shift: Adapting Farms with NASA Data» · Equipo «A dream», Guatemala.',
+      build: 'Contrato {contrato} · motor {motor} · generado {generado}',
+      quoteEs: 'cita en español',
+      traceEs: '',
     },
   },
 }

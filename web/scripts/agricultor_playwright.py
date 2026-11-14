@@ -311,7 +311,7 @@ def caso_kit(navegador, ancho: int = 390, alto: int = 844) -> None:
     texto = urllib.parse.parse_qs(url_wa.query).get("text", [""])[0]
     pagina = pag.evaluate("location.href")
     anota(url_wa.scheme == "https" and url_wa.netloc == "wa.me" and url_wa.path == "/" and list(urllib.parse.parse_qs(url_wa.query)) == ["text"]
-          and texto.strip().endswith(pagina) and "no es una alerta oficial" in texto and texto.count("\n- ") == 3,
+          and texto.strip().endswith(pagina) and "no es un aviso oficial" in texto.lower() and texto.count("\n- ") == 3,
           f"{pre}: enlace de WhatsApp bien formado (wa.me, resumen de 3 hechos y la dirección)", texto.replace("\n", " / ")[:140])
 
     # Imprimir: el botón pone la clase y llama a print(); la hoja impresa cabe en una sola página.
@@ -331,7 +331,7 @@ def caso_kit(navegador, ancho: int = 390, alto: int = 844) -> None:
     pag.emulate_media(media="print")
     pdf_a4 = pag.pdf(format="A4", print_background=True)
     paginas_a4 = len(re.findall(rb"/Type\s*/Page[^s]", pdf_a4))
-    anota(bool(clase) and bool(hoja) and hoja["hechos"] == 3 and hoja["formas"] >= 3 and "no es una alerta oficial" in hoja["texto"]
+    anota(bool(clase) and bool(hoja) and hoja["hechos"] == 3 and hoja["formas"] >= 3 and "no es un aviso oficial" in hoja["texto"].lower()
           and "Opciones para platicar" in hoja["texto"],
           f"{pre}: «Imprimir hoja» muestra solo la hoja (3 hechos con forma, opciones y aviso)",
           f"{hoja['hechos']} hechos, {hoja['formas']} formas" if hoja else "la hoja no se ve al imprimir")

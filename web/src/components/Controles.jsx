@@ -1,6 +1,7 @@
 import LanguageSelector from './LanguageSelector.jsx'
 import { useLocale, useT } from '../i18n/useT.js'
 import { messages } from '../i18n/messages.js'
+import { leerMotor } from '../i18n/motor.js'
 
 function Segmentado({ etiqueta, opciones, valor, onCambio }) {
   return (
@@ -30,10 +31,10 @@ export default function Controles(props) {
       <label className="campo">
         <span>{t('controles.plot')}</span>
         <select value={pid || ''} onChange={(e) => setPid(e.target.value)}>
-          {indice.length === 0 && <option value="__ejemplo__">Ejemplo (Jocotán)</option>}
+          {indice.length === 0 && <option value="__ejemplo__">{t('controles.example')}</option>}
           {indice.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.nombre}
+              {leerMotor(p, 'nombre', loc).txt}
               {p.disponible ? '' : ` ${t('controles.noData')}`}
             </option>
           ))}

@@ -9,14 +9,17 @@ import Tarjeta from './components/Tarjeta.jsx'
 import Validacion from './components/Validacion.jsx'
 import Glosario from './components/Glosario.jsx'
 import { LineaObservacion2026 } from './components/Observacion2026.jsx'
+import { useLocale, useT } from './i18n/useT.js'
+import { leerMotor } from './i18n/motor.js'
 
-const PESTANAS = [
-  ['parcela', 'Parcela'],
-  ['validacion', 'Validación'],
-  ['glosario', 'Glosario y fuentes'],
-]
+const PESTANAS = ['parcela', 'validacion', 'glosario']
+
+// Con movimiento reducido el salto a la observación 2026 es instantáneo.
+const movimiento = () => (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth')
 
 export default function App({ pidInicial = null }) {
+  const t = useT()
+  const loc = useLocale()
   const [indice, setIndice] = useState(null)
   const [pid, setPid] = useState(null)
   const [cultivo, setCultivo] = useState('maiz_frijol')
@@ -49,10 +52,14 @@ export default function App({ pidInicial = null }) {
   }, [])
 
   const parcela = useMemo(() => indice?.find((p) => p.id === pid), [indice, pid])
+  // Textos del motor en el idioma activo; si falta el inglés, va el español marcado con lang="es".
+  const aviso = leerMotor(res, 'aviso', loc)
+  const vacios = leerMotor(res?.meta, 'datos_de_ejemplo', loc)
+  const langDe = (m) => (m.txt && m.lang !== loc ? m.lang : undefined)
 
   function verObservacion2026() {
     setPestana('validacion')
-    setTimeout(() => document.getElementById('observacion-2026')?.scrollIntoView({ behavior: 'smooth' }), 60)
+    setTimeout(() => document.getElementById('observacion-2026')?.scrollIntoView({ behavior: movimiento() }), 60)
   }
 
   useEffect(() => {
@@ -76,15 +83,12 @@ export default function App({ pidInicial = null }) {
       <header className="cabecera no-imprimir">
         <div>
           <h1>Milpa Resiliente</h1>
-          <p className="lema">
-            El satélite ya sabe cómo ha usado su parcela. Le mostramos qué rotación aguanta mejor la próxima canícula y por
-            qué, para que el técnico y el agricultor decidan.
-          </p>
+          <p className="lema">{t('app.tagline')}</p>
         </div>
-        <nav className="pestanas" aria-label="Secciones">
-          {PESTANAS.map(([id, txt]) => (
+        <nav className="pestanas" aria-label={t('app.sections')}>
+          {PESTANAS.map((id) => (
             <button key={id} type="button" className={pestana === id ? 'activa' : ''} aria-current={pestana === id ? 'page' : undefined} onClick={() => setPestana(id)}>
-              {txt}
+              {t(`app.tabs.${id}`)}
             </button>
           ))}
         </nav>
@@ -92,7 +96,7 @@ export default function App({ pidInicial = null }) {
 
       {res?.meta?.tipo === 'ejemplo' && (
         <div className="banda-ejemplo no-imprimir" role="status">
-          DATOS DE EJEMPLO: este archivo sirve para desarrollar la web; no es una recomendación.
+          {t('app.example')}
         </div>
       )}
       {error && <div className="banda-error no-imprimir">{error}</div>}
@@ -129,8 +133,8 @@ export default function App({ pidInicial = null }) {
               ) : (
                 <div className="tarjeta-vacia">
                   {parcela && !parcela.disponible
-                    ? `Parcela pendiente: falta en la caché ${parcela.faltan.join(', ')}. Corra la precarga y la exportación.`
-                    : 'Cargando…'}
+                    ? t('parcelaVacia.pending', { lista: parcela.faltan.join(', ') })
+                    : t('common.loading')}
                 </div>
               )}
             </div>
@@ -139,12 +143,12 @@ export default function App({ pidInicial = null }) {
             <>
               <Rotaciones res={res} lluvia={lluvia} temp={temp} prioridad={prioridad} />
               <Tarjeta res={res} lluvia={lluvia} temp={temp} prioridad={prioridad} />
-              {res.meta.datos_de_ejemplo?.length > 0 && (
+              {vacios.txt?.length > 0 && (
                 <details className="pendientes no-imprimir">
-                  <summary>Respaldos y vacíos de datos en esta parcela ({res.meta.datos_de_ejemplo.length})</summary>
-                  <ul>
-                    {res.meta.datos_de_ejemplo.map((t) => (
-                      <li key={t}>{t}</li>
+                  <summary>{t('app.gaps', { n: vacios.txt.length })}</summary>
+                  <ul lang={langDe(vacios)}>
+                    {vacios.txt.map((txt) => (
+                      <li key={txt}>{txt}</li>
                     ))}
                   </ul>
                 </details>
@@ -157,15 +161,15 @@ export default function App({ pidInicial = null }) {
       {pestana === 'glosario' && <Glosario res={res} />}
 
       <footer className="pie no-imprimir">
-        <p>{res?.aviso || 'Milpa Resiliente apoya, no reemplaza, al técnico ni al agricultor.'}</p>
+        <p lang={langDe(aviso)}>{aviso.txt || t('app.aviso')}</p>
+        <p className="pie-ia">{t('app.ia')}</p>
         <p>
-          Prototipo local de referencia. Los audios de las tarjetas son voz sintética generada con IA (edge-tts); los
-          textos y las cifras salen de plantillas y reglas del motor, no de un modelo de lenguaje.
-        </p>
-        <p>
-          NASA Space Apps Challenge 2026 · Reto «Field Shift: Adapting Farms with NASA Data» · Equipo «A dream», Guatemala.
-          Contrato {res?.version_contrato || '1.0'} · motor {res?.meta?.motor_version || '—'} · generado{' '}
-          {res?.meta?.generado || '—'}
+          {t('app.credit')}{' '}
+          {t('app.build', {
+            contrato: res?.version_contrato || '1.0',
+            motor: res?.meta?.motor_version || t('common.dash'),
+            generado: res?.meta?.generado || t('common.dash'),
+          })}
         </p>
       </footer>
     </div>

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { CircleMarker, LayersControl, MapContainer, TileLayer, Tooltip, ZoomControl, useMap } from 'react-leaflet'
 import { BASE } from '../lib/datos.js'
-import { useT } from '../i18n/useT.js'
+import { useLocale, useT } from '../i18n/useT.js'
+import { leerMotor } from '../i18n/motor.js'
 
 const local = (capa, ext) => `${BASE}capas/${capa}/{z}/{x}/{y}.${ext}`
 const CAJA = [[14.586, -89.64], [15.021, -89.214]]
@@ -70,6 +71,7 @@ function RespaldoSinRed({ enLinea, guardada, avisar }) {
 
 export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
   const t = useT()
+  const loc = useLocale()
   const quieto = menosMovimiento()
   const enLinea = useRef(null)
   const guardada = useRef(null)
@@ -79,7 +81,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
   const puntos = parcelas.length
     ? parcelas
     : res
-      ? [{ id: '__ejemplo__', nombre: res.parcela.nombre, lat: res.parcela.lat, lon: res.parcela.lon, disponible: true }]
+      ? [{ ...res.parcela, id: '__ejemplo__', disponible: true }]
       : []
 
   return (
@@ -142,7 +144,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
                 eventHandlers={{ click: () => p.id !== '__ejemplo__' && onSeleccion(p.id) }}
               >
                 <Tooltip direction="top">
-                  <strong>{p.nombre}</strong>
+                  <strong>{leerMotor(p, 'nombre', loc).txt}</strong>
                   <br />
                   {p.disponible ? `${t('mapa.confidence')} ${t(`a11y.nivel.${nivel}`)}` : t('mapa.noDataYet')}
                   {p.provisional ? ` · ${t('mapa.provisional')}` : ''}
@@ -169,7 +171,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
             const nivel = p.disponible ? p.resumen?.confianza || 'media' : null
             return (
               <li key={p.id}>
-                <b>{p.nombre}</b>:{' '}
+                <b>{leerMotor(p, 'nombre', loc).txt}</b>:{' '}
                 {nivel ? `${t('mapa.confidence')} ${t(`a11y.nivel.${nivel}`)}` : t('mapa.noDataYet')}
                 {p.provisional ? ` · ${t('mapa.provisional')}` : ''}
               </li>

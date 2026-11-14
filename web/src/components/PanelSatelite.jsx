@@ -1,6 +1,7 @@
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { mesCorto, listaMesesI18n } from '../i18n/months.js'
 import { useLocale, useT } from '../i18n/useT.js'
+import { leerMotor } from '../i18n/motor.js'
 
 export default function PanelSatelite({ res }) {
   const t = useT()
@@ -43,7 +44,7 @@ export default function PanelSatelite({ res }) {
       <h2>{t('panel.title')}</h2>
       <p className="sub">
         {t('panel.sub', {
-          nombre: p.nombre,
+          nombre: leerMotor(p, 'nombre', loc).txt,
           lat: p.lat,
           lon: p.lon,
           alt: p.terreno.altitud_m ?? t('common.dash'),
@@ -127,7 +128,7 @@ export default function PanelSatelite({ res }) {
         {t('panel.monthlyNote', {
           desnudo: d.umbral_desnudo_ndvi,
           poca: d.umbral_poca_cobertura_ndvi ?? t('common.dash'),
-          notaQuema: q.nota,
+          notaQuema: leerMotor(q, 'nota', loc).txt,
         })}
       </p>
     </section>

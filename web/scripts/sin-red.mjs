@@ -95,7 +95,7 @@ try {
     'Kit: «Download audio» baja el mp3 corto en inglés de la copia local', kit ? `${kit.audio}: ${mp3Kit}` : 'no apareció el kit')
   const wa = kit ? new URL(kit.wa) : null
   const textoWa = wa ? wa.searchParams.get('text') || '' : ''
-  anota(Boolean(wa) && wa.origin === 'https://wa.me' && wa.pathname === '/' && textoWa.endsWith(URL_APP) && textoWa.includes('not an official alert'),
+  anota(Boolean(wa) && wa.origin === 'https://wa.me' && wa.pathname === '/' && textoWa.endsWith(URL_APP) && textoWa.includes('not an official notice'),
     'Kit: enlace de WhatsApp bien formado (wa.me/?text= con resumen y la dirección local)', textoWa.replace(/\n/g, ' / ').slice(0, 120))
   await ev(`(() => { window.print = () => {}; document.querySelector('.kit-imprimir').click(); return true })()`)
   const hojaPdf = await cdp('Page.printToPDF', { printBackground: true })
@@ -126,7 +126,7 @@ try {
     const ok = await hasta(() => ev(`(() => { const a = document.querySelector('.tarjeta-acciones audio'); return document.querySelectorAll('.rotacion').length === 3 && a && a.src.includes('/audio/${pid}.mp3') })()`), 15000)
     const audio = await ev(`(async () => { const a = document.querySelector('.tarjeta-acciones audio'); a.muted = true; try { await a.play() } catch (e) { return 'play falló: ' + e.message } await new Promise(r => setTimeout(r, 1500)); const t = a.currentTime; a.pause(); return 'suena ' + t.toFixed(1) + ' s de ' + a.duration.toFixed(0) + ' s' })()`)
     const ia = await ev(`document.querySelector('.nota-ia')?.textContent || ''`)
-    anota(Boolean(ok) && audio.startsWith('suena') && !audio.startsWith('suena 0.0') && ia.includes('IA'), `Parcela ${pid}: 3 rotaciones, tarjeta y audio mp3`, `${audio}; rótulo de IA: ${ia.includes('IA') ? 'sí' : 'no'}`)
+    anota(Boolean(ok) && audio.startsWith('suena') && !audio.startsWith('suena 0.0') && /\b(IA|AI)\b/.test(ia), `Parcela ${pid}: 3 rotaciones, tarjeta y audio mp3`, `${audio}; rótulo de IA: ${/\b(IA|AI)\b/.test(ia) ? 'sí' : 'no'}`)
   }
 
   // 3. capas «sin red»
@@ -138,13 +138,14 @@ try {
     `${teselas || 0} teselas locales; aviso: ${aviso ? 'sí' : 'no'}; control de capas marcado: ${radio}`)
 
   // 4. pestañas
-  await ev(`[...document.querySelectorAll('.pestanas button')].find(b => b.textContent === 'Validación').click()`)
+  // Pestañas por posición: el rótulo cambia con el idioma (Parcela/Plot, Validación/Validation, Glosario/Glossary).
+  await ev(`document.querySelectorAll('.pestanas button')[1].click()`)
   anota(Boolean(await hasta(() => ev(`!!document.getElementById('observacion-2026') && document.querySelectorAll('.tabla-datos').length >= 3`))), 'Pestaña Validación con el detalle de 2026')
-  await ev(`[...document.querySelectorAll('.pestanas button')].find(b => b.textContent.startsWith('Glosario')).click()`)
+  await ev(`document.querySelectorAll('.pestanas button')[2].click()`)
   anota(Boolean(await hasta(() => ev(`document.body.textContent.includes('IMERG')`))), 'Pestaña Glosario y fuentes (cita IMERG)')
 
   // 5. imprimir la tarjeta a PDF
-  await ev(`[...document.querySelectorAll('.pestanas button')].find(b => b.textContent === 'Parcela').click()`)
+  await ev(`document.querySelectorAll('.pestanas button')[0].click()`)
   await hasta(() => ev(`document.querySelectorAll('.rotacion').length === 3`))
   const pdf = await cdp('Page.printToPDF', { printBackground: true })
   const bytes = Buffer.from(pdf.result?.data || '', 'base64')

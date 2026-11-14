@@ -15,7 +15,10 @@ Por cada ancho e idioma comprueba (docs/accessibility.md, «Evidence view»):
   lista de parcelas en texto;
 - los encabezados no se saltan niveles y hay un solo h1;
 - foco visible (contorno de 2 px o más) en las primeras paradas de tabulación;
-- con prefers-reduced-motion el mapa no anima el zoom ni el fundido.
+- con prefers-reduced-motion el mapa no anima el zoom ni el fundido;
+- en inglés no queda texto en español en las tres pestañas (ni en aria-label), salvo citas rotuladas: un
+  «…» en español o un título con su traducción entre corchetes; ningún elemento lang="es" fuera de esas citas;
+- el pie lleva la línea visible de uso de IA, la tarjeta impresa también, y index.html su <meta>.
 Sale con código 1 si algo falla.
 """
 from __future__ import annotations
@@ -82,6 +85,40 @@ JS_FOCO = """() => { const e = document.activeElement; if (!e || e === document.
     const s = getComputedStyle(e);
     return { que: e.tagName.toLowerCase() + (e.className ? '.' + String(e.className).split(' ').pop() : ''),
              visible: s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) >= 2 } }"""
+
+
+# Texto en español que queda en la vista en inglés. Se cuentan palabras que solo usa el español; dos o más en un
+# mismo texto lo delatan. Antes se quitan las citas rotuladas («…» y «título [traducción]»), los nombres propios
+# y las rutas o claves de archivo (camotan.json meta.datos_de_ejemplo).
+# Un elemento con lang="es" solo vale si es una cita (.cita) o el botón «Español» del selector de idioma.
+JS_ESPANOL = r"""() => {
+  const PAL = new Set(['de', 'la', 'el', 'que', 'los', 'las', 'con', 'para', 'por', 'del', 'una', 'sin', 'más',
+    'según', 'también', 'está', 'como', 'pero', 'cuando', 'hasta', 'entre', 'sobre', 'años', 'meses', 'suelo',
+    'lluvia', 'parcela', 'hace', 'hoy', 'muy', 'se', 'su', 'sus', 'lo', 'datos', 'fuera', 'humedad', 'cultivo'])
+  const PROPIOS = [/La Estrella de Panamá/g, /de Sousa/g]
+  const limpia = (t) => PROPIOS.reduce((a, re) => a.replace(re, ''), t)
+    .replace(/«[^»]*»/g, '').replace(/[^.:;\[\]]*\[[^\]]*\]/g, '').replace(/\S*[_/]\S*/g, '')
+  const espanol = (t) => (limpia(t).toLowerCase().match(/[a-záéíóúñü]+/g) || []).filter((w) => PAL.has(w)).length >= 2
+  const permitido = (e) => { const l = e.closest('[lang]'); return l && l.getAttribute('lang') === 'es'
+    && (l.classList.contains('cita') || l.textContent.trim() === 'Español') }
+  const visible = (e) => e.getClientRects().length > 0 || e.closest('.sr-solo')
+  const malos = []
+  const w = document.createTreeWalker(document.querySelector('.app'), NodeFilter.SHOW_TEXT)
+  let n
+  while ((n = w.nextNode())) {
+    const e = n.parentElement
+    if (!e || /^(SCRIPT|STYLE)$/.test(e.tagName) || !visible(e) || permitido(e)) continue
+    if (e.closest('a[href]') && /^https?:/.test(n.textContent.trim())) continue
+    if (espanol(n.textContent)) malos.push('texto «' + n.textContent.trim().slice(0, 50) + '»')
+  }
+  document.querySelectorAll('.app [aria-label]').forEach((e) => {
+    if (espanol(e.getAttribute('aria-label'))) malos.push('aria-label «' + e.getAttribute('aria-label').slice(0, 50) + '»')
+  })
+  document.querySelectorAll('.app [lang="es"]').forEach((e) => {
+    if (visible(e) && !permitido(e)) malos.push('lang=es «' + e.textContent.trim().slice(0, 50) + '»')
+  })
+  return [...new Set(malos)]
+}"""
 
 
 def esperar_servidor(seg: float = 30) -> None:
@@ -164,6 +201,24 @@ def caso(navegador, ancho: int, alto: int, idioma: str) -> None:
         malos = saltos(pag.evaluate(JS_ENCABEZADOS))
         anota(not malos, f"{p}: encabezados en orden, un solo h1", ", ".join(malos))
 
+        if idioma == "en":
+            restos = pag.evaluate(JS_ESPANOL)
+            anota(not restos, f"{p}: sin texto en español fuera de citas rotuladas",
+                  f"{len(restos)}: " + "; ".join(restos[:4]) if restos else "")
+
+    # Línea de IA visible en el pie y en la tarjeta impresa; nada de «Prototipo local de referencia».
+    pag.locator("nav.pestanas button").nth(0).click()
+    abrir_pestana(pag, 0)
+    pie = pag.locator(".pie-ia")
+    marca = "AI" if idioma == "en" else "IA"
+    anota(pie.count() == 1 and pie.is_visible() and marca in pie.inner_text(),
+          f"{pre}: el pie dice qué se hizo con {marca} (código, textos, pictogramas y voz)")
+    pag.emulate_media(media="print")
+    ia_hoja = pag.locator(".tarjeta .ia-tarjeta")
+    anota(ia_hoja.count() == 1 and ia_hoja.is_visible(), f"{pre}: la tarjeta impresa lleva la línea de {marca}")
+    pag.emulate_media(media="screen")
+    anota("Prototipo local" not in pag.inner_text("body"), f"{pre}: sin «Prototipo local de referencia»")
+
     anota(not errores, f"{pre}: sin errores de JavaScript", "; ".join(errores[:2]))
     ctx.close()
 
@@ -177,6 +232,8 @@ def caso_movimiento(navegador) -> None:
     clases = pag.evaluate("document.querySelector('.leaflet-container').className")
     anota("leaflet-zoom-anim" not in clases and "leaflet-fade-anim" not in clases,
           "Evidence 390 px: con movimiento reducido el mapa no anima zoom ni fundido")
+    meta = pag.evaluate("(document.querySelector('meta[name=\"ai-disclosure\"]') || {}).content || ''")
+    anota("AI" in meta, "index.html: <meta name=\"ai-disclosure\"> declara el uso de IA")
     ctx.close()
 
 

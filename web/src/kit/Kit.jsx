@@ -124,6 +124,7 @@ function Hoja({ idioma, lugar, nombre, farmer, rotaciones, href }) {
         {conf.nivel && <p>{k.confianza} <b>{t.confianza[conf.nivel] || conf.nivel}</b>.</p>}
       </section>
       <p className="kit-aviso">{t.aviso}</p>
+      <p className="kit-fuente">{t.ia}</p>
       <p className="kit-fuente">{k.web} {href}</p>
     </article>
   )

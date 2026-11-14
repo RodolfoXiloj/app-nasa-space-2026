@@ -1,6 +1,7 @@
 import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { mesCorto } from '../i18n/months.js'
 import { useLocale, useT } from '../i18n/useT.js'
+import { leerMotor } from '../i18n/motor.js'
 
 export default function Clima({ res }) {
   const t = useT()
@@ -23,7 +24,7 @@ export default function Clima({ res }) {
     <section className="panel">
       <h2>{t('clima.title')}</h2>
       <p className="sub">
-        {c.periodo} · {c.resolucion}
+        {c.periodo} · {leerMotor(c, 'resolucion', loc).txt}
       </p>
       <div className="grafica" role="img" aria-label={resumen}>
         <ResponsiveContainer width="100%" height={170}>
@@ -46,7 +47,7 @@ export default function Clima({ res }) {
       <ul className="lista-compacta">
         <li>
           {t('clima.canicula', {
-            ventana: can.ventana,
+            ventana: leerMotor(can, 'ventana', loc).txt,
             anios: can.anios_racha_larga,
             total: can.anios_total,
             dias: can.umbral_racha_dias,
@@ -75,9 +76,9 @@ export default function Clima({ res }) {
               {t('clima.smapFallback', {
                 val: s.respaldo?.jul_ago_mediana,
                 unidad: s.respaldo?.unidad,
-                etiq: s.respaldo?.etiqueta,
+                etiq: leerMotor(s.respaldo, 'etiqueta', loc).txt,
                 periodo: s.respaldo?.periodo,
-                nota: s.nota,
+                nota: leerMotor(s, 'nota', loc).txt,
               })}
             </>
           )}

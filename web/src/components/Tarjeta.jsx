@@ -3,6 +3,24 @@ import { BASE, puntajes } from '../lib/datos.js'
 import { listaMesesI18n } from '../i18n/months.js'
 import { messages } from '../i18n/messages.js'
 import { useLocale, useT } from '../i18n/useT.js'
+import { leerMotor } from '../i18n/motor.js'
+
+const HOY = /^(Lo que hace hoy|What you do today|What they do today):\s*/
+
+// En inglés, las citas textuales en español van entre «…» dentro del texto del motor. Cada una se marca
+// lang="es" como cita rotulada; la que sigue a «our translation:» ya es la traducción y queda en inglés.
+function ConCitas({ txt, loc }) {
+  if (loc === 'es' || !txt) return txt || null
+  return txt.split(/(«[^»]*»)/).map((parte, i, partes) =>
+    parte.startsWith('«') && !/translation:\s*$/.test(partes[i - 1] || '') ? (
+      <span key={i} lang="es" className="cita">
+        {parte}
+      </span>
+    ) : (
+      parte
+    ),
+  )
+}
 
 function vozEspanol() {
   const voces = window.speechSynthesis?.getVoices() || []
@@ -49,9 +67,15 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
     setHablando(false)
   }
 
-  const stripToday = t('tarjeta.stripToday')
-  // Textos del motor en español: en la vista en inglés llevan lang="es".
-  const langMotor = loc === 'es' ? undefined : 'es'
+  // Textos del motor en el idioma activo (campos `en` del JSON); lo que falte va en español con lang="es".
+  const m = (obj, campo) => leerMotor(obj, campo, loc)
+  const lang = (x) => (x.txt && x.lang !== loc ? x.lang : undefined)
+  const nombre = (r) => (m(r, 'nombre').txt || '').replace(HOY, '')
+  const porQue = m(mejor.r, 'por_que')
+  const zarc = m(res.zarc, 'texto')
+  const notaZarc = m(res.zarc, 'nota_escenario')
+  const aviso = m(res, 'aviso')
+  const declaracion = m(res.audio.ia, 'declaracion').txt
 
   return (
     <section className="tarjeta-agricultor">
@@ -63,7 +87,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
               controls
               src={BASE + res.audio.mp3}
               aria-label={t('tarjeta.listenAria', { municipio: p.municipio })}
-              title={res.audio.ia?.declaracion || t('tarjeta.synthVoice')}
+              title={declaracion || t('tarjeta.synthVoice')}
             />
           ) : (
             <button type="button" onClick={hablando ? detener : escuchar} disabled={!hayVoz}>
@@ -75,7 +99,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
           </button>
         </div>
         <p className="nota-ia">
-          {res.audio.mp3 ? res.audio.ia?.declaracion || t('tarjeta.synthVoice') : t('tarjeta.synthBrowser')}
+          {res.audio.mp3 ? declaracion || t('tarjeta.synthVoice') : t('tarjeta.synthBrowser')}
         </p>
       </div>
       <div className="tarjeta">
@@ -85,7 +109,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
             {t('tarjeta.parcelLine', {
               lat: p.lat,
               lon: p.lon,
-              cultivo: res.rotaciones[0].nombre.replace(stripToday, ''),
+              cultivo: nombre(res.rotaciones[0]),
               prioridad: dict.prioridad[prioridad],
               escenario: lluvia !== 0 || temp !== 0 ? t('tarjeta.escenario', { lluvia, temp }) : '',
             })}
@@ -117,7 +141,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
                 <td>
                   <small>{dict.tipo[r.tipo]}</small>
                   <br />
-                  {r.nombre.replace(stripToday, '')}
+                  {nombre(r)}
                 </td>
                 <td className="num">{pt.agua}</td>
                 <td className="num">{pt.suelo}</td>
@@ -125,25 +149,28 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
                 <td className="num">
                   <b>{pt.total}</b>
                 </td>
-                <td>{r.confianza.nivel}</td>
+                <td>{t(`a11y.nivel.${r.confianza.nivel}`)}</td>
               </tr>
             ))}
           </tbody>
         </table>
         <p>
-          <b>{t('tarjeta.whyBest')}</b> <span lang={langMotor}>{mejor.r.por_que}</span>
+          <b>{t('tarjeta.whyBest')}</b> <span lang={lang(porQue)}>{porQue.txt}</span>
         </p>
         <p>
-          <b>{t('tarjeta.planting')}</b> <span lang={langMotor}>{res.zarc.texto}</span>{' '}
+          <b>{t('tarjeta.planting')}</b>{' '}
+          <span lang={lang(zarc)}>
+            <ConCitas txt={zarc.txt} loc={lang(zarc) || loc} />
+          </span>{' '}
           <span className="solo-imprimir">({res.zarc.enlace})</span>
           <a className="no-imprimir" href={res.zarc.enlace} target="_blank" rel="noreferrer">
             {t('common.seeZarc')}
           </a>
           <br />
-          <small lang={langMotor}>{res.zarc.nota_escenario}</small>
+          <small lang={lang(notaZarc)}>{notaZarc.txt}</small>
         </p>
-        <p className="aviso-tarjeta" lang={langMotor}>
-          {res.aviso}
+        <p className="aviso-tarjeta" lang={lang(aviso)}>
+          {aviso.txt}
         </p>
         <p className="fuentes-tarjeta">
           {t('tarjeta.sources', {
@@ -153,6 +180,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
               .join(' · '),
           })}
         </p>
+        <p className="fuentes-tarjeta ia-tarjeta">{t('app.ia')}</p>
       </div>
       <p className="nota no-imprimir">
         {t('tarjeta.audioNote', {

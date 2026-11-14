@@ -10,6 +10,7 @@ import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
 import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { IDIOMAS, NOMBRE_IDIOMA, TEXTOS, empateEnCadena } from './textos.js'
+import { leerMotor } from '../i18n/motor.js'
 import KitParcela from '../kit/index.jsx'
 import { Suspense, lazy } from 'react'
 
@@ -20,11 +21,10 @@ const Escuchar = lazy(() => import('./Escuchar.jsx'))
 const ORDEN = ['suelo', 'quema', 'canicula']
 const ESTADOS = ['verde', 'amarillo', 'rojo', 'gris']
 
-// Texto del motor en el idioma elegido: el JSON trae `es.campo` y `en.campo` (y, de antes, `campo` en
-// español y `campo_en` en inglés). Si falta el inglés, va el español marcado con lang="es".
+// Texto del motor en el idioma elegido (i18n/motor.js); si falta el inglés, va el español con lang="es".
 function TextoMotor({ obj, campo, idioma }) {
-  const txt = (obj[idioma] || {})[campo] || (idioma === 'en' ? obj[campo + '_en'] : obj[campo])
-  return txt ? <span lang={idioma}>{txt}</span> : <span lang="es">{obj[campo]}</span>
+  const { txt, lang } = leerMotor(obj, campo, idioma)
+  return <span lang={lang}>{txt}</span>
 }
 
 // Dibujo del tema de cada hecho (web/src/pictos/iconos.jsx). El suelo sale cubierto solo cuando el
@@ -223,6 +223,8 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
           <span className="agr-evidencia-titulo">{t.evidencia}</span>
           <span className="agr-evidencia-detalle">{t.evidenciaDetalle}</span>
         </button>
+        {/* Pie: qué se hizo con IA (código, textos, pictogramas y voz). */}
+        <p className="agr-nota agr-ia">{t.ia}</p>
       </main>
     </div>
   )
