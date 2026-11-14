@@ -39,6 +39,14 @@ def test_los_hechos_copian_las_cifras_del_motor(resultado_sintetico):
     assert canicula["periodo"] == res["clima"]["periodo"]
 
 
+def test_fuente_de_la_canicula():
+    con_diario = {"fuente_lluvia": "CHIRPS v3 mensual repartido por días con NASA POWER; junio-agosto con "
+                                   "CHIRPS v3 diario (reparto con NASA IMERG)", "fuente_ids": ["chirps", "nasa_power", "fao56"]}
+    assert farmer._fuentes_canicula(con_diario) == ["chirps_diario", "imerg"]
+    solo_power = {"fuente_lluvia": "NASA POWER", "fuente_ids": ["nasa_power", "fao56"]}
+    assert farmer._fuentes_canicula(solo_power) == ["nasa_power"]
+
+
 def test_el_bloque_no_trae_cifras_nuevas(resultado_sintetico):
     con_farmer = redaccion.numeros_permitidos(resultado_sintetico)
     sin_farmer = redaccion.numeros_permitidos({k: v for k, v in resultado_sintetico.items() if k != "farmer"})

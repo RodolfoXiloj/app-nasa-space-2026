@@ -17,6 +17,13 @@ DOCUMENTO_UMBRALES = "docs/umbrales.md"
 IDIOMAS = ("es", "en", "caa")  # caa: ch'orti' (ISO 639-3); sin grabación queda en None
 
 
+def _fuentes_canicula(cl: dict) -> list[str]:
+    """La canícula (15 jun-31 ago) usa la lluvia diaria de junio-agosto: CHIRPS diario si se aplicó."""
+    if "CHIRPS v3 diario" in (cl.get("fuente_lluvia") or ""):
+        return ["chirps_diario", "imerg"]
+    return [f for f in cl["fuente_ids"] if f != "fao56"]
+
+
 def _hechos(res: dict) -> list[dict]:
     det = res["deteccion"]
     q = det["quemas"]
@@ -31,7 +38,7 @@ def _hechos(res: dict) -> list[dict]:
          "meses": list(q["meses_con_quema"]),
          "periodo": q["periodo"], "fuente_ids": ["firms_viirs"], "motivo_gris": None},
         {"id": "canicula", "estado": None, "valor": can["anios_racha_larga"], "de": can["anios_total"], "unidad": "anios",
-         "periodo": cl["periodo"], "fuente_ids": [f for f in cl["fuente_ids"] if f != "fao56"], "motivo_gris": None},
+         "periodo": cl["periodo"], "fuente_ids": _fuentes_canicula(cl), "motivo_gris": None},
     ]
 
 
