@@ -1,10 +1,6 @@
 # Capturas del prototipo
 
-Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
-
-Las fechas de trabajo se normalizaron para esta edición; no representan nuevas ejecuciones, consultas ni capturas.
-
-Fecha y hora de las capturas: sin registro real (la hora 21:56 que figuraba era planeada). Según el plan, se toman con Edge sin interfaz sobre la web compilada (`npm run build`), servida con `npx vite preview --host 0.0.0.0 --port 4173`, como indica `docs/prueba-telefono.md`.
+Fecha y hora de las capturas: sin registro real (la hora 21:56 que figuraba era planeada); están en el repo desde el commit `f614691` (14 nov 2026). Según el plan, se toman con Edge sin interfaz sobre la web compilada (`npm run build`), servida con `npx vite preview --host 0.0.0.0 --port 4173`, como indica `docs/prueba-telefono.md`.
 - **En línea:** contra la IP local de la laptop.
 - **Sin internet:** contra `127.0.0.1`, con un proxy inexistente.
 

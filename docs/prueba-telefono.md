@@ -1,7 +1,5 @@
 # Prueba en un teléfono real
 
-Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
-
 Milpa Resiliente es un **prototipo local de referencia**: no se publica ni se entrega. Esta prueba sirve la web desde la laptop por la red Wi-Fi de la casa u oficina y la abre en un teléfono.
 
 ## 1. Levantar la web en la red local (laptop, PowerShell)

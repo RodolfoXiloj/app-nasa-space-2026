@@ -1,10 +1,8 @@
 # Uso de IA (Super Intelligence, SI) en Milpa Resiliente
 
-Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
-
-Las fechas de trabajo se normalizaron para esta edición; no representan nuevas ejecuciones, consultas ni capturas.
-
 La guía de Space Apps 2026 pide describir cómo se usó la IA. Cada integrante anota aquí lo que use, con fecha.
+
+La fecha de cada fila es la del commit en que ese trabajo entró a este repo (`git log`); no indica cuándo se hizo.
 
 ## Regla del proyecto
 
@@ -14,8 +12,8 @@ Ninguna cifra que ve el agricultor o el técnico la genera una IA. Los números 
 
 | Fecha | Quién | Herramienta | Para qué | Qué revisó una persona |
 |---|---|---|---|---|
-| 14 nov 2026 | Rodolfo | Asistente de IA | Evaluación de la idea y comparación con otras 5 (`docs/evaluacion-milpa-ajustada.txt`) | Pendiente de completar |
-| 14 nov 2026 | Rodolfo | Claude (Anthropic), asistente de código | Plan de construcción; esqueleto del repo, clientes de datos, motor, pruebas y web | Pendiente: revisión del equipo el sábado 09:00 |
+| Por confirmar (archivo fuera de git) | Rodolfo | Asistente de IA | Evaluación de la idea y comparación con otras 5 (`docs/evaluacion-milpa-ajustada.txt`) | Pendiente de completar |
+| 14 nov 2026 | Rodolfo | Claude (Anthropic), asistente de código | Plan de construcción; esqueleto del repo, clientes de datos, motor, pruebas y web | Pendiente: revisión del equipo |
 | 14 nov 2026 | Rodolfo | Claude (Anthropic), asistente de código | Segundo bloque: elección de puntos con NDVI e imagen, CHIRPS v3 (lector propio), FIRMS 2026, cliente de SMAP, validación, capas sin red, memoria y pruebas | Pendiente: revisión del equipo; cada prueba está en `docs/pruebas.md` |
 | 14 nov 2026 | Rodolfo | Claude (Anthropic), subagente de investigación con búsqueda web | Buscar y leer fuentes de Kc, Ky, rotaciones, ZARC y pérdidas de 2018; cada cita marcada como verificada o no verificada | Las citas se revisaron contra los documentos; las no verificadas quedan rotuladas en `data/fuentes.yaml` |
 | 14 nov 2026 | Rodolfo | edge-tts (voz neural de Microsoft) | Audio mp3 de la tarjeta, voz es-GT-MartaNeural | Solo lee el texto que generó el motor |

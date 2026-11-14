@@ -1,7 +1,5 @@
 # Validación de Milpa Resiliente
 
-Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
-
 Generado por `python -m pipeline.validacion.validar` el 2026-11-14T17:31:40Z (UTC). **No editar a mano:** se regenera desde `data/cache/` y da las mismas cifras que la pestaña Validación de la web.
 
 ## Regla fijada antes de ver el resultado

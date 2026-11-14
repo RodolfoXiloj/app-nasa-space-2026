@@ -1,7 +1,5 @@
 # Milpa Resiliente
 
-Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
-
 **NASA Space Apps Challenge 2026 · Guatemala · reto «Field Shift: Adapting Farms with NASA Data»** · Equipo «A dream»
 
 **Prototipo local de referencia** (decisión del 14 nov 2026): no se entrega ni se publica; funciona en esta computadora y en la red local (`docs/prueba-telefono.md`).

@@ -1,10 +1,8 @@
 # Revisión del plan contra el repo
 
-Actualización documental: 14 nov 2026, 09:00 (Guatemala, UTC−6).
+> **Superado (registrado en el commit `3e48dbe`, 14 nov 2026):** Rodolfo decidió que este repo **no se entrega**; queda como prototipo local de referencia. Lo de entrega (Render, push, slides, video, página en inglés) ya no aplica. Lo que mejoraba el funcionamiento se aplicó: ver `docs/estado.md` y `docs/pruebas.md`.
 
-> **Superado el 14 nov 2026, 21:00:** Rodolfo decidió que este repo **no se entrega**; queda como prototipo local de referencia. Lo de entrega (Render, push, slides, video, página en inglés) ya no aplica. Lo que mejoraba el funcionamiento se aplicó: ver `docs/estado.md` y `docs/pruebas.md`.
-
-sábado 14 nov 2026, ~20:50 (Guatemala). Solo revisión: en este turno no se cambió código. Esta revisión se conserva como referencia documental.
+En el repo desde el commit `3e48dbe` (14 nov 2026). Solo revisión: en este turno no se cambió código. Esta revisión se conserva como referencia documental.
 
 **Qué se comparó**
 - **Plan final:** el plan aprobado de Fable está en el hilo de T3 «Plan: Milpa Resiliente (NASA Space Apps 2026)», ítem `proposed_plan`. No hay copia en `docs/`.
@@ -16,7 +14,7 @@ sábado 14 nov 2026, ~20:50 (Guatemala). Solo revisión: en este turno no se cam
 **Orden que fijó Rodolfo**
 1. Prueba en teléfono (sección 4).
 2. Decisiones y ajustes (secciones 2 y 3, y la tabla).
-3. Sábado ~09:00: repo, Render y primer push.
+3. Repo: hecho (Git local, commit `f0b3c40`, 14 nov 2026). Render y primer push: pendientes.
 4. Al final: slides, video de 30 s y página en inglés.
 
 ## 1. Plan contra el repo
@@ -27,7 +25,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 
 | Ítem del plan | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
-| 1.1 Estático primero: 5 parcelas precalculadas; la web no necesita servidor ni claves | Hecho | `web/public/data/` (15 JSON de parcelas, el índice, la validación y el ejemplo), `web/public/audio/`, `web/public/capas/`, `render.yaml` | Publicarlo (sábado) |
+| 1.1 Estático primero: 5 parcelas precalculadas; la web no necesita servidor ni claves | Hecho | `web/public/data/` (15 JSON de parcelas, el índice, la validación y el ejemplo), `web/public/audio/`, `web/public/capas/`, `render.yaml` | Pendiente: publicarlo |
 | 1.2 Un solo motor en Python puro, sin red | Hecho | `motor/`, `tests/test_motor*.py` (71 pruebas pasan) | — |
 | 1.3 Contrato JSON congelado | Hecho | `contracts/recomendacion.schema.json` y ejemplo (`38562ee`); `motor/contrato.py`; `tests/test_contrato.py` | Nada que bloquee. Después se agregaron campos opcionales (poca cobertura, POWER contra CHIRPS, `smap.anio_ultimo`) sin quitar ninguno, y el esquema no es estricto (`additionalProperties`), así que la forma sigue siendo compatible |
 | 1.4 Caché dentro del repo con procedencia; red solo con `MILPA_ONLINE=1` | Hecho | `data/cache/*/` (cada archivo con URL, fecha y versión); `pipeline/cache.py` | — |
@@ -38,7 +36,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 | 2 Tarjeta en PDF con estilos de impresión y `window.print()` | Hecho | `web/src/components/Tarjeta.jsx` («Imprimir o guardar PDF»); `@media print` en `styles.css` | Probarlo desde el teléfono (sección 4) |
 | 2 Audio con edge-tts y voz del navegador de respaldo | Hecho | 5 mp3 con voz es-GT-MartaNeural, de ~72 s cada uno; la prueba de humo falla si falta uno | Decidir si 72 s es demasiado largo. El plan original pedía 45 s o menos; el final no fija tope |
 | 2 Mapa con capas GIBS y respaldo sin red | Hecho | `web/public/capas/` (24 teselas: color real y NDVI); `web/src/components/Mapa.jsx` | El mapa base de OpenStreetMap necesita internet; sin red hay que usar la capa «Color real MODIS (sin red)» |
-| 2 Despliegue en Render (sitio estático) | Falta | `render.yaml` escrito, sin desplegar | Sábado ~09:00: conectar el repo en Render, verificar `rootDir: web` y `staticPublishPath: dist`, y abrir la URL en incógnito |
+| 2 Despliegue en Render (sitio estático) | Falta | `render.yaml` escrito, sin desplegar | Pendiente: conectar el repo en Render, verificar `rootDir: web` y `staticPublishPath: dist`, y abrir la URL en incógnito |
 | 2 Estructura: `docs/guion-video.md` y `docs/project-page-en.md` | Falta | No existen | Guion del video y página en inglés (último bloque) |
 | 2 API en vivo, extra | Cortado (corte 1) | `api/README.md` | Nada: queda como siguiente paso |
 
@@ -85,10 +83,10 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 
 | Ítem del plan | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
-| Compuerta 0: leer los recursos oficiales de Field Shift y las guías de jueces y de entrega | **Falta, no consta** | Ni `docs/memoria` ni el README la registran. Hoy no se pudieron abrir las páginas oficiales: error de certificado al leerlas | Que Rodolfo o Iván lean la Project Submission Guide y la Judging Guide en el navegador antes del sábado 09:00 |
-| **Inicio del trabajo y reglas del evento** | **Por confirmar con la organización** | Esta copia local no contiene `.git`; no hay historial de commits disponible para comprobar fechas | Confirmar las reglas con el organizador antes de publicar. Las fechas normalizadas de la documentación no acreditan cuándo se realiz? el trabajo |
+| Compuerta 0: leer los recursos oficiales de Field Shift y las guías de jueces y de entrega | **Falta, no consta** | Ni `docs/memoria` ni el README la registran. Hoy no se pudieron abrir las páginas oficiales: error de certificado al leerlas | Que Rodolfo o Iván lean la Project Submission Guide y la Judging Guide en el navegador (pendiente) |
+| **Inicio del trabajo y reglas del evento** | **Por confirmar con la organización** | Todos los commits de este repo son del 14 nov 2026 (`git log`): dicen cuándo entró cada cosa al repo, no cuándo se hizo | Confirmar las reglas con el organizador antes de publicar. Las fechas de la documentación son las de esos commits |
 | H1-H4: datos, motor, 5 parcelas, validación y audio | Hecho, salvo la web pública | `2c1fbf8`, `a02250c`, `63356c7` | Despliegue (H2 y H3 lo pedían en URL pública) |
-| Reparto validado con Mario e Iván | Falta | Las tareas de datos y web las hizo el asistente | Reunión de 15 min el sábado 09:00: cada quien revisa lo de su carpeta |
+| Reparto validado con Mario e Iván | Falta | Las tareas de datos y web las hizo el asistente | Pendiente: reunión de 15 min; cada quien revisa lo de su carpeta |
 | Fuente de pérdidas de 2018 | Hecho | FAO GIEWS | — |
 | Revisión con agrónomo o extensionista | Falta | `motor/puntaje.py` y `data/rotaciones.yaml` dicen «valores iniciales» | Ver sección 3 |
 
@@ -100,7 +98,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 | 12.2 Validador de números, con un número inventado a propósito | Hecho | `tests/test_redaccion.py` | — |
 | 12.3 ZARC: fechas inventadas y caso sin registro | Hecho | `tests/test_zarc.py` | — |
 | 12.4 Sin red: con el wifi apagado, la copia local abre todo, reproduce el audio e imprime | Parcial | Datos, audio y capas son locales. La hora 10:29 que se citaba era planeada; `npm run sin-red` pasó 14 de 14 el 14 nov 2026 a las 12:10 (`pruebas.md`) | Prueba formal con el wifi de la laptop apagado (pasos en la sección 4) |
-| 12.5 URL pública en incógnito y en teléfono con datos móviles | Falta | — | Hoy: teléfono por la red local. Sábado: la URL de Render con datos móviles |
+| 12.5 URL pública en incógnito y en teléfono con datos móviles | Falta | — | Pendiente: teléfono por la red local y la URL de Render con datos móviles |
 | 12.6 Trazabilidad: 3 cifras al azar de cada tarjeta encontradas en `data/cache/` | Falta | El validador asegura que los textos usan cifras del JSON, pero no coteja el JSON contra la caché | Mario o Rodolfo, unos 20 min |
 | 12.7 Validación reproducible con un comando | Hecho | `python -m pipeline.validacion.validar` | Revisar que las slides usen esas mismas cifras |
 | 12.8 Lista de entrega | Falta | — | Ver la tabla siguiente |
@@ -111,8 +109,8 @@ Plan (sección 8), más las reglas de Space Apps que están en `docs/` y la [gu�
 
 | Entregable | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
-| Demo web en URL pública | Falta | Build listo (`web/dist`) | Render el sábado |
-| Repo público con README, licencia y fuentes | Parcial | `README.md`, `LICENSE` (MIT), `data/fuentes.yaml` (23 fuentes) | Crear el remoto y hacer push el sábado. Decidir si se publican las 2 notas internas de `docs/` (hoy en `.gitignore`). Agregar IMERG a las fuentes |
+| Demo web en URL pública | Falta | Build listo (`web/dist`) | Pendiente: Render |
+| Repo público con README, licencia y fuentes | Parcial | `README.md`, `LICENSE` (MIT), `data/fuentes.yaml` (23 fuentes) | Pendiente: crear el remoto y hacer push. Decidir si se publican las 2 notas internas de `docs/` (hoy en `.gitignore`). Agregar IMERG a las fuentes |
 | Validación publicada | Hecho en local | Pestaña Validación y `docs/validacion.md` | Será pública cuando se despliegue |
 | **Video de 30 s o menos**, o **slides de 7 o menos** contando la portada | Falta | — | Las slides van **en inglés**. Un video en español necesita **subtítulos en inglés**. Pasar del límite deja el proyecto fuera del juzgamiento global |
 | Archivos alojados fuera y enlace que abra sin iniciar sesión | Falta | — | YouTube, Drive o GitHub; probar cada enlace en incógnito |
@@ -140,7 +138,7 @@ Plan (sección 8), más las reglas de Space Apps que están en `docs/` y la [gu�
 | [Infobae, 2 sep 2026](https://www.infobae.com/guatemala/2026/09/02/el-nino-2026-en-guatemala-caniculas-largas-maiz-perdido-casi-por-completo-y-el-temor-a-una-hambre-estacional-en-el-corredor-seco/) y [17 sep 2026](https://www.infobae.com/guatemala/2026/09/17/guatemala-implementara-un-plan-de-emergencia-y-preve-asistencia-para-1-millon-212-mil-178-familias-hasta-diciembre/) | El Niño 2026, canículas largas, pérdidas de maíz; plan de emergencia | No (solo el resumen del buscador) |
 | [OCHA, El Niño 2026-2027, septiembre 2026](https://www.unocha.org/publications/report/guatemala/el-nino-2026-2027-climate-risk-humanitarian-outlook-latin-america-and-caribbean-september-2026) | Panorama regional; pérdidas de primera | No (error 403) |
 | [ReliefWeb, marco de acción anticipatoria por sequía 2026](https://reliefweb.int/report/guatemala/guatemala-anticipatory-action-framework-drought-2026-guatemala-marco-de-accion-anticipatoria-sequia-2026-enes) | Según el buscador, prioriza Chiquimula, Zacapa, Jalapa y El Progreso | No (error 403) |
-| [MAGA, análisis agroclimático de agosto a octubre de 2026 (PDF)](https://www.maga.gob.gt/download/informe9-26.pdf) | Citado en la evaluación del 14 nov 2026 | No (error 403) |
+| [MAGA, análisis agroclimático de agosto a octubre de 2026 (PDF)](https://www.maga.gob.gt/download/informe9-26.pdf) | Citado en la evaluación (`docs/evaluacion-milpa-ajustada.txt`) | No (error 403) |
 | [AGN: alerta naranja de la Codred de Zacapa, 29 sep 2026](https://agn.gt/?p=573643) | Según el buscador, alerta por sequía y pérdidas | No: el enlace abre un listado de noticias sin la nota |
 
 **Zacapa:** ninguna fuente verificada nombra a Zacapa con cifras de pérdida de 2026. Chiquimula sí aparece (Prensa Libre y Canal Antigua).
@@ -341,4 +339,4 @@ Falta comprobar el firewall desde otro equipo.
   - **No aplica en el teléfono:** la web no tiene modo sin conexión (no hay *service worker*). Si se corta el Wi-Fi, lo ya abierto sigue visible, pero no carga parcelas nuevas.
   - La prueba sin red del plan (12.4) se hace **en la laptop:** apagar el Wi-Fi de la laptop, correr `npx vite preview` y abrir `http://localhost:4173/`. Revisar que abran las 5 parcelas, que suene el audio y que se pueda imprimir. El mapa base no carga; se usa «Color real MODIS (sin red)».
 
-Después de la prueba, sus resultados se anotan en `docs/pruebas.md`. La prueba con **datos móviles** queda para el sábado, con la URL de Render (plan, 12.5).
+Después de la prueba, sus resultados se anotan en `docs/pruebas.md`. La prueba con **datos móviles** queda pendiente, con la URL de Render (plan, 12.5).
