@@ -1,0 +1,86 @@
+# Parámetros de cultivo que usa el motor para la demanda de agua.
+#
+# Verificado el 13 nov 2026 contra los documentos (ver docs/memoria/ y data/fuentes.yaml):
+# - Kc: FAO-56, Tabla 12 (Allen et al., 1998), https://www.fao.org/4/x0490e/x0490e0b.htm.
+#   Los cuatro juegos (maíz, frijol seco, sorgo, caupí) coinciden con la tabla. Kc final 0.35 de maíz y
+#   caupí = grano secado en el campo (notas 11 y 6 de la tabla). La tabla vale para clima subhúmedo
+#   (HRmin ~45 %, viento ~2 m/s); no se ajustó por clima.
+# - Ky estacional: FAO-33, retomado en FAO-66, cap. 2, Tabla 1, p. 7 (Steduto et al., 2012):
+#   maíz 1.25, frijol 1.15, sorgo 0.9. El caupí no tiene Ky publicado (el motor usa 1.0 y lo declara).
+# - Duración: FAO-56 Tabla 11 no trae filas para Centroamérica. Se usa:
+#     maíz: 20/35/40/30 = 125 días (FAO-56 Tabla 11, «Nigeria (humid)» e «India (dry, cool)»);
+#     maíz de ciclo corto: 90 días (ICTA 2015, p. 2: ICTA B-5 «ciclo de tres meses» para lugares con
+#       escasez de lluvias); etapas repartidas en la misma proporción que el maíz (supuesto);
+#     sorgo: 100 días (ICTA Blanco, cosecha a los 90-100 días según MAGA, 3 sep 2026); etapas en la
+#       proporción de FAO-56 Tabla 11 (supuesto);
+#     frijol de postrera: 80 días y caupí: 75 días son SUPUESTOS (FAO-56 da 95-110 días en otras
+#       regiones; ICTA no publica días para estas variedades en las fuentes revisadas).
+# Familia botánica: para el puntaje de plagas (alternar familias corta ciclos de plagas).
+
+fuente_kc: "FAO-56, Tabla 12 (Allen, Pereira, Raes y Smith, 1998), verificado el 13 nov 2026"
+fuente_ky: "FAO-33 retomado en FAO-66, cap. 2, Tabla 1, p. 7 (Steduto et al., 2012), verificado el 13 nov 2026"
+
+cultivos:
+  maiz:
+    nombre: maíz
+    familia: Poaceae
+    kc: { ini: 0.30, med: 1.20, fin: 0.35 }   # fin 0.35: grano secado en el campo (dobla), nota 11
+    etapas_dias: [20, 35, 40, 30]              # 125 días, FAO-56 Tabla 11
+    ky: 1.25
+    nota_kc: "FAO-56 Tabla 12, maíz de grano; Kc final de grano seco en campo"
+
+  maiz_corto:
+    nombre: maíz de ciclo corto (ICTA B-5)
+    familia: Poaceae
+    kc: { ini: 0.30, med: 1.20, fin: 0.35 }
+    etapas_dias: [15, 25, 30, 20]              # 90 días: ICTA B-5 «ciclo de tres meses» (ICTA 2015, p. 2)
+    ky: 1.25
+    nota_kc: "Mismo Kc que el maíz de grano; solo cambia la duración"
+
+  frijol:
+    nombre: frijol
+    familia: Fabaceae
+    kc: { ini: 0.40, med: 1.15, fin: 0.35 }
+    etapas_dias: [15, 25, 25, 15]              # 80 días; supuesto (frijol de postrera)
+    ky: 1.15
+    nota_kc: "FAO-56 Tabla 12, frijol seco"
+
+  sorgo:
+    nombre: sorgo (maicillo)
+    familia: Poaceae
+    kc: { ini: 0.30, med: 1.05, fin: 0.55 }
+    etapas_dias: [16, 28, 32, 24]              # 100 días: ICTA Blanco (MAGA 2026); proporción de FAO-56 Tabla 11
+    ky: 0.90
+    nota_kc: "FAO-56 Tabla 12, sorgo de grano (Kc medio 1.00-1.10)"
+
+  caupi:
+    nombre: caupí (frijol alacín)
+    familia: Fabaceae
+    kc: { ini: 0.40, med: 1.05, fin: 0.35 }
+    etapas_dias: [15, 20, 25, 15]              # 75 días; supuesto
+    ky: null                                   # sin valor en FAO-33 ni FAO-66: el motor usa 1.0 y lo declara
+    nota_kc: "FAO-56 Tabla 12, «Green Gram and Cowpeas»; Kc final de grano seco (nota 6)"
+
+  canavalia:
+    nombre: canavalia (abono verde)
+    familia: Fabaceae
+    kc: null                                   # sin Kc en FAO-56: su consumo de agua no se modela (vacío declarado)
+    etapas_dias: null
+    ky: null
+    nota_kc: "Cobertura y abono verde; no está en FAO-56"
+
+  ayote:
+    nombre: ayote
+    familia: Cucurbitaceae
+    kc: null                                   # va asociado al maíz: su agua no se modela aparte (vacío declarado)
+    etapas_dias: null
+    ky: null
+    nota_kc: "Asociado en la milpa; no se modela su consumo de agua"
+
+  gandul:
+    nombre: gandul
+    familia: Fabaceae
+    kc: null                                   # sin Kc en FAO-56 Tabla 12: no se modela (vacío declarado)
+    etapas_dias: null
+    ky: null
+    nota_kc: "Arbusto leguminoso que sigue verde en la época seca; no está en FAO-56"

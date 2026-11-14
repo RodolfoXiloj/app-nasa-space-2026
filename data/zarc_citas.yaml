@@ -1,0 +1,34 @@
+# Citas literales de ZARC (Zonificación Agroclimática del Riesgo, FAO y MAGA).
+#
+# REGLA: ZARC se CITA, nunca se calcula. El motor solo busca por municipio, cultivo y temporada
+# y copia `texto_literal`. No hace aritmética con fechas y el escenario no cambia la cita.
+#
+# Búsqueda del 13 nov 2026: NO hay ningún documento público con ventanas o semanas de siembra por
+# municipio (Jocotán, Camotán, Olopa, San Juan Ermita ni Zacapa). ZARC es un software instalado en las
+# computadoras de la DIGEGR (MAGA) y no publica resultados. Por eso `registros` sigue vacío y la
+# tarjeta remite al extensionista. NO inventar ventanas de siembra.
+#
+# Formato de cada registro por municipio (todos los campos son obligatorios):
+#   - municipio: Jocotán
+#     cultivo: maiz            # maiz | frijol | sorgo
+#     temporada: primera       # primera | postrera
+#     texto_literal: "..."     # copiado tal cual del documento
+#     documento: "..."
+#     institucion: "FAO y MAGA"
+#     anio: 2025
+#     url: "https://..."
+#     pagina: "..."
+#     fecha_consulta: "2026-11-14"
+
+enlace_general: "https://www.maga.gob.gt/herramienta-digital-zarc-mejorara-decisiones-de-siembra/"
+
+registros: []
+
+# Referencias publicadas a nivel de departamento. NO son la ventana de ZARC para el municipio: la
+# tarjeta las muestra como contexto, entre comillas, con su fuente, y sigue remitiendo al extensionista.
+referencias_departamento:
+  - departamentos: [Chiquimula, Zacapa]
+    texto_literal: "específicamente en Chiquimula, Quiché y Zacapa… la ZARC determinó un ajuste estratégico: mover las fechas de siembra de mayo a junio"
+    fuente: "La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos», abril de 2026 (nota de prensa sobre ZARC)"
+    url: "https://www.laestrella.com.pa/economia/paises-del-corredor-seco-afinan-siembras-con-datos-climaticos-guatemala-honduras-y-el-salvador-usan-datos-historicos-del-clima-para-definir-siembras-DL21804689"
+    fecha_consulta: "2026-11-13"

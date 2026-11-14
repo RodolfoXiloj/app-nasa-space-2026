@@ -1,0 +1,40 @@
+# Glosario en lenguaje simple. TODO(Iván): revisar redacción con alguien del campo.
+glosario:
+  - termino: NDVI
+    definicion: "Índice de verdor que calcula el satélite con la luz que reflejan las plantas. Cerca de cero es suelo desnudo; cuanto más alto, más verde y tupida está la parcela."
+  - termino: Suelo desnudo
+    definicion: "Meses en que el satélite ve muy poco verde en la parcela. Sin cobertura, el sol seca la tierra y la lluvia la arrastra."
+  - termino: Evapotranspiración
+    definicion: "Agua que se va al aire desde el suelo y desde las hojas. Es lo que la planta «gasta» cada día."
+  - termino: ET0
+    definicion: "Evapotranspiración de referencia: lo que gastaría un pasto bien regado con el clima de ese día. Se calcula con la temperatura (método de Hargreaves, FAO-56)."
+  - termino: Coeficiente de cultivo (Kc)
+    definicion: "Multiplica la ET0 para saber cuánta agua pide cada cultivo según su etapa: poco al nacer, más al florear."
+  - termino: Déficit de agua
+    definicion: "Parte del agua que el cultivo necesita y que la lluvia no alcanza a dar. Cero quiere decir que la lluvia alcanzó."
+  - termino: Canícula
+    definicion: "Racha de días secos a mitad de la temporada de lluvias, entre junio y agosto. Si se alarga, daña al maíz cuando florea."
+  - termino: Anomalía
+    definicion: "Cuánto se aleja un año de lo normal en ese lugar. Una anomalía negativa de lluvia es un año más seco que el promedio."
+  - termino: Resolución
+    definicion: "Tamaño del cuadro más pequeño que ve un dato. MODIS ve cuadros de 250 m; NASA POWER, de unos 50 km: no es su parcela, es la zona."
+  - termino: Satélite y medición en tierra
+    definicion: "El satélite mide desde arriba y cubre todo el país, pero con menos detalle. Una estación o un pluviómetro mide justo en un punto. Lo mejor es comparar los dos."
+  - termino: Confianza
+    definicion: "Qué tan seguros estamos de la recomendación. Baja si faltan datos, si el satélite vio nubes o si dos fuentes no coinciden."
+  - termino: SMAP
+    definicion: "Satélite de la NASA que mide la humedad de los primeros centímetros del suelo, en cuadros de unos 9 km."
+  - termino: Rastrojo en pie
+    definicion: "Dejar los restos del cultivo en la parcela después de cosechar, sin quemarlos. Protege el suelo en la época seca."
+  - termino: Abono verde
+    definicion: "Planta, casi siempre leguminosa, que se siembra para cubrir y alimentar el suelo, no para cosechar."
+  - termino: Poca cobertura
+    definicion: "Meses en que el satélite ve verde ralo (NDVI entre 0.35 y 0.45): el suelo no está del todo desnudo, pero queda casi descubierto."
+  - termino: CHIRPS
+    definicion: "Estimación de lluvia que combina satélites y pluviómetros, en cuadros de unos 5 km. La usamos para la lluvia de cada parcela porque es más detallada que la de NASA POWER."
+  - termino: IMERG (misión GPM)
+    definicion: "Lluvia medida por la constelación de satélites GPM de la NASA cada media hora. CHIRPS diario la usa para repartir la lluvia de cada 5 días entre los días."
+  - termino: Percentil
+    definicion: "Lugar de un año dentro de todos los años. Percentil 75 quiere decir que 3 de cada 4 años tuvieron un valor más bajo."
+  - termino: Desviación estándar (DE)
+    definicion: "Cuánto suele variar un dato de un año a otro. Una anomalía de −1 DE es un año claramente por debajo de lo normal."

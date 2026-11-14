@@ -1,0 +1,67 @@
+# 5 parcelas de ejemplo del Corredor Seco (Chiquimula y Zacapa).
+#
+# Puntos PROPUESTOS COMO DEFINITIVOS el 13 nov 2026 (ver docs/estado.md y docs/memoria/):
+#  1. Filtro de NDVI por píxel (pipeline/elegir_punto.py): NDVI seco (6 mar-23 abr) < 0.35,
+#     NDVI de lluvia (29 ago-16 oct) >= 0.60, amplitud >= 0.30 y 6 de 9 vecinos iguales, 2022-2024.
+#     Donde no hubo ningún píxel así en +-6 km (Camotán, Olopa) se relajó a NDVI seco < 0.45 y
+#     amplitud >= 0.25: esos puntos tienen "poca cobertura" en época seca, no suelo desnudo.
+#  2. Revisión a ojo con Sentinel-2 cloudless 2021 (EOX, 10 m) del cuadro de 250 m.
+#  3. Cada parcela cae en un píxel distinto de CHIRPS (0.05°), para que la lluvia las separe.
+# Pendiente del equipo: confirmar en campo o con alguien de la zona, y los límites municipales
+# (no se usó un mapa de municipios). `punto_original` guarda el punto provisional de la mañana.
+
+parcelas:
+  - id: jocotan
+    nombre: Parcela de ejemplo en Jocotán
+    municipio: Jocotán
+    departamento: Chiquimula
+    lat: 14.81146
+    lon: -89.39433
+    provisional: false
+    punto_original: {lat: 14.79, lon: -89.37}
+    criterio: estricto
+    nota: "Mosaico de parcelas abiertas al suroeste del casco urbano (Sentinel-2). El punto del plan original (14.79, -89.37) era vegetación densa con casas: NDVI >= 0.59 todo el año."
+
+  - id: camotan
+    nombre: Parcela de ejemplo en Camotán
+    municipio: Camotán
+    departamento: Chiquimula
+    lat: 14.86146
+    lon: -89.37404
+    provisional: false
+    punto_original: {lat: 14.84, lon: -89.33}
+    criterio: relajado
+    nota: "Ladera con mosaico de parcelas y guamil (Sentinel-2). Sin píxeles con suelo desnudo en +-6 km: se eligió el de menor cobertura seca con 9 de 9 vecinos iguales, en otro píxel de CHIRPS que Jocotán."
+
+  - id: olopa
+    nombre: Parcela de ejemplo cerca de Olopa
+    municipio: Olopa
+    departamento: Chiquimula
+    lat: 14.66563
+    lon: -89.29358
+    provisional: false
+    punto_original: {lat: 14.70, lon: -89.34}
+    criterio: relajado
+    nota: "Llano abierto con pastos o cultivos a ~6 km al sureste del punto original (Sentinel-2). Falta confirmar que esté dentro del municipio de Olopa y no en Esquipulas."
+
+  - id: san_juan_ermita
+    nombre: Parcela de ejemplo en San Juan Ermita
+    municipio: San Juan Ermita
+    departamento: Chiquimula
+    lat: 14.78646
+    lon: -89.42065
+    provisional: false
+    punto_original: {lat: 14.77, lon: -89.44}
+    criterio: estricto
+    nota: "Parcelas abiertas en barbecho en ladera (Sentinel-2). Queda entre San Juan Ermita y Jocotán: confirmar el límite municipal."
+
+  - id: zacapa
+    nombre: Parcela de ejemplo en Zacapa
+    municipio: Zacapa
+    departamento: Zacapa
+    lat: 14.94062
+    lon: -89.56
+    provisional: false
+    punto_original: {lat: 14.94, lon: -89.55}
+    criterio: estricto
+    nota: "Ladera seca al sur de la ciudad. El filtro de NDVI no distingue la milpa del bosque seco caducifolio, que también se seca en verano: punto con incertidumbre, revisar en campo."

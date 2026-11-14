@@ -1,0 +1,205 @@
+# Cita de cada fuente de datos y método. NASA puede retirar premios por fuentes sin citar:
+# toda fuente que use el motor o la web debe estar aquí. La web las muestra todas.
+fuentes:
+  - id: modis_mod13q1
+    nombre: "MODIS/Terra MOD13Q1 v061: índice de vegetación (NDVI) de 16 días a 250 m"
+    cita: "Didan, K. (2021). MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V061. NASA EOSDIS Land Processes DAAC. doi:10.5067/MODIS/MOD13Q1.061"
+    url: "https://doi.org/10.5067/MODIS/MOD13Q1.061"
+    resolucion: "250 m, 16 días"
+    es_nasa: true
+
+  - id: ornl_subsets
+    nombre: "ORNL DAAC: servicio de subconjuntos MODIS/VIIRS por punto"
+    cita: "ORNL DAAC (2018). Terrestrial Ecology Subsetting & Visualization Services (TESViS) Global Subsets Tool: MODIS/VIIRS Land Products. ORNL DAAC, Oak Ridge, Tennessee, USA. doi:10.3334/ORNLDAAC/1379"
+    url: "https://modis.ornl.gov/data/modis_webservice.html"
+    resolucion: null
+    es_nasa: true
+
+  - id: firms_viirs
+    nombre: "FIRMS: focos de calor VIIRS S-NPP 375 m (archivo anual de Guatemala)"
+    cita: "NASA FIRMS (Fire Information for Resource Management System). VIIRS (S-NPP) I Band 375 m Active Fire Product: procesamiento estándar VNP14IMG v002, doi:10.5067/VIIRS/VNP14IMG.002, y casi en tiempo real VNP14IMGT_NRT v2, doi:10.5067/FIRMS/VIIRS/VNP14IMGT_NRT.002. 2026 con MAP_KEY: estándar hasta el 31 jul y casi en tiempo real después."
+    url: "https://firms.modaps.eosdis.nasa.gov/country/"
+    resolucion: "375 m"
+    es_nasa: true
+
+  - id: nasa_power
+    nombre: "NASA POWER (comunidad AG): lluvia, temperatura y humedad de raíz"
+    cita: "These data were obtained from the NASA Langley Research Center (LaRC) POWER Project funded through the NASA Earth Science/Applied Science Program."
+    url: "https://power.larc.nasa.gov/"
+    resolucion: "0.5° x 0.625° (~50 km)"
+    es_nasa: true
+
+  - id: srtm
+    nombre: "SRTM 90 m (altitud y pendiente) vía OpenTopoData"
+    cita: "NASA JPL (2013). NASA Shuttle Radar Topography Mission Global 3 arc second (SRTMGL3) v003. NASA EOSDIS Land Processes DAAC. doi:10.5067/MEaSUREs/SRTM/SRTMGL3.003. Consultado con la API pública de OpenTopoData (dataset srtm90m, que usa SRTMGL3.003)."
+    url: "https://www.opentopodata.org/datasets/srtm/"
+    resolucion: "90 m"
+    es_nasa: true
+
+  - id: soilgrids
+    nombre: "SoilGrids 2.0 (ISRIC): arcilla, carbono orgánico y pH"
+    cita: "Poggio, L., de Sousa, L. M., Batjes, N. H., Heuvelink, G. B. M., Kempen, B., Ribeiro, E. y Rossiter, D. (2021). SoilGrids 2.0: producing soil information for the globe with quantified spatial uncertainty. SOIL, 7, 217-240. doi:10.5194/soil-7-217-2021"
+    url: "https://soilgrids.org/"
+    resolucion: "250 m"
+    es_nasa: false
+
+  - id: chirps
+    nombre: "CHIRPS v3.0 mensual (región latam): lluvia por satélite y estaciones (no es NASA)"
+    cita: "Climate Hazards Center, UC Santa Barbara. CHIRPS v3.0, datos mensuales (data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/latam/). Método base: Funk, C. et al. (2015). The climate hazards infrared precipitation with stations - a new environmental record for monitoring extremes. Scientific Data, 2, 150066. doi:10.1038/sdata.2015.66. El README de CHIRPS v3.0 (consultado el 13 nov 2026) no trae una cita propia de la versión 3.0. Julio y agosto de 2026, de la misma carpeta del producto final, solo se usan en la observación de 2026 de la validación."
+    url: "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/latam/"
+    resolucion: "0.05° (~5 km)"
+    es_nasa: false
+
+  - id: smap
+    nombre: "SMAP L3 mejorado (SPL3SMP_E): humedad superficial del suelo a 9 km"
+    cita: "O'Neill, P. E. et al. SMAP Enhanced L3 Radiometer Global and Polar Grid Daily 9 km EASE-Grid Soil Moisture (SPL3SMP_E), versión 6. NASA National Snow and Ice Data Center DAAC. doi:10.5067/M20OXIZHY3RJ. Extraído por punto con AppEEARS; solo datos con calidad recomendada."
+    url: "https://nsidc.org/data/spl3smp_e"
+    resolucion: "9 km, diario"
+    es_nasa: true
+
+  - id: chirps_diario
+    nombre: "CHIRPS v3.0 diario 'sat': lluvia de junio a agosto para la canícula (no es NASA; usa NASA IMERG)"
+    cita: "Climate Hazards Center, UC Santa Barbara. CHIRPS v3.0 diario, versión 'sat' (data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/sat/). Según su README, no es un producto diario independiente: reparte el total de cada péntada de CHIRPS con el reparto diario de NASA IMERG Late V07."
+    url: "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/"
+    resolucion: "0.05° (~5 km), diario"
+    es_nasa: false
+
+  - id: imerg
+    nombre: "NASA GPM IMERG Late V07: reparto diario de la lluvia de CHIRPS (vía CHIRPS v3 'sat')"
+    cita: "Huffman, G. J., Stocker, E. F., Bolvin, D. T., Nelkin, E. J. y Tan, J. (2023). GPM IMERG Late Precipitation L3 Half Hourly 0.1 degree x 0.1 degree V07. Greenbelt, MD: Goddard Earth Sciences Data and Information Services Center (GES DISC). doi:10.5067/GPM/IMERG/3B-HH-L/07. No se descargó directamente: lo usa el CHC para repartir por días la lluvia de CHIRPS v3 'sat'."
+    url: "https://doi.org/10.5067/GPM/IMERG/3B-HH-L/07"
+    resolucion: "0.1°, media hora"
+    es_nasa: true
+
+  - id: appeears
+    nombre: "AppEEARS (NASA LP DAAC): extracción por punto de SMAP"
+    cita: "AppEEARS Team (2026). Application for Extracting and Exploring Analysis Ready Samples (AppEEARS). NASA EOSDIS Land Processes Distributed Active Archive Center (LP DAAC), USGS/Earth Resources Observation and Science (EROS) Center, Sioux Falls, South Dakota, USA. Tarea 7c0fd22c-78e9-46d9-9f84-15d8447e9cf8."
+    url: "https://appeears.earthdatacloud.nasa.gov/"
+    resolucion: null
+    es_nasa: true
+
+  - id: gibs
+    nombre: "NASA GIBS: capas del mapa (color real y NDVI)"
+    cita: "We acknowledge the use of imagery provided by services from NASA's Global Imagery Browse Services (GIBS), part of NASA's Earth Science Data and Information System (ESDIS)."
+    url: "https://www.earthdata.nasa.gov/engage/open-data-services-software/earthdata-developer-portal/gibs-api"
+    resolucion: "según la capa"
+    es_nasa: true
+
+  - id: fao56
+    nombre: "FAO-56: evapotranspiración de referencia (Hargreaves) y coeficientes de cultivo"
+    cita: "Allen, R. G., Pereira, L. S., Raes, D. y Smith, M. (1998). Crop evapotranspiration: Guidelines for computing crop water requirements. FAO Irrigation and Drainage Paper 56. Roma: FAO."
+    url: "https://www.fao.org/4/x0490e/x0490e00.htm"
+    resolucion: null
+    es_nasa: false
+
+  - id: fao33
+    nombre: "FAO-33 y FAO-66: respuesta del rendimiento al agua (Ky)"
+    cita: "Steduto, P., Hsiao, T. C., Fereres, E. y Raes, D. (2012). Crop yield response to water. FAO Irrigation and Drainage Paper 66, cap. 2, Tabla 1 «Seasonal Ky values from FAO Irrigation and Drainage Paper No. 33», p. 7: maíz 1.25, frijol 1.15, sorgo 0.9. Original: Doorenbos, J. y Kassam, A. H. (1979), FAO Irrigation and Drainage Paper 33."
+    url: "https://www.fao.org/4/i2800e/i2800e02.pdf"
+    resolucion: null
+    es_nasa: false
+
+  - id: icta_maiz_2015
+    nombre: "ICTA: recomendaciones técnicas para maíz en el oriente de Guatemala (variedades ICTA B-5 y B-7)"
+    cita: "ICTA (2015). Recomendaciones técnicas para el cultivo de maíz en el oriente de Guatemala, p. 2."
+    url: "https://www.icta.gob.gt/publicaciones/Maiz/Recomendaciones%20tecnicas%20para%20el%20cultivo%20de%20maiz%20en%20el%20oriente%20de%20Guatemala%202015.pdf"
+    resolucion: null
+    es_nasa: false
+
+  - id: icta_abonos_2022
+    nombre: "ICTA: abonos verdes (canavalia, mucuna, gandul) en el corredor seco"
+    cita: "Rodas, A. (2022). Abonos verdes. Boletín ICTA, octubre 2022, pp. 3-4."
+    url: "https://www.icta.gob.gt/publicaciones%202022/boletines/Bolet%C3%ADn%20octubre%202022.pdf"
+    resolucion: null
+    es_nasa: false
+
+  - id: icta_sorgo
+    nombre: "ICTA: Programa de Sorgo y variedad ICTA Blanco"
+    cita: "ICTA, Programa de Sorgo (icta.gob.gt/sorgo); MAGA (3 sep 2026), Nueva variedad de sorgo, alternativa para la alimentación y mejora de producción de granos básicos."
+    url: "https://www.icta.gob.gt/sorgo"
+    resolucion: null
+    es_nasa: false
+
+  - id: maga_mta_chiquimula
+    nombre: "MAGA: Mesa Técnica Agroclimática de Chiquimula, boletín 21 (ago-oct 2025)"
+    cita: "MAGA (2025). Boletín 21 de la Mesa Técnica Agroclimática de Chiquimula, p. 9: conservación de suelo, cobertura, no quema y policultivos de ayote, maíz y frijol."
+    url: "https://www.maga.gob.gt/download/16-25chiquimula3.pdf"
+    resolucion: null
+    es_nasa: false
+
+  - id: cimmyt_menu_2024
+    nombre: "CIMMYT: menú tecnológico de maíz y frijol en el Oriente de Guatemala (2024)"
+    cita: "Vilchis Ramos, R. y Fonteyne, S. (2024). Menú tecnológico – Maíz y frijol en el Oriente de Guatemala, actualización 2024. CIMMYT, p. 4 (ensayo de quema y rastrojo en San Juan Ermita, primera 2023)."
+    url: "https://repository.cimmyt.org/server/api/core/bitstreams/a7d92b85-a5dc-499e-b647-8dbf20f36a25/content"
+    resolucion: null
+    es_nasa: false
+
+  - id: fao_corredor_seco_2012
+    nombre: "FAO: estudio de caracterización del Corredor Seco Centroamericano, Tomo I (2012)"
+    cita: "FAO (2012). Estudio de caracterización del Corredor Seco Centroamericano, Tomo I, pp. 21 (maíz con maicillo) y 55 (frijol alacín o caupí)."
+    url: "https://coin.fao.org/coin-static/cms/media/15/13588825131310/tomo_i_corredor_seco-ar.pdf"
+    resolucion: null
+    es_nasa: false
+
+  - id: bioversity_tepari
+    nombre: "Bioversity International: frijol tepari en Guatemala"
+    cita: "Amaya, N. et al. Identificación de oportunidades para la comercialización de frijol tepari en Guatemala. Bioversity International (estudio de campo de 2017; año de publicación por confirmar)."
+    url: "https://cgspace.cgiar.org/server/api/core/bitstreams/9964fd5e-e848-4cf3-963b-1b2c72516e3c/content"
+    resolucion: null
+    es_nasa: false
+
+  - id: fao_giews_2018
+    nombre: "FAO GIEWS: pérdidas por la sequía de 2018 en Centroamérica"
+    cita: "FAO GIEWS Update – Central America, 27 de agosto de 2018: Guatemala, 175 126 ha de maíz y frijol perdidas y 1 290 785 personas afectadas (estimación del MAGA, 13 ago 2018); Chiquimula entre los departamentos más afectados."
+    url: "https://www.fao.org/3/CA1321EN/ca1321en.pdf"
+    resolucion: null
+    es_nasa: false
+
+  - id: prensa_zarc_2026
+    nombre: "Nota de prensa sobre ZARC en el Corredor Seco (abril de 2026)"
+    cita: "La Estrella de Panamá (abril de 2026). Países del Corredor Seco afinan siembras con datos climáticos. Se cita como referencia por departamento; no es la ventana de ZARC por municipio."
+    url: "https://www.laestrella.com.pa/economia/paises-del-corredor-seco-afinan-siembras-con-datos-climaticos-guatemala-honduras-y-el-salvador-usan-datos-historicos-del-clima-para-definir-siembras-DL21804689"
+    resolucion: null
+    es_nasa: false
+
+  - id: zarc
+    nombre: "ZARC: Zonificación Agroclimática del Riesgo (FAO y MAGA)"
+    cita: "MAGA (18 feb 2025). Herramienta digital ZARC mejorará decisiones de siembra. ZARC (FAO y MAGA) es un software de la DIGEGR que da la semana de siembra de maíz y frijol; no publica ventanas por municipio. Se cita; Milpa Resiliente no recalcula fechas."
+    url: "https://www.maga.gob.gt/herramienta-digital-zarc-mejorara-decisiones-de-siembra/"
+    resolucion: null
+    es_nasa: false
+
+  - id: sentinel2_cloudless
+    nombre: "Sentinel-2 cloudless 2021 (EOX): imagen de 10 m para revisar los puntos y capa del mapa"
+    cita: "Sentinel-2 cloudless - https://s2maps.eu by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2021). Licencia CC BY-NC-SA 4.0."
+    url: "https://s2maps.eu"
+    resolucion: "10 m"
+    es_nasa: false
+
+  - id: openstreetmap
+    nombre: "Mapa base de OpenStreetMap"
+    cita: "© Colaboradores de OpenStreetMap, datos con licencia ODbL."
+    url: "https://www.openstreetmap.org/copyright"
+    resolucion: null
+    es_nasa: false
+
+  - id: fews_net_2026
+    nombre: "FEWS NET: actualización de la perspectiva de seguridad alimentaria de Guatemala, agosto 2026 (observación de 2026)"
+    cita: "FEWS NET (2026). Guatemala: Retrasos y pérdidas de cosechas en el Corredor Seco prolongarán la dependencia del mercado. Actualización de agosto 2026, información al 31 ago 2026. Coincide con CHIRPS, pero no es una confirmación independiente: su mapa de lluvia es del Climate Hazards Center."
+    url: "https://fews.net/es/latin-america-and-caribbean/guatemala/actualizacion-de-la-perspectiva-de-seguridad-alimentaria/agosto-2026"
+    resolucion: null
+    es_nasa: false
+
+  - id: prensa_libre_2026
+    nombre: "Prensa Libre (1 sep 2026): evaluación de Oxfam y Acción contra el Hambre en el corredor seco (observación de 2026)"
+    cita: "Ola, A. L. (2026, 1 de septiembre). Sequía golpea el maíz: estudio documenta graves pérdidas en 36 mil hogares del corredor seco. Prensa Libre. La nota no aclara si los hogares son evaluados o estimados."
+    url: "https://www.prensalibre.com/guatemala/comunitario/sequia-golpea-el-maiz-estudio-documenta-graves-perdidas-en-36-mil-hogares-del-corredor-seco/"
+    resolucion: null
+    es_nasa: false
+
+  - id: canal_antigua_2026
+    nombre: "Canal Antigua (25 sep 2026): familias afectadas por la sequía en Chiquimula y Jutiapa (observación de 2026)"
+    cita: "Canal Antigua (2026, 25 de septiembre). Sequía persiste pese a alivio temporal de lluvias: 113 mil familias siguen afectadas en Chiquimula y Jutiapa."
+    url: "https://canalantigua.tv/2026/09/25/sequia-persiste-pese-a-alivio-temporal-de-lluvias-113-mil-familias-siguen-afectadas-en-chiquimula-y-jutiapa/"
+    resolucion: null
+    es_nasa: false

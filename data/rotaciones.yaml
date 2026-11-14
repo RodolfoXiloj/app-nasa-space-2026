@@ -1,0 +1,183 @@
+# Biblioteca de rotaciones. Fuentes verificadas el 13 nov 2026 (detalle en docs/memoria/ y fuentes.yaml).
+#
+# Campos:
+#   tipo: actual | leguminosa_cobertura | tolerante_sequia
+#   cultivo_declarado: solo para tipo actual; une la plantilla con lo que declara el extensionista
+#   ciclos: temporada, cultivo principal (para agua), asociados (para plagas),
+#           siembra_mes y siembra_dia = SUPUESTO DEL MODELO para simular el agua.
+#           NO es una fecha recomendada: la fecha de siembra se cita de ZARC (data/zarc_citas.yaml).
+#   cubre_meses: meses en que la práctica deja el suelo cubierto (rastrojo en pie o cobertura viva).
+#   leguminosa, cobertura, rastrojo_en_pie, quema: banderas para el puntaje de suelo.
+#   beneficios, vacios, riesgos: textos SIN CIFRAS ni fechas (las cifras las pone el motor y el
+#           validador rechaza cualquier número que no esté en el JSON).
+#   fuente: cita corta; «supuesto» = sin fuente publicada todavía (la web lo muestra como vacío).
+#
+# Pendiente (Iván / agrónomo): revisar las reglas de puntaje con alguien del campo.
+
+rotaciones:
+  - id: actual_maiz_frijol
+    nombre: "Lo que hace hoy: maíz con frijol en primera y frijol en postrera"
+    tipo: actual
+    cultivo_declarado: maiz_frijol
+    ciclos:
+      - { temporada: primera, cultivo: maiz, asociados: [frijol], siembra_mes: 5, siembra_dia: 25 }
+      - { temporada: postrera, cultivo: frijol, asociados: [], siembra_mes: 9, siembra_dia: 15 }
+    cubre_meses: []
+    leguminosa: true
+    cobertura: false
+    rastrojo_en_pie: false
+    quema: detectada
+    beneficios:
+      - "Es el sistema que la familia ya conoce y para el que tiene semilla."
+      - "El frijol en postrera aprovecha las lluvias del final del año."
+    vacios:
+      - "No sabemos qué variedad de maíz y frijol usa."
+    riesgos:
+      - "Si la canícula se alarga, el maíz sufre justo cuando está floreando."
+    fuente: "Sistema tradicional de primera y postrera del oriente de Guatemala (ICTA, Recomendaciones técnicas para el cultivo de maíz en el oriente de Guatemala, 2015)"
+
+  - id: actual_maiz_solo
+    nombre: "Lo que hace hoy: maíz solo en primera"
+    tipo: actual
+    cultivo_declarado: maiz_solo
+    ciclos:
+      - { temporada: primera, cultivo: maiz, asociados: [], siembra_mes: 5, siembra_dia: 25 }
+    cubre_meses: []
+    leguminosa: false
+    cobertura: false
+    rastrojo_en_pie: false
+    quema: detectada
+    beneficios:
+      - "Un solo cultivo es más fácil de manejar."
+    vacios:
+      - "No sabemos qué variedad de maíz usa."
+    riesgos:
+      - "Repetir maíz año con año favorece plagas del suelo y del cogollo."
+      - "Sin postrera, el suelo queda más tiempo sin cultivo."
+    fuente: "supuesto inicial; describe el monocultivo de maíz de primera"
+
+  - id: actual_sorgo
+    nombre: "Lo que hace hoy: sorgo (maicillo) en primera"
+    tipo: actual
+    cultivo_declarado: sorgo
+    ciclos:
+      - { temporada: primera, cultivo: sorgo, asociados: [], siembra_mes: 5, siembra_dia: 25 }
+    cubre_meses: []
+    leguminosa: false
+    cobertura: false
+    rastrojo_en_pie: false
+    quema: detectada
+    beneficios:
+      - "El sorgo aguanta mejor la sequía que el maíz."
+    vacios:
+      - "No sabemos si su maicillo es criollo de ciclo largo o mejorado de ciclo corto."
+    riesgos:
+      - "Los pájaros pueden comerse el grano si no se protege."
+    fuente: "ICTA, Programa de Sorgo (icta.gob.gt/sorgo): en el corredor seco el sorgo complementa o sustituye al maíz"
+
+  - id: leguminosa_canavalia
+    nombre: "Maíz con canavalia en primera, frijol en postrera y rastrojo en pie"
+    tipo: leguminosa_cobertura
+    ciclos:
+      - { temporada: primera, cultivo: maiz, asociados: [canavalia], siembra_mes: 5, siembra_dia: 25 }
+      - { temporada: postrera, cultivo: frijol, asociados: [], siembra_mes: 9, siembra_dia: 15 }
+    cubre_meses: [12, 1, 2, 3]
+    leguminosa: true
+    cobertura: true
+    rastrojo_en_pie: true
+    quema: false
+    beneficios:
+      - "La canavalia y el rastrojo cubren el suelo en la época seca."
+      - "La canavalia es leguminosa: aporta nitrógeno y materia orgánica."
+      - "Sin quema, el suelo guarda más humedad y se lava menos, como recomienda la Mesa Técnica Agroclimática de Chiquimula."
+    vacios:
+      - "El consumo de agua de la canavalia no se calcula: no tiene coeficiente de cultivo en FAO-56."
+    riesgos:
+      - "Siembre la canavalia junto con el maíz o hasta unas dos semanas después, como indica ICTA, y vigile que no le haga sombra al maíz."
+      - "En un ensayo de CIMMYT en San Juan Ermita, el primer año dejar de quemar no subió la cosecha: el beneficio es de mediano plazo."
+      - "Dejar el rastrojo en pie choca con la costumbre de pastorear o quemar: hay que acordarlo con la familia."
+    fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 3 (maíz asociado con canavalia); MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 (cobertura y no quema); CIMMYT, Menú tecnológico maíz y frijol en el Oriente de Guatemala, 2024, p. 4"
+
+  - id: leguminosa_milpa
+    nombre: "Milpa completa: maíz, frijol y ayote en primera, frijol en postrera y rastrojo en pie"
+    tipo: leguminosa_cobertura
+    ciclos:
+      - { temporada: primera, cultivo: maiz, asociados: [frijol, ayote], siembra_mes: 5, siembra_dia: 25 }
+      - { temporada: postrera, cultivo: frijol, asociados: [], siembra_mes: 9, siembra_dia: 15 }
+    cubre_meses: [12, 1]
+    leguminosa: true
+    cobertura: true
+    rastrojo_en_pie: true
+    quema: false
+    beneficios:
+      - "El ayote cubre el suelo entre el maíz y frena la erosión en la temporada de lluvia."
+      - "Tres cultivos en la misma parcela reparten el riesgo: si uno falla, quedan los otros."
+    vacios:
+      - "El consumo de agua del ayote no se calcula aparte: va asociado al maíz."
+    riesgos:
+      - "El ayote necesita espacio: con mucha densidad de maíz compite por luz."
+      - "Dejar el rastrojo en pie choca con la costumbre de pastorear o quemar: hay que acordarlo con la familia."
+    fuente: "MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 («Rotar cultivos o policultivos como por ejemplo ayote, maíz y frijol»)"
+
+  - id: leguminosa_gandul
+    nombre: "Maíz con gandul en primera; el gandul sigue verde en la época seca"
+    tipo: leguminosa_cobertura
+    ciclos:
+      - { temporada: primera, cultivo: maiz, asociados: [gandul], siembra_mes: 5, siembra_dia: 25 }
+    cubre_meses: [10, 11, 12, 1, 2, 3]
+    leguminosa: true
+    cobertura: true
+    rastrojo_en_pie: true
+    quema: false
+    beneficios:
+      - "El gandul es un arbusto leguminoso de raíz profunda que sigue verde cuando ya no llueve."
+      - "Da grano y forraje en la época seca y protege el suelo."
+    vacios:
+      - "El consumo de agua del gandul no se calcula: no tiene coeficiente de cultivo en FAO-56."
+      - "Sin postrera de frijol: la familia cambia frijol por gandul ese año."
+    riesgos:
+      - "El gandul ocupa la parcela varios meses: se pierde la postrera de frijol."
+      - "Hay que protegerlo del ganado en la época seca."
+    fuente: "ICTA, Boletín octubre 2022 «Abonos verdes», p. 4 (mucuna, gandul y frijol cachito se adaptan al corredor seco)"
+
+  - id: tolerante_sorgo_caupi
+    nombre: "Sorgo en primera y caupí en postrera, con rastrojo en pie"
+    tipo: tolerante_sequia
+    ciclos:
+      - { temporada: primera, cultivo: sorgo, asociados: [], siembra_mes: 5, siembra_dia: 25 }
+      - { temporada: postrera, cultivo: caupi, asociados: [], siembra_mes: 9, siembra_dia: 10 }
+    cubre_meses: [12, 1]
+    leguminosa: true
+    cobertura: false
+    rastrojo_en_pie: true
+    quema: false
+    beneficios:
+      - "El sorgo pierde menos cosecha que el maíz cuando falta agua: su factor de respuesta al agua en FAO-33 es menor."
+      - "El caupí (frijol alacín) ya se usa en el Corredor Seco como sustituto del frijol."
+    vacios:
+      - "No hay un factor de respuesta al agua publicado para el caupí; el frijol tepary sí está documentado como tolerante a la sequía."
+      - "No sabemos si hay mercado o costumbre de consumo de caupí en la comunidad."
+    riesgos:
+      - "Cambiar maíz por sorgo afecta la tortilla y la seguridad alimentaria de la familia: decidirlo con ella."
+      - "Los pájaros pueden comerse el sorgo si no se protege."
+    fuente: "ICTA, Programa de Sorgo; MAGA, nueva variedad de sorgo ICTA Blanco (3 sep 2026); FAO, Estudio de caracterización del Corredor Seco Centroamericano, Tomo I, 2012, pp. 21 y 55; Bioversity International, frijol tepari en Guatemala"
+
+  - id: tolerante_maiz_corto
+    nombre: "Maíz de ciclo corto ICTA B-5 con frijol en primera y frijol en postrera"
+    tipo: tolerante_sequia
+    ciclos:
+      - { temporada: primera, cultivo: maiz_corto, asociados: [frijol], siembra_mes: 5, siembra_dia: 25 }
+      - { temporada: postrera, cultivo: frijol, asociados: [], siembra_mes: 9, siembra_dia: 1 }
+    cubre_meses: [12]
+    leguminosa: true
+    cobertura: false
+    rastrojo_en_pie: true
+    quema: false
+    beneficios:
+      - "Mantiene el maíz y acorta el tiempo en que la canícula puede dañarlo."
+      - "ICTA la recomienda para lugares con escasez de lluvias en el oriente del país."
+    vacios:
+      - "Hay que confirmar con el técnico que haya semilla certificada de la variedad en la zona."
+    riesgos:
+      - "Una variedad de ciclo corto rinde menos que una de ciclo largo en un año con buena lluvia."
+    fuente: "ICTA, Recomendaciones técnicas para el cultivo de maíz en el oriente de Guatemala, 2015, p. 2 (ICTA B-5, ciclo de tres meses; ICTA B-7, cuatro meses); ICTA 2017, ICTA B-7 TS tolerante a la sequía"
