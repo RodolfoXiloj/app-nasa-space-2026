@@ -6,6 +6,13 @@
 import { MESES } from '../pictos/textos.js'
 
 // El idioma activo vive en web/src/i18n/store.js (uno solo para toda la web, inglés por defecto).
+// Empate en cadena: las opciones parejas no están todas a `margen` puntos o menos entre sí (en Olopa,
+// 87/90/92: la práctica actual y el ICTA B-5 se separan 5, pero la canavalia empata con las dos).
+export function empateEnCadena(ids, porId, margen) {
+  const totales = ids.map((id) => ((porId[id] || {}).puntajes || {}).total).filter((x) => typeof x === 'number')
+  return totales.length > 1 && Math.max(...totales) - Math.min(...totales) > margen
+}
+
 export const IDIOMAS = ['en', 'es']
 export const NOMBRE_IDIOMA = { en: 'English', es: 'Español' }
 
@@ -86,8 +93,10 @@ export const TEXTOS = {
     },
     sinOrden: 'In no particular order.',
     opciones: {
-      empate: (n, margen) =>
-        `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} options come out even: their scores are ${margen} points or less apart. None stands out.`,
+      empate: (n, margen, enCadena) =>
+        enCadena
+          ? `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} options come out even: each is within ${margen} points of another, so none stands out.`
+          : `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} options come out even: their scores are ${margen} points or less apart. None stands out.`,
       una_destaca: 'One option stands out from the others:',
       gris: 'We do not compare the options here because confidence is low.',
       sinComparar: 'This data file does not compare the options.',
@@ -157,8 +166,10 @@ export const TEXTOS = {
     },
     sinOrden: 'Sin orden.',
     opciones: {
-      empate: (n, margen) =>
-        `${n === 2 ? 'Dos' : n === 3 ? 'Tres' : n} opciones quedan parejas: sus puntajes se separan ${margen} puntos o menos. Ninguna se separa lo suficiente.`,
+      empate: (n, margen, enCadena) =>
+        enCadena
+          ? `${n === 2 ? 'Dos' : n === 3 ? 'Tres' : n} opciones quedan parejas: cada una está a ${margen} puntos o menos de otra; ninguna se separa lo suficiente.`
+          : `${n === 2 ? 'Dos' : n === 3 ? 'Tres' : n} opciones quedan parejas: sus puntajes se separan ${margen} puntos o menos. Ninguna se separa lo suficiente.`,
       una_destaca: 'Una opción se separa de las demás:',
       gris: 'Aquí no comparamos las opciones porque la confianza es baja.',
       sinComparar: 'Este archivo de datos no compara las opciones.',

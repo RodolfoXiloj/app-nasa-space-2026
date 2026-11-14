@@ -8,7 +8,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Senal from '../agricultor/Senal.jsx'
-import { TEXTOS } from '../agricultor/textos.js'
+import { TEXTOS, empateEnCadena } from '../agricultor/textos.js'
 import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
 import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
@@ -109,7 +109,7 @@ function Hoja({ idioma, lugar, nombre, farmer, rotaciones, href }) {
       <p className="kit-formas">{k.formas}</p>
       <section className="kit-opciones">
         <h2>{t.opcionesTitulo}</h2>
-        <p>{estadoOp === 'empate' ? t.opciones.empate((op.empatadas || []).length || opciones.length, margen) : t.opciones[estadoOp]}</p>
+        <p>{estadoOp === 'empate' ? t.opciones.empate((op.empatadas || []).length || opciones.length, margen, empateEnCadena(op.empatadas || [], porId, margen)) : t.opciones[estadoOp]}</p>
         <ol>
           {opciones.map(({ id, destaca }) => {
             const rot = porId[id] || {}

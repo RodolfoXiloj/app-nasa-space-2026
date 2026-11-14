@@ -9,7 +9,7 @@ import Senal, { claseSenal } from './Senal.jsx'
 import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
 import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
-import { IDIOMAS, NOMBRE_IDIOMA, TEXTOS } from './textos.js'
+import { IDIOMAS, NOMBRE_IDIOMA, TEXTOS, empateEnCadena } from './textos.js'
 import Escuchar from './Escuchar.jsx'
 import KitParcela from '../kit/index.jsx'
 
@@ -118,7 +118,7 @@ function Opciones({ farmer, rotaciones, idioma }) {
       <h2 id="agr-opciones-titulo" className="agr-subtitulo">{t.opcionesTitulo}</h2>
       <p className={`agr-opciones-estado${enGris ? ' agr-opciones-estado--gris' : ''}`}>
         {enGris && <Senal estado="gris" />}
-        <span>{estado === 'empate' ? t.opciones.empate(lista.length, margen) : t.opciones[estado]}</span>
+        <span>{estado === 'empate' ? t.opciones.empate(lista.length, margen, empateEnCadena(mostradas, porId, margen)) : t.opciones[estado]}</span>
       </p>
       {estado === 'gris' && op.motivo_gris && (
         <p className="agr-hecho-detalle">
