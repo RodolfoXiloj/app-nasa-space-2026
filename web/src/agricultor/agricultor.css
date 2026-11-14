@@ -1,0 +1,258 @@
+/* Vista «Para el agricultor». Todo va bajo .agr para no chocar con web/src/styles.css, que se carga
+   después, con la vista Evidence. Los selectores llevan dos clases para ganarle a los de elemento
+   (button, select, h1-h5) de styles.css aunque ese archivo llegue más tarde.
+
+   Dirección visual: la impresión de un costal de maíz o de abono. Una tinta, rayas gruesas, letra
+   compacta y fuerte; se lee al sol en un teléfono barato. Lo único llamativo son los tres hechos.
+
+   Contraste (WCAG 2.2): el texto va en negro o gris oscuro sobre blanco o sobre los tintes claros
+   (más de 9:1) y en blanco sobre el verde milpa (7.5:1). Las formas llevan borde negro de 3 px, así
+   que se distinguen aunque el color no se vea. Objetivos táctiles de 48 px o más. */
+
+/* Única regla global: styles.css también la pone, pero llega solo con Evidence. Sin ella, la primera
+   pantalla tendría el margen de 8 px del navegador. */
+body { margin: 0; }
+
+.agr {
+  --agr-tinta: #000;
+  --agr-tinta-suave: #3b3b3b;
+  --agr-papel: #fff;
+  --agr-milpa: #1d5a2c;
+  --agr-verde: #2e7d32;
+  --agr-amarillo: #ffd200;
+  --agr-rojo: #c62828;
+  --agr-gris: #e4e4e4;
+  --agr-tinte-verde: #e6f2e6;
+  --agr-tinte-amarillo: #fff3bf;
+  --agr-tinte-rojo: #fbe4e4;
+  --agr-tinte-gris: #f1f1f1;
+  --agr-compacta: 'sans-serif-condensed', 'Roboto Condensed', 'Arial Narrow', 'Segoe UI', system-ui, sans-serif;
+  --agr-margen: max(16px, calc((100% - 40rem) / 2));
+
+  min-height: 100vh;
+  margin: 0;
+  background: var(--agr-papel);
+  color: var(--agr-tinta);
+  font-family: Roboto, 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+.agr *, .agr *::before, .agr *::after { box-sizing: border-box; }
+.agr p { margin: 0; }
+
+.agr .agr-boton {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  min-height: 48px;
+  min-width: 48px;
+  border-radius: 6px;
+  touch-action: manipulation;
+}
+.agr .agr-boton:focus-visible,
+.agr .agr-select:focus-visible {
+  outline: 3px solid var(--agr-tinta);
+  outline-offset: 3px;
+}
+
+/* Cabecera: marca e idioma, con una raya gruesa debajo, de orilla a orilla */
+.agr .agr-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  padding: 10px var(--agr-margen);
+  border-bottom: 4px solid var(--agr-tinta);
+}
+.agr .agr-marca {
+  margin: 0;
+  font-family: var(--agr-compacta);
+  font-size: clamp(1.25rem, 5.4vw, 1.625rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--agr-milpa);
+}
+.agr .agr-idiomas { display: flex; }
+.agr .agr-idioma {
+  padding: 0 14px;
+  border: 2px solid var(--agr-tinta);
+  background: var(--agr-papel);
+  font-weight: 700;
+  font-size: 1rem;
+}
+.agr .agr-idioma:first-child { border-radius: 6px 0 0 6px; }
+.agr .agr-idioma:last-child { border-radius: 0 6px 6px 0; border-left-width: 0; }
+.agr .agr-idioma[aria-pressed='true'] { background: var(--agr-tinta); color: var(--agr-papel); }
+.agr .agr-idioma[aria-pressed='false']:hover { background: var(--agr-tinte-gris); }
+
+.agr .agr-cuerpo { padding: 0 var(--agr-margen) 40px; }
+
+/* Parcela */
+.agr .agr-parcela { padding: 16px 0 4px; }
+.agr .agr-etiqueta { display: block; font-weight: 700; margin-bottom: 6px; }
+.agr .agr-select {
+  display: block;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 12px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--agr-tinta);
+  background: var(--agr-papel);
+  border: 2px solid var(--agr-tinta);
+  border-radius: 6px;
+}
+.agr .agr-nota { margin-top: 6px; color: var(--agr-tinta-suave); font-size: 1rem; }
+
+.agr .agr-subtitulo {
+  margin: 0 0 4px;
+  font-family: var(--agr-compacta);
+  font-size: 1.625rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--agr-tinta);
+}
+.agr .agr-hechos { padding-top: 24px; }
+.agr .agr-entradilla { color: var(--agr-tinta-suave); font-size: 1rem; margin-bottom: 14px; max-width: 34em; }
+
+.agr .agr-banda {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border-left: 6px solid var(--agr-tinta);
+  background: var(--agr-tinte-gris);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Los tres hechos: lo único llamativo de la pantalla. Siempre suelo, quema, canícula. */
+.agr .agr-lista-hechos { list-style: none; margin: 0; padding: 0; border-bottom: 3px solid var(--agr-tinta); }
+.agr .agr-hecho {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 12px 18px;
+  border-top: 3px solid var(--agr-tinta);
+}
+.agr .agr-hecho--verde { background: var(--agr-tinte-verde); }
+.agr .agr-hecho--amarillo { background: var(--agr-tinte-amarillo); }
+.agr .agr-hecho--rojo { background: var(--agr-tinte-rojo); }
+.agr .agr-hecho--gris { background: var(--agr-tinte-gris); }
+.agr .agr-hecho-texto { min-width: 0; }
+.agr .agr-hecho-nombre { margin: 0; font-size: 1.0625rem; font-weight: 700; line-height: 1.3; color: var(--agr-tinta); }
+.agr .agr-hecho-estado {
+  margin: 2px 0 4px;
+  font-family: var(--agr-compacta);
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+.agr .agr-hecho--gris .agr-hecho-estado { font-size: 1.5rem; line-height: 1.15; }
+.agr .agr-hecho-explica { font-size: 1rem; color: var(--agr-tinta-suave); }
+.agr .agr-hecho-conteo { margin-top: 8px; font-weight: 600; }
+.agr .agr-hecho-detalle { margin-top: 2px; font-size: 1rem; }
+.agr .agr-hecho-fuente { margin-top: 6px; font-size: 0.9375rem; color: var(--agr-tinta-suave); }
+
+.agr .agr-senal { display: block; width: 60px; height: 60px; overflow: visible; }
+.agr .agr-senal circle,
+.agr .agr-senal path,
+.agr .agr-senal rect { stroke: var(--agr-tinta); stroke-width: 3; }
+.agr .agr-senal--verde circle { fill: var(--agr-verde); }
+.agr .agr-senal--amarillo path { fill: var(--agr-amarillo); }
+.agr .agr-senal--rojo rect { fill: var(--agr-rojo); }
+.agr .agr-senal--gris circle { fill: var(--agr-gris); }
+.agr .agr-senal text {
+  fill: var(--agr-tinta);
+  font-family: Roboto, 'Segoe UI', system-ui, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+/* Opciones: sin orden ni ganadora salvo que el motor diga que una se separa */
+.agr .agr-opciones { padding-top: 28px; }
+.agr .agr-opciones-estado { margin: 4px 0 10px; }
+.agr .agr-lista-opciones { list-style: none; margin: 0; padding: 0; }
+.agr .agr-opcion {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 0;
+  border-top: 2px solid var(--agr-tinta);
+}
+.agr .agr-lista-opciones .agr-opcion:last-child { border-bottom: 2px solid var(--agr-tinta); }
+.agr .agr-opcion-tipo { font-weight: 700; }
+.agr .agr-opcion-nombre { font-size: 1rem; }
+.agr .agr-opcion--destaca { border: 3px solid var(--agr-tinta); padding: 12px 14px; margin-bottom: 10px; }
+.agr .agr-opcion--hoy { margin-top: 16px; border-top: 2px dashed var(--agr-tinta); }
+.agr .agr-opciones--gris .agr-lista-opciones { background: var(--agr-tinte-gris); padding: 0 12px; }
+
+.agr .agr-confianza { margin-top: 20px; }
+.agr .agr-confianza-titulo { margin: 0; font-size: 1.0625rem; font-weight: 700; color: var(--agr-tinta); }
+.agr .agr-confianza-nivel { font-family: var(--agr-compacta); font-size: 1.5rem; font-weight: 800; }
+
+.agr .agr-aviso {
+  margin: 28px 0 20px;
+  padding: 14px 16px;
+  border: 3px solid var(--agr-tinta);
+  font-weight: 700;
+}
+
+/* Un toque a Evidence */
+.agr .agr-evidencia {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  min-height: 64px;
+  padding: 12px 18px;
+  text-align: left;
+  background: var(--agr-milpa);
+  color: var(--agr-papel);
+  border: 3px solid var(--agr-tinta);
+}
+.agr .agr-evidencia:hover { background: #164a23; }
+.agr .agr-evidencia-titulo { font-family: var(--agr-compacta); font-size: 1.375rem; font-weight: 800; line-height: 1.2; }
+.agr .agr-evidencia-detalle { font-size: 1rem; }
+
+/* Barra de la vista Evidence: vuelve a la vista del agricultor */
+.agr-barra {
+  padding: 8px max(16px, calc((100% - 72rem) / 2));
+  background: #fff;
+  border-bottom: 3px solid #000;
+  font-family: Roboto, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 1.0625rem;
+}
+.agr-barra .agr-boton,
+.agr .agr-boton--linea {
+  font: inherit;
+  font-weight: 700;
+  min-height: 48px;
+  padding: 0 16px;
+  color: #000;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.agr-barra .agr-boton:hover { background: #f1f1f1; }
+.agr-barra .agr-boton:focus-visible { outline: 3px solid #000; outline-offset: 3px; }
+
+.agr.agr-cargando,
+.agr.agr-fallo { min-height: 50vh; padding: 24px 16px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+
+@media (forced-colors: active) {
+  .agr .agr-senal circle,
+  .agr .agr-senal path,
+  .agr .agr-senal rect { stroke: CanvasText; }
+  .agr .agr-senal text { fill: CanvasText; }
+}
+
+@media print {
+  .agr-barra { display: none; }
+  .agr .agr-evidencia, .agr .agr-idiomas { display: none; }
+}

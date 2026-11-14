@@ -16,7 +16,7 @@ const PESTANAS = [
   ['glosario', 'Glosario y fuentes'],
 ]
 
-export default function App() {
+export default function App({ pidInicial = null }) {
   const [indice, setIndice] = useState(null)
   const [pid, setPid] = useState(null)
   const [cultivo, setCultivo] = useState('maiz_frijol')
@@ -39,7 +39,7 @@ export default function App() {
     cargarJSON('data/parcelas.json')
       .then((j) => {
         setIndice(j.parcelas)
-        const primera = j.parcelas.find((p) => p.disponible)
+        const primera = j.parcelas.find((p) => p.id === pidInicial && p.disponible) || j.parcelas.find((p) => p.disponible)
         setPid(primera ? primera.id : '__ejemplo__')
       })
       .catch(() => {

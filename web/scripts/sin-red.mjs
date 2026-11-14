@@ -68,16 +68,27 @@ try {
   await cdp('Page.enable')
   await cdp('Network.setCacheDisabled', { cacheDisabled: true })
   await cdp('Page.navigate', { url: URL_APP })
+
+  // 00. primera pantalla: vista del agricultor, sin descargar el mapa ni las gráficas; Evidence a un toque
+  const diferido = () => [...peticiones.values()].some((p) => /\/assets\/Evidencia-[^/]*\.js$/.test(p.url))
+  const hechos = await hasta(() => ev(`(() => { const h = [...document.querySelectorAll('.agr-hecho')].map((li) => li.dataset.hecho); return h.length === 3 ? h.join(',') : null })()`), 30000)
+  anota(hechos === 'suelo,quema,canicula' && !diferido(), 'Primera pantalla: vista del agricultor con 3 hechos en orden, sin el mapa', hechos || 'no apareció')
+  const idiomaInicio = await ev(`document.documentElement.lang + '/' + document.querySelector('.agr-idioma[aria-pressed="true"]')?.lang`)
+  anota(idiomaInicio === 'en/en', 'Idioma por defecto: inglés en la vista del agricultor', idiomaInicio)
+  await ev(`document.querySelector('.agr-evidencia').click()`)
   await hasta(() => ev(`document.querySelectorAll('.rotacion').length === 3`), 30000)
+  anota((await ev(`location.hash`)) === '#evidence' && diferido(), 'Un toque abre Evidence y ahí se descarga el mapa')
+  const idiomaEvidence = await ev(`document.querySelector('.selector-idioma .activa')?.textContent`)
+  anota(idiomaEvidence === 'English', 'Evidence abre en el mismo idioma (un solo idioma activo)', idiomaEvidence || 'sin selector')
 
   // 0. internet de verdad cortado
   const externo = await ev(`fetch('https://tile.openstreetmap.org/0/0/0.png', {mode: 'no-cors'}).then(() => 'llegó', (e) => 'falló: ' + e.message)`)
   anota(externo.startsWith('falló'), 'Sin internet: una petición a tile.openstreetmap.org', externo)
 
-  // 1. primera pantalla y observación de 2026
+  // 1. vista Evidence y observación de 2026
   anota(await ev(`document.querySelector('h1')?.textContent === 'Milpa Resiliente'`), 'La página abre (título)')
   const obs = await ev(`document.querySelector('.banda-obs')?.textContent || ''`)
-  anota(obs.includes('Observación preliminar') && !/alerta/i.test(obs), 'Observación de 2026 en la primera pantalla, sin «alerta»', obs.slice(0, 90) + '…')
+  anota(obs.includes('Observación preliminar') && !/alerta/i.test(obs), 'Observación de 2026 al abrir Evidence, sin «alerta»', obs.slice(0, 90) + '…')
 
   // 2. las 5 parcelas, con audio
   const ids = await ev(`[...document.querySelector('.controles select').options].map(o => o.value)`)
@@ -114,6 +125,13 @@ try {
   // captura de la primera pantalla
   const cap = await cdp('Page.captureScreenshot', { format: 'png' })
   writeFileSync(join(SP, 'primera_pantalla_sin_red.png'), Buffer.from(cap.result.data, 'base64'))
+
+  // 5b. cambiar a español en Evidence y volver: la vista del agricultor sigue en español
+  await ev(`[...document.querySelectorAll('.selector-idioma button')].find(b => b.textContent === 'Español').click()`)
+  await ev(`document.querySelector('.agr-barra button').click()`)
+  const tituloEs = await hasta(() => ev(`document.querySelector('#agr-titulo')?.textContent || null`), 10000)
+  const langEs = await ev(`document.documentElement.lang`)
+  anota(tituloEs === 'Lo que el satélite vio en esta parcela' && langEs === 'es', 'Español elegido en Evidence sigue al volver a la vista del agricultor', `${langEs}: ${tituloEs}`)
 
   // 6. qué pidió la página: lo local debe responder y lo externo fallar
   const todas = [...peticiones.values()].filter((p) => p.url.startsWith('http'))
