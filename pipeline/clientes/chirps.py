@@ -235,16 +235,34 @@ def extraer_mes(anio: int, mes: int, pixeles: list[tuple[int, int]]) -> dict[str
 URL_DIARIO = ("https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/sat/{anio}/"
               "chirps-v3.0.sat.{anio}.{mes:02d}.{dia:02d}.tif")
 GEO_DIARIO = (-180.0, 60.0, 0.05)  # verificado el 13 nov 2026 en el TIFF diario global (7200 x 2400)
+# Versión 'rnl': la misma péntada de CHIRPS repartida por días con ECMWF ERA5. Verificado el 14 nov 2026:
+# existe la carpeta daily/final/rnl/ (1981-2026), los nombres son chirps-v3.0.rnl.AAAA.MM.DD.tif y el TIFF
+# tiene la misma malla (origen -180, 60; píxel de 0.05°) y el mismo formato (float32, LZW, una fila por franja).
+URL_DIARIO_RNL = ("https://data.chc.ucsb.edu/products/CHIRPS/v3.0/daily/final/rnl/{anio}/"
+                  "chirps-v3.0.rnl.{anio}.{mes:02d}.{dia:02d}.tif")
+VERSIONES_DIARIO = {
+    "sat": {"url": URL_DIARIO, "carpeta": "chirps_diario",
+            "producto": "CHIRPS v3.0 diario 'sat' (péntada de CHIRPS repartida con NASA IMERG Late V07)"},
+    "rnl": {"url": URL_DIARIO_RNL, "carpeta": "chirps_diario_rnl",
+            "producto": "CHIRPS v3.0 diario 'rnl' (péntada de CHIRPS repartida con el reanálisis ECMWF ERA5)"},
+}
 
 
-def extraer_dia(fecha: str, pixeles: list[tuple[int, int]]) -> dict[str, float | None]:
-    """{"fila,col": mm} de un día de CHIRPS v3 diario 'sat' (péntada de CHIRPS repartida con NASA IMERG)."""
+def _version_diario(version: str) -> dict:
+    if version not in VERSIONES_DIARIO:
+        raise ValueError(f"Versión de CHIRPS diario desconocida: {version!r} (use 'sat' o 'rnl')")
+    return VERSIONES_DIARIO[version]
+
+
+def extraer_dia(fecha: str, pixeles: list[tuple[int, int]], version: str = "sat") -> dict[str, float | None]:
+    """{"fila,col": mm} de un día de CHIRPS v3 diario: 'sat' (reparto con NASA IMERG) o 'rnl' (con ERA5)."""
+    v = _version_diario(version)
     clave = "_".join(f"{f}-{c}" for f, c in sorted(set(pixeles)))
-    ruta = cache.RAW_BIG / "chirps_diario" / f"{fecha}_{hashlib.md5(clave.encode()).hexdigest()[:8]}.json"
+    ruta = cache.RAW_BIG / v["carpeta"] / f"{fecha}_{hashlib.md5(clave.encode()).hexdigest()[:8]}.json"
     if ruta.exists():
         return json.loads(ruta.read_text(encoding="utf-8"))
     a, m, d = (int(x) for x in fecha.split("-"))
-    filas = leer_columnas_ligero(URL_DIARIO.format(anio=a, mes=m, dia=d), sorted({f for f, _ in pixeles}),
+    filas = leer_columnas_ligero(v["url"].format(anio=a, mes=m, dia=d), sorted({f for f, _ in pixeles}),
                                  max_col=max(c for _, c in pixeles))
     res = {}
     for f, c in pixeles:
@@ -256,14 +274,17 @@ def extraer_dia(fecha: str, pixeles: list[tuple[int, int]]) -> dict[str, float |
 
 
 def descargar_diario(pids: list[str] | None = None, anio_ini: int = 2001, anio_fin: int = 2025,
-                     meses: tuple[int, ...] = (6, 7, 8), hilos: int = 4) -> None:
-    """CHIRPS v3 diario 'sat' en junio-agosto (la canícula) -> data/cache/chirps_diario/{parcela}.json.
+                     meses: tuple[int, ...] = (6, 7, 8), hilos: int = 4, version: str = "sat") -> None:
+    """CHIRPS v3 diario en junio-agosto (la canícula) -> data/cache/chirps_diario/{parcela}.json.
 
     Advertencia del propio CHC (readme): el diario no es un producto independiente; reparte el total de
-    la péntada de CHIRPS con el reparto diario de NASA IMERG Late V07.
+    la péntada de CHIRPS con el reparto diario de NASA IMERG Late V07 ('sat', el que usa el motor).
+    Con version='rnl' baja el reparto con ERA5 a data/cache/chirps_diario_rnl/{parcela}.json, solo para
+    la prueba de sensibilidad de la canícula (pipeline/validacion/sensibilidad_canicula.py); el motor no lo lee.
     """
     from datetime import date, timedelta
 
+    v = _version_diario(version)
     lon0, lat0, paso = GEO_DIARIO
     parcelas = [p for p in cache.cargar_parcelas() if not pids or p["id"] in pids]
     pix = {p["id"]: (int(math.floor((lat0 - p["lat"]) / paso)), int(math.floor((p["lon"] - lon0) / paso)))
@@ -278,22 +299,25 @@ def descargar_diario(pids: list[str] | None = None, anio_ini: int = 2001, anio_f
             d += timedelta(days=1)
     resultados: dict[str, dict] = {}
     with ThreadPoolExecutor(max_workers=hilos) as ex:
-        fut = {ex.submit(extraer_dia, f, lista): f for f in fechas}
+        fut = {ex.submit(extraer_dia, f, lista, version): f for f in fechas}
         for k, f in enumerate(as_completed(fut), 1):
             resultados[fut[f]] = f.result()
             if k % 200 == 0 or k == len(fechas):
-                print(f"[chirps diario] {k}/{len(fechas)} días", flush=True)
+                print(f"[chirps diario {version}] {k}/{len(fechas)} días", flush=True)
     for p in parcelas:
         f, c = pix[p["id"]]
         filas = [[fe, resultados[fe].get(f"{f},{c}")] for fe in fechas]
         datos = {"columnas": ["fecha", "mm"], "filas": filas, "meses": list(meses), "lat": p["lat"], "lon": p["lon"],
                  "pixel": {"fila": f, "col": c}, "resolucion": "0.05° (~5 km), diario"}
-        proc = cache.procedencia(url=URL_DIARIO.format(anio="AAAA", mes=0, dia=0).replace(".00.00", ".MM.DD"),
-                                 producto="CHIRPS v3.0 diario 'sat' (péntada de CHIRPS repartida con NASA IMERG Late V07)",
+        extra = {} if version == "sat" else {"version_reparto": version,
+                                             "uso": "Solo prueba de sensibilidad de la canícula; el motor no lo lee"}
+        proc = cache.procedencia(url=v["url"].format(anio="AAAA", mes=0, dia=0).replace(".00.00", ".MM.DD"),
+                                 producto=v["producto"],
                                  version="3.0", periodo=f"{anio_ini}-{anio_fin}, meses {list(meses)}",
-                                 nota="No es un producto diario independiente (readme del CHC); lectura por rangos")
-        ruta = cache.guardar(cache.CACHE / "chirps_diario" / f"{p['id']}.json", datos, proc)
-        print(f"[chirps diario {p['id']}] {len(filas)} días -> {ruta}")
+                                 nota="No es un producto diario independiente (readme del CHC); lectura por rangos",
+                                 **extra)
+        ruta = cache.guardar(cache.CACHE / v["carpeta"] / f"{p['id']}.json", datos, proc)
+        print(f"[chirps diario {version} {p['id']}] {len(filas)} días -> {ruta}")
 
 
 def descargar(pids: list[str] | None = None, anio_ini: int = 1991, anio_fin: int = 2025, hilos: int = 3) -> dict:
@@ -368,14 +392,16 @@ if __name__ == "__main__":
     ap.add_argument("parcelas", nargs="*")
     ap.add_argument("--desde", type=int, default=1991)
     ap.add_argument("--hasta", type=int, default=2025)
-    ap.add_argument("--diario", action="store_true", help="CHIRPS diario 'sat' de junio a agosto, 2001-2025")
+    ap.add_argument("--diario", action="store_true", help="CHIRPS diario de junio a agosto, 2001-2025")
+    ap.add_argument("--version", choices=sorted(VERSIONES_DIARIO), default="sat",
+                    help="reparto diario: 'sat' (IMERG, el del motor) o 'rnl' (ERA5, solo prueba de sensibilidad)")
     ap.add_argument("--reciente", type=int, metavar="AÑO", help="julio y agosto de ese año, aparte (observación 2026)")
     a = ap.parse_args()
     try:
         if a.reciente:
             descargar_reciente(a.reciente, pids=a.parcelas or None)
         elif a.diario:
-            descargar_diario(a.parcelas or None)
+            descargar_diario(a.parcelas or None, version=a.version)
         else:
             descargar(a.parcelas or None, a.desde, a.hasta)
     except cache.SinRed as e:
