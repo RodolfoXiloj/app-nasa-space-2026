@@ -17,7 +17,7 @@ An AI coding agent (Claude, by Anthropic) wrote most of the code, most of the te
 | Claude (Anthropic), research agent with web search (14 Nov 2026) | Found the impact figures, the tools that already exist and the status of each sensor (Suomi NPP, Terra, CHIRPS v3, POWER) | Decided which figures to use; the ones the agent marked as uncertain were left out. Each figure has its URL in [impact.md](impact.md) |
 | An AI assistant | Compared the project idea with five other ideas before we started building | Chose the idea and the challenge |
 | Claude (Anthropic), coding agent (14 Nov 2026) | Reviewed the documents for consistency with the code and the data and drafted the corrections | Rodolfo approves each merge into `main` |
-| edge-tts (Microsoft neural voices `es-GT-MartaNeural` and `en-US-JennyNeural`) | Reads aloud the text the engine wrote: a short phrase mp3 per plot in Spanish and another in English, each with subtitles; and a longer card mp3 per plot in Spanish and in English (the Evidence page still plays only the Spanish one) | Decided to label the voice as AI-generated everywhere it plays |
+| edge-tts (Microsoft neural voices `es-GT-MartaNeural` and `en-US-JennyNeural`) | Reads aloud the text the engine wrote: a short phrase mp3 per plot in Spanish and another in English, each with subtitles; and a longer card mp3 per plot in Spanish and in English (the Evidence page plays the one that matches the interface language) | Decided to label the voice as AI-generated everywhere it plays |
 
 ## What the team decided, not the AI
 

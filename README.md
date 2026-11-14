@@ -2,9 +2,9 @@
 
 **NASA Space Apps Challenge 2026 · Guatemala · Challenge “Field Shift: Adapting Farms with NASA Data”** · Team “A dream”: Rodolfo Xiloj, Mario and Iván.
 
-> NASA satellite records turned into three facts a farmer can see and hear, for the milpa in Guatemala's Dry Corridor. Next to them, three crop rotations to talk over with the extension worker, with the evidence and its limits in plain sight.
+> NASA satellite records turned into three facts a farmer can see and hear, for the milpa in Guatemala’s Dry Corridor.
 
-Milpa Resiliente is a static website for farmers and agricultural extension workers in Guatemala's Dry Corridor. It covers five example plots in Chiquimula and Zacapa: Jocotán, Camotán, Olopa, San Juan Ermita and Zacapa. The whole site is in English and Spanish, with an EN/ES selector; English is the default.
+Milpa Resiliente is a static website for farmers and agricultural extension workers in Guatemala's Dry Corridor. Next to the three facts, it shows three crop rotations to talk over with the extension worker, with the evidence and its limits in plain sight. It covers five example plots in Chiquimula and Zacapa: Jocotán, Camotán, Olopa, San Juan Ermita and Zacapa. The whole site is in English and Spanish, with an EN/ES selector; English is the default.
 
 It supports the extension worker and the farmer; it does not replace them. Planting dates are **quoted, never calculated**. They come from ZARC (Zonificación Agroclimática del Riesgo), a tool from FAO and Guatemala's Ministry of Agriculture (MAGA).
 
@@ -125,7 +125,6 @@ Known limits:
 - ZARC computes the best planting week by municipality inside MAGA-DIGEGR, but those windows are not published; we quote the public departmental reference.
 - Scale: a Dry Corridor family farms about 0.35 ha on average, while one MODIS pixel covers 6.25 ha, a SMAP cell 9 km and an SRTM cell 90 m. The tool describes the land around the plot, not the plot.
 - Sensor continuity: Suomi NPP stopped delivering new data in early November 2026 and Terra is being retired, so updates would move to VIIRS on NOAA-20 and NOAA-21 (and to VIIRS vegetation indices for NDVI).
-- The Evidence page still plays the longer card audio in Spanish only: the English card mp3 is already generated, but the page does not play it yet. The short Listen audio has a Spanish and an English voice.
 
 ## NASA data
 

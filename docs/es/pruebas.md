@@ -6,6 +6,27 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Rama `entrega-impacto-6` sobre `main` (`5a5d6d3`): sábado 14 nov 2026
+
+Cambios de esta rama: bloque `perdidas_documentadas` en `validacion.json` y en `docs/validacion.md`, límite de 2026 y notas de SMAP, CHIRPS y Prensa Libre con su inglés, el mp3 de la tarjeta de Evidence en el idioma de la interfaz, capturas y PDF de las diapositivas regenerados, y pruebas nuevas en `tests/test_validacion.py` y `tests/test_slides.py`. `sin-red.mjs` ahora exige `audio/{parcela}.en.mp3` en la tarjeta cuando Evidence está en inglés (antes exigía el mp3 en español en los dos idiomas); `evidence_playwright.py` comprueba el mp3 de la tarjeta en cada idioma. Antes se regeneró sin red con `python -m pipeline.validacion.validar` y `python -m motor.exportar` (sin `--audio`): `puntajes`, `farmer.hechos`, `farmer.opciones` y `texto_tarjeta` quedaron idénticos en los 15 JSON de parcela. Mismo equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0; `web/node_modules` con `npm ci`. Horas de `date` (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 17:05:14 a 17:05:24 | Pruebas automáticas | `python -m pytest -q` | ✅ solo puntos, hasta «[100%]», sin fallas; salida 0 |
+| 17:05:24 a 17:05:34 | Pruebas automáticas con el total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ «237 passed in 9.43s»; salida 0 |
+| 17:05:35 a 17:05:36 | Humo de la web | `cd web && npm run smoke` | ✅ 16 JSON «ok», «audio de la tarjeta en inglés con etiqueta de IA: 5 mp3», «ok futuros_nasa (5 parcelas)»; «Prueba de humo de la web: sin fallas»; salida 0 |
+| 17:05:36 a 17:05:42 | Build | `cd web && npm run build` | ✅ «525 modules transformed», «built in 4.48s»; JS inicial `index` 171.54 kB (gzip 56.81 kB), JS de Evidence 673.19 kB (gzip 190.72 kB); salida 0 |
+| 17:05:42 a 17:05:55 | Sin red | `cd web && npm run sin-red -- <carpeta temporal fuera del repo>` | ✅ «23 de 23 comprobaciones pasan»; la tarjeta de cada parcela suena con `{parcela}.en.mp3`; salida 0 |
+| 17:05:55 a 17:06:04 | Vista del agricultor y kit a 360, 390 y 412 px | `python web/scripts/agricultor_playwright.py` | ✅ «77 de 77 comprobaciones pasan»; salida 0 |
+| 17:06:04 a 17:06:19 | Vista Evidence a 360, 390 y 412 px | `python web/scripts/evidence_playwright.py` | ✅ «143 de 143 comprobaciones pasan»; salida 0 |
+| 17:06:19 a 17:06:21 | PDF de las diapositivas | `cd web && python scripts/slides_pdf.py` | ✅ «docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)»; «python-pptx no está instalado: no se genera .pptx»; salida 0 |
+| 17:06:21 a 17:06:22 | Sensibilidad de la canícula | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ «OK 'sat': jocotan 2, camotan 2, olopa 0, san_juan_ermita 1, zacapa 3 de 25 años»; «OK 'rnl': caché completa; totales mensuales iguales a 'sat'»; salida 0 |
+
+Antes de esta corrida, la misma batería tuvo dos fallas que se corrigieron:
+
+- `evidence_playwright.py` (sin hora anotada): «137 de 143». Las 6 en «Validación», «sin scroll horizontal» (ancho 419 a 420 px), por la URL del README de CHIRPS en la nota nueva. Se agregó `.lista-compacta li` a la regla `overflow-wrap: anywhere` de `evidence.css`; después, «143 de 143».
+- `npm run sin-red`, 16:58:38 a 17:00:05: «18 de 23», salida 1. Las 5 «Parcela …: 3 rotaciones, tarjeta y audio mp3» esperaban `audio/{parcela}.mp3` con Evidence en inglés, que ahora toca `audio/{parcela}.en.mp3`. Se cambió la comprobación para exigir el mp3 del idioma activo; después, «23 de 23».
+
 ## Rama `entrega-impacto-1` sobre `main` (`4fdf64f`): sábado 14 nov 2026
 
 Mientras se trabajaba esta rama, `main` recibió tres commits (`61bf817`, `b69bcd1` y `4fdf64f`: audio de la tarjeta en inglés, diapositivas y fuentes). La rama se rebasó sobre `4fdf64f`, sin archivos en común, y todos los comandos se corrieron otra vez sobre la rama rebasada con los cambios de esta rama. Mismo equipo y versiones que la sección siguiente; `web/node_modules` viene del `npm ci` anotado ahí. Horas de `date` (UTC−6).

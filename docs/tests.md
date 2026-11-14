@@ -8,6 +8,27 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## Branch `entrega-impacto-6` on top of `main` (`5a5d6d3`): Saturday 14 Nov 2026
+
+This branch's changes: the `perdidas_documentadas` block in `validacion.json` and in `docs/validacion.md`, the 2026 limit and the SMAP, CHIRPS and Prensa Libre notes with their English, the Evidence card mp3 in the interface language, the slide screenshots and PDF regenerated, and new tests in `tests/test_validacion.py` and `tests/test_slides.py`. `sin-red.mjs` now requires `audio/{plot}.en.mp3` on the card when Evidence is in English (it used to require the Spanish mp3 in both languages); `evidence_playwright.py` checks the card mp3 in each language. Before this, the data were regenerated offline with `python -m pipeline.validacion.validar` and `python -m motor.exportar` (no `--audio`): `puntajes`, `farmer.hechos`, `farmer.opciones` and `texto_tarjeta` stayed identical in the 15 plot JSON files. Same laptop: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0; `web/node_modules` from `npm ci`. Times from `date` (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 17:05:14 to 17:05:24 | Automated tests | `python -m pytest -q` | ✅ only dots, up to "[100%]", no failure; exit 0 |
+| 17:05:24 to 17:05:34 | Automated tests with the total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ "237 passed in 9.43s"; exit 0 |
+| 17:05:35 to 17:05:36 | Web smoke test | `cd web && npm run smoke` | ✅ 16 JSON files "ok", "audio de la tarjeta en inglés con etiqueta de IA: 5 mp3", "ok futuros_nasa (5 parcelas)"; "Prueba de humo de la web: sin fallas"; exit 0 |
+| 17:05:36 to 17:05:42 | Web build | `cd web && npm run build` | ✅ "525 modules transformed", "built in 4.48s"; first-load JS `index` 171.54 kB (gzip 56.81 kB), Evidence JS 673.19 kB (gzip 190.72 kB); exit 0 |
+| 17:05:42 to 17:05:55 | Offline test | `cd web && npm run sin-red -- <temp folder outside the repo>` | ✅ "23 de 23 comprobaciones pasan"; each plot's card plays `{plot}.en.mp3`; exit 0 |
+| 17:05:55 to 17:06:04 | Farmer view and kit at 360, 390 and 412 px | `python web/scripts/agricultor_playwright.py` | ✅ "77 de 77 comprobaciones pasan"; exit 0 |
+| 17:06:04 to 17:06:19 | Evidence view at 360, 390 and 412 px | `python web/scripts/evidence_playwright.py` | ✅ "143 de 143 comprobaciones pasan"; exit 0 |
+| 17:06:19 to 17:06:21 | Slides PDF | `cd web && python scripts/slides_pdf.py` | ✅ "docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)"; "python-pptx no está instalado: no se genera .pptx"; exit 0 |
+| 17:06:21 to 17:06:22 | Canícula sensitivity | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ "OK 'sat': jocotan 2, camotan 2, olopa 0, san_juan_ermita 1, zacapa 3 de 25 años"; "OK 'rnl': caché completa; totales mensuales iguales a 'sat'"; exit 0 |
+
+Before this run, the same battery had two failures, which were fixed:
+
+- `evidence_playwright.py` (no time logged): "137 de 143". The 6 failures were in "Validación", "sin scroll horizontal" (width 419 to 420 px), caused by the CHIRPS README URL in the new note. `.lista-compacta li` was added to the `overflow-wrap: anywhere` rule in `evidence.css`; then "143 de 143".
+- `npm run sin-red`, 16:58:38 to 17:00:05: "18 de 23", exit 1. The 5 "Parcela …: 3 rotaciones, tarjeta y audio mp3" checks expected `audio/{plot}.mp3` with Evidence in English, which now plays `audio/{plot}.en.mp3`. The check now requires the mp3 of the active language; then "23 de 23".
+
 ## Branch `entrega-impacto-1` on top of `main` (`4fdf64f`): Saturday 14 Nov 2026
 
 While this branch was in progress, `main` gained three commits (`61bf817`, `b69bcd1` and `4fdf64f`: English card audio, slides and sources). The branch was rebased onto `4fdf64f`, with no file in common, and every command was run again on the rebased branch with this branch's changes. Same laptop and versions as the next section; `web/node_modules` comes from the `npm ci` logged there. Times from `date` (UTC−6).
