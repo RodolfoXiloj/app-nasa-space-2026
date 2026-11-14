@@ -71,15 +71,15 @@
   .portada .equipo b { font-size: 36px; }
 
   /* 2. Problema */
-  .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 34px; }
-  .tarjeta { border-top: 10px solid var(--tinta); background: var(--tinte-gris); padding: 26px 28px 28px; }
+  .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 24px; }
+  .tarjeta { border-top: 10px solid var(--tinta); background: var(--tinte-gris); padding: 18px 24px 20px; }
   .tarjeta--rojo { border-color: var(--rojo); background: var(--tinte-rojo); }
   .tarjeta--amarillo { border-color: var(--amarillo); background: var(--tinte-amarillo); }
   .tarjeta h3 { font-size: 34px; display: flex; align-items: center; gap: 14px; }
-  .tarjeta .cifra { font-size: 84px; font-weight: 900; line-height: 1; margin-top: 18px; font-family: var(--compacta); }
-  .tarjeta .cifra small { font-size: 34px; font-weight: 700; }
-  .tarjeta p { font-size: 25px; line-height: 1.3; margin-top: 10px; }
-  .nota-baja { margin-top: auto; font-size: 23px; line-height: 1.4; color: var(--tinta-suave); }
+  .tarjeta .cifra { font-size: 64px; font-weight: 900; line-height: 1; margin-top: 12px; font-family: var(--compacta); }
+  .tarjeta .cifra small { font-size: 30px; font-weight: 700; }
+  .tarjeta p { font-size: 23px; line-height: 1.3; margin-top: 8px; }
+  .nota-baja { margin-top: auto; font-size: 19px; line-height: 1.38; color: var(--tinta-suave); }
   .nota-baja b { color: var(--tinta); }
 
   /* 3. Semáforo */
@@ -91,36 +91,53 @@
   .estado--rojo { background: var(--tinte-rojo); }
   .estado--gris { background: var(--tinte-gris); }
   .estado svg { flex: none; }
+  .lado { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+  .arriba { display: flex; gap: 32px; flex: 1; min-height: 0; }
+  #s3 .estados { gap: 8px; margin: 0; }
+  #s3 .estado { font-size: 26px; padding: 6px 14px; gap: 14px; }
+  #s3 .estado small { font-size: 18px; }
+  #s3 .estado svg { width: 38px; height: 38px; }
+  #s3 .recorte, #s3 .tel--recorte { width: 330px; }
+  #s3 .tel--recorte { height: 230px; }
+  #s3 .recorte figcaption { font-size: 19px; margin-top: 8px; }
+  #s3 .regla { font-size: 20px; line-height: 1.3; padding: 10px 16px; }
   .col-texto { display: flex; flex-direction: column; gap: 18px; flex: 1; min-width: 0; }
 
   /* 4. Empate */
   .puntajes { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
   .puntaje { display: flex; align-items: baseline; gap: 20px; font-size: 28px; border-bottom: 3px solid var(--tinta); padding-bottom: 10px; }
   .puntaje b { font-family: var(--compacta); font-size: 60px; width: 92px; flex: none; }
+  .otras { font-size: 24px; line-height: 1.35; color: var(--tinta-suave); }
+  #s4 .fila { gap: 32px; }
+  #s4 .col-texto { gap: 12px; }
+  #s4 .puntajes { gap: 6px; }
+  #s4 .puntaje { font-size: 25px; padding-bottom: 4px; }
+  #s4 .puntaje b { font-size: 46px; width: 76px; }
+  #s4 .regla { font-size: 23px; padding: 10px 18px; }
   .regla { background: var(--tinte-amarillo); border-left: 10px solid var(--amarillo); padding: 16px 20px; font-size: 27px; line-height: 1.35; }
 
   /* 5. Tabla */
-  table { border-collapse: collapse; width: 100%; margin-top: 30px; font-size: 27px; line-height: 1.3; }
+  table { border-collapse: collapse; width: 100%; margin-top: 22px; font-size: 25px; line-height: 1.3; }
   th { text-align: left; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; color: var(--tinta-suave); border-bottom: 4px solid var(--tinta); padding: 0 16px 10px 0; }
-  td { border-bottom: 2px solid #9a9a9a; padding: 16px 16px 16px 0; vertical-align: top; }
+  td { border-bottom: 2px solid #9a9a9a; padding: 11px 16px 11px 0; vertical-align: top; }
   td:first-child { font-weight: 800; width: 34%; }
   td:first-child small { display: block; font-weight: 400; font-size: 20px; color: var(--tinta-suave); }
   .flecha { color: var(--milpa); font-weight: 900; }
 
   /* 6. Honestidad */
-  .avisos { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
-  .aviso { background: var(--tinta); color: var(--papel); padding: 22px 26px; font-size: 29px; font-weight: 800; line-height: 1.25; }
-  .aviso small { display: block; font-size: 21px; font-weight: 400; margin-top: 8px; color: #e6e6e6; }
-  .limites { list-style: none; padding: 0; margin: 26px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; }
-  .limites li { font-size: 24px; line-height: 1.3; padding-left: 22px; border-left: 6px solid var(--rojo); }
-  .limites b { font-family: var(--compacta); font-size: 30px; }
+  .avisos { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 18px; }
+  .aviso { background: var(--tinta); color: var(--papel); padding: 14px 22px; font-size: 25px; font-weight: 800; line-height: 1.25; }
+  .aviso small { display: block; font-size: 19px; font-weight: 400; margin-top: 8px; color: #e6e6e6; }
+  .limites { list-style: none; padding: 0; margin: 14px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 36px; }
+  .limites li { font-size: 20px; line-height: 1.28; padding-left: 22px; border-left: 6px solid var(--rojo); }
+  .limites b { font-family: var(--compacta); font-size: 24px; }
 
   /* 7. Audio, sin red, siguientes pasos */
   .tres { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 32px; margin-top: 28px; flex: 1; min-height: 0; }
   .bloque h3 { font-size: 32px; border-bottom: 5px solid var(--tinta); padding-bottom: 8px; margin-bottom: 14px; }
   .bloque p, .bloque li { font-size: 24px; line-height: 1.35; }
   .bloque ul { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 10px; }
-  .bloque img { display: block; width: auto; max-width: 100%; max-height: 300px; border: 3px solid var(--tinta); border-radius: 10px; margin-top: 12px; }
+  .bloque img { display: block; width: auto; max-width: 100%; max-height: 250px; border: 3px solid var(--tinta); border-radius: 10px; margin-top: 12px; }
   code { font-family: Consolas, 'Courier New', monospace; font-size: 0.9em; background: var(--tinte-gris); padding: 1px 6px; }
 </style>
 </head>
@@ -154,7 +171,7 @@
         Burning
       </h3>
       <p class="cifra"><span data-dato="jocotan.json:farmer.hechos[id=quema].valor">3</span> <small>of <span data-dato="jocotan.json:farmer.hechos[id=quema].de">15</span> years</small></p>
-      <p>Fires within <span data-dato="jocotan.json:deteccion.quemas.radio_m">500</span> m of the Jocotán plot, Jan–May.</p>
+      <p>Fire detected within <span data-dato="jocotan.json:deteccion.quemas.radio_m">500</span> m of the Jocotán plot, Jan–May.</p>
     </div>
     <div class="tarjeta tarjeta--rojo">
       <h3>
@@ -162,11 +179,12 @@
         Bare soil
       </h3>
       <p class="cifra"><span data-dato="san_juan_ermita.json:farmer.hechos[id=suelo].valor">3</span> <small>of <span data-dato="san_juan_ermita.json:farmer.hechos[id=suelo].de">12</span> months</small></p>
-      <p>Bare in Feb–Apr at San Juan Ermita, before the rains.</p>
+      <p>Bare soil around the plot in Feb–Apr at San Juan Ermita, before the rains.</p>
     </div>
   </div>
-  <p class="nota-baja"><b>2018:</b> Guatemala lost <span data-dato="validacion.json:evidencia_publica_2018.guatemala_ha_perdidas">175,126</span> ha of maize and beans; Chiquimula was among the hardest hit (MAGA, cited by FAO GIEWS).<br>
-    <b>Jul–Aug 2026:</b> <span data-dato="validacion.json:observacion_2026.lluvia_chirps[id=san_juan_ermita].pct_de_la_mediana">20</span>–<span data-dato="validacion.json:observacion_2026.lluvia_chirps[id=camotan].pct_de_la_mediana">26</span> % of normal rain at our 5 plots (CHIRPS v3). An observation, not a forecast.</p>
+  <p class="nota-baja"><b>2026:</b> 3.2 million people (17 %) forecast in food crisis or worse in Guatemala for Jul–Sep; Chiquimula and Zacapa at 15–19 % (SESAN, IPC forecast). Subsistence farmers in the Dry Corridor report losses of more than 50 %, up to total (FEWS NET).<br>
+    <b>2019:</b> average maize losses of 78.1 % in 201 communities monitored by Oxfam, 23 of them in Jocotán, Camotán, San Juan Ermita and Olopa.<br>
+    <b>2018:</b> <span data-dato="validacion.json:evidencia_publica_2018.guatemala_ha_perdidas">175,126</span> ha of crop losses in Guatemala, mainly maize and beans (preliminary MAGA figure, via FAO GIEWS). <b>Jul–Aug 2026:</b> <span data-dato="validacion.json:observacion_2026.lluvia_chirps[id=san_juan_ermita].pct_de_la_mediana">20</span>–<span data-dato="validacion.json:observacion_2026.lluvia_chirps[id=camotan].pct_de_la_mediana">26</span> % of normal rain at our 5 plots (CHIRPS v3). An observation, not a forecast.</p>
   <div class="pie"><span><b>Milpa Resiliente</b> · The problem</span><span>2 / 7</span></div>
 </section>
 
@@ -175,6 +193,8 @@
   <h2>Farmer view: an icon and a word</h2>
   <div class="fila">
     <img class="tel" src="../capturas/en/farmer-390-jocotan.png" alt="Farmer view at 390 px, Jocotán: bare soil marked Repeats with a red square">
+    <div class="lado">
+     <div class="arriba">
     <div class="col-texto">
       <ul class="estados">
         <li class="estado estado--verde">
@@ -195,13 +215,16 @@
       <img class="tel tel--corta tel--recorte" src="../capturas/en/farmer-390-camotan-grey.png" alt="Camotán options in grey: confidence is low because the SMAP cell has no recommended-quality data">
       <figcaption>Camotán: no quality SMAP data, so the options turn grey.</figcaption>
     </figure>
+     </div>
+      <p class="regla">The three facts are the three problems that Kuxur Rum (“my humid land” in Ch’orti’) tackles: permanent cover, no burning and soil moisture through the canícula. FAO and Guatemala’s Ministry of Agriculture have promoted it in Chiquimula since 2000; by 2006 more than 7,000 farms had adopted it.</p>
+    </div>
   </div>
   <div class="pie"><span><b>Milpa Resiliente</b> · Real screens, 390 px, English · Jocotán and Camotán</span><span>3 / 7</span></div>
 </section>
 
 <!-- 4 · Empate -->
 <section class="slide" id="s4">
-  <h2>A tie means no winner</h2>
+  <h2>A tie means we do not name a winner</h2>
   <div class="fila">
     <img class="tel tel--corta" src="../capturas/en/farmer-390-olopa-tie.png" alt="Olopa options at 390 px: three options in no particular order">
     <div class="col-texto">
@@ -211,8 +234,8 @@
         <p class="puntaje"><b data-dato="olopa.json:rotaciones[id=leguminosa_canavalia].puntajes.total">90</b>Maize with jack bean</p>
         <p class="puntaje"><b data-dato="olopa.json:rotaciones[id=tolerante_maiz_corto].puntajes.total">92</b>Short-cycle maize ICTA B-5</p>
       </div>
-      <p class="regla"><b>Rule:</b> <span data-dato="olopa.json:farmer.umbrales.margen_empate">3</span> points or less apart = a tie. Jack bean ties with both others, so all three are shown, in no order.</p>
-      <p class="grande suave">No option wins at any of the 5 plots today.</p>
+      <p class="regla"><b>Rule:</b> <span data-dato="olopa.json:farmer.umbrales.margen_empate">3</span> points or less apart = a tie. Jack bean ties with both others, so all three are shown, in no order. The rule works as a chain.</p>
+      <p class="otras">Elsewhere both alternatives lead today’s practice by 5 to 8 points and tie with each other: Jocotán <span data-dato="jocotan.json:rotaciones[id=leguminosa_canavalia].puntajes.total">88</span> / <span data-dato="jocotan.json:rotaciones[id=tolerante_sorgo_caupi].puntajes.total">87</span> vs <span data-dato="jocotan.json:rotaciones[id=actual_maiz_frijol].puntajes.total">80</span>, San Juan Ermita <span data-dato="san_juan_ermita.json:rotaciones[id=leguminosa_canavalia].puntajes.total">88</span> / <span data-dato="san_juan_ermita.json:rotaciones[id=tolerante_sorgo_caupi].puntajes.total">86</span> vs <span data-dato="san_juan_ermita.json:rotaciones[id=actual_maiz_frijol].puntajes.total">80</span>. Camotán (<span data-dato="camotan.json:rotaciones[id=leguminosa_canavalia].puntajes.total">90</span> / <span data-dato="camotan.json:rotaciones[id=tolerante_sorgo_caupi].puntajes.total">89</span> vs <span data-dato="camotan.json:rotaciones[id=actual_maiz_frijol].puntajes.total">84</span>) and Zacapa (<span data-dato="zacapa.json:rotaciones[id=leguminosa_canavalia].puntajes.total">81</span> / <span data-dato="zacapa.json:rotaciones[id=tolerante_sorgo_caupi].puntajes.total">80</span> vs <span data-dato="zacapa.json:rotaciones[id=actual_maiz_frijol].puntajes.total">73</span>) show the same gap, but confidence is low there, so the options go grey.</p>
     </div>
   </div>
   <div class="pie"><span><b>Milpa Resiliente</b> · The tie</span><span>4 / 7</span></div>
@@ -225,12 +248,12 @@
     <thead><tr><th>Product</th><th>Decision on the farmer screen</th></tr></thead>
     <tbody>
       <tr><td>MODIS MOD13Q1<small>NDVI, 250 m, 16-day</small></td><td><span class="flecha">→</span> Bare-soil and low-cover months → <b>Bare soil</b> fact and soil score</td></tr>
-      <tr><td>FIRMS (VIIRS)<small>Active fire, 375 m</small></td><td><span class="flecha">→</span> Fire years within <span data-dato="olopa.json:deteccion.quemas.radio_m">500</span> m, Jan–May → <b>Burning</b> fact</td></tr>
-      <tr><td>CHIRPS v3 / IMERG<small>Daily rain, ~5 km; IMERG splits it by day</small></td><td><span class="flecha">→</span> Dry spells over <span data-dato="olopa.json:clima.canicula.umbral_racha_dias">15</span> days (&lt; <span data-dato="olopa.json:clima.canicula.umbral_dia_seco_mm">2</span> mm/day) → <b>Canícula</b> fact and water deficit</td></tr>
-      <tr><td>SMAP SPL3SMP_E<small>Soil moisture, 9 km</small></td><td><span class="flecha">→</span> Jul–Aug soil moisture; missing quality data → <b>grey, low confidence</b></td></tr>
+      <tr><td>FIRMS (VIIRS, Suomi NPP)<small>Active fire, 375 m; a detection is a pixel centre</small></td><td><span class="flecha">→</span> Fire years within <span data-dato="olopa.json:deteccion.quemas.radio_m">500</span> m, Jan–May → <b>Burning</b> fact</td></tr>
+      <tr><td>CHIRPS v3 daily “sat”<small>Rain at ~5 km; NASA IMERG’s daily split arrives inside it</small></td><td><span class="flecha">→</span> Dry spells over <span data-dato="olopa.json:clima.canicula.umbral_racha_dias">15</span> days (&lt; <span data-dato="olopa.json:clima.canicula.umbral_dia_seco_mm">2</span> mm/day) → <b>Canícula</b> fact and water deficit</td></tr>
+      <tr><td>SMAP SPL3SMP_E<small>Soil moisture, 9 km, top 5 cm</small></td><td><span class="flecha">→</span> Jul–Aug soil moisture; missing quality data → <b>grey, low confidence</b></td></tr>
     </tbody>
   </table>
-  <p class="nota-baja">CHIRPS comes from the UCSB Climate Hazards Center; IMERG, MODIS, FIRMS and SMAP from NASA. Also used: NASA POWER (temperature, ET0) and cached NASA GIBS map layers.</p>
+  <p class="nota-baja">CHIRPS comes from the UCSB Climate Hazards Center (Funk et al., 2026); we did not download IMERG directly. MODIS, FIRMS and SMAP come from NASA. Also used: NASA POWER (temperature, ET0), SRTM (slope, 90 m) and cached NASA GIBS map layers.</p>
   <div class="pie"><span><b>Milpa Resiliente</b> · Data → decision</span><span>5 / 7</span></div>
 </section>
 
@@ -243,11 +266,12 @@
   </div>
   <ul class="limites">
     <li>The 5 plots are example points chosen by satellite, <b>not verified in the field</b>.</li>
-    <li>2018 back-test: high risk at 5 of 5 plots, but also <b><span data-dato="validacion.json:parcelas[id=jocotan].sequia_2018.falsas_alarmas">2</span>–<span data-dato="validacion.json:parcelas[id=olopa].sequia_2018.falsas_alarmas">3</span> false alarms</b> and <b><span data-dato="validacion.json:parcelas[id=jocotan].sequia_2018.fallos">1</span> miss</b> in <span data-dato="validacion.json:parcelas[id=jocotan].sequia_2018.n_anios">20</span> years per plot.</li>
+    <li>2018 back-test: high risk at 5 of 5 plots, but also <b><span data-dato="validacion.json:parcelas[id=jocotan].sequia_2018.falsas_alarmas">2</span>–<span data-dato="validacion.json:parcelas[id=olopa].sequia_2018.falsas_alarmas">3</span> false alarms</b> and <b><span data-dato="validacion.json:parcelas[id=jocotan].sequia_2018.fallos">1</span> miss</b> in <span data-dato="validacion.json:parcelas[id=jocotan].sequia_2018.n_anios">20</span> years per plot. Against seven years with documented losses it misses 2016, 2019 and 2023 at every plot.</li>
     <li>Olopa: greenness barely follows the rain deficit, Spearman ρ = <b data-dato="validacion.json:parcelas[id=olopa].sequia_2018.spearman_deficit_vs_ndvi">0.07</b>.</li>
     <li>Zacapa: NASA POWER differs <b data-dato="validacion.json:parcelas[id=zacapa].power_vs_chirps.2001-2025.jul_ago.sesgo_pct">55.4</b> % from CHIRPS in Jul–Aug → grey.</li>
     <li>Camotán: <b data-dato="camotan.json:smap.mediciones_sin_calidad_recomendada">3007</b> SMAP readings fail the quality flag → grey.</li>
-    <li>One MODIS pixel is 250 m × 250 m: it mixes the milpa with its neighbours.</li>
+    <li>A family here farms about 0.35 ha on average; one MODIS pixel is 6.25 ha. We see the land around the plot, not the plot.</li>
+    <li>Suomi NPP stopped delivering new data in early November 2026 and Terra is being retired: updates would move to VIIRS on NOAA-20 and NOAA-21.</li>
   </ul>
   <div class="pie"><span><b>Milpa Resiliente</b> · Honesty</span><span>6 / 7</span></div>
 </section>
@@ -264,7 +288,7 @@
     <div class="bloque">
       <h3>No internet</h3>
       <ul>
-        <li>Served from a laptop on the local network: 5 plots, audio and data are local files.</li>
+        <li>Built to be served from a laptop on a local network: 5 plots, audio and data are local files. Not yet tried in the field.</li>
         <li>The map falls back to saved MODIS layers.</li>
         <li>Checked by <code>npm run sin-red</code> with the internet blocked.</li>
       </ul>
@@ -273,9 +297,9 @@
       <h3>Next steps</h3>
       <ul>
         <li>Visit the plots with extension workers.</li>
-        <li>Agronomist review of the thresholds.</li>
-        <li>Add INSIVUMEH station rain.</li>
-        <li>Audio in Ch’orti’.</li>
+        <li>Agronomist review of thresholds and scores.</li>
+        <li>Comprehension test of pictograms and audio.</li>
+        <li>Ch’orti’ audio recorded by native speakers: the script and the audio slot are ready.</li>
       </ul>
     </div>
   </div>
