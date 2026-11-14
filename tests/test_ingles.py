@@ -26,7 +26,12 @@ def pares(obj, ruta=""):
         elif isinstance(es_b, dict) and isinstance(en_b, dict):
             for c, es in obj["es"].items():
                 en = obj["en"].get(c)
-                if isinstance(es, list):
+                if isinstance(es, list) and es and isinstance(es[0], dict):   # filas (evidencia): campo por campo
+                    out += [(f"{ruta}/{c}[{i}]/{k}", a[k], b.get(k)) for i, (a, b) in enumerate(zip(es, en or []))
+                            for k in a if isinstance(a[k], str)]
+                    if len(es) != len(en or []):
+                        out.append((f"{ruta}/{c}", f"{len(es)} filas", f"{len(en or [])} filas"))
+                elif isinstance(es, list):
                     out += [(f"{ruta}/{c}[{i}]", a, b) for i, (a, b) in enumerate(zip(es, en or []))]
                     if len(es) != len(en or []):
                         out.append((f"{ruta}/{c}", f"{len(es)} textos", f"{len(en or [])} textos"))
@@ -63,12 +68,19 @@ def revisar(obj) -> list[str]:
     return errores
 
 
+def _sin_idiomas(v):
+    """Filas de evidencia sin sus subbloques es/en, para compararlas con rot.es.evidencia."""
+    if isinstance(v, list):
+        return [{k: x for k, x in e.items() if k not in ("es", "en")} if isinstance(e, dict) else e for e in v]
+    return v
+
+
 def espanol_intacto(obj, ruta="") -> list[str]:
     """El bloque `es` repite el campo de siempre: el español no cambió."""
     out = []
     if isinstance(obj, dict):
         for c, v in (obj.get("es") or {}).items() if isinstance(obj.get("es"), dict) else []:
-            if c in obj and obj[c] != v:
+            if c in obj and _sin_idiomas(obj[c]) != v:
                 out.append(f"{ruta}/{c}")
         for k, v in obj.items():
             if k not in ("es", "en"):
@@ -98,6 +110,27 @@ def test_bloques_bilingues_principales(resultado_sintetico):
     assert all(g["en"]["termino"] and g["en"]["definicion"] for g in r["glosario"])
     assert all(f["en"]["nombre"] and f["en"]["cita"] for f in r["fuentes"])
     assert r["zarc"]["en"]["texto"].startswith("Planting date:")
+
+
+def test_rotaciones_traen_evidencia_y_descripcion_en_ingles(resultado_sintetico):
+    """rot.en.evidencia: las mismas filas (valor, periodo, fuente_id) con los textos en inglés."""
+    for r in resultado_sintetico["rotaciones"]:
+        assert r["en"]["descripcion"] and r["es"]["descripcion"] == r["descripcion"], r["id"]
+        assert len(r["en"]["evidencia"]) == len(r["evidencia"]) == len(r["es"]["evidencia"])
+        for e, en in zip(r["evidencia"], r["en"]["evidencia"]):
+            assert (en["valor"], en["periodo"], en["fuente_id"]) == (e["valor"], e["periodo"], e["fuente_id"])
+            assert en["dato"] == e["en"]["dato"] and "es" not in en and "en" not in en
+    assert set(ingles.DESCRIPCIONES) == {r["id"] for r in datos.rotaciones()}
+
+
+def test_tarjeta_en_ingles_con_las_mismas_cifras(resultado_sintetico):
+    r = resultado_sintetico
+    en = r["en"]["texto_tarjeta"]
+    assert r["es"]["texto_tarjeta"] == r["texto_tarjeta"]
+    assert en.startswith("Plot in ") and en.endswith("does not replace, your extension worker.")
+    assert _cifras(_sin_citas(en)) == _cifras(_sin_citas(r["texto_tarjeta"]))
+    for rot in r["rotaciones"]:
+        assert f"Score {rot['puntajes']['total']}." in en
 
 
 def test_las_rotaciones_traducen_cada_texto(resultado_sintetico):

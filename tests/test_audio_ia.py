@@ -60,3 +60,36 @@ def test_los_mp3_publicados_declaran_ia_y_coinciden_con_su_json():
             continue
         assert a["ia"]["generado_con_ia"] is True and "IA" in a["ia"]["declaracion"]
         assert exportar.mp3_vigente(web / a["mp3"], a["texto"]) is not None, p["id"]
+
+
+def test_la_tarjeta_en_ingles_tiene_su_mp3_con_etiqueta_de_ia():
+    """audio.en: mp3 de la tarjeta en inglés, voz en-US, hash del texto en inglés y comentario ID3 en «eng»."""
+    web = datos.RAIZ / "web" / "public"
+    vistos = 0
+    for p in datos.parcelas():
+        ruta_json = web / "data" / f"{p['id']}.json"
+        if not ruta_json.exists():
+            continue
+        res = json.loads(ruta_json.read_text(encoding="utf-8"))
+        a = res["audio"]
+        assert a["es"]["texto"] == a["texto"] and a["en"]["texto"] == res["en"]["texto_tarjeta"]
+        if not a["en"]["mp3"]:
+            continue
+        vistos += 1
+        assert a["en"]["ia"]["generado_con_ia"] is True and "AI-generated" in a["en"]["ia"]["declaracion"]
+        assert a["en"]["voz"].startswith("en-US-")
+        info = exportar.mp3_vigente(web / a["en"]["mp3"], a["en"]["texto"])
+        assert info is not None, p["id"]
+        assert info["TXXX"][audio_id3.MARCA_IA].startswith("true;") and "AI-generated" in info["COMM"]
+        cab = (web / a["en"]["mp3"]).read_bytes()[:4096]
+        i = cab.index(b"COMM")
+        assert cab[i + 11:i + 14] == b"eng"   # 10 bytes de cabecera del marco + 1 de codificación
+    assert vistos == 5
+
+
+def test_el_comentario_id3_lleva_el_idioma(tmp_path):
+    ruta = tmp_path / "x.mp3"
+    ruta.write_bytes(AUDIO_FALSO)
+    audio_id3.escribir(ruta, "t", "a", "al", "2026", "AI-generated synthetic voice", {}, idioma="eng")
+    datos_mp3 = ruta.read_bytes()
+    assert b"eng" in datos_mp3[:200] and audio_id3.leer(ruta)["COMM"] == "AI-generated synthetic voice"

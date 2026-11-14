@@ -68,11 +68,12 @@ def quitar_id3(datos: bytes) -> bytes:
 
 
 def escribir(ruta: Path, titulo: str, artista: str, album: str, anio: str, comentario: str,
-             extra: dict[str, str]) -> None:
+             extra: dict[str, str], idioma: str = "spa") -> None:
+    """`idioma`: código ISO 639-2 del comentario (COMM): «spa» o «eng»."""
     ruta = Path(ruta)
     audio = quitar_id3(ruta.read_bytes())
     marcos = (_texto("TIT2", titulo) + _texto("TPE1", artista) + _texto("TALB", album) + _texto("TYER", anio)
-              + _comm(comentario) + b"".join(_txxx(k, v) for k, v in extra.items()))
+              + _comm(comentario, idioma) + b"".join(_txxx(k, v) for k, v in extra.items()))
     relleno = b"\x00" * 64
     cab = b"ID3\x03\x00\x00" + _sincro(len(marcos) + len(relleno))
     ruta.write_bytes(cab + marcos + relleno + audio)

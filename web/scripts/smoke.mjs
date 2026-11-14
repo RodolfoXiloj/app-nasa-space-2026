@@ -39,6 +39,7 @@ try {
   }
   if (!archivos.length) throw new Error('No hay JSON en public/data: corra python -m motor.exportar')
   const escenarios = [[0, 0, 'agua'], [-30, 1.5, 'suelo'], [-20, 0, 'plagas']]
+  let tarjetasEn = 0
   for (const f of archivos) {
     const res = JSON.parse(readFileSync(join(dir, f), 'utf-8'))
     if (res.audio?.mp3) {
@@ -52,6 +53,22 @@ try {
       } catch (e) {
         fallas++
         console.error(`FALLA ${f}: audio ${res.audio.mp3}: ${e.message}`)
+      }
+    }
+    // Tarjeta completa en inglés (audio.en): mp3 propio con etiqueta ID3 de IA y declaración en el JSON.
+    const tarjetaEn = res.audio?.en
+    if (tarjetaEn?.mp3) {
+      try {
+        const mp3 = readFileSync(join(raiz, 'public', tarjetaEn.mp3))
+        if (mp3.length < 1000) throw new Error('mp3 vacío')
+        const cabecera = mp3.subarray(0, 4096).toString('latin1')
+        if (!cabecera.startsWith('ID3') || !cabecera.includes('AI_GENERATED')) throw new Error('sin etiqueta ID3 de IA')
+        if (!tarjetaEn.ia?.generado_con_ia || !tarjetaEn.ia?.declaracion) throw new Error('el JSON no declara la IA')
+        if (tarjetaEn.texto !== res.en?.texto_tarjeta) throw new Error('el texto no es en.texto_tarjeta')
+        tarjetasEn++
+      } catch (e) {
+        fallas++
+        console.error(`FALLA ${f}: audio en ${tarjetaEn.mp3}: ${e.message}`)
       }
     }
     const audioEn = res.farmer?.audio?.en
@@ -95,6 +112,7 @@ try {
       console.error(`FALLA observación 2026: ${e.message}`)
     }
   }
+  console.log(`audio de la tarjeta en inglés con etiqueta de IA: ${tarjetasEn} mp3`)
   const indice = JSON.parse(readFileSync(join(dir, 'parcelas.json'), 'utf-8'))
   for (const p of indice.parcelas) {
     for (const ruta of Object.values(p.archivos)) {

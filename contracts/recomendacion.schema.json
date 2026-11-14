@@ -230,10 +230,14 @@
       "type": "array",
       "items": { "type": "object", "required": ["termino", "definicion"], "properties": { "termino": { "type": "string" }, "definicion": { "type": "string" } } }
     },
-    "texto_tarjeta": { "type": "string", "minLength": 20 },
+    "texto_tarjeta": { "type": "string", "minLength": 20, "description": "En español; en inglés va en en.texto_tarjeta" },
     "audio": {
       "type": "object", "required": ["mp3", "texto"],
-      "properties": { "mp3": { "type": ["string", "null"] }, "voz": { "type": ["string", "null"] }, "texto": { "type": "string" } }
+      "properties": {
+        "mp3": { "type": ["string", "null"] }, "voz": { "type": ["string", "null"] }, "texto": { "type": "string" },
+        "es": { "$ref": "#/$defs/audio_tarjeta", "description": "La tarjeta en español (los mismos campos de arriba)" },
+        "en": { "$ref": "#/$defs/audio_tarjeta", "description": "La tarjeta en inglés: texto = en.texto_tarjeta; mp3 null si no hay grabación vigente" }
+      }
     },
     "farmer": {
       "type": "object",
@@ -403,6 +407,30 @@
       }
     },
     "texto_no_vacio": { "type": "string", "minLength": 3 },
+    "audio_tarjeta": {
+      "type": "object", "required": ["mp3", "texto"],
+      "properties": {
+        "mp3": { "type": ["string", "null"] },
+        "voz": { "type": ["string", "null"] },
+        "texto": { "type": "string", "minLength": 20 },
+        "ia": { "type": "object", "required": ["generado_con_ia", "declaracion"], "properties": { "generado_con_ia": { "const": true }, "declaracion": { "type": "string", "minLength": 10 } } }
+      },
+      "if": { "properties": { "mp3": { "type": "string" } }, "required": ["mp3"] },
+      "then": { "required": ["ia"] }
+    },
+    "textos_rotacion": {
+      "type": "object",
+      "description": "Textos de la rotación en un idioma; la web lee rot[idioma]?.campo y, si falta, el campo en español",
+      "properties": {
+        "nombre": { "type": ["string", "null"] }, "nombre_corto": { "type": ["string", "null"] },
+        "descripcion": { "type": ["string", "null"] },
+        "por_que": { "type": "string" },
+        "beneficios": { "type": "array", "items": { "type": "string" } },
+        "vacios": { "type": "array", "items": { "type": "string" } },
+        "riesgos": { "type": "array", "items": { "type": "string" } },
+        "evidencia": { "type": "array", "items": { "$ref": "#/$defs/evidencia" } }
+      }
+    },
     "rotacion": {
       "type": "object",
       "required": ["id", "nombre", "tipo", "es_actual", "ciclos", "por_que", "evidencia", "beneficios", "vacios", "riesgos", "puntajes", "deficit", "confianza", "calendario", "trazabilidad"],
@@ -457,6 +485,8 @@
             }
           }
         },
+        "es": { "$ref": "#/$defs/textos_rotacion" },
+        "en": { "$ref": "#/$defs/textos_rotacion" },
         "trazabilidad": {
           "type": "object", "required": ["agua", "suelo", "plagas"],
           "properties": {

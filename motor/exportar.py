@@ -9,7 +9,8 @@ Audio: cada mp3 es voz sintética generada con IA. Se declara en el JSON (audio.
 junto al reproductor) y en las etiquetas ID3 del archivo (motor/audio_id3.py). Un mp3 solo se
 enlaza si el hash del texto guardado en su etiqueta coincide con el texto actual.
 Hay dos audios por parcela (cultivo por defecto):
-    audio/{parcela}.mp3          la tarjeta completa (~70 s), en `audio`
+    audio/{parcela}.mp3          la tarjeta completa (~70 s), en `audio` (y en `audio.es`)
+    audio/{parcela}.en.mp3       la misma tarjeta en inglés (voz en-US), en `audio.en`
     audio/{parcela}.frases.mp3      frases cortas en español (20 a 30 s, mono a 32 kbps), en `farmer.audio.es`
     audio/{parcela}.frases.en.mp3   las mismas frases en inglés, en `farmer.audio.en`; subtítulos
                                     audio/{parcela}.frases.{es,en}.vtt; tiempos en `farmer.frases`
@@ -65,6 +66,7 @@ def etiquetar(ruta: Path, municipio: str, voz: str, texto: str, tiempos: dict | 
     d = declaracion_ia(voz) if not en else {"declaracion": ingles.declaracion_ia(voz, herramienta)}
     comentario = d["declaracion"]
     titulo = (f"Milpa Resiliente: {municipio}, short phrase audio (synthetic voice)" if en and tiempos else
+              f"Milpa Resiliente: {municipio} card (synthetic voice)" if en else
               f"Milpa Resiliente: {municipio}, audio corto por frases (voz sintética)" if tiempos else
               f"Milpa Resiliente: tarjeta de {municipio} (voz sintética)")
     artista = (f"AI-generated synthetic voice: {voz}" if en else
@@ -74,7 +76,7 @@ def etiquetar(ruta: Path, municipio: str, voz: str, texto: str, tiempos: dict | 
     if tiempos:
         extra[audio_frases.CLAVE_TIEMPOS] = json.dumps(tiempos, separators=(",", ":"))
     audio_id3.escribir(ruta, titulo=titulo, artista=artista, album=ALBUM,
-                       anio="2026", comentario=comentario, extra=extra)
+                       anio="2026", comentario=comentario, extra=extra, idioma="eng" if en else "spa")
 
 
 def declaracion_ia_bloque(voz: str, en: bool = False) -> dict:
@@ -123,7 +125,7 @@ def _escribir(ruta: Path, obj: dict) -> None:
     ruta.write_text(json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
 
 
-def generar_audio(texto: str, ruta: Path) -> str | None:
+def generar_audio(texto: str, ruta: Path, voces: list[str] = VOCES, rate: str = RATE) -> str | None:
     """mp3 de la tarjeta con edge-tts (voz neural de Microsoft, sin cuenta). Devuelve la voz usada o None.
 
     Solo se envía el texto de la tarjeta (sin datos personales). Exige MILPA_ONLINE=1. Si falla, la web
@@ -139,14 +141,36 @@ def generar_audio(texto: str, ruta: Path) -> str | None:
     except ImportError:
         return None
     ruta.parent.mkdir(parents=True, exist_ok=True)
-    for voz in VOCES:
+    for voz in voces:
         try:
-            asyncio.run(edge_tts.Communicate(texto, voz, rate=RATE).save(str(ruta)))
+            asyncio.run(edge_tts.Communicate(texto, voz, rate=rate).save(str(ruta)))
             if ruta.exists() and ruta.stat().st_size > 1000:
                 return voz
         except Exception as e:  # noqa: BLE001
             print(f"[audio] {voz} falló: {type(e).__name__}", file=sys.stderr)
     return None
+
+
+def audio_tarjeta_en(res: dict, pid: str, municipio: str, generar: bool) -> None:
+    """mp3 de la tarjeta en inglés (`en.texto_tarjeta`), con la misma voz en-US y la misma declaración de IA
+    que el audio corto en inglés. Llena `audio.en`; sin mp3 vigente deja `mp3` en None (la web usa el
+    español o la voz del navegador)."""
+    texto = res["en"]["texto_tarjeta"]
+    ruta = WEB_AUDIO / f"{pid}.en.mp3"
+    if generar:
+        voz = generar_audio(texto, ruta, VOCES_EN, RATE_EN)
+        if voz:
+            etiquetar(ruta, municipio, voz, texto, en=True)
+    info = mp3_vigente(ruta, texto)
+    bloque = {"mp3": None, "voz": None, "texto": texto}
+    if info:
+        voz = info["TXXX"].get("MILPA_VOZ") or VOCES_EN[0]
+        bloque.update(mp3=f"audio/{pid}.en.mp3", voz=f"{voz} (edge-tts, neural synthetic voice)",
+                      ia=declaracion_ia_bloque(voz, en=True))
+    elif ruta.exists():
+        print(f"[exportar] {pid}: el mp3 en inglés no coincide con el texto actual o no declara IA; "
+              "no se enlaza (corra con --audio)", file=sys.stderr)
+    res["audio"]["en"] = bloque
 
 
 def audio_corto(res: dict, pid: str, municipio: str, generar: bool) -> str | None:
@@ -253,6 +277,9 @@ def exportar(pids: list[str] | None = None, destino: Path = WEB_DATA, validar_es
                     elif ruta_mp3.exists():
                         print(f"[exportar] {p['id']}: el mp3 no coincide con el texto actual o no declara IA; "
                               "no se enlaza (corra con --audio)", file=sys.stderr)
+                    res["audio"]["es"] = {k: res["audio"].get(k) for k in ("mp3", "voz", "texto", "ia")
+                                          if k in res["audio"]}
+                    audio_tarjeta_en(res, p["id"], p["municipio"], generar=audio)
                     aviso = audio_corto(res, p["id"], p["municipio"], generar=audio)
                     if aviso:
                         print(f"[exportar] {aviso}", file=sys.stderr)

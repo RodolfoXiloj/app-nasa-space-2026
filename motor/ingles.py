@@ -392,6 +392,93 @@ def zarc(z: dict, ref_yaml: dict | None) -> None:
     bilingue(z, {"texto": en, "nota_escenario": t(z.get("nota_escenario"))})
 
 
+# Descripción de cada rotación (su campo `fuente` en data/rotaciones.yaml). Los títulos de las obras citadas
+# se dejan como se publicaron; solo se traduce lo que va alrededor.
+DESCRIPCIONES = {
+    "actual_maiz_frijol": "Traditional primera and postrera system of eastern Guatemala (ICTA, Recomendaciones técnicas "
+                          "para el cultivo de maíz en el oriente de Guatemala, 2015)",
+    "actual_maiz_solo": "initial assumption; describes single-crop maize in primera",
+    "actual_sorgo": "ICTA, Programa de Sorgo (icta.gob.gt/sorgo): in the dry corridor sorghum complements or replaces "
+                    "maize",
+    "leguminosa_canavalia": "ICTA, Boletín octubre 2022 «Abonos verdes», p. 3 (maize intercropped with jack bean); MAGA, "
+                            "Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 (ground cover and no "
+                            "burning); CIMMYT, Menú tecnológico maíz y frijol en el Oriente de Guatemala, 2024, p. 4",
+    "leguminosa_milpa": "MAGA, Mesa Técnica Agroclimática de Chiquimula, boletín 21, 2025, p. 9 («Rotate crops or "
+                        "polycultures such as squash, maize and beans»)",
+    "leguminosa_gandul": "ICTA, Boletín octubre 2022 «Abonos verdes», p. 4 (velvet bean, pigeon pea and cowpea adapt to "
+                         "the dry corridor)",
+    "tolerante_sorgo_caupi": "ICTA, Programa de Sorgo; MAGA, new sorghum variety ICTA Blanco (3 Sep 2026); FAO, Estudio "
+                             "de caracterización del Corredor Seco Centroamericano, Tomo I, 2012, pp. 21 and 55; "
+                             "Bioversity International, tepary bean in Guatemala",
+    "tolerante_maiz_corto": "ICTA, Recomendaciones técnicas para el cultivo de maíz en el oriente de Guatemala, 2015, "
+                            "p. 2 (ICTA B-5, three-month cycle; ICTA B-7, four months); ICTA 2017, ICTA B-7 TS "
+                            "drought tolerant",
+}
+
+NIVELES = {"alta": "high", "media": "medium", "baja": "low"}
+PRIORIDADES = {"agua": "water", "suelo": "soil", "plagas": "pests"}
+ORDINALES_OPCION = ["option one", "option two", "option three"]
+
+
+def _lista_and(items: list[str]) -> str:
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def _sin_hoy(nombre: str) -> str:
+    return nombre.replace("What you do today: ", "")
+
+
+def _frase_opciones(res: dict, prioridad: str) -> str:
+    """Igual que motor.redaccion._frase_opciones, en inglés."""
+    rots = res["rotaciones"]
+    op = (res.get("farmer") or {}).get("opciones") or {}
+    ids = [r["id"] for r in rots]
+    pri = PRIORIDADES.get(prioridad, prioridad)
+    if op.get("estado") == "gris":
+        return "With low confidence, we do not say which option is better."
+    if op.get("estado") == "empate":
+        cuales = [ORDINALES_OPCION[ids.index(i)] for i in op["empatadas"]]
+        return f"By your priority, {pri}, no option stands out enough: {_lista_and(cuales)} are about even."
+    if op.get("estado") == "una_destaca":
+        mejor = next(r for r in rots if r["id"] == op["destaca"])
+    else:
+        mejor = max(rots, key=lambda r: r["puntajes"]["total"])
+    nombre = mejor["en"]["nombre"]
+    nombre = nombre.replace("What you do today: ", "today's, ") if mejor.get("es_actual") else nombre
+    return f"By your priority, {pri}, the one that comes out best is: {nombre}."
+
+
+def texto_tarjeta(res: dict) -> str:
+    """Igual que motor.redaccion.texto_tarjeta, en inglés y con las mismas cifras. Requiere las rotaciones y
+    el bloque zarc ya con su `en`."""
+    p, det, rots = res["parcela"], res["deteccion"], res["rotaciones"]
+    act = rots[0]
+    ev_n = next((e["valor"] for e in act["evidencia"] if e["dato"].startswith("Meses de suelo desnudo")), 0)
+    poca = det.get("meses_poca_cobertura") or []
+    if ev_n:
+        vista = f"the soil is left bare in {lista_meses(det['meses_desnudos'])}"
+    elif poca:
+        vista = f"the soil has little cover in {lista_meses(poca)}"
+    else:
+        vista = "no months with bare soil are seen"
+    ordinales = ["Option one, what you do today", "Option two", "Option three"]
+    partes = [f"Plot in {p['municipio']}, {p['departamento']}.",
+              f"What the satellite sees: {vista}.",
+              "We compare three options."]
+    for o, r in zip(ordinales, rots):
+        partes.append(f"{o}: {_sin_hoy(r['en']['nombre'])}. Score {r['puntajes']['total']}.")
+    partes.append(_frase_opciones(res, p["prioridad"]))
+    partes.append(f"Confidence {NIVELES.get(act['confianza']['nivel'], act['confianza']['nivel'])}.")
+    partes.append(res["zarc"]["en"]["texto"])
+    partes.append("This tool supports, and does not replace, your extension worker.")
+    return " ".join(partes)
+
+
+def _evidencia_idioma(e: dict, lang: str) -> dict:
+    """La fila de evidencia completa (valor, periodo, fuente_id...) con los textos del idioma."""
+    return {**{k: v for k, v in e.items() if k not in ("es", "en")}, **(e.get(lang) or {})}
+
+
 def agregar(res: dict, base: str | None = None) -> dict:
     """Agrega los bloques `es`/`en` a todo el texto visible del JSON de la parcela (salvo las rotaciones, que
     motor/recomendar.py traduce con su contexto, y el bloque farmer, que ya trae sus dos idiomas)."""
@@ -418,6 +505,9 @@ def agregar(res: dict, base: str | None = None) -> dict:
                          "alertas": [t(a) for a in m["alertas"]]})
         for e in r["evidencia"]:
             _t_campos(e, ("dato", "unidad", "fuente", "resolucion"))
+        bilingue(r, {"descripcion": DESCRIPCIONES.get(r["id"]) if r.get("descripcion") else r.get("descripcion")})
+        r["es"]["evidencia"] = [_evidencia_idioma(e, "es") for e in r["evidencia"]]
+        r["en"]["evidencia"] = [_evidencia_idioma(e, "en") for e in r["evidencia"]]
         conf = r["confianza"]
         bilingue(conf, {"motivo": conf.get("motivo_en")})
         for c in conf.get("criterios", []):
@@ -432,6 +522,8 @@ def agregar(res: dict, base: str | None = None) -> dict:
         en = g.get("en") or {}
         g["en"] = {}
         bilingue(g, {"termino": en.get("termino"), "definicion": en.get("definicion")})
+    if res.get("texto_tarjeta"):
+        bilingue(res, {"texto_tarjeta": texto_tarjeta(res)})
     f = res.get("farmer")
     if f:  # el bloque farmer ya trae *_en; se agregan también `es`/`en` para seguir la misma convención
         for h in f["hechos"]:
