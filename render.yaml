@@ -1,0 +1,11 @@
+# Blueprint de Render: sitio estático gratis desde web/ (no se duerme, sin secretos).
+# NO desplegado todavía. TODO(equipo, sábado 8:00): conectar el repo en Render y verificar que
+# rootDir/staticPublishPath queden como abajo. Respaldo: GitHub Pages con el mismo web/dist.
+services:
+  - type: web
+    name: milpa-resiliente
+    runtime: static
+    rootDir: web
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    pullRequestPreviewsEnabled: false
