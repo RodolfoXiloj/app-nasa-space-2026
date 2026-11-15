@@ -1,8 +1,8 @@
-# Guía 4 para Mario: Escucha y revisión de los 15 audios y sus subtítulos
+# Guía 4 para Mario: Escucha y revisión de los 20 audios y sus subtítulos
 
 **Responsable:** Mario  
 **Carpeta de audios:** `web/public/audio/`  
-**Tiempo estimado:** 25 a 30 minutos  
+**Tiempo estimado:** 35 a 40 minutos  
 
 > **Por qué hace falta una persona:** Un script automático puede comprobar que los archivos `.mp3` y `.vtt` existen, cuánto duran y que el texto del subtítulo coincide letra por letra con el JSON. Pero solo un oído humano detecta si la voz sintética pronuncia mal un topónimo o cultivo (*Jocotán*, *Camotán*, *Olopa*, *canícula*, *canavalia*, *caupí*, *ZARC*, *SMAP*, *ICTA B-5*), si se corta una sílaba al final de una frase o si el subtítulo va adelantado o atrasado respecto a la voz.
 
@@ -10,13 +10,14 @@
 
 ## Cómo están organizados los audios en `web/public/audio/`
 
-La aplicación reproduce **15 audios activos** (3 por cada una de las 5 parcelas):
+La aplicación reproduce **20 audios activos** (4 por cada una de las 5 parcelas):
 
 1. **5 audios cortos en español (`{parcela}.frases.mp3`, 26 a 29 s):** suenan en la **vista del agricultor** al poner el idioma en **Español** y tocar **«Escuchar»**. Llevan subtítulos sincronizados frase por frase desde `{parcela}.frases.es.vtt` (6 frases por audio).
 2. **5 audios cortos en inglés (`{parcela}.frases.en.mp3`, 28 a 30 s):** suenan en la **vista del agricultor** al dejar el idioma en **English** y tocar **«Listen»**. Llevan subtítulos sincronizados desde `{parcela}.frases.en.vtt` (6 frases por audio).
-3. **5 audios largos de la tarjeta en español (`{parcela}.mp3`, 67 a 73 s):** suenan en la **vista *Evidence*** dentro del recuadro **«Tarjeta para el agricultor»**. No usan archivo `.vtt` separado porque el texto completo que lee la voz está impreso justo debajo del reproductor (`texto_tarjeta`).
+3. **5 audios largos de la tarjeta en español (`{parcela}.mp3`, 67 a 73 s):** suenan en la **vista *Evidence*** dentro del recuadro **«Tarjeta para el agricultor»**, con el idioma en **Español**. No usan archivo `.vtt` separado porque el texto completo que lee la voz está impreso justo debajo del reproductor (`texto_tarjeta`).
+4. **5 audios largos de la tarjeta en inglés (`{parcela}.en.mp3`, 89 a 95 s):** suenan en el mismo reproductor de *Evidence* con el idioma en **English** (desde el 14 nov 2026; antes la tarjeta sonaba en español en los dos idiomas).
 
-*(Nota: en la carpeta `web/public/audio/` verás 5 archivos adicionales llamados `{parcela}.en.mp3` de ~90 a 95 s. Son las lecturas en inglés de la tarjeta larga, que ya están generadas pero aún no están conectadas al reproductor de `Tarjeta.jsx`, tal como se declara en `docs/project-page-en.md`. Los incluimos al final por si deseas revisarlos también).*
+*(Nota: los subtítulos en inglés del audio corto se corrigieron el 14 nov 2026: ahora siguen los tiempos del mp3 en inglés, no los del español. Fíjate igual en si cada frase cambia a la par de la voz.)*
 
 ---
 
@@ -28,11 +29,12 @@ La aplicación reproduce **15 audios activos** (3 por cada una de las 5 parcelas
    - Pon el idioma en **Español**, elige cada parcela en el menú desplegable, toca **«Escuchar»** y sigue las **6 frases** en la tabla del **Grupo 1**.
    - Cambia el idioma a **English**, elige cada parcela, toca **«Listen»** y sigue las **6 frases** en la tabla del **Grupo 2**.
 3. Baja y toca **«Ver la evidencia»** (*See the evidence*), ve a la sección **«Tarjeta para el agricultor»** y dale reproducir al audio de cada una de las 5 parcelas mientras sigues el párrafo del **Grupo 3**.
+   - Cambia el idioma a **English** dentro de *Evidence* y repite con las 5 parcelas siguiendo el **Grupo 4**: debe sonar la voz en inglés, no la española.
 4. Marca en la tabla final la **hora real** en que escuchaste cada audio y anota cualquier palabra mal pronunciada, corte brusco o desfase de subtítulo.
 
 ---
 
-## Lista completa de los 15 audios y el texto exacto que debe sonar
+## Lista completa de los 20 audios y el texto exacto que debe sonar
 
 ### Grupo 1. Vista del agricultor — 5 audios cortos en Español (voz `es-GT-MartaNeural`)
 
@@ -207,14 +209,34 @@ En estos 5 audios el texto completo está escrito como párrafo fijo en la tarje
 
 ---
 
-### Archivos adicionales en `web/public/audio/` (5 tarjetas en inglés generadas, aún no conectadas al reproductor de `Tarjeta.jsx`)
+### Grupo 4. Vista *Evidence* — 5 tarjetas en inglés (voz `en-US-JennyNeural`)
 
-- `web/public/audio/jocotan.en.mp3` (92.7 s)
-- `web/public/audio/camotan.en.mp3` (90.0 s)
-- `web/public/audio/olopa.en.mp3` (95.2 s)
-- `web/public/audio/san_juan_ermita.en.mp3` (94.3 s)
-- `web/public/audio/zacapa.en.mp3` (89.4 s)
+Suenan en *Evidence* con el idioma en **English**, en el mismo reproductor de «Card for the farmer». El texto que lee la voz es el del campo `audio.en.texto` de cada JSON.
 
+#### Audio 16: Jocotán (tarjeta en inglés en *Evidence*)
+- **Archivo MP3:** `web/public/audio/jocotan.en.mp3` (duración: **92.7 s**, 557 KB)
+- **Texto que debe sonar:**
+  > «Plot in Jocotán, Chiquimula. What the satellite sees: the soil is left bare in March and April. We compare three options. Option one, what you do today: maize with beans in primera and beans in postrera. Score 80. Option two: Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble. Score 88. Option three: Sorghum in primera and cowpea in postrera, with standing stubble. Score 87. By your priority, water, no option stands out enough: option two and option three are about even. Confidence high. Planting date: check it in ZARC (FAO–MAGA) with your extension worker. Published reference for the department (not the municipality's window): «específicamente en Chiquimula, Quiché y Zacapa… la ZARC determinó un ajuste estratégico: mover las fechas de siembra de mayo a junio» (our translation: «specifically in Chiquimula, Quiché and Zacapa… ZARC set a strategic adjustment: move planting dates from May to June») (La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos» (Dry Corridor countries fine-tune planting with climate data), April 2026 (press note on ZARC)). This tool supports, and does not replace, your extension worker.»
+
+#### Audio 17: Camotán (tarjeta en inglés en *Evidence*)
+- **Archivo MP3:** `web/public/audio/camotan.en.mp3` (duración: **90.0 s**, 541 KB)
+- **Texto que debe sonar:**
+  > «Plot in Camotán, Chiquimula. What the satellite sees: the soil has little cover in March and April. We compare three options. Option one, what you do today: maize with beans in primera and beans in postrera. Score 84. Option two: Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble. Score 90. Option three: Sorghum in primera and cowpea in postrera, with standing stubble. Score 89. With low confidence, we do not say which option is better. Confidence low. Planting date: check it in ZARC (FAO–MAGA) with your extension worker. Published reference for the department (not the municipality's window): «específicamente en Chiquimula, Quiché y Zacapa… la ZARC determinó un ajuste estratégico: mover las fechas de siembra de mayo a junio» (our translation: «specifically in Chiquimula, Quiché and Zacapa… ZARC set a strategic adjustment: move planting dates from May to June») (La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos» (Dry Corridor countries fine-tune planting with climate data), April 2026 (press note on ZARC)). This tool supports, and does not replace, your extension worker.»
+
+#### Audio 18: Olopa (tarjeta en inglés en *Evidence*)
+- **Archivo MP3:** `web/public/audio/olopa.en.mp3` (duración: **95.2 s**, 572 KB)
+- **Texto que debe sonar:**
+  > «Plot in Olopa, Chiquimula. What the satellite sees: the soil has little cover in March and April. We compare three options. Option one, what you do today: maize with beans in primera and beans in postrera. Score 87. Option two: Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble. Score 90. Option three: Short-cycle maize ICTA B-5 with beans in primera and beans in postrera. Score 92. By your priority, water, no option stands out enough: option one, option two and option three are about even. Confidence medium. Planting date: check it in ZARC (FAO–MAGA) with your extension worker. Published reference for the department (not the municipality's window): «específicamente en Chiquimula, Quiché y Zacapa… la ZARC determinó un ajuste estratégico: mover las fechas de siembra de mayo a junio» (our translation: «specifically in Chiquimula, Quiché and Zacapa… ZARC set a strategic adjustment: move planting dates from May to June») (La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos» (Dry Corridor countries fine-tune planting with climate data), April 2026 (press note on ZARC)). This tool supports, and does not replace, your extension worker.»
+
+#### Audio 19: San Juan Ermita (tarjeta en inglés en *Evidence*)
+- **Archivo MP3:** `web/public/audio/san_juan_ermita.en.mp3` (duración: **94.3 s**, 566 KB)
+- **Texto que debe sonar:**
+  > «Plot in San Juan Ermita, Chiquimula. What the satellite sees: the soil is left bare in February, March and April. We compare three options. Option one, what you do today: maize with beans in primera and beans in postrera. Score 80. Option two: Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble. Score 88. Option three: Sorghum in primera and cowpea in postrera, with standing stubble. Score 86. By your priority, water, no option stands out enough: option two and option three are about even. Confidence high. Planting date: check it in ZARC (FAO–MAGA) with your extension worker. Published reference for the department (not the municipality's window): «específicamente en Chiquimula, Quiché y Zacapa… la ZARC determinó un ajuste estratégico: mover las fechas de siembra de mayo a junio» (our translation: «specifically in Chiquimula, Quiché and Zacapa… ZARC set a strategic adjustment: move planting dates from May to June») (La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos» (Dry Corridor countries fine-tune planting with climate data), April 2026 (press note on ZARC)). This tool supports, and does not replace, your extension worker.»
+
+#### Audio 20: Zacapa (tarjeta en inglés en *Evidence*)
+- **Archivo MP3:** `web/public/audio/zacapa.en.mp3` (duración: **89.4 s**, 537 KB)
+- **Texto que debe sonar:**
+  > «Plot in Zacapa, Zacapa. What the satellite sees: the soil is left bare in April. We compare three options. Option one, what you do today: maize with beans in primera and beans in postrera. Score 73. Option two: Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble. Score 81. Option three: Sorghum in primera and cowpea in postrera, with standing stubble. Score 80. With low confidence, we do not say which option is better. Confidence low. Planting date: check it in ZARC (FAO–MAGA) with your extension worker. Published reference for the department (not the municipality's window): «específicamente en Chiquimula, Quiché y Zacapa… la ZARC determinó un ajuste estratégico: mover las fechas de siembra de mayo a junio» (our translation: «specifically in Chiquimula, Quiché and Zacapa… ZARC set a strategic adjustment: move planting dates from May to June») (La Estrella de Panamá, «Países del Corredor Seco afinan siembras con datos climáticos» (Dry Corridor countries fine-tune planting with climate data), April 2026 (press note on ZARC)). This tool supports, and does not replace, your extension worker.»
 ---
 
 ## Tabla para anotar el resultado y la hora real
@@ -236,3 +258,8 @@ En estos 5 audios el texto completo está escrito como párrafo fijo en la tarje
 | **13** | | `web/public/audio/olopa.mp3` | `texto_tarjeta` en `olopa.json` | 73.5 s | | | |
 | **14** | | `web/public/audio/san_juan_ermita.mp3` | `texto_tarjeta` en `san_juan_ermita.json` | 71.7 s | | | |
 | **15** | | `web/public/audio/zacapa.mp3` | `texto_tarjeta` en `zacapa.json` | 67.1 s | | | |
+| **16** | | `web/public/audio/jocotan.en.mp3` | `audio.en.texto` en `jocotan.json` | 92.7 s | | | |
+| **17** | | `web/public/audio/camotan.en.mp3` | `audio.en.texto` en `camotan.json` | 90.0 s | | | |
+| **18** | | `web/public/audio/olopa.en.mp3` | `audio.en.texto` en `olopa.json` | 95.2 s | | | |
+| **19** | | `web/public/audio/san_juan_ermita.en.mp3` | `audio.en.texto` en `san_juan_ermita.json` | 94.3 s | | | |
+| **20** | | `web/public/audio/zacapa.en.mp3` | `audio.en.texto` en `zacapa.json` | 89.4 s | | | |

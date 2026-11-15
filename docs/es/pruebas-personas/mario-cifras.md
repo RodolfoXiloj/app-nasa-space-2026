@@ -38,7 +38,7 @@ En la primera pantalla, cambia el selector **Parcela** por cada uno de los 5 mun
 
 ## Sección 2. Vista *Evidence* — Tarjeta del agricultor y las 3 tarjetas de Rotaciones (`rotaciones[]`)
 
-Haz clic en **«Ver la evidencia»**. Con el selector *Qué sembró el último ciclo* en **«Maíz + frijol (milpa)»** y *Prioridad* en **«Agua»**, comprueba las cifras de las **3 opciones de rotación** y de la **Tarjeta para el agricultor**:
+Haz clic en **«Ver la evidencia»**. Con el selector *Cultivo que declara el extensionista* en **«Maíz + frijol»** y *Prioridad de la familia* en **«Ahorrar agua»**, comprueba las cifras de las **3 opciones de rotación** y de la **Tarjeta para el agricultor**:
 
 | Parcela y archivo JSON | Opción 1 (*Lo que hace hoy*)<br>Agua / Suelo / Plagas → **Total** · Déficit mediana (p25–p75) · Pérdida | Opción 2 (*Leguminosa o cobertura*)<br>Agua / Suelo / Plagas → **Total** · Déficit mediana (p25–p75) · Pérdida | Opción 3 (*Tolerante a sequía*)<br>Agua / Suelo / Plagas → **Total** · Déficit mediana (p25–p75) · Pérdida | Nivel de confianza en las 3 opciones (`confianza.nivel`) |
 |---|---|---|---|---|
@@ -48,17 +48,17 @@ Haz clic en **«Ver la evidencia»**. Con el selector *Qué sembró el último c
 | **San Juan Ermita**<br>`san_juan_ermita.json` | *Maíz + frijol*: **81 / 77 / 80 → Total 80**<br>Déficit: **15 %** (11–19 %) · Pérdida: **18 %** | *Maíz + canavalia*: **81 / 100 / 90 → Total 88**<br>Déficit: **15 %** (11–19 %) · Pérdida: **18 %** | *Sorgo + caupí*: **90 / 94 / 70 → Total 86**<br>Déficit: **9 %** (5–14 %) · Pérdida: **9 %** | **Alta** |
 | **Zacapa**<br>`zacapa.json` | *Maíz + frijol*: **67 / 78 / 80 → Total 73**<br>Déficit: **25 %** (21–32 %) · Pérdida: **30 %** | *Maíz + canavalia*: **67 / 100 / 90 → Total 81**<br>Déficit: **25 %** (21–32 %) · Pérdida: **30 %** | *Sorgo + caupí*: **80 / 92 / 70 → Total 80**<br>Déficit: **19 %** (15–25 %) · Pérdida: **18 %** | **Baja** |
 
-### Puntajes totales si cambias el selector «Qué sembró el último ciclo»:
-- **Si eliges «Maíz solo (sin frijol)» (`{parcela}.maiz_solo.json`):**
+### Puntajes totales si cambias el selector «Cultivo que declara el extensionista»:
+- **Si eliges «Maíz solo» (`{parcela}.maiz_solo.json`):**
   - Jocotán: **68 / 88 / 87** · Camotán: **72 / 90 / 89** · Olopa: **77 / 90 / 92** · San Juan Ermita: **68 / 88 / 86** · Zacapa: **58 / 81 / 80**.
-- **Si eliges «Sorgo» (`{parcela}.sorgo.json`):**
+- **Si eliges «Sorgo (maicillo)» (`{parcela}.sorgo.json`):**
   - Jocotán: **70 / 88 / 87** · Camotán: **73 / 90 / 89** · Olopa: **78 / 90 / 92** · San Juan Ermita: **71 / 88 / 86** · Zacapa: **64 / 81 / 80**.
 
 ---
 
 ## Sección 3. Vista *Evidence* — Recuadro «Observación preliminar: julio–agosto de 2026» (`validacion.json → observacion_2026`)
 
-Al abrir *Evidence*, arriba del todo aparece el bloque de la observación de 2026. Despliega el detalle **«Ver cifras por parcela (CHIRPS y SMAP)»** y comprueba las dos tablas contra `web/public/data/validacion.json`:
+Al abrir *Evidence*, arriba del todo aparece el bloque de la observación de 2026. Toca el enlace **«Ver detalle y límites»**: abre la pestaña **«Validación»** en la sección de la observación, con dos tablas. Compruébalas contra `web/public/data/validacion.json`:
 
 ### Tabla A: Lluvia de julio + agosto de 2026 en CHIRPS v3 (`observacion_2026.lluvia_chirps`, 35 años: 1991–2025)
 
@@ -78,7 +78,7 @@ Al abrir *Evidence*, arriba del todo aparece el bloque de la observación de 202
 | **Olopa** | `(606, 971)` | **0.180 m³/m³** | **0.216 m³/m³** (**2015**) | **El más bajo de 12 años** |
 | **Zacapa** | `(602, 968)` | **0.152 m³/m³** | **0.172 m³/m³** (**2019**) | **El más bajo de 12 años** |
 
-*(Y debajo debe indicar que **Camotán** en la celda `(603, 970)` no tiene mediciones con la calidad recomendada por NASA).*
+*(Y en los límites debe decir que **Camotán** no tiene dato de calidad recomendada).* 
 
 ---
 
@@ -105,7 +105,7 @@ Haz clic en la pestaña superior **«Validación»** de *Evidence* y comprueba e
    - Guatemala: **175 126 ha** perdidas y **1 290 785 personas** afectadas (y en El Salvador, Guatemala y Honduras juntos: **282 000 ha** y **2.2 millones** de personas).
 2. **Tabla de la prueba de 2018 y los 20 años de prueba (2006–2025, `validacion.json → parcelas[].sequia_2018`):**
 
-| Parcela | Puesto de 2018 en lluvia jul–ago (2001–2025) | ¿El motor marca 2018 con datos hasta 2017? | Déficit hídrico 2018 (`deficit_pct`) | Anomalía NDVI jul–ago 2018 (DE) | Anomalía SMAP jul–ago 2018 (DE) | Aciertos / Falsas alarmas / Fallos (4 años secos listados: 2014, 2015, 2018, 2019 en 20 años) | Spearman $\rho$ (déficit vs NDVI) |
+| Parcela | Puesto de 2018 por déficit de agua (2001–2025) | ¿El motor marca 2018 con datos hasta 2017? | Déficit hídrico 2018 (`deficit_pct`) | Anomalía NDVI jul–sep 2018 (DE) | Anomalía SMAP jul–ago 2018 (DE) | Aciertos / Falsas alarmas / Fallos (4 años secos listados: 2014, 2015, 2018, 2019 en 20 años) | Spearman $\rho$ (déficit vs NDVI) |
 |---|---|---|---|---|---|---|---|
 | **Jocotán** | **1 de 25** | **Sí** | **35 %** | **−2.35 DE** | **−0.67 DE** | **3 / 2 / 1** | **+0.69** |
 | **Camotán** | **1 de 25** | **Sí** | **32 %** | **+0.14 DE** | **sin datos** | **3 / 2 / 1** | **+0.45** |

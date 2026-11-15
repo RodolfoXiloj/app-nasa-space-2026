@@ -340,7 +340,32 @@
 
 ## 6. Hallazgos y observaciones importantes para el equipo
 
+> **Actualización del 14 nov 2026, 17:50 (UTC−6):** los hallazgos 1 y 2 de abajo ya están resueltos en `main` (ver la sección 7). Se dejan como se escribieron, porque describen lo que la corrida de las 16:39 encontró.
+
 1. **Audio de la tarjeta en inglés en *Evidence* (`{parcela}.en.mp3`):**
    - Los 5 archivos `web/public/audio/{parcela}.en.mp3` existen en disco, duran entre 89.4 y 95.2 s y pasan todas las validaciones de etiquetas de IA, pero `web/src/components/Tarjeta.jsx` reproduce actualmente `res.audio.mp3` (español) en ambos idiomas, tal como ya se declara honestamente en `docs/project-page-en.md` (*«The Evidence page still plays the longer card audio in Spanish only (the English card mp3 is generated but not yet played)»*). En la vista del agricultor, en cambio, el botón **«Listen»** sí reproduce los 5 audios cortos en inglés (`{parcela}.frases.en.mp3`) con subtítulos en inglés (`{parcela}.frases.en.vtt`).
 2. **Marcas de tiempo de `.frases.en.vtt`:**
    - Los 5 archivos `.frases.en.vtt` reutilizan los intervalos de tiempo de las 6 frases en español (hasta ~26–28.6 s), mientras que los MP3 cortos en inglés duran ~28.5–29.8 s (1.5 a 2.5 s más). Mario debe poner especial atención en la Guía 4 (`mario-audios.md`) a si el cambio entre la frase 5 y la frase 6 en inglés se siente natural al oído.
+
+---
+
+## 7. Actualización tras unir `entrega-impacto-6` (sábado 14 nov 2026)
+
+Las secciones 1 a 6 son corridas de las 16:29 a las 16:54 sobre un `main` anterior. Después entró la rama `entrega-impacto-6`, que cambia tres cosas de este reporte. Las corridas completas con su hora están en `docs/es/pruebas.md`.
+
+1. **Tarjeta en inglés (hallazgo 1): resuelto.** `Tarjeta.jsx` reproduce `audio/{parcela}.en.mp3` cuando la interfaz está en inglés y `audio/{parcela}.mp3` en español. Los audios activos pasan de 15 a **20** (las filas 16 a 20 de la tabla de la sección 3 ya no son «extra en disco»), y la guía de Mario los incluye como Grupo 4. Lo comprueban `web/scripts/evidence_playwright.py` («la tarjeta reproduce el mp3 en inglés / en español») y `npm run sin-red`.
+2. **Tiempos de los `.frases.en.vtt` (hallazgo 2): resuelto.** Los subtítulos en inglés ahora usan los tiempos del mp3 en inglés (su último subtítulo termina con el audio, de 28.482 a 29.814 s). La prueba `test_ultimo_subtitulo_termina_con_su_mp3` falla con los archivos anteriores y pasa con los nuevos.
+3. **Conteo de `docs/project-page-en.md` (sección 5): cambia una fila.** Se quitó de «Detailed Project Description» la frase que decía que la tarjeta de *Evidence* sonaba solo en español, y se agregó el lema al encabezado (fuera de los campos para pegar). Recuento con el mismo método, hecho a las `2026-11-14T17:47-06:00`:
+
+| # | Sección | Palabras | Caracteres (con espacios) | Caracteres (sin saltos de línea) | Caracteres (sin espacios) | Párrafos / bloques |
+|---|---|---|---|---|---|---|
+| 0 | *Encabezado y notas previas* | 138 | 824 | 813 | 683 | 5 |
+| 5 | **`Detailed Project Description`** | **1 376** | **8 037** | **8 020** | **6 654** | 9 |
+
+Las demás filas de la sección 5 no cambian (`Project Name` 2 / 16, `High-Level Project Summary` 306 / 1 776, `Short version` 161 / 973, `Use of Super Intelligence (SI)` 199 / 1 183, `NASA Data` 385 / 2 266, `Space Agency Partner Data and Other References` 130 / 991).
+
+Dos precisiones más sobre las secciones 0 a 2, para que nadie las tome como el estado actual:
+
+4. **El sitio no tiene Service Worker.** Las filas 0a («`dist/` listo con `sw.js`») y 0f («Service Worker con red bloqueada») lo mencionan por error: `web/dist/` no trae ningún `sw.js`. `npm run sin-red` abre un navegador con un proxy inexistente, de modo que solo responde el servidor local, y comprueba que todo lo que el sitio pide (datos, audio, capas del mapa) es local. Sin internet funciona mientras alguien lo sirva en la red local; no «queda guardado» en el teléfono.
+5. **El árbol de accesibilidad de las secciones 1.2 y 1.3 es de un árbol de trabajo anterior.** Trae «What the satellite saw on this plot», «Options to talk over with your technician» y «This is not an official alert; talk to your technician», y no trae la línea de julio y agosto de 2026. El sitio actual dice «What the satellite saw around this plot», «Options to talk over with your extension worker» y «This is not an official notice: talk it over with your extension worker». Los textos vigentes, en el orden de lectura, están en `rodolfo-talkback.md` y en `ivan-ingles.md`, que se corrigieron contra el sitio construido el 14 nov 2026 (`web/scripts/agricultor_playwright.py`: 96 de 96).
+

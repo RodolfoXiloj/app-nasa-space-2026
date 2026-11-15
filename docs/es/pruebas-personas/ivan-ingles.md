@@ -23,151 +23,258 @@ Usa estas **4 marcas simples** en la tabla del final cada vez que notes algo al 
 
 ## Parte 1. Textos en inglés de la vista del agricultor (primera pantalla)
 
-Lee en voz alta estos textos tal como aparecen al abrir la aplicación web (`http://localhost:4173/`, que abre en inglés por defecto):
+Lee en voz alta la pantalla tal como abre (`http://localhost:4173/`, en inglés por defecto). Este es el texto real de la parcela **Jocotán**, en el orden en que aparece, sacado del sitio construido el 14 nov 2026:
 
-### 1.1 Encabezado, selector de parcela y reproductor de audio (`web/src/agricultor/textos.js`)
+### 1.1 Jocotán, de arriba abajo
 > **Milpa Resiliente**  
-> **Plot:** Jocotán, Chiquimula — *Example plot in Jocotán.*  
-> **Button:** Listen — *Short audio with subtitles.* (When playing: *Pause* / *Play from start*)  
-> **Subtitles button:** Subtitles  
-> **AI voice note:** AI-generated synthetic voice (edge-tts, Microsoft neural text to speech; voice en-US-JennyNeural) from the text the engine wrote with templates. It is not a person.
+> *(Language)*  
+> *(button)* English  
+> *(button)* Español  
+> Plot  
+> *(plot)* Jocotán, Chiquimula  
+> Example plot in Jocotán  
+> July and August 2026  
+> Rain was 24 % of normal (median 1991-2025), according to CHIRPS. Preliminary.  
+> Observed, not a forecast.  
+> *(button)* Listen — Short audio with subtitles  
+> **What the satellite saw around this plot**  
+> Three facts from past years, always in the same order. They are records, not a forecast.  
+> **Bare soil**  
+> Repeats  
+> It saw it often.  
+> *(drawing, read by screen readers:)* 2 of 12 months with bare soil (March and April). Little cover: February and May.  
+> Bare soil  
+> Little cover  
+> Covered  
+> Soil: repeats. The satellite saw 2 months of bare soil.  
+> Bare: March and April.  
+> Little plant cover: February and May.  
+> Source: MODIS (NASA), 2021‑2025.  
+> **Fire near the plot**  
+> Repeats  
+> It saw it often.  
+> *(drawing, read by screen readers:)* 3 of 15 years with a fire seen nearby  
+> Burning: repeats. Fires seen nearby in 3 of 15 years.  
+> Months with fire: April and May.  
+> Source: VIIRS (NASA FIRMS), 2012‑2026.  
+> **Long dry spell (canícula)**  
+> Watch  
+> It saw it a few times.  
+> *(drawing, read by screen readers:)* 2 of 25 years with a long canícula (midsummer dry spell)  
+> Midsummer drought: watch. Dry spells longer than 15 days in 2 of 25 years.  
+> Between June and August.  
+> Source: CHIRPS and IMERG (NASA), 2001‑2025.  
+> **Options to talk over with your extension worker**  
+> Two options come out even: their scores are 3 points or less apart. None stands out.  
+> Legume or cover crop  
+> Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble  
+> Drought-tolerant crop  
+> Sorghum in primera and cowpea in postrera, with standing stubble  
+> In no particular order.  
+> What you do today  
+> Maize with beans in primera and beans in postrera  
+> **How sure we are**  
+> High  
+> Why:  
+> All three checks pass.  
+> This is not an official notice: talk it over with your extension worker.  
+> **Share this plot**  
+> One black-and-white page to print, the short audio and a WhatsApp message.  
+> *(button)* Print sheet  
+> *(link)* Download audio  
+> *(link)* Share on WhatsApp  
+> *(button)* See the evidence — Map, charts, sources and limits  
+> Made with AI help: an AI assistant helped write the code, the texts and the pictograms, and the team checked them. The audio is a synthetic AI voice. The facts come from the engine’s fixed rules, not from a language model.  
 
-### 1.2 Los 3 hechos del semáforo en la vista del agricultor (`textos.js` + `pictos/textos.js` + `motor/ingles.py`)
-> **Section heading:** What the satellite saw on this plot  
-> **Intro:** Three facts from past years, always in the same order. They are records, not a forecast.  
->
-> **States (shape + word + explanation):**  
-> - **Good:** The satellite did not see the problem in this period.  
-> - **Watch:** It saw it a few times.  
-> - **Repeats:** It saw it often.  
-> - **The satellite can't see well here:** We don't have enough data for this plot.  
->
-> **Fact 1 — Bare soil (Jocotán example):**  
-> - Heading: **Bare soil** — **Repeats** (*It saw it often.*)  
-> - Wheel alt text: *2 of 12 months with bare soil (March and April). Little cover: February and May.*  
-> - Wheel legend: *Bare soil · Little cover · Covered*  
-> - Count & details: *Soil: repeats. The satellite saw 2 months of bare soil.* / *Bare: March and April.* / *Little plant cover: February and May.*  
-> - Source: *Source: MODIS (NASA), 2021‑2025.*  
-> - *(Variantes en las otras parcelas: Camotán/Olopa: «Soil: watch. The satellite saw 2 months with little cover, none bare.» · San Juan Ermita: «Soil: repeats. The satellite saw 3 months of bare soil.» · Zacapa: «Soil: watch. The satellite saw 1 month of bare soil and 4 with little cover.»)*  
->
-> **Fact 2 — Fire near the plot (Jocotán example):**  
-> - Heading: **Fire near the plot** — **Repeats** (*It saw it often.*)  
-> - Grid alt text: *3 of 15 years with a fire seen nearby*  
-> - Count & details: *Burning: repeats. Fires seen nearby in 3 of 15 years.* / *Months with fire: April and May.*  
-> - Source: *Source: VIIRS (NASA FIRMS), 2012‑2026.*  
-> - *(Variante en Zacapa: «Burning: good. No fires seen nearby in 15 years.»)*  
->
-> **Fact 3 — Long dry spell (canícula) (Jocotán example):**  
-> - Heading: **Long dry spell (canícula)** — **Watch** (*It saw it a few times.*)  
-> - Grid alt text: *2 of 25 years with a long canícula (midsummer dry spell)*  
-> - Count & details: *Midsummer drought: watch. Dry spells longer than 15 days in 2 of 25 years.* / *Between June and August.*  
-> - Source: *Source: CHIRPS and IMERG (NASA), 2001‑2025.*  
-> - *(Variante en Olopa: «Midsummer drought: good. No dry spell went past 15 days in 25 years.»)*
+### 1.2 Lo que cambia en las otras parcelas
 
-### 1.3 Opciones para platicar con su técnico, confianza y Kit de compartir (`textos.js` + `kit/textos.js`)
-> **Section heading:** Options to talk over with your technician  
-> - **When 2 options tie (Jocotán, San Juan Ermita):** *Two options come out even: their scores are 3 points or less apart. None stands out.*  
-> - **When all 3 options tie (Olopa):** *All three options come out even: their scores are 3 points or less apart. None stands out.*  
-> - **When confidence is low (Camotán, Zacapa):** *We cannot recommend one option over another: confidence in the data for this plot is low. Check the three options below with your technician.*  
-> - **Option labels & names:**  
->   - *What you do today:* Maize with beans in primera and beans in postrera  
->   - *Legume or cover crop:* Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble  
->   - *Drought-tolerant crop:* Sorghum in primera and cowpea in postrera, with standing stubble *(or in Olopa: Short-cycle maize ICTA B-5 with beans in primera and beans in postrera)*  
->   - *In no particular order.*  
-> - **How sure we are:**  
->   - *High* — *Why: All three checks pass.* (Jocotán, San Juan Ermita)  
->   - *Medium* — *Why: Two rain sources (POWER and CHIRPS) differ by 22% in July-August.* (Olopa)  
->   - *Low* — *Why: SMAP has no soil-moisture data of recommended quality for this cell; slope is 37% (erosion risk on bare soil).* (Camotán)  
->   - *Low* — *Why: Two rain sources (POWER and CHIRPS) differ by 55% in July-August; slope is 35.3% (erosion risk on bare soil).* (Zacapa)  
-> - **Disclaimer:** *This is not an official alert; talk to your technician.*  
-> - **Share this plot:** *One black-and-white page to print, the short audio and a WhatsApp message.* → Buttons: *Print sheet* · *Download audio* · *Share on WhatsApp*  
-> - **Bottom button:** *See the evidence — Map, charts, sources and limits*
+Cambia el selector **Plot** y lee también estas partes, que son distintas en cada parcela. Las seis frases son las que dice la voz al tocar **Listen**:
+
+**Camotán**
+
+> July and August 2026. Rain was 26 % of normal (median 1991-2025), according to CHIRPS. Preliminary. Observed, not a forecast.  
+> 1. Camotán plot, read by a computer voice.  
+> 2. Soil: watch. The satellite saw 2 months with little cover, none bare.  
+> 3. Burning: repeats. Fires seen nearby in 3 of 15 years.  
+> 4. Midsummer drought: watch. Dry spells longer than 15 days in 2 of 25 years.  
+> 5. We can't say which option is best: SMAP soil moisture is missing.  
+> 6. This is not an official notice: talk it over with your extension worker.  
+> Options to talk over with your extension worker  
+> We do not compare the options here because confidence is low.  
+> Reason:  
+> The 9 km SMAP cell has no recommended-quality data in the whole record (3007 measurements discarded by the quality flag).  
+> Legume or cover crop  
+> Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble  
+> Drought-tolerant crop  
+> Sorghum in primera and cowpea in postrera, with standing stubble  
+> In no particular order.  
+> What you do today  
+> Maize with beans in primera and beans in postrera  
+> How sure we are  
+> Low  
+> Why:  
+> The 9 km SMAP cell has no recommended-quality data in the whole record (3007 measurements discarded by the quality flag).  
+
+**Olopa**
+
+> July and August 2026. Rain was 22 % of normal (median 1991-2025), according to CHIRPS. Preliminary. Observed, not a forecast.  
+> 1. Olopa plot, read by a computer voice.  
+> 2. Soil: watch. The satellite saw 2 months with little cover, none bare.  
+> 3. Burning: watch. Fires seen nearby in 1 of 15 years.  
+> 4. Midsummer drought: good. No dry spell went past 15 days in 25 years.  
+> 5. All three options come out even: what you plant today, maize with jack bean and short-cycle maize.  
+> 6. This is not an official notice: talk it over with your extension worker.  
+> Options to talk over with your extension worker  
+> Three options come out even: each is within 3 points of another, so none stands out.  
+> What you do today  
+> Maize with beans in primera and beans in postrera  
+> Legume or cover crop  
+> Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble  
+> Drought-tolerant crop  
+> Short-cycle maize ICTA B-5 with beans in primera and beans in postrera  
+> In no particular order.  
+> How sure we are  
+> Medium  
+> Why:  
+> POWER differs 22.1 % from CHIRPS (less than 15 % required).  
+
+**San Juan Ermita**
+
+> July and August 2026. Rain was 20 % of normal (median 1991-2025), according to CHIRPS. Preliminary. Observed, not a forecast.  
+> 1. San Juan Ermita plot, read by a computer voice.  
+> 2. Soil: repeats. The satellite saw 3 months of bare soil.  
+> 3. Burning: watch. Fires seen nearby in 2 of 15 years.  
+> 4. Midsummer drought: watch. Dry spells longer than 15 days in 1 of 25 years.  
+> 5. There are two even options: maize with jack bean or sorghum with cowpea.  
+> 6. This is not an official notice: talk it over with your extension worker.  
+> Options to talk over with your extension worker  
+> Two options come out even: their scores are 3 points or less apart. None stands out.  
+> Legume or cover crop  
+> Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble  
+> Drought-tolerant crop  
+> Sorghum in primera and cowpea in postrera, with standing stubble  
+> In no particular order.  
+> What you do today  
+> Maize with beans in primera and beans in postrera  
+> How sure we are  
+> High  
+> Why:  
+> All three checks pass.  
+
+**Zacapa**
+
+> July and August 2026. Rain was 21 % of normal (median 1991-2025), according to CHIRPS. Preliminary. Observed, not a forecast.  
+> 1. Zacapa plot, read by a computer voice.  
+> 2. Soil: watch. The satellite saw 1 month of bare soil and 4 with little cover.  
+> 3. Burning: good. No fires seen nearby in 15 years.  
+> 4. Midsummer drought: repeats. Dry spells longer than 15 days in 3 of 25 years.  
+> 5. We can't say which option is best: two rain sources disagree.  
+> 6. This is not an official notice: talk it over with your extension worker.  
+> Options to talk over with your extension worker  
+> We do not compare the options here because confidence is low.  
+> Reason:  
+> POWER differs 55.4 % from CHIRPS (less than 15 % required).  
+> Legume or cover crop  
+> Maize with jack bean (canavalia) in primera, beans in postrera and standing stubble  
+> Drought-tolerant crop  
+> Sorghum in primera and cowpea in postrera, with standing stubble  
+> In no particular order.  
+> What you do today  
+> Maize with beans in primera and beans in postrera  
+> How sure we are  
+> Low  
+> Why:  
+> POWER differs 55.4 % from CHIRPS (less than 15 % required).  
+
+### 1.3 Evidence en inglés (opcional, si queda tiempo)
+
+Toca **See the evidence** y lee en voz alta, de la parcela Jocotán: el encabezado, el recuadro «Preliminary observation: July–August 2026», una de las tres rotaciones completa (por qué, evidencia, beneficios, vacíos y riesgos) y el panel «Where it fails» de la pestaña Validation.
 
 ---
 
 ## Parte 2. Textos del resumen y descripción del proyecto (`docs/project-page-en.md`)
 
-Lee en voz alta cada sección del formulario de Space Apps:
+Lee en voz alta cada sección **directamente del archivo** `docs/project-page-en.md` (así lees el texto vigente y no una copia). Tamaños al 14 nov 2026:
 
-### 2.1 High-Level Project Summary (versión principal — 253 palabras)
-> Milpa Resiliente turns two decades of satellite records into a three-fact traffic light designed for a smallholder farmer in Guatemala's Dry Corridor to read in seconds (the comprehension test with farmers is still pending): how many months a year the land around the plot shows bare soil or little plant cover (NASA MODIS NDVI, 250 m), how many years a satellite detected fire near the plot (NASA FIRMS VIIRS, 375 m; small or short fires can be missed), and how many years the mid-summer dry spell, the *canícula*, ran long (CHIRPS v3 daily rain, split into days with NASA GPM IMERG). Each fact has a shape, a word, a pictogram and a short audio in Spanish or English, so it does not depend on colour or on reading well. One tap away, an Evidence view lets the extension worker compare three crop rotations per plot under drier and hotter scenarios, with sources, validation and limits in plain sight. It matters because drought keeps taking these families' maize and beans: for July-September 2026 Guatemala's food security agency forecast 3.2 million people (17 %) in crisis or worse (IPC Phase 3+), with Chiquimula and Zacapa at 15-19 %; FEWS NET reported 2026 crop losses for subsistence farmers, in some cases total; and in 2019 Oxfam measured average maize losses of 78.1 % in 201 monitored communities, 23 of them in our four Chiquimula municipalities. The tool does not decide for anyone: it gives the farmer and the extension worker the same evidence to decide together.
-
-### 2.2 High-Level Project Summary — Short version (respaldo — 149 palabras)
-> Milpa Resiliente turns two decades of satellite records into a three-fact traffic light for smallholder farmers in Guatemala's Dry Corridor: months with bare soil or little cover around the plot (NASA MODIS NDVI), years with fire detected nearby (NASA FIRMS VIIRS) and years with a long mid-summer dry spell, the *canícula* (CHIRPS v3 with NASA GPM IMERG). Each fact has a shape, a word, a pictogram and a short audio in Spanish or English. One tap away, an Evidence view lets the extension worker compare three crop rotations per plot, with sources, validation and limits. It matters: for July-September 2026, 3.2 million Guatemalans (17 %) were forecast in food crisis or worse, and FEWS NET reported maize losses, in some cases total, in the Dry Corridor. The tool does not decide: it gives the farmer and the extension worker the same evidence. Comprehension tests with farmers are still pending.
-
-### 2.3 Detailed Project Description (1 119 palabras)
-Lee también en voz alta los 7 párrafos de `docs/project-page-en.md` (líneas 35 a 50):
-1. **What it does** (*Farmer view* y *Evidence view*)
-2. **How it works** (pipeline en Python, balance hídrico FAO-56, validador determinista y fechas de siembra de ZARC citadas, nunca calculadas)
-3. **Local roots** (sistema agroforestal *Kuxur Rum*, territorio maya Ch'orti', 112 432 hablantes y por qué no se tradujo ni sintetizó Ch'orti' con máquina sin hablantes nativos)
-4. **How we checked it** (regla fijada antes de ver 2018, 5 de 5 parcelas marcadas en 2018 con datos hasta 2017, 175 126 ha de pérdidas según MAGA/FAO GIEWS, conteo de aciertos y fallos en 20 años, sesgo de NASA POWER frente a CHIRPS y observación preliminar de julio–agosto de 2026 con 20 % a 26 % de la mediana 1991–2025)
-5. **Benefits**
-6. **Limits we state openly** (escala de 0.35 ha frente a 6.25 ha de MODIS y 9 km de SMAP, falta de SMAP recomendado en Camotán, fin de datos nuevos de Suomi NPP a inicios de noviembre de 2026 y retiro de Terra hacia VIIRS en NOAA-20/21)
-7. **Tools**, más los bloques **Use of Super Intelligence (SI)**, **NASA Data** y **Space Agency Partner Data and Other References**.
+- **2.1 High-Level Project Summary** (versión principal): 306 palabras, un solo párrafo. Es el más largo de leer de corrido: marca dónde te quedas sin aire.
+- **2.2 Short version** (respaldo): 161 palabras.
+- **2.3 Detailed Project Description**: 1376 palabras, en 8 bloques que empiezan en negrita: *What it does*, *How it works*, *Local roots*, *How we test the rotations against the future*, *How we checked it*, *Benefits*, *Limits we state openly*, *Tools*.
+- **2.4 Use of Super Intelligence (SI)** (199 palabras), **NASA Data** (385) y **Space Agency Partner Data and Other References** (130).
 
 ---
 
 ## Parte 3. Textos de las 7 diapositivas (`docs/slides/index.html`)
 
-Lee en voz alta cada una de las 7 láminas como si las estuvieras presentando ante el jurado:
+Lee en voz alta cada lámina como si la presentaras ante el jurado. Puedes leerlas del PDF (`docs/slides/milpa-resiliente.pdf`) o de aquí: este es el texto real de cada una, sacado de `index.html` el 14 nov 2026. Las diapositivas 3, 4 y 7 llevan además capturas de la pantalla, que no se leen.
 
-### Slide 1 — Cover
-> **Challenge:** Field Shift: Adapting Farms with NASA Data · NASA Space Apps 2026  
-> **Title:** Milpa Resiliente  
-> **Subtitle:** Satellite records turned into a three-fact traffic light for smallholder farmers and extension workers in Guatemala's Dry Corridor.  
-> **Footer:** Team **A dream** · Chiquimula and Zacapa, Guatemala · English and Spanish · Works offline after the first visit
+### Slide 1 — Milpa Resiliente
+> NASA satellite records turned into three facts a farmer can see and hear, for the milpa in Guatemala’s Dry Corridor.  
+> Challenge: Field ShiftNASA Space Apps Challenge 2026  
+> Team “A dream”  
+> Rodolfo Xiloj · Mario · Iván  
 
-### Slide 2 — 1 · The problem in the Dry Corridor
-> **Heading:** Drought keeps hitting subsistence maize and beans  
-> - **3.2 M people in Guatemala (17 %)** forecast in food crisis or worse (IPC Phase 3+) for July–September 2026; Chiquimula and Zacapa are at 15–19 % (SESAN IPC analysis, May 2026).  
-> - **78.1 % average maize loss** measured by Oxfam in August 2019 across 201 communities in the Dry Corridor, including 23 in Jocotán, Camotán, Olopa and San Juan Ermita.  
-> - **20–26 % of median Jul–Aug rain** fell in 2026 across our five plots' CHIRPS v3 cells: the driest July–August in all 36 years (1991–2026). FEWS NET reported crop losses, in some cases total.  
-> - **Why satellite tables do not reach the plot:** Smallholder families farm about **0.35 ha** (~half a *manzana*). Adult literacy is **52.9 %** in Jocotán and **59.4 %** in Camotán, and **112,432 people** speak Ch'orti' Maya. Charts in English, red-green maps and web apps that need mobile data leave the farmer out of the conversation with the extension worker.
+### Slide 2 — Chiquimula: the same three hits
+> Canícula  
+> 2 — of 25 years  
+> Midsummer dry spell longer than 15 days in Jocotán.  
+> Burning  
+> 3 — of 15 years  
+> Fire detected within 500 m of the Jocotán plot, Jan–May.  
+> Bare soil  
+> 3 — of 12 months  
+> Bare soil around the plot in Feb–Apr at San Juan Ermita, before the rains.  
+> 2026: 3.2 million people (17 %) forecast in food crisis or worse in Guatemala for Jul–Sep; Chiquimula and Zacapa at 15–19 % (SESAN, IPC forecast).  
+> 2019: average maize losses of 78.1 % in 201 communities monitored by Oxfam, 23 of them in Jocotán, Camotán, San Juan Ermita and Olopa.  
+> 2018: 175,126 ha of crop losses in Guatemala, mainly maize and beans (preliminary MAGA figure, via FAO GIEWS). Jul–Aug 2026: 20–26 % of normal rain at our 5 plots (CHIRPS v3). An observation, not a forecast.  
 
-### Slide 3 — 2 · What the farmer sees first
-> **Heading:** Three satellite facts, a shape, a word and a voice  
-> **Mockup (Jocotán, Chiquimula — Listen · 26 s · subtitles on):**  
-> 1. `[!] Square` **Bare soil — Repeats:** 2 of 12 months bare (March and April). MODIS NDVI, 250 m, 2021–2025.  
-> 2. `[!] Square` **Fire near the plot — Repeats:** 3 of 15 years with fire within 500 m. FIRMS VIIRS, 375 m, 2012–2026.  
-> 3. `[!] Triangle` **Long canícula — Watch:** 2 of 25 years with a dry spell over 15 days. CHIRPS v3 + GPM IMERG, 2001–2025.  
-> **Options to talk over with your technician:** Two options come out even (within 3 points): **Maize + canavalia** (88) and **Sorghum + cowpea** (87), vs. current milpa (80). Confidence: **High**.  
-> **Design rules:**  
-> - **No colour-only encoding:** green circle “Good”, yellow triangle “Watch”, red square “Repeats”, gray when a sensor cannot see well. No orange and no word “alert”, so it is never confused with CONRED's official alerts.  
-> - **Pictograms + short audio:** a 12-month wheel for bare soil, one dot per year for fires and dry spells, and a 21–29 s synthetic-voice audio with WebVTT subtitles in Spanish and English.  
-> - **Kit without internet:** prints on one black-and-white letter page, downloads the mp3 and shares a plain-text summary on WhatsApp. Works offline via a service worker.
+### Slide 3 — Farmer view: an icon and a word
+> Good — Circle  
+> Watch — Triangle  
+> Repeats — Square  
+> Grey: “The satellite can’t see well here” — When data is missing, we say so instead of guessing.  
+> Camotán: no quality SMAP data, so the options turn grey.  
+> The three facts are the three problems that Kuxur Rum (“my humid land” in Ch’orti’) tackles: permanent cover, no burning and soil moisture through the canícula. FAO and Guatemala’s Ministry of Agriculture have promoted it in Chiquimula since 2000; by 2006 more than 7,000 farms had adopted it.  
 
-### Slide 4 — 3 · Local roots and the Evidence view
-> **Heading:** Kuxur Rum, Ch'orti' territory and the extension worker's view  
-> - **Rooted in Chiquimula:** The cover-crop and no-burn option follows **Kuxur Rum** (“my humid land” in Ch'orti'), an agroforestry system promoted by FAO and MAGA in Jocotán, Camotán and Olopa since 2000: permanent soil cover, no burning and more moisture through the *canícula*. Over 7,000 farms had adopted it by 2006.  
-> - **Respect for Ch'orti':** The data contract reserves the `chorti` audio slot and `docs/chorti.md` holds the 6-phrase script for native speakers to translate and record. We did not machine-translate or synthesise Ch'orti'.  
-> - **Planting dates are quoted, never calculated:** The tool points to **ZARC (FAO–MAGA)** for municipal planting windows and quotes the published 2026 adjustment (May → June in Chiquimula and Zacapa).  
-> - **One tap away: Evidence view:**  
->   - Map with offline NASA GIBS MODIS true-colour tiles and online Sentinel-2.  
->   - Three rotations scored on water, soil and pests under 0, −10, −20 and −30 % rain and +1.5 °C.  
->   - “NASA product → decision” table and a “Where it fails” panel.  
->   - Deterministic text templates checked by a validator: no invented numbers.
+### Slide 4 — A tie: no winner today. Not in 2041–2060.
+> Olopa, three rotations: score today and NASA NEX-GDDP-CMIP6 futures held (SSP2-4.5, 2041–2060):  
+> 879/33What you plant today  
+> 909/33Maize with jack bean  
+> 9233/33Short-cycle maize ICTA B-5  
+> Rule: 3 points or less apart = a tie. Jack bean ties with both others, so all three are shown, in no order. The rule works as a chain. Holds = water as good as today’s practice in today’s climate. Median model: -6.7 % June–August rain, +1.4 °C. With high emissions, today’s practice holds in 3 of 34.  
+> Elsewhere both alternatives lead today’s practice by 5 to 8 points and tie with each other: Jocotán 88 / 87 vs 80, San Juan Ermita 88 / 86 vs 80. Camotán (90 / 89 vs 84) and Zacapa (81 / 80 vs 73) show the same gap, but confidence is low there, so the options go grey.  
 
-### Slide 5 — 4 · NASA data → agricultural decision
-> **Heading:** Six NASA products, each tied to a concrete check  
-> *(Lee las 6 filas de la tabla: MODIS MOD13Q1 NDVI v061, FIRMS VIIRS S-NPP, GPM IMERG Late V07 via CHIRPS v3 daily “sat”, NASA POWER, SMAP SPL3SMP_E v6 y SRTM GL3 90 m + NASA GIBS).*
+### Slide 5 — NASA product → the decision it drives
+> Product | Decision on the farmer screen  
+> MODIS MOD13Q1 — NDVI, 250 m, 16-day | → Bare-soil and low-cover months → Bare soil fact and soil score  
+> FIRMS (VIIRS, Suomi NPP) — Active fire, 375 m; a detection is a pixel centre | → Fire years within 500 m, Jan–May → Burning fact  
+> CHIRPS v3 daily “sat” — Rain at ~5 km; NASA IMERG’s daily split arrives inside it | → Dry spells over 15 days (< 2 mm/day) → Canícula fact and water deficit  
+> SMAP SPL3SMP_E — Soil moisture, 9 km, top 5 cm | → Jul–Aug soil moisture; missing quality data → grey, low confidence  
+> NEX-GDDP-CMIP6 — 33–34 climate models, 0.25°, 2041–2060 | → Rain and heat change per model → how many futures each rotation holds (Evidence)  
+> CHIRPS comes from the UCSB Climate Hazards Center (Funk et al., 2026); we did not download IMERG directly. MODIS, FIRMS, SMAP and NEX-GDDP-CMIP6 come from NASA (CMIP6 precomputed offline in Google Earth Engine). Also used: NASA POWER (temperature, ET0), SRTM (slope, 90 m) and cached NASA GIBS map layers.  
 
-### Slide 6 — 5 · Validation and honest limits
-> **Heading:** Checked against 2018 and 20 years of records — misses included  
-> - **5 / 5 plots flagged in 2018 using only data up to 2017:** With thresholds fixed beforehand on 2001–2017 water deficit (CHIRPS rain + POWER ETo; SMAP is not part of this run), the rule flags 2018 at all five plots. In August 2018 MAGA estimated **175,126 ha** of crop losses in Guatemala (relayed by FAO GIEWS).  
-> - **20 test years (2006–2025): hits and misses:** One year and five points are a sanity check, not a skill score. Across 2006–2025 the rule flags 5 or 6 years per plot:  
->   - Against the 4 dry years listed beforehand (2014, 2015, 2018, 2019): **3 hits, 2–3 false alarms, 1 miss (2019)**.  
->   - Against 7 years with documented crop losses (2009, 2010, 2015, 2016, 2018, 2019, 2023): **3–4 hits**; misses **2016, 2019 and 2023** at every plot.  
-> - **Limits we state in the app:**  
->   - **Scale:** a plot is ~0.35 ha; MODIS is 6.25 ha and SMAP is 9 km. The tool describes the surrounding land, not the plot.  
->   - **Pending field checks:** plots were chosen from imagery; agronomic review, a real photocopy test and user comprehension tests are still pending.  
->   - **Sensor transition:** S-NPP stopped delivering new data in early Nov 2026 and Terra is retiring; updates move to VIIRS on NOAA-20/21.
+### Slide 6 — Where it fails
+> Not an official alert. — The audio ends: “This is not an official notice: talk it over with your extension worker.”  
+> Thresholds were set after seeing the data. — The cut-offs were chosen after counting the 5 plots, not before. An agronomist still has to review them.  
+> The 5 plots are example points chosen by satellite, not verified in the field.  
+> 2018 back-test: high risk at 5 of 5 plots, but also 2–3 false alarms and 1 miss in 20 years per plot. Against seven years with documented losses it misses 2016, 2019 and 2023 at every plot.  
+> Olopa: greenness barely follows the rain deficit, Spearman ρ = 0.07.  
+> Zacapa: NASA POWER differs 55.4 % from CHIRPS in Jul–Aug → grey.  
+> Camotán: 3007 SMAP readings fail the quality flag → grey.  
+> A family here farms about 0.35 ha on average; one MODIS pixel is 6.25 ha. We see the land around the plot, not the plot.  
+> Suomi NPP stopped delivering new data in early November 2026 and Terra is being retired: updates would move to VIIRS on NOAA-20 and NOAA-21.  
 
-### Slide 7 — 6 · Summary
-> **Heading:** Same satellite evidence for the farmer and the extension worker  
-> 1. **Built for the first screen:** Three facts, shapes + words, pictograms and a 26 s audio with subtitles. No login, no keys, works offline after the first load.  
-> 2. **Transparent by construction:** Plain Python rules + FAO-56 water balance. Every sentence comes from a template and a validator rejects any number not in the JSON.  
-> 3. **Ready to inspect:** Live web app, 5 real plots in Chiquimula and Zacapa, full source code, tests and data provenance in the repository.  
-> **Footer:** Milpa Resiliente · Team **A dream** (Rodolfo Xiloj, Mario, Iván) · `github.com/RodolfoXiloj/challenge-space-apps-2026`
+### Slide 7 — Audio, no internet, next steps
+> Audio  
+> One tap on Listen: under 30 seconds per plot, Spanish or English voice, with subtitles in both. The voice is synthetic (AI) and says so.  
+> No internet  
+> Built to be served from a laptop on a local network: 5 plots, audio and data are local files. Not yet tried in the field.  
+> The map falls back to saved MODIS layers.  
+> Checked by npm run sin-red with the internet blocked.  
+> Next steps  
+> Visit the plots with extension workers.  
+> Agronomist review of thresholds and scores.  
+> Comprehension test of pictograms and audio.  
+> Ch’orti’ audio recorded by native speakers: the script and the audio slot are ready.  
 
 ---
 
@@ -175,12 +282,12 @@ Lee en voz alta cada una de las 7 láminas como si las estuvieras presentando an
 
 | Fecha y hora real (ej. `2026-11-15 15:00`) | Sección leída en voz alta | Tiempo aproximado que tomó leerla | ¿Se leyó fluido de principio a fin? (Sí / No) | Frases marcadas con `[AIRE]`, `[TRABA]`, `[RARO]` o `[DATO]` y cambio sugerido |
 |---|---|---|---|---|
-| | **1.1 Vista agricultor — Encabezado, controles y aviso de voz IA** | | | |
-| | **1.2 Vista agricultor — Los 3 hechos y estados del semáforo (5 parcelas)** | | | |
-| | **1.3 Vista agricultor — Opciones, confianza y Kit de compartir** | | | |
-| | **2.1 `project-page-en.md` — High-Level Project Summary (253 palabras)** | | | |
-| | **2.2 `project-page-en.md` — Short version (149 palabras)** | | | |
+| | **1.1 Vista agricultor — Jocotán, de arriba abajo** | | | |
+| | **1.2 Vista agricultor — Lo que cambia en Camotán, Olopa, San Juan Ermita y Zacapa** | | | |
+| | **1.3 Evidence en inglés (opcional)** | | | |
+| | **2.1 `project-page-en.md` — High-Level Project Summary (306 palabras)** | | | |
+| | **2.2 `project-page-en.md` — Short version (161 palabras)** | | | |
 | | **2.3 `project-page-en.md` — Detailed Project Description, SI y NASA Data** | | | |
-| | **3.1 `docs/slides/index.html` — Slides 1, 2 y 3 (Portada, Problema y Vista agricultor)** | | | |
-| | **3.2 `docs/slides/index.html` — Slides 4 y 5 (Raíces locales, Evidence y Tabla NASA)** | | | |
-| | **3.3 `docs/slides/index.html` — Slides 6 y 7 (Validación, Límites y Cierre)** | | | |
+| | **3.1 `docs/slides/index.html` — Slides 1, 2 y 3 (portada, el problema y la vista del agricultor)** | | | |
+| | **3.2 `docs/slides/index.html` — Slides 4 y 5 (el empate y los futuros de NASA; producto → decisión)** | | | |
+| | **3.3 `docs/slides/index.html` — Slides 6 y 7 (dónde falla; audio, sin internet y siguientes pasos)** | | | |
