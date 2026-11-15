@@ -33,13 +33,23 @@ export function idEscenario(lluvia, temp) {
   return `lluvia_${lluvia}_temp_${temp}`
 }
 
+// El mismo redondeo que round() de Python en motor/puntaje.py: un .5 exacto va al número par (84.5 -> 84).
+// Math.round lo subiría (85) y la tarjeta mostraría otro total que el motor, el texto y el audio.
+// Los pesos (0.25, 0.5) y los puntajes enteros dan sumas exactas en binario, así que el .5 se detecta sin error.
+export function redondearComoPython(x) {
+  const abajo = Math.floor(x)
+  const resto = x - abajo
+  if (resto === 0.5) return abajo % 2 === 0 ? abajo : abajo + 1
+  return Math.round(x)
+}
+
 // Puntajes de una rotación en el escenario elegido, con el total re-ponderado según la prioridad.
 export function puntajes(res, rotId, lluvia, temp, prioridad) {
   const esc = res.escenarios.lista.find((e) => e.id === idEscenario(lluvia, temp))
   const base = esc?.rotaciones?.[rotId]
   const p = base ? { ...base.puntajes } : { ...res.rotaciones.find((r) => r.id === rotId).puntajes }
   const w = res.pesos.por_prioridad[prioridad]
-  p.total = Math.round(w.agua * p.agua + w.suelo * p.suelo + w.plagas * p.plagas)
+  p.total = redondearComoPython(w.agua * p.agua + w.suelo * p.suelo + w.plagas * p.plagas)
   return { ...p, deficit: base?.deficit_mediano_pct }
 }
 

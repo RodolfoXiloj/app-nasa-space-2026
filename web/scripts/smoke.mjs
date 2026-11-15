@@ -85,6 +85,20 @@ try {
         console.error(`FALLA ${f}: farmer audio en ${audioEn.mp3}: ${e.message}`)
       }
     }
+    // El total que recalcula la web (lib/datos.js) es el del motor: con la prioridad del JSON, en cada escenario.
+    try {
+      const { puntajes } = await server.ssrLoadModule('/src/lib/datos.js')
+      const prio = res.pesos?.prioridad
+      for (const esc of res.escenarios?.lista || []) {
+        for (const [rid, r] of Object.entries(esc.rotaciones)) {
+          const web = puntajes(res, rid, esc.lluvia_pct, esc.temp_c, prio).total
+          if (web !== r.puntajes.total) throw new Error(`${esc.id} ${rid}: la web da ${web}, el motor ${r.puntajes.total}`)
+        }
+      }
+    } catch (e) {
+      fallas++
+      console.error(`FALLA ${f}: total recalculado: ${e.message}`)
+    }
     for (const [nombre, C] of Object.entries(piezas)) {
       for (const [lluvia, temp, prioridad] of escenarios) {
         try {
