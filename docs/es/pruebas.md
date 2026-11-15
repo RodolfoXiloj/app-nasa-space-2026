@@ -6,6 +6,23 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Versión interactiva (rama `v2-interactiva`): sábado 14 nov 2026
+
+Hecha en la noche, en tandas; la batería completa pasó después de cada tanda. Aquí va la corrida final, sobre el código ya corregido tras la revisión independiente (sección 11 de `plan-version-interactiva.md`). Horas con `date` (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 21:35:56 a 21:36:18 | Pruebas de Python | `python -m pytest -q` | ✅ pasa todo; a las 21:38:51, `python -m pytest`: «265 passed in 21.43s» (250 + 15 de `tests/test_explorar.py`) |
+| 21:36:25 | Build y peso | `npm run build` | ✅ primera pantalla 171.57 kB (gzip 56.83 kB); detalle en `docs/peso.md` |
+| 21:36:27 | Humo | `npm run smoke` | ✅ «sin fallas»; ahora también compara el total que recalcula la web con el del motor en cada escenario |
+| 21:36:39 | Sin red | `npm run sin-red` | ✅ 23 de 23 |
+| 21:36:48 | Vista del agricultor | `python scripts/agricultor_playwright.py` | ✅ 96 de 96 (el orden de tabulación suma «Imagen para WhatsApp» y «Guardar para usar sin señal») |
+| 21:37:02 | Evidence | `python scripts/evidence_playwright.py` | ✅ 143 de 143 |
+| 21:37:29 | Piezas nuevas de Evidence | `python scripts/v2_playwright.py` | ✅ 35 de 35 |
+| 21:38:22 | Sin señal, también tras un despliegue nuevo | `python scripts/sin_senal_playwright.py` | ✅ 24 de 24 |
+
+Antes del arreglo del redondeo, la prueba de humo nueva falló como debía: «camotan.json: total recalculado: lluvia_0_temp_0 actual_maiz_frijol: la web da 85, el motor 84». Ese defecto también está en la versión lite publicada (ver `plan-version-interactiva.md`, sección 11).
+
 ## Android en emulador y nombres de las figuras: sábado 14 nov 2026
 
 Emulador `Medium_Phone_API_35` (Android 15, Chrome 157, TalkBack 15.0). Detalle en `docs/es/pruebas-personas/resultados-automaticos.md`, sección 8. Horas de `date` (UTC−6).

@@ -8,6 +8,23 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## Interactive version (branch `v2-interactiva`): Saturday 14 Nov 2026
+
+Built at night in batches; the full battery passed after each batch. This is the final run, on the code already fixed after the independent review (section 11 of `es/plan-version-interactiva.md`). Times from `date` (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 21:35:56 to 21:36:18 | Python tests | `python -m pytest -q` | ✅ all pass; at 21:38:51, `python -m pytest`: "265 passed in 21.43s" (250 + 15 in `tests/test_explorar.py`) |
+| 21:36:25 | Build and weight | `npm run build` | ✅ first screen 171.57 kB (gzip 56.83 kB); details in `peso.md` |
+| 21:36:27 | Smoke | `npm run smoke` | ✅ "sin fallas"; it now also compares the total the web recomputes with the engine's in every scenario |
+| 21:36:39 | Offline | `npm run sin-red` | ✅ 23 of 23 |
+| 21:36:48 | Farmer view | `python scripts/agricultor_playwright.py` | ✅ 96 of 96 (the tab order adds "Image for WhatsApp" and "Save to use without signal") |
+| 21:37:02 | Evidence | `python scripts/evidence_playwright.py` | ✅ 143 of 143 |
+| 21:37:29 | New Evidence pieces | `python scripts/v2_playwright.py` | ✅ 35 of 35 |
+| 21:38:22 | Without signal, also after a new deploy | `python scripts/sin_senal_playwright.py` | ✅ 24 of 24 |
+
+Before the rounding fix, the new smoke check failed as it should: "camotan.json: total recalculado: lluvia_0_temp_0 actual_maiz_frijol: la web da 85, el motor 84". The same defect is in the published lite version (see `es/plan-version-interactiva.md`, section 11).
+
 ## Android emulator and pictogram names: Saturday 14 Nov 2026
 
 Emulator `Medium_Phone_API_35` (Android 15, Chrome 157, TalkBack 15.0). Details in `docs/es/pruebas-personas/resultados-automaticos.md`, section 8. Times from `date` (UTC−6).

@@ -297,6 +297,20 @@ Todo en la rama local `v2-interactiva`, con la batería completa en verde despu�
 
 Fuentes: `data/fuentes.yaml` suma «terrain_tiles» (39 fuentes; antes 38). Al volver a exportar, solo cambió el bloque de fuentes de cada JSON de parcela.
 
+**Revisión independiente del código (otro agente, solo lectura, terminó hacia las 21:30).** Confirmó como correctas las mallas de los satélites, la curva de agua (copia exacta de `balance_ciclo`), la ventana de la canícula, la sincronía del audio y el recorte del comparador. Encontró 7 defectos; los 7 quedaron arreglados:
+
+| # | Defecto | Arreglo |
+|---|---|---|
+| 1 | La biblioteca recalculaba el total con `Math.round` (sube el .5) y el motor usa `round()` de Python (va al par): Camotán, lo de hoy, decía 85 y el motor 84 | El motor exporta el total de cada prioridad (`totales`) y la web lo muestra; prueba nueva |
+| 2 | Un despliegue nuevo borraba lo que la persona guardó para usar sin señal | Dos cachés: la de la app cambia con cada versión; la de datos y audio no se borra. La prueba simula un despliegue y vuelve a abrir sin servidor |
+| 3 | Con una rayita de señal que no carga, la página esperaba hasta que el navegador se rindiera | La página y los datos esperan la red 3.5 s y luego sale la copia guardada |
+| 4 | El audio guardado no se actualizaba si cambiaban los datos | La versión del service worker incluye un hash de los datos y del audio; al instalarse, vuelve a bajar lo guardado |
+| 5 | Con las huellas encendidas, los puntos de las parcelas no se podían tocar | La capa de huellas va debajo de los puntos |
+| 6 | «Guardado» podía salir bajo otra parcela si se cambiaba mientras guardaba | Cada guardado lleva su turno y se descarta si cambió la parcela o el idioma |
+| 7 | La palabra del gris («El satélite no ve bien aquí») se salía de la imagen | La letra se achica hasta caber (hoy ninguna parcela está en gris) |
+
+**El defecto 1 también está en la versión lite publicada.** Evidence (las tarjetas de opciones y la tabla de la tarjeta) recalcula el total con `Math.round` en `web/src/lib/datos.js` y difiere del motor en 146 combinaciones de parcela, escenario y prioridad. En la vista por defecto, Camotán, lo que hace hoy, muestra 85 mientras el texto de la tarjeta y el audio dicen 84. El arreglo es el commit `d60ccae` (una función y una comprobación en la prueba de humo) y se puede llevar a `main` solo, con `git cherry-pick d60ccae`, aunque se entregue la versión lite.
+
 ## 12. Lanzar o no: el corte de las 09:00 del domingo
 
 Se decide a las **09:00 del domingo 15 nov**, para dejar tres horas para unir, desplegar, revisar el sitio en vivo y enviar el formulario antes de las 12:00. Si a las 09:00 falta algo de esta lista, se entrega la versión lite y v2 sigue para después.
