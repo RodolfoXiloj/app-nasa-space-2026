@@ -43,5 +43,7 @@ The team worked in Spanish. These files stay in Spanish:
 | [es/uso-ia.md](es/uso-ia.md) | Spanish working log of AI use |
 | [es/impacto.md](es/impacto.md) | Spanish copy of [impact.md](impact.md) |
 | [es/herramientas-existentes.md](es/herramientas-existentes.md) | Spanish copy of [existing-tools.md](existing-tools.md) |
+| [es/investigacion-herramientas-interactivas.md](es/investigacion-herramientas-interactivas.md) | Research on interactive tools, 3D terrain, WebGL raster shaders, waveforms and wow-factor features |
+| [es/plan-version-interactiva.md](es/plan-version-interactiva.md) | Plan for the interactive version (v2, branch `v2-interactiva`): each research finding with its decision, the items, the order of work and what stays out |
 | [es/chorti.md](es/chorti.md) | Spanish copy of [chorti.md](chorti.md) |
 | [es/pruebas-personas/](es/pruebas-personas/README.md) | Step-by-step guides for the people tests (form and Members, TalkBack, print, audio, figures, pictograms, English read-aloud) and the automated support checks |
