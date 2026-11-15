@@ -6,6 +6,21 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Relieve 3D en Android: sábado 14 nov 2026
+
+Rodolfo abrió la vista 3D en su teléfono Android a las 22:43 y el relieve salía en picos de cientos de metros (capturas de su pantalla). Horas de `date` (UTC−6).
+
+| Hora | Qué | Resultado |
+|---|---|---|
+| 22:43 | Teselas del relieve (`web/public/terreno/`): RGB sin canal alfa ni datos de color o gama; alturas de 520 a 1858 m | ✅ el archivo está bien |
+| 22:47 | Reproducción en Edge: el worker de MapLibre lee los píxeles con ruido de ±1 y sin `VideoFrame` (lo que hacen algunos navegadores que «protegen» el canvas) | ❌ los mismos picos que en el teléfono; sin ruido, el relieve se ve bien |
+| 22:50 | Arreglo: el relieve de la vista 3D va recodificado en `web/public/relieve3d/` (altura = (R + G + B) × 4 m); las Terrarium originales pasan a `data/cache/terreno/` | ✅ con el mismo ruido, el relieve se ve bien |
+| 22:51:51 a 22:54:19 | Batería completa | ✅ «269 passed»; primera pantalla 171.57 kB; «sin fallas»; 23 de 23; 96 de 96; 143 de 143; 35 de 35; 24 de 24 |
+| 22:54:36 | `git push origin v2-interactiva:main` (`870e2c9`) | ✅ el sitio publicado sirvió el build nuevo a las 22:55:16 |
+| 22:55:40 a 22:57:07 | Sitio publicado: la vista 3D con y sin el ruido simulado, y las pruebas de v2 y de la vista del agricultor | ✅ el relieve se ve bien con ruido; 52 de 53: falló «el service worker controla la página» en la primera visita después del despliegue; guardar y abrir sin red sí pasaron |
+| 22:57:23 a 22:58:50 | Lo mismo otra vez, y el tiempo hasta que el service worker controla una visita nueva | Una corrida 17 de 18 (la misma comprobación), la otra 18 de 18; en tres visitas nuevas controla a los 0.49 a 0.53 s. Lo que falló fue la primera visita con los archivos todavía fríos en Render, no el sitio |
+| Pendiente | Que Rodolfo vuelva a abrir la vista 3D en su teléfono | — |
+
 ## La versión interactiva publicada: sábado 14 nov 2026
 
 Rodolfo pidió unir v2 a `main` y desplegar. Horas de `date` (UTC−6).

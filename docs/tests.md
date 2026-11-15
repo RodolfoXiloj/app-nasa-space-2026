@@ -8,6 +8,21 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## 3D relief on Android: Saturday 14 Nov 2026
+
+Rodolfo opened the 3D view on his Android phone at 22:43 and the relief showed spikes hundreds of metres tall (his screenshots). Times from `date` (UTC−6).
+
+| Time | What | Result |
+|---|---|---|
+| 22:43 | Relief tiles (`web/public/terreno/`): RGB with no alpha and no colour or gamma data; heights from 520 to 1858 m | ✅ the files are fine |
+| 22:47 | Reproduced in Edge: MapLibre's worker reads the pixels with ±1 noise and without `VideoFrame` (what some browsers that "protect" the canvas do) | ❌ the same spikes as on the phone; without the noise the relief looks right |
+| 22:50 | Fix: the 3D view's relief is re-encoded in `web/public/relieve3d/` (height = (R + G + B) × 4 m); the original Terrarium tiles move to `data/cache/terreno/` | ✅ with the same noise the relief looks right |
+| 22:51:51 to 22:54:19 | Full battery | ✅ "269 passed"; first screen 171.57 kB; "sin fallas"; 23 of 23; 96 of 96; 143 of 143; 35 of 35; 24 of 24 |
+| 22:54:36 | `git push origin v2-interactiva:main` (`870e2c9`) | ✅ the published site served the new build at 22:55:16 |
+| 22:55:40 to 22:57:07 | Published site: the 3D view with and without the simulated noise, plus the v2 and farmer-view tests | ✅ the relief looks right with the noise; 52 of 53: "the service worker controls the page" failed on the first visit after the deploy; saving and opening without network passed |
+| 22:57:23 to 22:58:50 | The same again, plus the time until the service worker controls a new visit | One run 17 of 18 (the same check), the other 18 of 18; on three new visits it takes control after 0.49 to 0.53 s. What failed was the first visit with the files still cold on Render, not the site |
+| Pending | Rodolfo opens the 3D view on his phone again | — |
+
 ## The interactive version, published: Saturday 14 Nov 2026
 
 Rodolfo asked to merge v2 into `main` and deploy. Times from `date` (UTC−6).
