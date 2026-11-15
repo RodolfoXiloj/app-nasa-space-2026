@@ -117,6 +117,8 @@ Done after this pass (14 Nov 2026):
 - The scroll to the 2026 observation reads `prefers-reduced-motion` and jumps without animation when it is set (in the code of `App.jsx`; no automated check).
 - The plot selector's fallback name has an English text, "Example (Jocotán)".
 
+- On Chrome for Android the month wheel and the year dots reached the accessibility tree with an empty description (their name came from `aria-labelledby` pointing to the SVG `<title>`), so TalkBack would only say "image". They now carry `aria-label` directly; checked on an Android 15 emulator with `uiautomator`, on the published site, in both languages (`docs/es/pruebas-personas/resultados-automaticos.md`, section 8).
+
 Still pending:
 
 - On a real phone with TalkBack: the reading of the long chart summaries, the table regions while scrolling sideways, the map controls, and the calendar list.

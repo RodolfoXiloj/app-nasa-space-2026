@@ -8,6 +8,19 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## Android emulator and pictogram names: Saturday 14 Nov 2026
+
+Emulator `Medium_Phone_API_35` (Android 15, Chrome 157, TalkBack 15.0). Details in `docs/es/pruebas-personas/resultados-automaticos.md`, section 8. Times from `date` (UTC−6).
+
+| Time | What | Result |
+|---|---|---|
+| 18:54 to 18:58 | TalkBack walk-through and video (another thread) | ⚠️ Ran against an old version of the site (`localhost:4173` from an earlier working tree): no 2026 line, old heading and notice. TalkBack focuses "Escuchar" and the audio plays. Screenshots and video were not copied into the repository |
+| 19:18 | Accessibility tree of the live site (`uiautomator`) | ❌ Current texts, but the 3 pictograms had an empty description: TalkBack would only say "image" |
+| 19:21 | The same tree with the fix (`aria-label` on the drawing), local build | ✅ The 3 pictograms carry their name |
+| 19:22:43 to 19:24:02 | Battery: build, `pytest`, smoke, offline, farmer, Evidence | ✅ first-load JS 171.53 kB; "250 passed in 18.02s"; "sin fallas"; 23 of 23; 96 of 96; 143 of 143 |
+| 19:25 to 19:28 | Live site with the fix (commit `9f24bfe`), Spanish and English | ✅ Heading, 2026 line, notice and the 3 pictogram names right in both languages |
+| 19:28 to 19:29 | Reading order with the TalkBack gesture | Not possible: gestures sent through `adb` do not reach TalkBack. Left for the real phone |
+
 ## People tests: first results (Saturday 14 Nov 2026)
 
 Reported by the team at 19:12 (UTC−6); the exact time of each test was not recorded.

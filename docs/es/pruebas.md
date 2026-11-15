@@ -6,6 +6,19 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Android en emulador y nombres de las figuras: sábado 14 nov 2026
+
+Emulador `Medium_Phone_API_35` (Android 15, Chrome 157, TalkBack 15.0). Detalle en `docs/es/pruebas-personas/resultados-automaticos.md`, sección 8. Horas de `date` (UTC−6).
+
+| Hora | Qué | Resultado |
+|---|---|---|
+| 18:54 a 18:58 | Recorrido con TalkBack y video (otro hilo) | ⚠️ Corrió contra una versión vieja del sitio (`localhost:4173` de un árbol de trabajo anterior): sin la línea de 2026, con el título y el aviso viejos. TalkBack enfoca «Escuchar» y el audio suena. Capturas y video no se copiaron al repositorio |
+| 19:18 | Árbol de accesibilidad del sitio publicado (`uiautomator`) | ❌ Textos actuales, pero las 3 figuras con descripción vacía: TalkBack diría solo «imagen» |
+| 19:21 | El mismo árbol con el arreglo (`aria-label` en el dibujo), build local | ✅ Las 3 figuras con su nombre |
+| 19:22:43 a 19:24:02 | Batería: build, `pytest`, humo, sin red, agricultor, Evidence | ✅ JS inicial 171.53 kB; «250 passed in 18.02s»; «sin fallas»; 23 de 23; 96 de 96; 143 de 143 |
+| 19:25 a 19:28 | Sitio publicado con el arreglo (commit `9f24bfe`), español e inglés | ✅ Título, línea de 2026, aviso y nombres de las 3 figuras correctos en los dos idiomas |
+| 19:28 a 19:29 | Orden de lectura con el gesto de TalkBack | No se pudo: los gestos enviados con `adb` no llegan a TalkBack. Queda para el teléfono real |
+
 ## Pruebas con personas: primeros resultados (sábado 14 nov 2026)
 
 Informados por el equipo a las 19:12 (UTC−6); la hora exacta de cada prueba no quedó registrada.

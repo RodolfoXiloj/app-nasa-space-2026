@@ -81,6 +81,8 @@ Compara lo que dice TalkBack en voz alta con esta lista extraída de los textos 
 
 ## Qué debes vigilar especialmente durante la prueba
 
+0. **Las tres figuras de los hechos tienen que decir su significado, no solo «imagen».** Hasta el 14 nov 2026, Chrome de Android las exponía sin nombre; se corrigió ese día y se comprobó en un emulador (`resultados-automaticos.md`, sección 8). Confírmalo con el dedo: al llegar a la rueda debe decir «2 de 12 meses con suelo desnudo…».
+
 1. **Que no lea letras sueltas dentro de los pictogramas:** Al pasar por la rueda de meses (`RuedaMeses`), TalkBack debe leer de corrido la frase resumen (`"2 de 12 meses con suelo desnudo..."`) y **no** ponerse a deletrear las 12 iniciales `E, F, M, A, M, J, J, A, S, O, N, D`.
 2. **Qué pasa cuando suena el audio corto y los subtítulos cambian:** El párrafo `.agr-subtitulos` tiene `aria-live="polite"`. Observa y anota si TalkBack intenta leer cada subtítulo mientras ya está sonando la voz de Marta (`jocotan.frases.mp3`) o si espera en silencio mientras no mueves el foco.
 3. **Cambio de parcela a mitad de reproducción:** Si el audio de Jocotán está sonando y cambias el selector `#agr-parcela` a **Camotán**, el audio de Jocotán debe callarse de inmediato.

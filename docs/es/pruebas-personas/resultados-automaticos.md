@@ -378,3 +378,31 @@ Dos precisiones más sobre las secciones 0 a 2, para que nadie las tome como el 
 4. **El sitio no tiene Service Worker.** Las filas 0a («`dist/` listo con `sw.js`») y 0f («Service Worker con red bloqueada») lo mencionan por error: `web/dist/` no trae ningún `sw.js`. `npm run sin-red` abre un navegador con un proxy inexistente, de modo que solo responde el servidor local, y comprueba que todo lo que el sitio pide (datos, audio, capas del mapa) es local. Sin internet funciona mientras alguien lo sirva en la red local; no «queda guardado» en el teléfono.
 5. **El árbol de accesibilidad de las secciones 1.2 y 1.3 es de un árbol de trabajo anterior.** Trae «What the satellite saw on this plot», «Options to talk over with your technician» y «This is not an official alert; talk to your technician», y no trae la línea de julio y agosto de 2026. El sitio actual dice «What the satellite saw around this plot», «Options to talk over with your extension worker» y «This is not an official notice: talk it over with your extension worker». Los textos vigentes, en el orden de lectura, están en `rodolfo-talkback.md` y en `ivan-ingles.md`, que se corrigieron contra el sitio construido el 14 nov 2026 (`web/scripts/agricultor_playwright.py`: 96 de 96).
 
+---
+
+## 8. Android en emulador (sábado 14 nov 2026)
+
+Emulador `Medium_Phone_API_35`: Android 15, Chrome 157 y TalkBack 15.0. No reemplaza la prueba en un teléfono real (`rodolfo-talkback.md`): ahí se siente el barrido con el dedo y se oye la voz.
+
+### 8.1 Corrida de las 18:54 a las 18:58 (otro hilo): versión vieja del sitio
+
+Ese hilo grabó 15 capturas y un video narrado de 2 min 36 s. El emulador abrió `localhost:4173`, servido desde un árbol de trabajo anterior, así que todo muestra una versión vieja del sitio: sin la línea de julio-agosto 2026, con el título «Lo que el satélite vio en esta parcela» y con el aviso «Esto no es una alerta oficial; hable con su técnico». El sitio publicado dice otra cosa en los tres casos. Además, según su propia descripción, el video habla de una «referencia al seguro agrícola (ZARC)»; el sitio no menciona ningún seguro, porque ZARC es la zonificación de FAO y el MAGA para las fechas de siembra. Y el video dura más que el límite de 30 s para un video de demostración. Por eso esas capturas y el video no se copiaron al repositorio; siguen en ese árbol de trabajo local.
+
+Lo que sí mostró: TalkBack funciona con Chrome en Android, pone el recuadro verde sobre el botón «Escuchar» y el audio corto suena con sus subtítulos.
+
+### 8.2 Verificación contra el sitio publicado (19:18 a 19:28)
+
+Se abrió https://milpa-resiliente.onrender.com/ en el mismo emulador y se leyó el árbol de accesibilidad con `uiautomator`: es lo que TalkBack anuncia.
+
+1. **19:18, sitio publicado:** los textos son los actuales en inglés: título «around this plot», línea de julio-agosto 2026, aviso «This is not an official notice: talk it over with your extension worker». Pero **las tres figuras (la rueda de meses y los discos de años) llegaban con la descripción vacía**: TalkBack habría dicho solo «imagen». Su nombre venía del `<title>` del dibujo por `aria-labelledby`, que Chrome de escritorio sí lee y Chrome de Android no.
+2. **19:21, build local con el arreglo** (`aria-label` directo en el dibujo, commit `9f24bfe`): las tres figuras exponen «2 de 12 meses con suelo desnudo (marzo y abril). Poca cobertura: febrero y mayo.», «3 de 15 años con quema vista cerca» y «2 de 25 años con canícula larga».
+3. **19:25 a 19:28, sitio publicado con el arreglo:**
+
+| Idioma | Título actual | Línea de julio-agosto 2026 | Aviso actual | Nombres de las 3 figuras |
+|---|---|---|---|---|
+| Español | ✅ «Lo que el satélite vio alrededor de esta parcela» | ✅ | ✅ «No es un aviso oficial: platíquelo con su técnico.» | ✅ «2 de 12 meses con suelo desnudo (marzo y abril)…», «3 de 15 años con quema vista cerca», «2 de 25 años con canícula larga» |
+| Inglés | ✅ «What the satellite saw around this plot» | ✅ | ✅ «This is not an official notice: talk it over with your extension worker.» | ✅ «2 of 12 months with bare soil (March and April)…», «3 of 15 years with a fire seen nearby», «2 of 25 years with a long canícula (midsummer dry spell)» |
+
+Capturas en `evidencias-android/`: `android-publicado-en.png`, `android-publicado-es.png` y `android-publicado-es-talkback.png` (TalkBack encendido, con su salida de voz en pantalla).
+
+**Lo que no se pudo comprobar en el emulador:** el orden de lectura con TalkBack. Los toques y deslizamientos que se mandan con `adb` no llegan a TalkBack como gestos: el foco se quedó en el botón de inicio de Chrome. Eso queda para la prueba en un teléfono real.

@@ -66,7 +66,7 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 ## Qué falta
 
 **Necesita a una persona** (ninguna tiene resultado anotado todavía)
-- Las pruebas con personas de `docs/es/pruebas-personas/` que faltan: formulario y Members, TalkBack en un Android real e impresión en blanco y negro (Rodolfo); cifras en pantalla (Mario); comprensión de los pictogramas con 3 a 5 adultos e inglés en voz alta (Iván). Hecha: la escucha de los audios (Mario, 14 nov: se entienden y la velocidad está bien).
+- Las pruebas con personas de `docs/es/pruebas-personas/` que faltan: formulario y Members, TalkBack en un Android real (en un emulador ya se comprobaron los textos y los nombres de las figuras, 14 nov) e impresión en blanco y negro (Rodolfo); cifras en pantalla (Mario); comprensión de los pictogramas con 3 a 5 adultos e inglés en voz alta (Iván). Hecha: la escucha de los audios (Mario, 14 nov: se entienden y la velocidad está bien).
 - Prueba en un teléfono real con `docs/es/prueba-telefono.md`: servir en la red local, recorrer la lista y anotar los resultados.
 - Conversación con un agricultor y con un extensionista: las preguntas, parcela por parcela, están en `docs/es/preguntas-agricultor.md`. Con ellas se confirman los 5 puntos, los límites municipales de Olopa y San Juan Ermita, los años malos y las fechas y duraciones que hoy son supuestos.
 - Revisar con un agrónomo o extensionista las reglas de puntaje y las 8 plantillas (preguntas en `docs/es/revision-plan.md`, sección 3.2).
