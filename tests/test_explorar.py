@@ -152,3 +152,25 @@ def test_curva_de_agua_cierra_con_el_balance_del_motor(exportados):
                 assert ultimo[0] == cur["dias"] and ultimo[2] == x["demanda_mm"] and ultimo[3] == x["usada_mm"]
                 assert all(a[k] <= c[k] for a, c in zip(x["puntos"], x["puntos"][1:]) for k in (1, 2, 3))
                 assert x["deficit_pct"] == round(100 * (1 - usada / demanda))
+
+
+def test_totales_de_la_biblioteca_son_los_del_motor(exportados, motor_res):
+    from motor import puntaje
+    for pid in PIDS:
+        elegidas = {r["id"]: r for r in motor_res[pid]["rotaciones"]}
+        for b in exportados[pid]["biblioteca"]:
+            assert b["totales"] == {pr: puntaje.total(b["puntajes"], pr) for pr in puntaje.PESOS}, (pid, b["id"])
+            if b["id"] in elegidas:
+                assert b["totales"]["agua"] == elegidas[b["id"]]["puntajes"]["total"], (pid, b["id"])
+
+
+def test_celda_smap_es_la_del_cache():
+    probadas = 0
+    for p in datos.parcelas():
+        celda = ((datos.cache(f"smap/{p['id']}.json", obligatorio=False) or {}).get("datos") or {}).get("celda")
+        if not celda:
+            continue
+        c = huellas.celda_smap(p["lat"], p["lon"])
+        assert (c["fila"], c["col"]) == (celda["linea"], celda["muestra"]), p["id"]
+        probadas += 1
+    assert probadas >= 4

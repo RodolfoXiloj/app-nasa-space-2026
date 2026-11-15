@@ -162,8 +162,16 @@ export function dibujar({ idioma, lugar, farmer, href }) {
     ctx.fillStyle = '#000'
     ctx.font = `700 36px ${LETRA}`
     ctx.fillText(t.hechos[id], 200, y + 62)
-    ctx.font = `900 58px ${LETRA}`
-    ctx.fillText((palabras[e] || {})[idioma] || t.estados[e], 200, y + 126)
+    const palabra = (palabras[e] || {})[idioma] || t.estados[e]
+    // Sin dibujo a la derecha (gris) hay más lugar; si aun así no cabe, la letra se achica.
+    const cabe = e === 'gris' ? ANCHO - 80 - 200 - 20 : 560
+    let talla = 58
+    ctx.font = `900 ${talla}px ${LETRA}`
+    while (ctx.measureText(palabra).width > cabe && talla > 30) {
+      talla -= 2
+      ctx.font = `900 ${talla}px ${LETRA}`
+    }
+    ctx.fillText(palabra, 200, y + 126)
     const frase = fraseDe(id) || (e === 'gris' ? t.explicaEstado[e] : '')
     ctx.font = `500 30px ${LETRA}`
     parrafo(ctx, frase, 200, y + 176, 560, 38)

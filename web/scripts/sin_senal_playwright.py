@@ -10,6 +10,8 @@ Levanta `vite preview` en 127.0.0.1:4178 y, en español y en inglés:
 4. APAGA el servidor y recarga: la vista debe abrir con los tres hechos, Escuchar debe sonar con subtítulos y
    el hecho que nombra la voz debe quedar marcado;
 5. abre Evidence sin servidor: como no se guardó, debe decir qué pasó (role="alert"), sin pantalla en blanco.
+6. tras guardar, simula un despliegue nuevo (build con otra versión del service worker): la caché de la app
+   cambia, lo guardado sigue y la parcela vuelve a abrir sin servidor con su audio. Al final rehace el build normal.
 Sale con código 1 si algo falla. No deja procesos en el puerto.
 """
 from __future__ import annotations
@@ -116,12 +118,73 @@ def prueba(navegador, idioma: str) -> None:
     ctx.close()
 
 
+def build(sal: str = "") -> None:
+    npm = "npm.cmd" if sys.platform == "win32" else "npm"
+    entorno = dict(__import__("os").environ, MILPA_SW_SAL=sal)
+    r = subprocess.run([npm, "run", "build"], cwd=WEB, env=entorno, capture_output=True, text=True)
+    if r.returncode:
+        raise SystemExit("npm run build falló:\n" + r.stdout[-2000:] + r.stderr[-2000:])
+
+
+JS_CACHES = """async () => { const out = {}; for (const k of await caches.keys()) out[k] = (await (await caches.open(k)).keys()).map((r) => r.url.replace(location.origin, '')); return out }"""
+
+
+def prueba_despliegue(navegador) -> None:
+    """Lo guardado sobrevive a un despliegue nuevo: otra versión del service worker borra solo la caché de la app."""
+    pre = "Sin señal tras un despliegue nuevo"
+    srv = servidor()
+    try:
+        ctx = navegador.new_context(viewport={"width": 390, "height": 844})
+        pg = ctx.new_page()
+        pg.goto(URL)
+        pg.evaluate("() => localStorage.setItem('milpa-locale', 'es')")
+        pg.reload()
+        pg.wait_for_selector(".agr-lista-hechos [data-hecho]")
+        pg.evaluate("async () => { await navigator.serviceWorker.ready; for (let i = 0; i < 40 && !navigator.serviceWorker.controller; i++) await new Promise((r) => setTimeout(r, 100)) }")
+        pg.locator(".kit-guardar").click()
+        pg.wait_for_function("() => /Guardado/.test(document.querySelector('.kit-sin-senal').textContent)", timeout=60000)
+        antes = pg.evaluate(JS_CACHES)
+    finally:
+        apagar(srv)
+    try:
+        build("prueba-despliegue")
+        srv = servidor()
+        try:
+            pg.reload()
+            viejas = {k for k in antes if k.startswith("milpa-app-")}
+            despues = antes
+            for _ in range(60):  # hasta 30 s: el service worker nuevo se instala, se activa y borra la caché vieja
+                pg.wait_for_timeout(500)
+                despues = pg.evaluate(JS_CACHES)
+                apps = {k for k in despues if k.startswith("milpa-app-")}
+                if apps and not (apps & viejas):
+                    break
+        finally:
+            apagar(srv)
+        app_antes = [k for k in antes if k.startswith("milpa-app-")]
+        app_despues = [k for k in despues if k.startswith("milpa-app-")]
+        anota(app_antes != app_despues and len(app_despues) == 1, f"{pre}: la caché de la app cambió de versión · {app_antes} → {app_despues}")
+        audio = [u for u in despues.get("milpa-datos", []) if "/audio/" in u and u.endswith(".mp3")]
+        anota(bool(audio), f"{pre}: lo guardado sigue en «milpa-datos» · {audio}")
+        pg.reload()
+        pg.wait_for_selector(".agr-lista-hechos [data-hecho]", timeout=15000)
+        anota(pg.locator(".agr-lista-hechos [data-hecho]").count() == 3, f"{pre}: la vista abre sin servidor con los tres hechos")
+        pg.locator(".agr-escuchar-boton").click()
+        pg.wait_for_timeout(4500)
+        t = pg.evaluate("() => { const a = document.querySelector('#agr-audio'); return [a.currentTime, a.error ? a.error.code : null] }")
+        anota(t[0] > 2 and t[1] is None, f"{pre}: Escuchar suena sin servidor · {t[0]:.1f} s")
+        ctx.close()
+    finally:
+        build("")
+
+
 def main() -> int:
     with sync_playwright() as p:
         navegador = p.chromium.launch(channel="msedge")
         try:
             for idioma in ("es", "en"):
                 prueba(navegador, idioma)
+            prueba_despliegue(navegador)
         finally:
             navegador.close()
     ok = sum(1 for r, _ in resultados if r)

@@ -1,8 +1,8 @@
 // G1 y S1 (versión interactiva), solo para maíz con frijol: la biblioteca de data/explorar/{pid}.json.
 // - AguaCiclo: la curva de agua de las tres opciones que muestra el sitio.
 // - Biblioteca: el extensionista prueba cualquier plantilla que aplica, con los puntajes del motor en el escenario
-//   base; el total se repondera con la prioridad elegida (los mismos pesos de res.pesos). La vista del agricultor
-//   sigue con tres opciones.
+//   base; el total de cada prioridad también lo da el motor (`totales`). La vista del agricultor sigue con tres
+//   opciones.
 import { useState } from 'react'
 import CurvaAgua from './CurvaAgua.jsx'
 import { listaMesesI18n } from '../i18n/months.js'
@@ -10,10 +10,6 @@ import { useTx } from '../i18n/explorar.js'
 
 export function nombreEntrada(tx, b) {
   return (tx.loc === 'en' && b.nombre_corto_en) || b.nombre_corto
-}
-
-function total(p, pesos) {
-  return Math.round(pesos.agua * p.agua + pesos.suelo * p.suelo + pesos.plagas * p.plagas)
 }
 
 export function AguaCiclo({ explorar, res }) {
@@ -43,8 +39,7 @@ export default function Biblioteca({ explorar, res, prioridad = 'agua' }) {
   const tx = useTx()
   const bib = explorar?.biblioteca || []
   const [rid, setRid] = useState(null)
-  if (bib.length < 2 || !res?.pesos?.por_prioridad) return null
-  const pesos = res.pesos.por_prioridad[prioridad] || res.pesos.por_prioridad.agua
+  if (bib.length < 2) return null
   const hoy = bib.find((b) => b.es_actual)
   const alternativas = bib.filter((b) => !b.es_actual)
   const sel = bib.find((b) => b.id === rid) || alternativas.find((b) => !b.elegida) || alternativas[0]
@@ -84,7 +79,7 @@ export default function Biblioteca({ explorar, res, prioridad = 'agua' }) {
               {fila(tx('biblioteca.agua'), (b) => b.puntajes.agua)}
               {fila(tx('biblioteca.suelo'), (b) => b.puntajes.suelo)}
               {fila(tx('biblioteca.plagas'), (b) => b.puntajes.plagas)}
-              {fila(tx('biblioteca.total'), (b) => total(b.puntajes, pesos))}
+              {fila(tx('biblioteca.total'), (b) => (b.totales || {})[prioridad] ?? (b.totales || {}).agua)}
               {fila(tx('biblioteca.deficit'), (b) => `${b.deficit.mediana_pct} %`)}
               {fila(tx('biblioteca.meses'), (b) => meses(b.meses_cultivo))}
               {fila(tx('biblioteca.desnudos'), (b) => meses(b.meses_desnudos))}

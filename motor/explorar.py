@@ -21,7 +21,7 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-from motor import clima, datos, deteccion, huellas
+from motor import clima, datos, deteccion, huellas, puntaje
 from motor import recomendar as rec
 
 DESTINO = datos.RAIZ / "web" / "public" / "data" / "explorar"
@@ -142,6 +142,8 @@ def biblioteca(pid: str, base: str | None = None, res: dict | None = None) -> li
             "nombre": rot["nombre"], "nombre_en": en.get("nombre"),
             "nombre_corto": rot.get("nombre_corto") or rot["nombre"], "nombre_corto_en": en.get("nombre_corto"),
             "puntajes": {k: ev["puntajes"][k] for k in ("agua", "suelo", "plagas")},
+            # El total de cada prioridad con puntaje.total (round de Python): la web no lo recalcula.
+            "totales": {pr: puntaje.total(ev["puntajes"], pr) for pr in puntaje.PESOS},
             "deficit": ev["deficit"], "meses_cultivo": sorted(ev["meses_cultivo"]),
             "meses_desnudos": sorted(ev["meses_desnudos"]), "quema": ev["frac_quema"] > 0,
             "toca_canicula": ev["toca_canicula"],

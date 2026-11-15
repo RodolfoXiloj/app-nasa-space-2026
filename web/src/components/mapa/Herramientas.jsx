@@ -63,7 +63,8 @@ export function HuellasCapa({ explorar, activa }) {
   if (!explorar || !activa) return null
   const centro = [explorar.lat, explorar.lon]
   return (
-    <Pane name="huellas" style={{ zIndex: 420 }}>
+    // Debajo de los puntos de las parcelas (overlayPane, z 400): el punto se sigue pudiendo tocar dentro de una celda.
+    <Pane name="huellas" style={{ zIndex: 390 }}>
       {[...explorar.huellas].reverse().map((h) => {
         const estilo = ESTILO[h.id] || {}
         const tip = (

@@ -5,7 +5,7 @@
 // agricultor o en Evidence imprime lo mismo que antes.
 // Cada hecho lleva forma (Senal), palabra, dibujo del tema y cantidad (RuedaMeses o PuntosAnios): nada
 // depende del color, que en una fotocopia se pierde.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import Senal from '../agricultor/Senal.jsx'
 import { TEXTOS, empateEnCadena } from '../agricultor/textos.js'
@@ -148,7 +148,11 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
     }
   }, [])
   const [imagen, setImagen] = useState(null)
+  // Cada guardado o imagen lleva su turno: si mientras tanto cambia la parcela o el idioma, su resultado no se
+  // muestra bajo la parcela nueva.
+  const turno = useRef(0)
   useEffect(() => {
+    turno.current += 1
     setGuardado(null)
     setImagen(null)
   }, [pid, idioma])
@@ -169,13 +173,17 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
   const mp3 = ((farmer.audio || {})[idioma] || {}).mp3 || `audio/${pid}.frases.mp3`
 
   async function hacerImagen() {
+    const mio = turno.current
     setImagen('haciendo')
-    setImagen(await compartirImagen({ idioma, lugar, farmer, href, pid, texto }))
+    const r = await compartirImagen({ idioma, lugar, farmer, href, pid, texto })
+    if (turno.current === mio) setImagen(r)
   }
 
   async function guardarAqui() {
+    const mio = turno.current
     setGuardado('guardando')
-    setGuardado(await guardar(urlsParcela({ parcela, farmer, idioma })))
+    const r = await guardar(urlsParcela({ parcela, farmer, idioma }))
+    if (turno.current === mio) setGuardado(r)
   }
 
   function imprimir() {
