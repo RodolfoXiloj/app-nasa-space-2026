@@ -6,6 +6,26 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Pruebas con personas: domingo 15 nov 2026
+
+Informadas por Rodolfo entre las 13:25 y las 13:38 (UTC−6), después del plazo de envío (12:00). La hora de cada prueba no quedó anotada.
+
+| Prueba | Quién | Resultado |
+|---|---|---|
+| TalkBack en un Android real, vista del agricultor (`docs/es/pruebas-personas/rodolfo-talkback.md`) | Rodolfo | ✅ «Todo bien». No se anotaron el modelo del teléfono, las versiones de Android y Chrome ni lo que anunció cada paso |
+| Comprensión de los pictogramas (`docs/es/pruebas-personas/ivan-pictogramas.md`) | Iván | 3 personas adultas, ninguna agricultora: Participante 1 es profesional de agronomía (por llamada); Participantes 2 y 3 estudian ciencia de datos y diseño (en persona). Las respuestas son notas de Iván escritas después, no palabras literales, y el consentimiento verbal no quedó anotado. Resultados abajo |
+
+Lo que encontró Iván:
+
+- **Quema y discos de años:** 3 de 3. Contaron 3 de 15 años con quema y 2 de 25 con canícula larga. Participante 3 creyó primero que cada llama era una quema distinta.
+- **Rueda de meses:** 3 de 3 dijeron 2 meses; 2 de 3 nombraron marzo y abril desde el dibujo. Participante 1 leyó el texto de abajo porque las iniciales repetidas le causaron dudas.
+- **Suelo desnudo:** 2 de 3 vieron tierra rajada o reseca. Participante 2 vio desgaste y, sin el título, no habría pensado en falta de cobertura.
+- **Sol de la canícula:** 2 de 3 lo relacionaron con sequía, pero 2 de 3 lo leyeron primero o también como buen tiempo (un día soleado, tiempo despejado).
+- **Semáforo:** 3 de 3 leyeron el triángulo como cuidado. Del cuadrado, Participante 1 dijo que sin el rojo no lo asociaría con «pasa seguido»; de las otras dos personas no se anotó respuesta. El círculo no se mostró.
+- **Botón «Escuchar»:** 3 de 3 entendieron que la bocina es para oír.
+- **Escala del satélite** (pregunta que agregó Iván): 3 de 3 entendieron que el satélite mide todo el cuadro y no solo la parcela; Participante 1, después de la explicación. Participante 3 advirtió que «su parcela» puede hacer pensar que el satélite mira solo el terreno de una familia.
+- **No se preguntó:** el signo gris, la línea de julio y agosto de 2026 y las tarjetas «Este año» y «El futuro».
+
 ## Frases claras, «Este año», «El futuro» y la parcela guardada sin señal: domingo 15 nov 2026
 
 Rodolfo pidió que el audio y las frases de la vista del agricultor las entienda cualquier persona, y que el agricultor también vea el antes y después y los futuros. Horas de `date` (UTC−6).

@@ -92,6 +92,10 @@ Compara lo que dice TalkBack en voz alta con esta lista extraída de los textos 
 
 ---
 
+## Resultado (domingo 15 nov 2026)
+
+Rodolfo hizo esta prueba en un teléfono Android real: «todo bien». Lo informó hacia las 13:25 (UTC−6). No quedaron anotados la hora de la prueba, el modelo del teléfono, las versiones de Android y Chrome ni lo que anunció cada paso; por eso la tabla de abajo sigue vacía.
+
 ## Tabla para anotar el resultado y la hora real
 
 | Fecha y hora real (ej. `2026-11-15 10:15`) | Modelo de teléfono Android y versión de Android / Chrome | Paso o elemento probado | ¿Qué anunció TalkBack exactamente? | ¿Correcto? (Sí / No) | Observaciones o fallos encontrados |

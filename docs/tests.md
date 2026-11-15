@@ -8,6 +8,26 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## People tests: Sunday 15 Nov 2026
+
+Reported by Rodolfo between 13:25 and 13:38 (UTC−6), after the submission deadline (12:00). The time of each test was not logged.
+
+| Test | Who | Result |
+|---|---|---|
+| TalkBack on a real Android phone, farmer view (`docs/es/pruebas-personas/rodolfo-talkback.md`) | Rodolfo | ✅ "All good". The phone model, the Android and Chrome versions and what each step announced were not written down |
+| Pictogram comprehension (`docs/es/pruebas-personas/ivan-pictogramas.md`) | Iván | 3 adults, none of them a farmer: Participant 1 is an agronomist (by phone call); Participants 2 and 3 study data science and design (in person). The answers are Iván's notes, written afterwards, not word for word, and verbal consent was not noted. Results below |
+
+What Iván found:
+
+- **Fire and year dots:** 3 of 3. They counted 3 of 15 years with fire and 2 of 25 with a long canícula. Participant 3 first thought each flame was a separate fire.
+- **Month wheel:** 3 of 3 said 2 months; 2 of 3 named March and April from the drawing. Participant 1 read the text below because the repeated initials were confusing.
+- **Bare soil:** 2 of 3 saw cracked or very dry soil. Participant 2 saw worn-out soil and, without the title, would not have thought of missing plant cover.
+- **Canícula sun:** 2 of 3 linked it to drought, but 2 of 3 first or also read it as good weather (a sunny day, clear skies).
+- **Traffic light:** 3 of 3 read the triangle as caution. For the square, Participant 1 said that without the red they would not link it to "happens often"; no answer was noted for the other two. The circle was not shown.
+- **Listen button:** 3 of 3 understood that the speaker is for listening.
+- **Satellite scale** (a question Iván added): 3 of 3 understood that the satellite measures the whole square, not only the plot; Participant 1 after the explanation. Participant 3 warned that "su parcela" (your plot) can make people think the satellite looks only at one family's land.
+- **Not asked:** the grey sign, the July and August 2026 line, and the "This year" and "The future" cards.
+
 ## Plain sentences, "This year", "The future" and the saved plot without signal: Sunday 15 Nov 2026
 
 Rodolfo asked for the farmer view's audio and sentences to be understood by anyone, and for the farmer to also see the before and after and the futures. Times from `date` (UTC−6).
@@ -35,7 +55,7 @@ Rodolfo asked for the farmer view's audio and sentences to be understood by anyo
 | 03:23:49 to 03:25:03 | Fix: the figure says "2018, the driest year, 138 millimeters; 2026, 79 millimeters" (and in Spanish); the farmer-view test checks it | ✅ "sin fallas"; 115 of 115; 25 of 25 |
 | 03:25:12 to 03:27:47 | Full battery | ✅ "280 passed"; 172.05 kB; "sin fallas"; 23 of 23; 115 of 115; 25 of 25; 35 of 35; 143 of 143 |
 | 03:27:54 | `git push origin v2-interactiva:main` (`8abda09`) | ✅ fast-forward `8d781c0..8abda09`, not forced |
-| 03:28:41 a 03:29:57 | Published site with the new figure | ✅ serves the new build at 03:28:41; the figure says the millimeters in both languages (115 of 115); offline, Jocotán and Olopa open with everything (14 of 14); 35 of 35; 37 files identical to the local build without counting line endings or the `sw.js` version |
+| 03:28:41 to 03:29:57 | Published site with the new figure | ✅ serves the new build at 03:28:41; the figure says the millimeters in both languages (115 of 115); offline, Jocotán and Olopa open with everything (14 of 14); 35 of 35; 37 files identical to the local build without counting line endings or the `sw.js` version |
 | Pending | A person listens to the 10 new audio files (`docs/es/pruebas-personas/mario-audios.md`) and tries "Save to use without signal" with a plot other than Jocotán on a real phone | — |
 
 ## 3D relief on Android: Saturday 14 Nov 2026

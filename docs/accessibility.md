@@ -46,13 +46,19 @@ Already in place and kept: language buttons with `aria-pressed` and their own `l
 
 The yellow and grey fills are close to their own tints (1.3 and 1.1), so these shapes rely on their black outline, which passes. Green and red fills are close to each other (1.1), as they are for anyone with red-green color blindness. That is why each state has a different shape (circle, triangle, square, dashed "?") and a word. We did not change the semaphore colors.
 
-## Still to test on a real phone (Rodolfo, with TalkBack)
+## Real phone with TalkBack (Rodolfo)
 
-- TalkBack reading order on the first screen: header, plot, Listen, the three facts, options, kit, Evidence.
+Done on Sunday 15 Nov 2026 on a real Android phone, with the step-by-step guide `docs/es/pruebas-personas/rodolfo-talkback.md`: "all good". The phone model, the Android and Chrome versions and what each step announced were not written down. The guide covers:
+
+- TalkBack reading order on the first screen: header, language buttons, plot, the 2026 line, Listen, the three facts, "This year", options, "The future", the notice, kit, Evidence.
 - That each language button is read in its own voice ("English", "Español") and announced as on or off.
-- That the subtitle phrases are read once each while the audio plays, and that they do not talk over the audio too much. If they do, consider announcing only when the audio is paused.
-- That the native audio player controls are reachable and named.
-- That the month wheel and the year dots read their title, in the active language.
+- Whether TalkBack reads the subtitle phrases over the audio while it plays.
+- That the native audio player is reachable and named.
+- That the month wheel, the year dots and the drawings of the two new cards read their name.
+- Changing the plot while the audio plays, and reloading the page on the computer's Wi-Fi without internet.
+
+Not in that guide, so still to check on a real phone:
+
 - Download audio and Share on WhatsApp: what TalkBack says when they open the download or WhatsApp.
 - Large system font (Android display size and font size at maximum): no clipped text at 360 px.
 
@@ -121,7 +127,7 @@ Done after this pass (14 Nov 2026):
 
 Still pending:
 
-- On a real phone with TalkBack: the reading of the long chart summaries, the table regions while scrolling sideways, the map controls, and the calendar list.
+- On a real phone with TalkBack: the reading of the long chart summaries, the table regions while scrolling sideways, the map controls, and the calendar list. The real-phone pass of 15 Nov 2026 covered the farmer view only.
 
 ## Interactive version (v2)
 
@@ -145,4 +151,4 @@ Branch `v2-interactiva`, Saturday 14 Nov 2026 (night). The new pieces follow the
 | The future (farmer view, 15 Nov) | Each option's 33 plant drawings sit in a `role="img"` row labelled with the option and "X of 33 climates: enough water"; a plant with enough water stands upright and a dry one is bent, so the difference is the shape, not the colour; the count is also written next to the option's name; with forced colours the plants use `CanvasText`. The card is not shown where the options are gray (Camotán and Zacapa) |
 | Share image text (kit, 15 Nov) | The longer sentences still fit their box: past 3 lines at 30 px the letter shrinks, down to 22 px at most (Zacapa: 26 px in Spanish, 24 px in English); the legend keeps "? = no data" on one line |
 
-Still pending for v2: the same real-phone TalkBack pass as above, now also on the Listen highlight, the share image, the 3D view's buttons and the two new cards.
+The real-phone TalkBack pass of 15 Nov 2026 (above) covered the v2 farmer view: Listen, the kit with the share-image button and the two new cards. Still pending for v2 on a real phone: the 3D view's buttons, in Evidence.
