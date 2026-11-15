@@ -74,7 +74,7 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 
 **Técnico (opcional)**
 - Canícula: con CHIRPS diario las rachas son más realistas, pero el umbral de 15 días y el día seco de 2 mm siguen siendo los del plan; no se recalibraron para que 2018 salga bien. El conteo depende del reparto diario («sat» o «rnl»): ver [sensibilidad-canicula.md](sensibilidad-canicula.md).
-- `motor/clima.py` deja anotado para Mario confirmar en la documentación de POWER por qué su lluvia cambia de nivel antes de 2001; el motor ya evita ese tramo (usa 2001-2025).
+- POWER antes de 2001: su lluvia (PRECTOTCORR) es MERRA-2 corregido con el análisis de pluviómetros CPC Unified (definición de la API de POWER; Reichle y Liu, 2021, NASA/TM-2021-104606 vol. 59, p. 7), que falla donde hay pocos pluviómetros. Ninguna fuente documenta un cambio en 2001, así que la causa exacta del salto sigue sin confirmar. No afecta al motor: usa 2001-2025 y toma el total de lluvia de CHIRPS.
 - Camotán sin SMAP: la segunda tarea con SPL4SMGP (modelo, zona de raíces) tardaría horas y habría que rotularla como modelo. Queda como está.
 
 **De entrega:** la web, el README, los documentos principales y las 7 diapositivas (`docs/slides/`, PDF de 7 páginas) ya están en inglés. Pendientes, todos de Rodolfo: hacer público el repositorio, desplegar el sitio (`render.yaml`), pedir la clasificación FortiGuard de la URL, pegar el borrador de `docs/project-page-en.md` en el formulario de Space Apps revisando los límites de cada campo, y poner ahí la URL pública.

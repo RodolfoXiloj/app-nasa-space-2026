@@ -10,8 +10,13 @@ Supuestos declarados (valores iniciales, se revisan el sábado):
   el plan (4.3) decía 1 mm y subir a 2 mm si POWER muestra llovizna constante. En Jocotán, con
   1 mm la racha mediana fue de 4 días (13 nov 2026): se aplicó la regla, no se ajustó para 2018.
 - Periodo: 2001-2025. La lluvia de POWER en Jocotán cambia de nivel antes de 2001
-  (1991-1996 entre 357 y 834 mm/año; 2001-2025 entre 910 y 2931 mm/año), posiblemente por un
-  cambio de fuente del dato. TODO(Mario): confirmarlo en la documentación de POWER y contra CHIRPS.
+  (1991-1996 entre 357 y 834 mm/año; 2001-2025 entre 910 y 2931 mm/año). CHIRPS no cambia en ese
+  tramo, así que el salto es de POWER. Revisado el 14 nov 2026: PRECTOTCORR es «MERRA-2 bias
+  corrected» (definición de la API de POWER) y MERRA-2 corrige su lluvia sobre tierra con el análisis
+  diario de pluviómetros CPC Unified (Reichle y Liu, 2021, NASA/TM-2021-104606 vol. 59, p. 7). Ese
+  informe advierte que CPCU falla donde hay pocos pluviómetros, pero no documenta un cambio en 2001:
+  la causa exacta del salto sigue sin confirmar. No afecta al motor, que usa 2001-2025 y toma el total
+  de lluvia de CHIRPS.
 - La ET0 se calcula por Hargreaves porque solo usa temperatura; FAO-56 la acepta cuando faltan
   radiación, humedad y viento medidos.
 - Lluvia corregida con CHIRPS (decisión del 13 nov, regla 5.1 del plan): si hay caché de CHIRPS
