@@ -14,6 +14,7 @@ import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { TEXTOS_KIT } from './textos.js'
 import { guardar, registrar, urlsParcela } from './sinSenal.js'
+import { compartirImagen } from './imagen.js'
 import './kit.css'
 
 const ORDEN = ['suelo', 'quema', 'canicula']
@@ -146,7 +147,11 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
       vigente = false
     }
   }, [])
-  useEffect(() => setGuardado(null), [pid, idioma])
+  const [imagen, setImagen] = useState(null)
+  useEffect(() => {
+    setGuardado(null)
+    setImagen(null)
+  }, [pid, idioma])
   useEffect(() => {
     setHref(window.location.href)
     const quitar = () => document.documentElement.classList.remove(CLASE)
@@ -162,6 +167,11 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
   const texto = href ? resumenWhatsApp({ idioma, lugar, farmer, href }) : ''
   // El mp3 corto del idioma de la pantalla; si falta el inglés, el español.
   const mp3 = ((farmer.audio || {})[idioma] || {}).mp3 || `audio/${pid}.frases.mp3`
+
+  async function hacerImagen() {
+    setImagen('haciendo')
+    setImagen(await compartirImagen({ idioma, lugar, farmer, href, pid, texto }))
+  }
 
   async function guardarAqui() {
     setGuardado('guardando')
@@ -185,7 +195,13 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
         <a className="kit-boton kit-whatsapp" href={`https://wa.me/?text=${encodeURIComponent(texto)}`} target="_blank" rel="noopener noreferrer">
           {k.whatsapp}
         </a>
+        <button type="button" className="kit-boton kit-imagen" onClick={hacerImagen} disabled={imagen === 'haciendo'}>
+          {k.imagen}
+        </button>
       </div>
+      {imagen && imagen !== 'haciendo' && imagen !== 'cancelada' && (
+        <p className="kit-detalle" role="status">{k.imagenLista[imagen] || ''}</p>
+      )}
       {puedeGuardar && (
         <div className="kit-sin-senal">
           <button type="button" className="kit-boton kit-guardar" onClick={guardarAqui} disabled={guardado === 'guardando'}>

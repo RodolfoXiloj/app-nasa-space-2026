@@ -312,7 +312,7 @@ def caso_a11y(navegador, ancho: int, alto: int, idioma: str) -> None:
             break
         pag.keyboard.press("Tab")
     esperado = [".agr-idioma", ".agr-idioma", "#agr-parcela", ".agr-escuchar-boton",
-                ".kit-imprimir", ".kit-audio", ".kit-whatsapp", ".agr-evidencia"]
+                ".kit-imprimir", ".kit-audio", ".kit-whatsapp", ".kit-imagen", ".agr-evidencia"]
     # «Guardar para usar sin señal» solo sale si el navegador registró el service worker (kit/sinSenal.js).
     if pag.locator(".kit-guardar").count():
         esperado.insert(-1, ".kit-guardar")
