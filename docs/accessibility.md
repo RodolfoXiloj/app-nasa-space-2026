@@ -26,7 +26,7 @@ All of it runs in `python web/scripts/agricultor_playwright.py` (after `npm run 
 - **`index.html` starts in English**, the default locale, instead of `lang="es"`. The locale store then sets `lang` on every switch.
 - **First-load JavaScript back under budget:** Listen loads with `import()` after the first paint, 173.37 → 170.90 kB (see `docs/peso.md`).
 
-Already in place and kept: language buttons with `aria-pressed` and their own `lang`; the semaphore shapes (`Senal.jsx`) are `aria-hidden` because the state word next to them says the same thing ("Good", "Watch", "Repeats", "The satellite can't see well here"); the month wheel and the year dots are `role="img"` with a title in the active language; the topic icons are decorative and hidden.
+Already in place and kept: language buttons with `aria-pressed` and their own `lang`; the semaphore shapes (`Senal.jsx`) are `aria-hidden` because the state word next to them says the same thing ("Good", "Watch out", "Happens often", "The satellite can't see well here"; the yellow and red words were "Watch" and "Repeats" until 15 Nov 2026); the month wheel and the year dots are `role="img"` with a title in the active language; the topic icons are decorative and hidden.
 
 ## Contrast ratios
 
@@ -140,5 +140,9 @@ Branch `v2-interactiva`, Saturday 14 Nov 2026 (night). The new pieces follow the
 | Canícula day by day | The SVG is `role="img"` with the count of long dry spells; dry days are dark and rainy days light (luminance, not hue), long spells have a thick outline, and every year is also a 48 px button with its longest spell in text |
 | Water curve, July–August 2026, model cloud | `role="img"` with a summary built from the data, a visible summary line, a dashed rain line and a hatched deficit; 2026 bars are hatched and every bar carries its value; the model cloud uses filled circles and crosses and has a table of the models |
 | Library | Template buttons with `aria-pressed`; the scores sit in a table inside a named, focusable scroll region; in English the template's source is a labelled Spanish quote |
+| Plain words (farmer view and audio, 15 Nov) | Each fact's sentence says what the satellite saw, when and how often ("In March and April, your land is usually left with no plants covering it. The satellite saw it from 2021 to 2025.") instead of only the state word ("Soil: repeats."); the state words are now "Watch out" and "Happens often" |
+| This year (farmer view, 15 Nov) | Three bars (a normal year, the driest year since 1991, 2026) inside one `role="img"` figure whose `aria-label` reads the three amounts; each bar also shows its name and millimetres as text, and the bars differ in length, so colour is not needed; with forced colours the fills use `CanvasText` |
+| The future (farmer view, 15 Nov) | Each option's 33 plant drawings sit in a `role="img"` row labelled with the option and "X of 33 climates: enough water"; a plant with enough water stands upright and a dry one is bent, so the difference is the shape, not the colour; the count is also written next to the option's name; with forced colours the plants use `CanvasText`. The card is not shown where the options are gray (Camotán and Zacapa) |
+| Share image text (kit, 15 Nov) | The longer sentences still fit their box: past 3 lines at 30 px the letter shrinks, down to 22 px at most (Zacapa: 26 px in Spanish, 24 px in English); the legend keeps "? = no data" on one line |
 
-Still pending for v2: the same real-phone TalkBack pass as above, now also on the Listen highlight, the share image and the 3D view's buttons.
+Still pending for v2: the same real-phone TalkBack pass as above, now also on the Listen highlight, the share image, the 3D view's buttons and the two new cards.

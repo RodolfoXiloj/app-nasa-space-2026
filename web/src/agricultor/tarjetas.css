@@ -1,0 +1,117 @@
+/* «Este año» y «El futuro» en la vista del agricultor. Llegan con su JS (import() después de pintar). Alto contraste,
+   formas que se distinguen sin color (barras de largo distinto; matas de pie o caídas) y nada que dependa del color
+   solo. */
+.agr .agr-tarjeta {
+  margin: 28px var(--agr-margen) 0;
+  padding: 18px 16px 16px;
+  border: 3px solid var(--agr-tinta);
+  border-radius: 10px;
+  background: var(--agr-papel);
+}
+.agr .agr-tarjeta .agr-subtitulo {
+  margin-top: 0;
+}
+.agr .agr-tarjeta-frase {
+  margin: 8px 0 14px;
+  font-size: 1.15rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+/* Barras de la lluvia de julio y agosto */
+.agr .agr-barras {
+  margin: 0 0 12px;
+  display: grid;
+  gap: 10px;
+}
+.agr .agr-barra {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+.agr .agr-barra-nombre {
+  font-weight: 700;
+}
+.agr .agr-barra-fondo {
+  display: block;
+  height: 26px;
+  border: 2px solid var(--agr-tinta);
+  border-radius: 6px;
+  background: var(--agr-papel);
+  overflow: hidden;
+}
+.agr .agr-barra-lleno {
+  display: block;
+  height: 100%;
+  background: #1f4f7a;
+}
+.agr .agr-barra--seco .agr-barra-lleno {
+  background: #7a8a9a;
+}
+.agr .agr-barra--este .agr-barra-lleno {
+  background: #b8541a;
+}
+.agr .agr-barra-mm {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Las matas de los futuros */
+.agr .agr-futuro-lista {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.agr .agr-futuro-fila {
+  padding: 10px 10px 8px;
+  border: 2px solid var(--agr-tinta);
+  border-radius: 8px;
+}
+.agr .agr-futuro-fila--hoy {
+  background: var(--agr-tinte-amarillo);
+}
+.agr .agr-futuro-nombre {
+  margin: 0 0 6px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+  font-weight: 700;
+}
+.agr .agr-futuro-nombre strong {
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+.agr .agr-matas {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  gap: 2px 4px;
+}
+.agr .agr-mata {
+  width: 100%;
+  height: auto;
+  max-height: 34px;
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.agr .agr-mata--viva {
+  stroke: #2e7d32;
+}
+.agr .agr-mata--viva .agr-mata-flor {
+  stroke: #b8860b;
+}
+.agr .agr-mata--seca {
+  stroke: #a07a2c;
+}
+@media (forced-colors: active) {
+  .agr .agr-mata--viva,
+  .agr .agr-mata--seca {
+    stroke: CanvasText;
+  }
+  .agr .agr-barra-lleno {
+    background: CanvasText;
+  }
+}

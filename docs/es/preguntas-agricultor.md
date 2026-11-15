@@ -1,6 +1,6 @@
 # Preguntas para el agricultor y el extensionista
 
-Lo que el equipo necesita preguntar en la zona para cerrar lo que el satélite no puede decir. Cada pregunta dice **para qué sirve** y **qué archivo cambia** con la respuesta. Las cifras de «lo que dice hoy el sitio» salen de `web/public/data/` (corrida del 14 nov 2026).
+Lo que el equipo necesita preguntar en la zona para cerrar lo que el satélite no puede decir. Cada pregunta dice **para qué sirve** y **qué archivo cambia** con la respuesta. Las cifras de «lo que dice hoy el sitio» salen de `web/public/data/` (corrida del 14 nov 2026; las frases y las tarjetas «Este año» y «El futuro», del 15 nov).
 
 Tiempo: unos 40 minutos con un agricultor y 20 con un extensionista. Si solo hay 10 minutos, haga las ocho preguntas marcadas con **★**.
 
@@ -25,6 +25,8 @@ Las 5 parcelas son **puntos de ejemplo elegidos con satélite**; nadie los ha vi
 | **Olopa** (14.66563, −89.29358) | ninguno · marzo y abril | 1 de 15 años: 2018 | 0 de 25 años | Las tres parejas: hoy (87), canavalia (90), maíz ICTA B-5 (92) | 22 % |
 | **San Juan Ermita** (14.78646, −89.42065) | febrero, marzo y abril · enero y mayo | 2 de 15 años: 2018 y 2026 | 1 de 25 años: 2018 | Parejas: canavalia (88), sorgo con caupí (86). Hoy: 80 | 20 % |
 | **Zacapa** (14.94062, −89.56000) | abril · enero, febrero, marzo y mayo | 0 de 15 años | 3 de 25 años: 2015, 2018 y 2025 | En gris (la lluvia de dos fuentes no coincide): canavalia (81), sorgo con caupí (80). Hoy: 73 | 21 % |
+
+**«El futuro»** (desde el 15 nov): en cuántos de los 33 climas posibles de la NASA para 2041-2060 (NEX-GDDP-CMIP6, SSP2-4.5) le alcanza el agua a cada opción. Jocotán: hoy 3, maíz con canavalia 3, sorgo con caupí 33; Camotán: hoy 5, maíz con canavalia 5, sorgo con caupí 33 (no se muestra: opciones en gris); Olopa: hoy 9, maíz con canavalia 9, maíz de ciclo corto 33; San Juan Ermita: hoy 5, maíz con canavalia 5, sorgo con caupí 33; Zacapa: hoy 9, maíz con canavalia 9, sorgo con caupí 33 (no se muestra: opciones en gris).
 
 Años que el motor marca como de riesgo alto de sequía (2006-2025): **2009, 2014, 2015, 2018 y 2025** en Jocotán, Camotán y Zacapa; Olopa: 2010, 2014, 2015, 2018, 2021 y 2025; San Juan Ermita: 2009, 2010, 2014, 2015, 2018 y 2025. **No marca 2016, 2019 ni 2023**, que tienen pérdidas documentadas.
 
@@ -99,22 +101,23 @@ Enseñe la primera pantalla sin explicar nada.
 | N.º | Pregunta | Qué se busca |
 |---|---|---|
 | 28 ★ | «¿Qué le dice esta pantalla?» | Que hable de su tierra y de años pasados, no de un aviso |
-| 29 | Señale cada palabra: **Bien**, **Atención**, **Se repite**. «¿Qué quiere decir?» | Que «Se repite» se entienda como «ha pasado varias veces», no como una orden |
+| 29 | Señale cada palabra: **Bien**, **Ponga atención**, **Pasa seguido**. «¿Qué quiere decir?» | Que «Pasa seguido» se entienda como «ha pasado varias veces» y «Ponga atención» como «fíjese en esto», no como una orden |
 | 30 | Señale el gris: **«El satélite no ve bien aquí»**. «¿Y esto?» | Que se lea como «falta el dato», no como «algo anda mal» |
-| 31 | Señale la línea de julio y agosto de 2026. «Esto, ¿ya pasó o va a pasar?» | Que se lea como algo que ya ocurrió. **Si alguien lo toma como pronóstico, hay que cambiar el texto** |
+| 31 | Señale la línea de julio y agosto de 2026 y la tarjeta **«Este año»**. «Esto, ¿ya pasó o va a pasar?» | Que se lea como algo que ya ocurrió. **Si alguien lo toma como pronóstico, hay que cambiar el texto** |
 | 32 | Toque **Escuchar**. Al terminar: «¿Qué entendió? ¿Qué palabra no se entendió? ¿La voz se entiende?» | Palabras que cambiar. La voz es de computadora y lo dice al empezar |
 | 33 | «¿Usted dice canícula, rastrojo, postrera, tierra pelada? ¿Cómo le dicen aquí?» | Las palabras de los textos y del audio |
 | 34 | «¿Qué idioma se habla en su casa? ¿Le serviría oírlo en ch'orti'?» | El guion en ch'orti' espera hablantes que lo graben (`docs/es/chorti.md`) |
 | 35 | Con la hoja impresa: «¿Se ve claro así, en blanco y negro?» | Que no dependa del color |
 | 36 | «Después de ver esto, ¿qué haría?» | Que la respuesta sea «platicarlo» y no «hacer lo que dice» |
+| 37 | Donde sale la tarjeta **«El futuro»** (Jocotán, Olopa y San Juan Ermita), señale las matas. «¿Qué quiere decir que unas estén verdes y otras secas?» | Que se lea como «en cuántos de los climas posibles le alcanza el agua», no como años ni como una promesa. **Si alguien lo toma como pronóstico seguro, hay que cambiar el texto** |
 
 ## Bloque 7. Teléfono y uso (2 min)
 
 | N.º | Pregunta | Para qué sirve |
 |---|---|---|
-| 37 | «¿Tiene teléfono con internet? ¿Hay señal en la parcela, o solo en el pueblo?» | El sitio funciona sin internet solo si alguien lo sirve desde una laptop en una red local. Todavía no se ha probado en campo |
-| 38 | «¿Usa WhatsApp? ¿Le mandan audios?» | El kit comparte un resumen por WhatsApp y permite bajar el audio |
-| 39 | «¿Prefiere leerlo, oírlo o que alguien se lo explique? ¿Con quién lo vería?» | Si la primera pantalla debe abrir con el audio |
+| 38 | «¿Tiene teléfono con internet? ¿Hay señal en la parcela, o solo en el pueblo?» | Con una visita con internet y el botón «Guardar para usar sin señal», la parcela abre sin señal en ese teléfono. Todavía no se ha probado en campo |
+| 39 | «¿Usa WhatsApp? ¿Le mandan audios?» | El kit comparte un resumen por WhatsApp y permite bajar el audio |
+| 40 | «¿Prefiere leerlo, oírlo o que alguien se lo explique? ¿Con quién lo vería?» | Si la primera pantalla debe abrir con el audio |
 
 ## Para el extensionista o agrónomo (20 min)
 
@@ -142,7 +145,7 @@ Guarde las hojas en `docs/es/respuestas-campo.md` (una sección por conversació
 - **Puntos** (1 a 4, E3): se corrigen en `data/parcelas.yaml` y se vuelve a correr todo el flujo de datos para ese punto.
 - **Fechas y duraciones** (7 a 11, E2): se cambian en `data/rotaciones.yaml` y `data/cultivos.yaml`, con la fuente «comunicación de un agricultor o extensionista de [municipio], [fecha]», y se regeneran los JSON. **Aquí sí pueden cambiar los puntajes**, y se dice cuáles y por qué.
 - **Años malos** (16, 18 a 21, E5): entran a la validación como una fila rotulada «testimonio», sin tocar la regla. No se ajusta ningún umbral para que un año coincida.
-- **Palabras y comprensión** (28 a 36): se cambian los textos y el audio se vuelve a generar.
+- **Palabras y comprensión** (28 a 37): se cambian los textos y el audio se vuelve a generar.
 - **Lo que no coincida** se escribe en «Dónde falla», aunque no se pueda arreglar.
 
 Una conversación no es una muestra: en los documentos se escribe «un agricultor de Jocotán dijo…», nunca «los agricultores dicen…».

@@ -14,26 +14,28 @@ Jocotán, Camotán and Olopa, three of our five plots, are Ch'orti' Maya territo
 
 ## The script
 
-These are the six phrases of the Jocotán plot, copied from `farmer.frases` in `web/public/data/jocotan.json`. The phrases change with each plot's states, numbers and options (for example, Olopa's options phrase says that all three options come out even), so a full script also needs the phrases of the other four plots, in their own JSON files.
+These are the eight phrases of the Jocotán plot, copied from `farmer.frases` in `web/public/data/jocotan.json`. The phrases change with each plot's states, numbers and options (for example, Olopa's options phrase says that all three options come out even), so a full script also needs the phrases of the other four plots, in their own JSON files. Camotán and Zacapa have no future phrase: their options are gray.
 
 | id | Spanish | English | Ch'orti' (to be filled by a native speaker) |
 |---|---|---|---|
-| parcela | Parcela de Jocotán, con voz de computadora. | Jocotán plot, read by a computer voice. | |
-| suelo | Suelo: se repite. El satélite vio 2 meses de suelo desnudo. | Soil: repeats. The satellite saw 2 months of bare soil. | |
-| quema | Quema: se repite. Vio quemas cerca en 3 de 15 años. | Burning: repeats. Fires seen nearby in 3 of 15 years. | |
-| canicula | Canícula: atención. Racha seca de más de 15 días en 2 de 25 años. | Midsummer drought: watch. Dry spells longer than 15 days in 2 of 25 years. | |
-| opciones | Hay dos opciones parejas: maíz con canavalia o sorgo con caupí. | There are two even options: maize with jack bean or sorghum with cowpea. | |
+| parcela | Parcela de Jocotán. Le habla una voz de computadora. | Jocotán plot. A computer voice is reading this. | |
+| suelo | En marzo y abril, su tierra suele quedar sin plantas que la cubran. Lo vio el satélite de 2021 a 2025. | In March and April, your land is usually left with no plants covering it. The satellite saw it from 2021 to 2025. | |
+| quema | En 3 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en abril y mayo. | In 3 of the last 15 years there were fires within half a kilometer of your plot, in April and May. | |
+| canicula | En 2 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia. | In 2 of the last 25 years, the midsummer drought brought more than 15 days in a row with almost no rain. | |
+| este_anio | Este año, en julio y agosto, llovió solo la cuarta parte de lo normal (24 %). Es menos que en 2018, el año más seco desde 1991. Es un dato preliminar. | This year, July and August got only a quarter of the normal rain (24 %). That is less than in 2018, the driest year since 1991. It is a preliminary figure. | |
+| opciones | Hoy hay dos opciones parejas: maíz con canavalia o sorgo con caupí. | Today there are two even options: maize with jack bean or sorghum with cowpea. | |
+| futuro | La NASA calcula 33 climas posibles para 2041 a 2060. Si siembra como hoy, maíz con frijol, le alcanza el agua en 3 de 33. Maíz con canavalia: en 3. Sorgo con caupí: en los 33. | NASA computes 33 possible climates for 2041 to 2060. Planting as today, maize with beans has enough water in 3 of 33. Maize with jack bean: in 3. Sorghum with cowpea: in all 33. | |
 | cierre | No es un aviso oficial: platíquelo con su técnico. | This is not an official notice: talk it over with your extension worker. | |
 
-The first phrase says “read by a computer voice” because today's audio is synthetic. A recording by a person would need its own first phrase, without that label.
+The first phrase says “A computer voice is reading this” because today's audio is synthetic. A recording by a person would need its own first phrase, without that label.
 
 The words of the four states (`data/umbrales_semaforo.yaml` → `estados`):
 
 | State | Spanish | English | Ch'orti' (to be filled by a native speaker) |
 |---|---|---|---|
 | Green | Bien | Good | |
-| Yellow | Atención | Watch | |
-| Red | Se repite | Repeats | |
+| Yellow | Ponga atención | Watch out | |
+| Red | Pasa seguido | Happens often | |
 | Gray | El satélite no ve bien aquí | The satellite can't see well here | |
 
 A name the speakers may want to use: **Kuxur Rum**, “my humid land” in Ch'orti', the no-burn agroforestry system with permanent cover that FAO and Guatemala's Ministry of Agriculture have promoted in Chiquimula since 2000 (https://openknowledge.fao.org/server/api/core/bitstreams/1800c8af-a373-462f-a231-21dbf734ca18/content).

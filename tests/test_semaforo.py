@@ -23,7 +23,7 @@ def test_umbrales_confirmados_tal_cual_docs():
     # el gris de suelo usa el mismo corte que la confianza baja
     assert SUELO["gris_pct_validos_menor_que"] == confianza.UMBRALES["validos_baja"]
     assert {k: (v["es"], v["en"]) for k, v in U["estados"].items()} == {
-        "verde": ("Bien", "Good"), "amarillo": ("Atención", "Watch"), "rojo": ("Se repite", "Repeats"),
+        "verde": ("Bien", "Good"), "amarillo": ("Ponga atención", "Watch out"), "rojo": ("Pasa seguido", "Happens often"),
         "gris": ("El satélite no ve bien aquí", "The satellite can't see well here")}
 
 

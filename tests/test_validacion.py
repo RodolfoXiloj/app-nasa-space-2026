@@ -144,9 +144,12 @@ def test_perdidas_documentadas_en_docs_validacion():
 def test_limite_2026_y_notas_nuevas():
     v = _val()
     lim = v["observacion_2026"]["limites"][0]
+    # Desde el 15 nov 2026 la lluvia de julio-agosto de 2026 sí se dice al agricultor (vista y audio corto), como
+    # dato preliminar; sigue fuera de puntajes y confianza.
     assert lim == ("Es una observación del pasado, no un pronóstico. La lluvia y la humedad de 2026 no entran en los "
-                   "puntajes, la confianza ni el audio: el clima del motor es 2001-2025. Los focos de enero a mayo de "
-                   "2026 sí cuentan en el hecho de quema.")
+                   "puntajes ni en la confianza: el clima del motor es 2001-2025. La lluvia de julio-agosto de 2026 sí se "
+                   "dice en la vista del agricultor y en su audio corto, como dato preliminar. Los focos de enero a mayo "
+                   "de 2026 sí cuentan en el hecho de quema.")
     pl = next(e for e in v["observacion_2026"]["reportes_publicos"] if e["id"] == "prensa_libre_2026_09_01")
     assert ("Según la nota, el estudio incorporó 4260 participantes, representativos de unos 91 121 hogares: los "
             "36 431 hogares son una estimación representativa, no un conteo.") in pl["nota"]

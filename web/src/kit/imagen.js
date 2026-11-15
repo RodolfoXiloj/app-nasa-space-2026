@@ -14,8 +14,9 @@ const LETRA = "'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
 
 const estadoDe = (h) => (['verde', 'amarillo', 'rojo', 'gris'].includes(h.estado) ? h.estado : 'gris')
 
+// Corta solo en espacios normales: el espacio duro ( ) mantiene juntas las parejas de la leyenda («? = sin dato»).
 function lineas(ctx, texto, ancho) {
-  const palabras = String(texto).split(/\s+/)
+  const palabras = String(texto).split(/[ \t\r\n]+/)
   const out = []
   let actual = ''
   for (const p of palabras) {
@@ -35,6 +36,21 @@ function parrafo(ctx, texto, x, y, ancho, alto) {
     y += alto
   }
   return y
+}
+
+// La frase de un hecho dentro de su caja: con 30 px caben 3 líneas; si pasa de ahí (la del suelo de Zacapa, desde
+// las frases claras del 15 nov 2026), la letra se achica de 2 en 2 hasta 22 px. `altoMax` va de la primera línea
+// base al fondo de la última.
+function parrafoQueCabe(ctx, texto, x, y, ancho, altoMax) {
+  const interlinea = (talla) => Math.round(talla * 1.26)
+  let talla = 30
+  for (; talla > 22; talla -= 2) {
+    ctx.font = `500 ${talla}px ${LETRA}`
+    const n = lineas(ctx, texto, ancho).length
+    if ((n - 1) * interlinea(talla) + Math.ceil(talla * 0.3) <= altoMax) break
+  }
+  ctx.font = `500 ${talla}px ${LETRA}`
+  return parrafo(ctx, texto, x, y, ancho, interlinea(talla))
 }
 
 function senal(ctx, estado, cx, cy, r) {
@@ -173,8 +189,8 @@ export function dibujar({ idioma, lugar, farmer, href }) {
     }
     ctx.fillText(palabra, 200, y + 126)
     const frase = fraseDe(id) || (e === 'gris' ? t.explicaEstado[e] : '')
-    ctx.font = `500 30px ${LETRA}`
-    parrafo(ctx, frase, 200, y + 176, 560, 38)
+    // De la primera línea (y + 176) al fondo de la caja (y + 284) quedan 8 px de margen.
+    parrafoQueCabe(ctx, frase, 200, y + 176, 560, altoHecho - 16 - 176 - 8)
     const gris = e === 'gris'
     if (id === 'suelo' && !gris) rueda(ctx, 900, y + 140, 92, h.meses || [], h.meses_poca_cobertura || [])
     else if (!gris && h.valor != null && h.de > 0) puntos(ctx, 790, y + 60, h.valor, h.de, 240)

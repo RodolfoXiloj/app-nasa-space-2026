@@ -11,7 +11,7 @@ enlaza si el hash del texto guardado en su etiqueta coincide con el texto actual
 Hay dos audios por parcela (cultivo por defecto):
     audio/{parcela}.mp3          la tarjeta completa (~70 s), en `audio` (y en `audio.es`)
     audio/{parcela}.en.mp3       la misma tarjeta en inglés (voz en-US), en `audio.en`
-    audio/{parcela}.frases.mp3      frases cortas en español (20 a 30 s, mono a 32 kbps), en `farmer.audio.es`
+    audio/{parcela}.frases.mp3      frases en español (20 a 75 s, mono a 32 kbps), en `farmer.audio.es`
     audio/{parcela}.frases.en.mp3   las mismas frases en inglés, en `farmer.audio.en`; subtítulos
                                     audio/{parcela}.frases.{es,en}.vtt; tiempos en `farmer.frases`
                                     (motor/audio_frases.py)
@@ -42,7 +42,7 @@ VOCES = ["es-GT-MartaNeural", "es-MX-DaliaNeural"]  # plan: voz es-GT, respaldo 
 VOCES_EN = ["en-US-JennyNeural", "en-US-AriaNeural"]
 RATE = "-5%"
 RATE_EN = "-5%"
-MAX_BYTES_FRASES = 120_000
+MAX_BYTES_FRASES = 300_000  # hasta 75 s a 32 kbps (15 nov 2026); antes 20 a 30 s y 120 kB
 ALBUM = "Milpa Resiliente"
 CULTIVOS = ["maiz_frijol", "maiz_solo", "sorgo"]
 PRIORIDAD = "agua"
@@ -223,7 +223,7 @@ def audio_corto(res: dict, pid: str, municipio: str, generar: bool) -> str | Non
     ruta_en = WEB_AUDIO / f"{pid}.frases.en.mp3"
     r_en = None
     if generar:
-        for kbps in (audio_frases.KBPS, 28, 24):
+        for kbps in (audio_frases.KBPS, 24):  # en MP3 a 24 kHz no hay 28 kbps
             r_try = audio_frases.sintetizar([x["en"] for x in f["frases"]], ruta_en, VOCES_EN, RATE_EN, kbps)
             if not r_try:
                 continue

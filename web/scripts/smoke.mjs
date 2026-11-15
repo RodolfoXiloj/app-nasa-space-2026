@@ -76,7 +76,8 @@ try {
       try {
         const mp3 = readFileSync(join(raiz, 'public', audioEn.mp3))
         if (mp3.length < 1000) throw new Error('mp3 vacío')
-        if (mp3.length > 120_000) throw new Error(`mp3 pesa ${mp3.length} B (máx. 120 kB)`)
+        // Hasta 75 s de frases completas a 32 kbps (15 nov 2026; antes 20 a 30 s y 120 kB): motor/exportar.py MAX_BYTES_FRASES.
+        if (mp3.length > 300_000) throw new Error(`mp3 pesa ${mp3.length} B (máx. 300 kB)`)
         const cabecera = mp3.subarray(0, 4096).toString('latin1')
         if (!cabecera.startsWith('ID3') || !cabecera.includes('AI_GENERATED')) throw new Error('sin etiqueta ID3 de IA')
         if (!audioEn.ia?.generado_con_ia) throw new Error('el JSON no declara la IA del mp3 en inglés')

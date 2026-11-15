@@ -19,6 +19,8 @@ import { Suspense, lazy } from 'react'
 const Escuchar = lazy(() => import('./Escuchar.jsx'))
 // La línea de julio-agosto 2026 (lluvia observada frente a la mediana 1991-2025) llega igual, con import().
 const Linea2026 = lazy(() => import('./Linea2026.jsx'))
+// «Este año» (barras de la lluvia de julio y agosto) y «El futuro» (las 33 matas por opción): con import(), igual.
+const Tarjeta = lazy(() => import('./Tarjetas.jsx'))
 
 const ORDEN = ['suelo', 'quema', 'canicula']
 const ESTADOS = ['verde', 'amarillo', 'rojo', 'gris']
@@ -223,7 +225,19 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
           )}
         </section>
 
+        {farmer && (
+          <Suspense fallback={null}>
+            <Tarjeta cual="anio" farmer={farmer} idioma={idioma} />
+          </Suspense>
+        )}
+
         {farmer && <Opciones farmer={farmer} rotaciones={res.rotaciones} idioma={idioma} />}
+
+        {farmer && (
+          <Suspense fallback={null}>
+            <Tarjeta cual="futuro" farmer={farmer} rotaciones={res.rotaciones} idioma={idioma} />
+          </Suspense>
+        )}
 
         <p className="agr-aviso">{t.aviso}</p>
         {farmer && <KitParcela idioma={idioma} pid={pid} parcela={parcela} farmer={farmer} rotaciones={res.rotaciones} />}

@@ -446,7 +446,7 @@ def recomendar(pid: str, cultivo: str = "maiz_frijol", prioridad: str = "agua", 
         "audio": {"mp3": None, "voz": None, "texto": ""},
     }
     verificar_campos_reto(res)
-    res["farmer"] = farmer.bloque(res, datos.umbrales_semaforo(base))
+    res["farmer"] = farmer.bloque(res, datos.umbrales_semaforo(base), pid=p["id"])
     res["texto_tarjeta"] = redaccion.texto_tarjeta(res)
     res["audio"]["texto"] = res["texto_tarjeta"]
     ingles.agregar(res, base)

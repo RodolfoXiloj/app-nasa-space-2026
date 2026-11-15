@@ -97,7 +97,7 @@ Public reports (they are not the source of the figures above; quotes translated 
 
 Limits:
 
-- It is an observation of the past, not a prediction. The 2026 rain and soil moisture do not enter the scores, the confidence or the audio: the engine's climate is 2001-2025. Fire detections from January to May 2026 do count in the fire fact.
+- It is an observation of the past, not a prediction. The 2026 rain and soil moisture do not enter the scores or the confidence: the engine's climate is 2001-2025. The July-August 2026 rain is told in the farmer view and its short audio, as a preliminary figure. Fire detections from January to May 2026 do count in the fire fact.
 - Preliminary: the Climate Hazards Center recomputes CHIRPS every month, and SMAP can be reprocessed. The 2026 months come from the final product folder (not from prelim/); the date of each file is stored.
 - SMAP: 3 cells of 9 km with data (4 plots; Jocotán and San Juan Ermita share a cell). Camotán has no data of recommended quality. With 12 years, "the lowest" is all that can be said; no percentile is given.
 - The plots are example points chosen from satellite imagery, not verified in the field.

@@ -18,6 +18,7 @@ An AI coding agent (Claude, by Anthropic) wrote most of the code, most of the te
 | An AI assistant | Compared the project idea with five other ideas before we started building | Chose the idea and the challenge |
 | Claude (Anthropic), coding agent (14 Nov 2026) | Reviewed the documents for consistency with the code and the data and drafted the corrections | Rodolfo approves each merge into `main` |
 | Claude (Anthropic), coding agent (14 Nov 2026) | Wrote and rendered the 30-second demo video in `video/pitch/` with HyperFrames: the script, the scenes, the captions and the scripts that capture the real site and the NASA GIBS imagery | Chose the storyline, English narration and sound effects without music. A person still has to watch and hear the whole video |
+| Claude (Anthropic), coding agent (15 Nov 2026) | Rewrote the farmer-view sentences in plain words (what the satellite saw, when and how often), changed the state words to "Watch out" and "Happens often", added the "This year" and "The future" cards and generated the audio of the 5 plots again | Rodolfo asked for sentences anyone can understand and approved the change; the numbers still come from the engine and the validator checks each one |
 | Kokoro-82M (open voice model, run on our computer) and faster-whisper `small.en` | Kokoro reads the demo video's English narration; faster-whisper gives each word's time for the captions | The video's end card labels the narration as an AI voice |
 | edge-tts (Microsoft neural voices `es-GT-MartaNeural` and `en-US-JennyNeural`) | Reads aloud the text the engine wrote: a short phrase mp3 per plot in Spanish and another in English, each with subtitles; and a longer card mp3 per plot in Spanish and in English (the Evidence page plays the one that matches the interface language) | Decided to label the voice as AI-generated everywhere it plays |
 
@@ -44,4 +45,5 @@ An AI coding agent (Claude, by Anthropic) wrote most of the code, most of the te
 
 - An agronomist or extension worker has not reviewed the scoring rules and the eight rotation templates yet.
 - The pictograms have not passed the comprehension test with users yet.
+- Nobody has listened yet to the 10 new phrase mp3s of 15 November (Spanish and English), nor checked the new sentences and the two new cards with a farmer (`docs/es/preguntas-agricultor.md`, block 6).
 - A person has not yet re-opened every page behind the impact figures added on 14 November.

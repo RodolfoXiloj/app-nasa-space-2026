@@ -30,7 +30,7 @@ function sinSenal() {
     generateBundle(_opciones, bundle) {
       const nombres = Object.keys(bundle).sort()
       // Solo la primera pantalla y lo que llega justo después de pintar; Evidence y la vista 3D se guardan al abrirlas.
-      const primeras = /^assets\/(index|Escuchar|Kit|Linea2026|sinSenal)-[\w-]+\.(js|css)$/
+      const primeras = /^assets\/(index|Escuchar|Kit|Linea2026|sinSenal|Tarjetas)-[\w-]+\.(js|css)$/
       const assets = nombres.filter((f) => primeras.test(f))
       const precarga = ['./', ...assets, 'data/parcelas.json', 'data/validacion.json', 'manifest.webmanifest', 'icono-192.png']
       const hash = createHash('sha256').update(nombres.join('|')).update(process.env.MILPA_SW_SAL || '')

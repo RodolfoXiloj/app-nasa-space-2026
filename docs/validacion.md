@@ -97,7 +97,7 @@ Reportes públicos (no son la fuente de las cifras de arriba):
 
 Límites:
 
-- Es una observación del pasado, no un pronóstico. La lluvia y la humedad de 2026 no entran en los puntajes, la confianza ni el audio: el clima del motor es 2001-2025. Los focos de enero a mayo de 2026 sí cuentan en el hecho de quema.
+- Es una observación del pasado, no un pronóstico. La lluvia y la humedad de 2026 no entran en los puntajes ni en la confianza: el clima del motor es 2001-2025. La lluvia de julio-agosto de 2026 sí se dice en la vista del agricultor y en su audio corto, como dato preliminar. Los focos de enero a mayo de 2026 sí cuentan en el hecho de quema.
 - Preliminar: el Climate Hazards Center recalcula CHIRPS cada mes y SMAP puede reprocesarse. Los meses de 2026 vienen de la carpeta del producto final (no de prelim/); se guarda la fecha de cada archivo.
 - SMAP: 3 celdas de 9 km con dato (4 parcelas; Jocotán y San Juan Ermita comparten celda); sin dato de calidad recomendada: Camotán. Con 12 años, «el más bajo» es todo lo que se puede decir; no se da percentil.
 - Las parcelas son puntos de ejemplo elegidos con satélite, no verificados en campo.

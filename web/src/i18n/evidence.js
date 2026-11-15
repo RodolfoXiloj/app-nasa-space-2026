@@ -2,7 +2,7 @@
 
 export const OBS_LIMITES = {
   en: [
-    "It is an observation of the past, not a prediction. The 2026 rain and soil moisture do not enter the scores, the confidence or the audio: the engine's climate is 2001-2025. Fire detections from January to May 2026 do count in the fire fact.",
+    "It is an observation of the past, not a prediction. The 2026 rain and soil moisture do not enter the scores or the confidence: the engine's climate is 2001-2025. The July-August 2026 rain is told in the farmer view and its short audio, as a preliminary figure. Fire detections from January to May 2026 do count in the fire fact.",
     'Preliminary: the Climate Hazards Center revises CHIRPS monthly and SMAP may be reprocessed. 2026 months come from the final product folder (not prelim/); each file date is recorded.',
     'SMAP: 3 cells with data (4 plots; Jocotán and San Juan Ermita share a cell); no recommended-quality data: Camotán. With 12 years, “lowest” is all we state—we do not report a percentile.',
     'Plots are example points chosen from space—not verified in the field.',

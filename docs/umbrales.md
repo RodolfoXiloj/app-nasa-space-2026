@@ -1,6 +1,6 @@
 # Umbrales del semáforo de 3 hechos: CONFIRMADOS
 
-**Estado: Confirmado por Rodolfo, sáb 14 nov.** Se confirmó la propuesta tal cual: gris por hecho, empate si dos opciones difieren 3 puntos o menos, Olopa con las tres opciones sin orden, y las palabras «Bien», «Atención» y «Se repite» ("Good", "Watch", "Repeats"). El motor los aplica desde `data/umbrales_semaforo.yaml` y `motor/farmer.py`, con `farmer.umbrales.estado` en `"confirmado"`. Aplicarlos no cambió ningún puntaje: al regenerar los JSON de las 5 parcelas, los totales siguen iguales.
+**Estado: Confirmado por Rodolfo, sáb 14 nov.** Se confirmó la propuesta tal cual: gris por hecho, empate si dos opciones difieren 3 puntos o menos, Olopa con las tres opciones sin orden, y las palabras «Bien», «Atención» y «Se repite» ("Good", "Watch", "Repeats"). **Cambio del dom 15 nov:** a pedido del equipo, «Atención» pasa a «Ponga atención» ("Watch out") y «Se repite» a «Pasa seguido» ("Happens often"), y las frases de la vista y del audio dicen qué pasó, cuándo y cada cuánto, en vez de leer la palabra del estado. Los cortes y los estados no cambian. El motor los aplica desde `data/umbrales_semaforo.yaml` y `motor/farmer.py`, con `farmer.umbrales.estado` en `"confirmado"`. Aplicarlos no cambió ningún puntaje: al regenerar los JSON de las 5 parcelas, los totales siguen iguales.
 
 Escrita el sábado 14 nov 2026. Todas las cifras salen de `data/cache/`: se corrió `motor.recomendar.recomendar()` en memoria para las 5 parcelas (maíz con frijol, prioridad agua), sin escribir archivos. Coinciden con los JSON de `web/public/data/`.
 
@@ -73,8 +73,8 @@ Las 5 parcelas quedan distintas entre sí, que es lo que el puntaje total no log
 | Estado | Forma | Palabra (es / en) | Qué dice |
 |---|---|---|---|
 | Verde | Círculo | «Bien» / "Good" | El satélite no vio el problema en el período |
-| Amarillo | Triángulo | «Atención» / "Watch" | Lo vio poco: un mes o uno o dos años |
-| Rojo | Cuadrado | «Se repite» / "Repeats" | Lo vio seguido: dos meses o más, o tres años o más |
+| Amarillo | Triángulo | «Ponga atención» / "Watch out" | Lo vio pocas veces: un mes o uno o dos años |
+| Rojo | Cuadrado | «Pasa seguido» / "Happens often" | Lo vio varias veces: dos meses o más, o tres años o más |
 | Gris | Signo de interrogación, borde punteado | «El satélite no ve bien aquí» / "The satellite can't see well here" | Faltan datos de esa fuente; no se adivina |
 
 - Nunca solo color: forma, palabra, ícono y posición fija (suelo, quema, canícula, siempre en ese orden).
@@ -117,6 +117,6 @@ Con los datos de hoy (escenario base):
 2. Gris por hecho (esta propuesta) o gris para toda la parcela con confianza baja (la idea del plan). Con la segunda opción, Camotán y Zacapa quedarían con los 3 hechos en gris.
 3. Confirmar el margen de empate de 3 puntos.
 4. Cómo mostrar Olopa: ahí el empate no es transitivo. La canavalia empata con la práctica actual y con el maíz ICTA B-5, pero el B-5 supera a la actual por 5 puntos. Propuesta: mostrar las tres sin orden y decir que ninguna se separa lo suficiente.
-5. Las palabras de cada estado («Bien», «Atención», «Se repite») son un borrador; Iván las revisa con la prueba de comprensión.
+5. Las palabras de cada estado («Bien», «Ponga atención», «Pasa seguido», desde el 15 nov) son un borrador; Iván las revisa con la prueba de comprensión.
 
 Después de confirmar, el carril A pasa estos valores al motor (`farmer.umbrales.estado = "confirmado"`), regenera los datos y corre la prueba de regresión.

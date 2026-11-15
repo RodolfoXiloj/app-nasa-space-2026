@@ -230,12 +230,13 @@ PATRONES = [
     (r"Años con canícula de más de (\d+) días secos", "Years with a canícula of more than {0} dry days"),
     (r"de (\d+) años", "of {0} years"),
     (r"Observación preliminar: julio-agosto (\d{4})", "Preliminary observation: July-August {0}"),
-    (r"Es una observación del pasado, no un pronóstico\. La lluvia y la humedad de (\d{4}) no entran en los puntajes, "
-     r"la confianza ni el audio: el clima del motor es (\d{4}-\d{4})\. Los focos de enero a mayo de (\d{4}) sí cuentan "
+    (r"Es una observación del pasado, no un pronóstico\. La lluvia y la humedad de (\d{4}) no entran en los puntajes "
+     r"ni en la confianza: el clima del motor es (\d{4}-\d{4})\. La lluvia de julio-agosto de (\d{4}) sí se dice en la "
+     r"vista del agricultor y en su audio corto, como dato preliminar\. Los focos de enero a mayo de (\d{4}) sí cuentan "
      r"en el hecho de quema\.",
-     "It is an observation of the past, not a prediction. The {0} rain and soil moisture do not enter the scores, the "
-     "confidence or the audio: the engine's climate is {1}. Fire detections from January to May {2} do count in the "
-     "fire fact."),
+     "It is an observation of the past, not a prediction. The {0} rain and soil moisture do not enter the scores or the "
+     "confidence: the engine's climate is {1}. The July-August {2} rain is told in the farmer view and its short audio, "
+     "as a preliminary figure. Fire detections from January to May {3} do count in the fire fact."),
     (r"Preliminar: el Climate Hazards Center recalcula CHIRPS cada mes y SMAP puede reprocesarse\. Los meses de (\d{4}) "
      r"vienen de la carpeta del producto final \(no de prelim/\); se guarda la fecha de cada archivo\.",
      "Preliminary: the Climate Hazards Center recomputes CHIRPS every month and SMAP may be reprocessed. The {0} months "

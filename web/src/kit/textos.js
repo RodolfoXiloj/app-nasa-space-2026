@@ -9,7 +9,8 @@ export const TEXTOS_KIT = {
     whatsapp: 'Share on WhatsApp',
     hoja: 'Plot sheet',
     hechos: 'What the satellite saw (past years, not a forecast)',
-    formas: 'Shapes: circle = good, triangle = watch, square = repeats, ? = no data.',
+    // Espacios duros ( ) para que «? = no data» no se parta al final de una línea.
+    formas: 'Shapes: circle = good, triangle = watch out, square = happens often, ? = no data.',
     confianza: 'How sure we are:',
     web: 'Full page:',
     resumen: (lugar) => `Milpa Resiliente, ${lugar}`,
@@ -33,7 +34,7 @@ export const TEXTOS_KIT = {
     whatsapp: 'Compartir por WhatsApp',
     hoja: 'Hoja de la parcela',
     hechos: 'Lo que vio el satélite (años pasados, no es pronóstico)',
-    formas: 'Formas: círculo = bien, triángulo = atención, cuadrado = se repite, ? = sin dato.',
+    formas: 'Formas: círculo = bien, triángulo = ponga atención, cuadrado = pasa seguido, ? = sin dato.',
     confianza: 'Qué tan seguros estamos:',
     web: 'Página completa:',
     resumen: (lugar) => `Milpa Resiliente, ${lugar}`,

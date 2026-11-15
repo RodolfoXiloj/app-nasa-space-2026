@@ -302,8 +302,9 @@ def observacion_2026(anio: int = ANIO_OBSERVACION, meses: tuple[int, ...] = MESE
         "resumen": resumen,
         "limites": [
             f"Es una observación del pasado, no un pronóstico. La lluvia y la humedad de {anio} no entran en los "
-            f"puntajes, la confianza ni el audio: el clima del motor es 2001-2025. Los focos de enero a mayo de {anio} "
-            "sí cuentan en el hecho de quema.",
+            f"puntajes ni en la confianza: el clima del motor es 2001-2025. La lluvia de julio-agosto de {anio} sí se "
+            "dice en la vista del agricultor y en su audio corto, como dato preliminar. Los focos de enero a mayo de "
+            f"{anio} sí cuentan en el hecho de quema.",
             "Preliminar: el Climate Hazards Center recalcula CHIRPS cada mes y SMAP puede reprocesarse. Los meses de "
             f"{anio} vienen de la carpeta del producto final (no de prelim/); se guarda la fecha de cada archivo.",
             f"SMAP: {len(smap)} celdas de 9 km con dato ({sum(len(x['parcelas']) for x in smap)} parcelas"

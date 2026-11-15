@@ -61,15 +61,15 @@ export const TEXTOS = {
     hechos: { suelo: 'Bare soil', quema: 'Fire near the plot', canicula: 'Long dry spell (canícula)' },
     estados: {
       verde: 'Good',
-      amarillo: 'Watch',
-      rojo: 'Repeats',
+      amarillo: 'Watch out',
+      rojo: 'Happens often',
       gris: "The satellite can't see well here",
       sinResumen: 'Not in this data file yet',
     },
     explicaEstado: {
       verde: 'The satellite did not see the problem in this period.',
       amarillo: 'It saw it a few times.',
-      rojo: 'It saw it often.',
+      rojo: 'It saw it several times.',
       gris: 'Data from this source is missing, so we do not guess.',
     },
     conteo: {
@@ -129,15 +129,15 @@ export const TEXTOS = {
     hechos: { suelo: 'Suelo desnudo', quema: 'Quema cerca de la parcela', canicula: 'Canícula larga' },
     estados: {
       verde: 'Bien',
-      amarillo: 'Atención',
-      rojo: 'Se repite',
+      amarillo: 'Ponga atención',
+      rojo: 'Pasa seguido',
       gris: 'El satélite no ve bien aquí',
       sinResumen: 'Aún no está en este archivo de datos',
     },
     explicaEstado: {
       verde: 'El satélite no vio el problema en el período.',
       amarillo: 'Lo vio pocas veces.',
-      rojo: 'Lo vio seguido.',
+      rojo: 'Lo vio varias veces.',
       gris: 'Faltan datos de esta fuente; no se adivina.',
     },
     conteo: {

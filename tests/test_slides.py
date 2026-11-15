@@ -130,8 +130,8 @@ def test_afirmaciones_sin_data_dato():
     # «20–26 % of normal rain at our 5 plots»: mínimo y máximo.
     pct = [x["pct_de_la_mediana"] for x in val["observacion_2026"]["lluvia_chirps"]]
     assert (min(pct), max(pct)) == (20, 26)
-    # «under 30 seconds per plot»
-    assert all(j["farmer"]["audio"]["es"]["duracion_s"] < 30 for j in jsons.values())
+    # «about a minute or less per plot» (desde el 15 nov 2026 las frases dicen qué pasó, cuándo y cada cuánto)
+    assert all(j["farmer"]["audio"]["es"]["duracion_s"] <= 66 for j in jsons.values())
     # «Bare in Feb–Apr at San Juan Ermita»
     assert jsons["san_juan_ermita"]["farmer"]["hechos"][0]["meses"] == [2, 3, 4]
     # Chiquimula es el departamento de las parcelas citadas en la diapositiva 2.

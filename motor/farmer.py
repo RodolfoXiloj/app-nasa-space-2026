@@ -19,6 +19,11 @@ Si el YAML dice `estado: pendiente` (o no se pasa), cada `estado` queda en None,
 """
 from __future__ import annotations
 
+import json
+import re
+from pathlib import Path
+
+from motor import datos as _datos
 from motor import frases as _frases_mod
 
 VERSION = "1"
@@ -186,18 +191,74 @@ def _umbrales(umbrales: dict | None) -> dict:
     }
 
 
-def bloque(res: dict, umbrales: dict | None = None) -> dict:
+# ---------------------------------------------------------------- este año y el futuro, para el agricultor
+WEB_DATA = _datos.RAIZ / "web" / "public" / "data"
+
+
+def _leer(ruta: Path) -> dict | None:
+    try:
+        return json.loads(ruta.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def este_anio(pid: str, web: Path = WEB_DATA) -> dict | None:
+    """Lluvia de julio y agosto de 2026 frente a lo normal (mediana 1991-2025) y frente al año más seco, de los
+    archivos que ya publica el sitio: data/validacion.json (pipeline/validacion/validar.py, la cifra de la línea
+    2026) y data/explorar/{pid}.json (motor/explorar.py, los milímetros). Es una observación preliminar: no entra
+    en puntajes ni en la confianza. None si falta alguno: no se adivina."""
+    v = _leer(web / "validacion.json") or {}
+    fila = next((x for x in ((v.get("observacion_2026") or {}).get("lluvia_chirps") or []) if x.get("id") == pid), None)
+    lj = (_leer(web / "explorar" / f"{pid}.json") or {}).get("lluvia_jul_ago") or {}
+    if not fila or not isinstance(fila.get("pct_de_la_mediana"), (int, float)) or lj.get("total_2026_mm") is None:
+        return None
+    ref = lj.get("periodo_referencia") or fila.get("periodo_referencia") or ""
+    return {
+        "pct_de_la_mediana": fila["pct_de_la_mediana"], "periodo_referencia": ref, "desde": int(ref[:4]) if ref[:4].isdigit() else None,
+        "total_2026_mm": round(lj["total_2026_mm"]), "mediana_mm": round(lj["mediana_jul_ago_mm"]),
+        "anio_mas_seco": lj.get("anio_mas_seco"),
+        "total_mas_seco_mm": round(lj["total_mas_seco_mm"]) if lj.get("total_mas_seco_mm") is not None else None,
+        "preliminar": True, "fuente_ids": ["chirps"],
+    }
+
+
+def futuros(pid: str, web: Path = WEB_DATA) -> dict | None:
+    """Las rotaciones en los futuros de la NASA (NEX-GDDP-CMIP6, SSP2-4.5, 2041-2060) de data/futuros_nasa.json
+    (motor/futuros.py): en cuántos le alcanza el agua a cada una, y en cuáles. None si la parcela no está."""
+    f = _leer(web / "futuros_nasa.json") or {}
+    e = (((f.get("parcelas") or {}).get(pid) or {}).get("escenarios") or {}).get("ssp245")
+    m = re.match(r"(\d{4})\D+(\d{4})", f.get("periodo_futuro") or "")
+    if not e or not m:
+        return None
+    rots = []
+    for r in e["rotaciones"]:
+        por_modelo = [bool((x.get("aguanta") or {}).get(r["id"])) for x in e["modelos"]]
+        assert sum(por_modelo) == r["futuros_que_aguanta"], (pid, r["id"])
+        rots.append({"id": r["id"], "aguantan": r["futuros_que_aguanta"], "de": e["n_modelos"], "por_modelo": por_modelo})
+    return {
+        "escenario": "ssp245", "desde": int(m.group(1)), "hasta": int(m.group(2)), "n_modelos": e["n_modelos"],
+        "modelos": [x["modelo"] for x in e["modelos"]], "rotaciones": rots, "fuente_ids": ["nex_gddp_cmip6"],
+    }
+
+
+def bloque(res: dict, umbrales: dict | None = None, pid: str | None = None, web: Path = WEB_DATA) -> dict:
     """Bloque `farmer` a partir del JSON ya armado por motor.recomendar.recomendar().
 
     `umbrales`: contenido de data/umbrales_semaforo.yaml (motor.datos.umbrales_semaforo). Sin él, o con
-    `estado: pendiente`, no hay estados."""
+    `estado: pendiente`, no hay estados. Con `pid`, suma «este año» y «el futuro» si el sitio ya publica sus datos."""
     hechos = _hechos(res, umbrales)
     opciones = _opciones(res, umbrales)
+    anio = este_anio(pid, web) if pid else None
+    fut = futuros(pid, web) if pid else None
+    if fut and {r["id"] for r in res["rotaciones"]} - {x["id"] for x in fut["rotaciones"]}:
+        fut = None  # los futuros se calcularon para las rotaciones de otro cultivo declarado: no se mezclan
     return {
         "version": VERSION,
         "umbrales": _umbrales(umbrales),
         "hechos": hechos,
         "opciones": opciones,
-        "frases": _frases_mod.construir(res, hechos, opciones, umbrales) if confirmados(umbrales) else [],
+        "este_anio": anio,
+        "futuros": fut,
+        "frases": _frases_mod.construir(res, hechos, opciones, umbrales, anio, fut) if confirmados(umbrales) else [],
         "audio": {lang: None for lang in IDIOMAS},
     }

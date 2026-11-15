@@ -23,7 +23,8 @@ con el porcentaje de la mediana 1991-2025 que trae public/data/validacion.json, 
 «observed, not a forecast», texto real con el lang del idioma activo y visible para el lector de pantalla, sin
 «alerta»/«alert» y en tinta gris (nada naranja); sus textos no van en el JS inicial (llega con import()).
 Y un caso del kit comunitario a 390 px (web/src/kit/): los botones «Imprimir hoja», «Descargar audio» y
-«Compartir por WhatsApp» existen, la hoja impresa cabe en 1 página y el enlace de WhatsApp está bien formado.
+«Compartir por WhatsApp» existen, la hoja impresa cabe en 1 página, el enlace de WhatsApp está bien formado y
+«Imagen para WhatsApp» descarga un PNG de 1080 x 1440 (con Zacapa, la frase del suelo más larga).
 Sale con código 1 si algo falla.
 """
 from __future__ import annotations
@@ -413,6 +414,20 @@ def caso_kit(navegador, ancho: int = 390, alto: int = 844) -> None:
     anota(paginas == 1 and paginas_a4 == 1, f"{pre}: la hoja cabe en 1 página", f"carta {paginas}, A4 {paginas_a4}")
     anota(vuelve, f"{pre}: después de imprimir, la página vuelve a la vista normal")
     pag.emulate_media(media="screen")
+
+    # Imagen para WhatsApp (web/src/kit/imagen.js) con Zacapa: su frase del suelo es la más larga y la letra se
+    # achica para que quepa en su caja. Sin el menú de compartir del teléfono (canShare falso), se descarga.
+    pag.select_option("#agr-parcela", "zacapa")
+    pag.wait_for_function("() => (document.querySelector('.kit-audio')?.getAttribute('href') || '').includes('zacapa.frases')",
+                          timeout=20000)
+    pag.evaluate("() => Object.defineProperty(navigator, 'canShare', { value: () => false, configurable: true })")
+    with pag.expect_download(timeout=20000) as descarga:
+        pag.locator(".kit-imagen").tap()
+    png = Path(descarga.value.path()).read_bytes()
+    medida = (int.from_bytes(png[16:20], "big"), int.from_bytes(png[20:24], "big")) if png[:8] == b"\x89PNG\r\n\x1a\n" else None
+    nombre = descarga.value.suggested_filename
+    anota(medida == (1080, 1440) and nombre == "milpa-zacapa-es.png",
+          f"{pre}: «Imagen para WhatsApp» hace el PNG de la parcela (Zacapa, la frase más larga)", f"{nombre} {medida}")
     anota(not errores, f"{pre}: sin errores de JavaScript", "; ".join(errores[:2]))
     ctx.close()
 
@@ -424,6 +439,42 @@ def linea_fuera_del_js_inicial() -> None:
     dentro = [a for a in iniciales if any(n in (WEB / "dist" / a).read_text(encoding="utf-8") for n in NOTA_2026.values())]
     anota(bool(iniciales) and not dentro, "Línea 2026 fuera del JS inicial (llega con import())",
           ", ".join(dentro) or ", ".join(iniciales))
+
+
+def caso_tarjetas(navegador, ancho: int, idioma: str) -> None:
+    """«Este año» y «El futuro» (15 nov 2026): dicen la misma frase que el audio, con los datos del JSON, sin
+    desbordar; el futuro no sale cuando la confianza es baja (Camotán). Y el rojo del semáforo dice «Pasa seguido»."""
+    pre = f"Tarjetas {ancho} px, {idioma}"
+    ctx = navegador.new_context(viewport={"width": ancho, "height": 844}, device_scale_factor=2, is_mobile=True, has_touch=True)
+    ctx.add_init_script(f"try {{ localStorage.setItem('milpa-locale', '{idioma}') }} catch (e) {{}}")
+    pag = ctx.new_page()
+    errores: list[str] = []
+    pag.on("pageerror", lambda e: errores.append(str(e)))
+    pag.goto(URL)
+    pag.wait_for_selector(".agr-lista-hechos [data-hecho]", timeout=20000)
+    pag.select_option("#agr-parcela", "jocotan")
+    pag.wait_for_selector(".agr-futuro .agr-mata", timeout=20000)
+    f = json.loads((WEB / "public" / "data" / "jocotan.json").read_text(encoding="utf-8"))["farmer"]
+    frase = {x["id"]: x[idioma] for x in f["frases"]}
+    barras = pag.locator(".agr-anio .agr-barra").count()
+    anota(pag.inner_text(".agr-anio .agr-tarjeta-frase") == frase["este_anio"] and barras == 3,
+          f"{pre}: «Este año» dice la frase del audio y dibuja 3 barras", f"{barras} barras")
+    filas = pag.evaluate("""() => [...document.querySelectorAll('.agr-futuro-fila')].map((li) => ({ a: +li.dataset.aguantan,
+        matas: li.querySelectorAll('.agr-mata').length, vivas: li.querySelectorAll('.agr-mata--viva').length }))""")
+    anota([x["a"] for x in filas] == [3, 3, 33] and all(x["matas"] == 33 and x["vivas"] == x["a"] for x in filas),
+          f"{pre}: «El futuro» dibuja 33 matas por opción, verdes las que aguantan (3, 3 y 33)", str(filas))
+    anota(pag.inner_text(".agr-futuro .agr-tarjeta-frase") == frase["futuro"], f"{pre}: «El futuro» dice la frase del audio")
+    etiquetas = pag.evaluate("() => [...document.querySelectorAll('.agr-futuro .agr-matas, .agr-anio .agr-barras')].map((e) => e.getAttribute('aria-label') || '')")
+    anota(len(etiquetas) == 4 and all(etiquetas), f"{pre}: las barras y cada fila de matas se dicen en palabras (aria-label)", f"{len(etiquetas)}")
+    palabra = "Pasa seguido" if idioma == "es" else "Happens often"
+    anota(palabra in pag.inner_text(".agr-lista-hechos [data-hecho='suelo']"), f"{pre}: el rojo del semáforo dice «{palabra}»")
+    sw = pag.evaluate("document.documentElement.scrollWidth")
+    anota(sw <= ancho, f"{pre}: sin desbordar a lo ancho", f"{sw} px")
+    pag.select_option("#agr-parcela", "camotan")
+    pag.wait_for_function("() => { const e = document.querySelector('.agr-anio'); return e && e.dataset.esteAnio === '26' }", timeout=20000)
+    anota(pag.locator(".agr-futuro").count() == 0, f"{pre}: con confianza baja (Camotán) no se muestra el futuro")
+    anota(not errores, f"{pre}: sin errores de JavaScript", "; ".join(errores[:2]))
+    ctx.close()
 
 
 def main() -> int:
@@ -452,6 +503,11 @@ def main() -> int:
                     caso_kit(navegador)
                 except Exception as e:
                     anota(False, "Kit 390 px: el caso no terminó", str(e).splitlines()[0])
+                for ancho, idioma in ((360, "es"), (390, "en")):
+                    try:
+                        caso_tarjetas(navegador, ancho, idioma)
+                    except Exception as e:
+                        anota(False, f"Tarjetas {ancho} px, {idioma}: el caso no terminó", str(e).splitlines()[0])
             finally:
                 navegador.close()
     finally:

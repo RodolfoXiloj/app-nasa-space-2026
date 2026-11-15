@@ -9,6 +9,7 @@ import re
 import pytest
 
 from motor import audio_frases, audio_id3, contrato, datos, exportar, farmer, frases
+from motor.recomendar import recomendar
 
 U = datos.umbrales_semaforo()
 WEB = datos.RAIZ / "web" / "public"
@@ -42,36 +43,90 @@ def test_sin_umbrales_no_hay_frases(resultado_sintetico):
     assert farmer.bloque(resultado_sintetico, None)["frases"] == []
 
 
-@pytest.mark.parametrize("estado, valor, poca, dice", [
-    ("verde", 0, [], "no vio suelo desnudo"),
-    ("amarillo", 0, [3, 4], "2 meses con poca cobertura, ninguno desnudo"),
-    ("amarillo", 1, [1, 2, 3, 5], "1 mes de suelo desnudo y 4 con poca cobertura"),
-    ("rojo", 3, [1, 5], "3 meses de suelo desnudo."),
-    ("gris", 0, [], "el satélite no ve bien aquí"),
+# Las frases dicen qué pasó, cuándo y cada cuánto (15 nov 2026: «Suelo: se repite» no le dice nada a nadie). La
+# palabra del semáforo queda solo en el gris, donde es el mensaje.
+@pytest.mark.parametrize("estado, meses, poca, dice", [
+    ("verde", [], [], "su tierra estuvo cubierta de plantas todo el año. lo vio el satélite de 2021 a 2025."),
+    ("amarillo", [], [3, 4], "en marzo y abril, su tierra suele quedar con pocas plantas que la cubran."),
+    ("amarillo", [4], [1, 2, 3, 5], "en abril, su tierra suele quedar sin plantas que la cubran; en enero, febrero, marzo y mayo, con pocas."),
+    ("rojo", [2, 3, 4], [1, 5], "en febrero, marzo y abril, su tierra suele quedar sin plantas que la cubran."),
+    ("gris", [], [], "suelo: el satélite no ve bien aquí."),
 ])
-def test_frase_del_suelo_por_estado(resultado_sintetico, estado, valor, poca, dice):
-    h = dict(resultado_sintetico["farmer"]["hechos"][0], estado=estado, valor=valor, meses_poca_cobertura=poca)
+def test_frase_del_suelo_por_estado(resultado_sintetico, estado, meses, poca, dice):
+    h = dict(resultado_sintetico["farmer"]["hechos"][0], estado=estado, valor=len(meses), meses=meses,
+             meses_poca_cobertura=poca, periodo="2021-2025")
     es, en = frases._suelo(h, U)
-    assert es.startswith("Suelo: ") and dice in es.lower()
-    assert en.startswith("Soil: ")
-    palabra = U["estados"][estado]
-    assert palabra["es"].lower() in es.lower() and palabra["en"].lower() in en.lower()
+    assert dice in es.lower()
+    assert "se repite" not in es.lower() and "repeats" not in en.lower()
+    if estado == "gris":
+        assert en.startswith("Soil: ") and U["estados"]["gris"]["en"].lower() in en.lower()
+    else:
+        assert "the satellite saw it from 2021 to 2025." in en.lower()
+
+
+@pytest.mark.parametrize("estado, valor, meses, dice", [
+    ("verde", 0, [], "en los últimos 15 años, el satélite no vio quemas a menos de medio kilómetro de su parcela."),
+    ("amarillo", 2, [3], "en 2 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en marzo."),
+    ("rojo", 3, [4, 5], "en 3 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en abril y mayo."),
+    ("gris", 0, [], "quema: el satélite no ve bien aquí.")])
+def test_frase_de_la_quema_por_estado(estado, valor, meses, dice):
+    es, en = frases._quema({"estado": estado, "valor": valor, "de": 15, "meses": meses}, U)
+    assert dice in es.lower()
+    assert ("burning: " in en.lower()) == (estado == "gris")
 
 
 @pytest.mark.parametrize("estado, valor, dice", [
-    ("verde", 0, "no vio quemas cerca en 15 años"), ("amarillo", 2, "2 de 15 años"),
-    ("rojo", 3, "3 de 15 años"), ("gris", 0, "no ve bien aquí")])
-def test_frase_de_la_quema_por_estado(estado, valor, dice):
-    es, en = frases._quema({"estado": estado, "valor": valor, "de": 15}, U)
-    assert dice in es.lower() and en.startswith("Burning: ")
-
-
-@pytest.mark.parametrize("estado, valor, dice", [
-    ("verde", 0, "ninguna racha seca pasó de 15 días en 25 años"), ("amarillo", 1, "en 1 de 25 años"),
-    ("rojo", 3, "en 3 de 25 años"), ("gris", 0, "no ve bien aquí")])
+    ("verde", 0, "en los últimos 25 años, la canícula nunca dejó más de 15 días seguidos casi sin lluvia."),
+    ("amarillo", 1, "en 1 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia."),
+    ("rojo", 3, "en 3 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia."),
+    ("gris", 0, "canícula: el satélite no ve bien aquí.")])
 def test_frase_de_la_canicula_por_estado(estado, valor, dice):
     es, en = frases._canicula({"estado": estado, "valor": valor, "de": 25}, U, 15)
-    assert dice in es.lower() and en.startswith("Midsummer drought: ")
+    assert dice in es.lower()
+    assert ("midsummer drought: " in en.lower()) == (estado == "gris")
+
+
+@pytest.mark.parametrize("pct, dice", [(24, "solo la cuarta parte"), (26, "solo la cuarta parte"), (20, "solo la quinta parte"),
+                                       (22, "solo la quinta parte"), (35, "solo la tercera parte"), (50, "la mitad"),
+                                       (100, "más o menos lo normal"), (130, "más de lo normal")])
+def test_lluvia_de_este_anio_en_palabras_sin_exagerar(pct, dice):
+    assert frases.parte_de_lo_normal(pct)[0].startswith(dice)
+
+
+def test_frase_de_este_anio_compara_con_el_anio_mas_seco():
+    e = {"pct_de_la_mediana": 24, "desde": 1991, "total_2026_mm": 79, "anio_mas_seco": 2018, "total_mas_seco_mm": 138}
+    es, en = frases._este_anio(e)
+    assert es == ("Este año, en julio y agosto, llovió solo la cuarta parte de lo normal (24 %). Es menos que en 2018, "
+                  "el año más seco desde 1991. Es un dato preliminar.")
+    assert en.startswith("This year, July and August got only a quarter of the normal rain (24 %).")
+    es2, _ = frases._este_anio(dict(e, total_2026_mm=150))   # más que el año más seco: no se compara
+    assert "2018" not in es2 and es2.endswith("Es un dato preliminar.")
+
+
+def test_jocotan_publicado_tiene_este_anio_y_el_futuro():
+    """Con los archivos que publica el sitio, Jocotán dice la lluvia de este año y los 33 futuros, y todo pasa el
+    validador de cifras."""
+    res = recomendar("jocotan")
+    f = res["farmer"]
+    assert f["este_anio"]["pct_de_la_mediana"] == 24 and f["este_anio"]["anio_mas_seco"] == 2018
+    fu = f["futuros"]
+    assert fu["n_modelos"] == 33 and (fu["desde"], fu["hasta"]) == (2041, 2060)
+    aguantan = {r["id"]: r["aguantan"] for r in fu["rotaciones"]}
+    assert aguantan == {"actual_maiz_frijol": 3, "leguminosa_canavalia": 3, "tolerante_sorgo_caupi": 33}
+    assert all(sum(r["por_modelo"]) == r["aguantan"] and len(r["por_modelo"]) == 33 for r in fu["rotaciones"])
+    ids = [x["id"] for x in f["frases"]]
+    assert ids == ["parcela", "suelo", "quema", "canicula", "este_anio", "opciones", "futuro", "cierre"]
+    futuro = next(x for x in f["frases"] if x["id"] == "futuro")
+    assert futuro["es"] == ("La NASA calcula 33 climas posibles para 2041 a 2060. Si siembra como hoy, maíz con frijol, "
+                            "le alcanza el agua en 3 de 33. Maíz con canavalia: en 3. Sorgo con caupí: en los 33.")
+    assert contrato.errores_textos(res) == []
+
+
+def test_con_confianza_baja_no_se_dice_el_futuro():
+    """Camotán tiene las opciones en gris (falta SMAP de calidad): no se dice qué aguanta mejor en el futuro."""
+    f = recomendar("camotan")["farmer"]
+    assert f["opciones"]["estado"] == "gris"
+    assert "futuro" not in [x["id"] for x in f["frases"]]
 
 
 def _res_opciones(res: dict, totales: list[float], nivel: str = "alta") -> dict:
@@ -86,21 +141,21 @@ def _res_opciones(res: dict, totales: list[float], nivel: str = "alta") -> dict:
 def test_frase_de_opciones_en_empate_no_nombra_ganadora(resultado_sintetico):
     res = _res_opciones(resultado_sintetico, [80, 88, 87])
     es = res["farmer"]["frases"][4]["es"]
-    assert es.startswith("Hay dos opciones parejas: ") and " o " in es and "mejor" not in es
+    assert es.startswith("Hoy hay dos opciones parejas: ") and " o " in es and "mejor" not in es
 
 
 def test_frase_de_opciones_olopa_nombra_las_tres_sin_ganadora(resultado_sintetico):
     res = _res_opciones(resultado_sintetico, [87, 90, 92], nivel="media")
     f = res["farmer"]["frases"][4]
-    assert f["es"].startswith("Las tres opciones quedan parejas: lo que siembra hoy, ")
-    assert f["en"].startswith("All three options come out even: what you plant today, ")
+    assert f["es"].startswith("Hoy, las tres opciones quedan parejas: lo que siembra hoy, ")
+    assert f["en"].startswith("Today, all three options come out even: what you plant today, ")
     assert "mejor" not in f["es"]
 
 
 def test_frase_de_opciones_cuando_una_destaca(resultado_sintetico):
     res = _res_opciones(resultado_sintetico, [80, 88, 84])
     nombre = resultado_sintetico["rotaciones"][1]["nombre_corto"]
-    assert res["farmer"]["frases"][4]["es"] == f"La opción que mejor sale es {nombre}."
+    assert res["farmer"]["frases"][4]["es"] == f"Hoy, la opción que mejor sale es {nombre}."
 
 
 def test_frase_de_opciones_en_gris_dice_por_que(resultado_sintetico):
@@ -243,10 +298,10 @@ def test_nada_solo_en_audio(pid, res):
 
 @pytest.mark.skipif(not PUBLICADOS, reason="sin audio corto publicado")
 @pytest.mark.parametrize("pid, res", PUBLICADOS, ids=[p for p, _ in PUBLICADOS])
-def test_audio_corto_dura_de_20_a_30_s_mono_y_declara_ia(pid, res):
+def test_audio_corto_dura_de_20_a_75_s_mono_y_declara_ia(pid, res):
     a = res["farmer"]["audio"]["es"]
     ruta = WEB / a["mp3"]
-    assert 20 <= a["duracion_s"] <= 30
+    assert 20 <= a["duracion_s"] <= 75
     assert a["bytes"] == ruta.stat().st_size
     c = audio_frases.cabecera_mp3(ruta.read_bytes())
     assert c["mono"] and 24 <= c["kbps"] <= 32 and c["kbps"] == a["kbps"] and c["capa"] == 3
@@ -272,7 +327,7 @@ def test_los_mp3_largos_ya_no_dicen_prototipo_local():
 @pytest.mark.skipif(not PUBLICADOS, reason="sin audio corto publicado")
 @pytest.mark.parametrize("pid, res", PUBLICADOS, ids=[p for p, _ in PUBLICADOS])
 def test_mp3_corto_en_ingles_publicado(pid, res):
-    """Cada parcela con audio en español lleva el mp3 en inglés, con IA y hasta 120 kB."""
+    """Cada parcela con audio en español lleva el mp3 en inglés, con IA y hasta 300 kB."""
     a = res["farmer"]["audio"]["en"]
     assert a and a["mp3"].endswith(".frases.en.mp3")
     assert a["bytes"] <= exportar.MAX_BYTES_FRASES
@@ -328,9 +383,21 @@ def test_las_uniones_del_mp3_dan_los_tiempos_de_la_etiqueta(pid, res):
     n = len(res["farmer"]["frases"])
     ruta_es = WEB / res["farmer"]["audio"]["es"]["mp3"]
     etiqueta = audio_frases.tiempos_de_etiqueta(audio_id3.leer(ruta_es))
+    assert etiqueta and len(etiqueta["tiempos"]) == n
     hallados = audio_frases.tiempos_de_mp3(ruta_es, n)
-    for (a, b), (x, y) in zip(hallados["tiempos"], etiqueta["tiempos"]):
-        assert abs(a - x) <= 0.01 and abs(b - y) <= 0.01
+    # Con frases completas (15 nov 2026) puede haber una pausa dentro de una frase tan larga como una unión (Olopa): el
+    # método de respaldo no cuadra y devuelve None. No se usa: cada mp3 trae sus tiempos exactos en la etiqueta.
+    if hallados:
+        for (a, b), (x, y) in zip(hallados["tiempos"], etiqueta["tiempos"]):
+            assert abs(a - x) <= 0.01 and abs(b - y) <= 0.01
     en = res["farmer"]["audio"]["en"]
+    et_en = audio_frases.tiempos_de_etiqueta(audio_id3.leer(WEB / en["mp3"]))
+    assert et_en and len(et_en["tiempos"]) == n
+    # El .en.vtt usa los tiempos que guardó el exportador en la etiqueta del mp3 en inglés (desde el 15 nov 2026 cada
+    # mp3 en inglés trae los suyos); las uniones halladas en el audio, cuando cuadran, los confirman (±10 ms).
+    cues = [[c["inicio"], c["fin"]] for c in _cues(WEB / en["subtitulos"])]
+    assert cues == et_en["tiempos"]
     t_en = audio_frases.tiempos_de_mp3(WEB / en["mp3"], n)
-    assert [[c["inicio"], c["fin"]] for c in _cues(WEB / en["subtitulos"])] == t_en["tiempos"]
+    if t_en:
+        for (a, b), (x, y) in zip(cues, t_en["tiempos"]):
+            assert abs(a - x) <= 0.01 and abs(b - y) <= 0.01

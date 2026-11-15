@@ -2,7 +2,7 @@
 
 English version of [umbrales.md](umbrales.md). The Spanish file is the one the engine and the tests point to.
 
-**Status: confirmed by Rodolfo on Saturday 14 Nov 2026.** The proposal was confirmed as written: gray per fact, a tie when two options differ by 3 points or less, Olopa with its three options in no order, and the words "Good", "Watch" and "Repeats" («Bien», «Atención», «Se repite»). The engine applies them from `data/umbrales_semaforo.yaml` and `motor/farmer.py`, with `farmer.umbrales.estado` set to `"confirmado"`. Applying them changed no score: after regenerating the JSON files of the 5 plots, the totals are the same.
+**Status: confirmed by Rodolfo on Saturday 14 Nov 2026.** The proposal was confirmed as written: gray per fact, a tie when two options differ by 3 points or less, Olopa with its three options in no order, and the words "Good", "Watch" and "Repeats" («Bien», «Atención», «Se repite»). **Change on Sunday 15 Nov:** at the team's request, "Watch" becomes "Watch out" («Ponga atención») and "Repeats" becomes "Happens often" («Pasa seguido»), and the phrases of the view and the audio say what happened, when and how often, instead of reading the state's word. The cuts and the states do not change. The engine applies them from `data/umbrales_semaforo.yaml` and `motor/farmer.py`, with `farmer.umbrales.estado` set to `"confirmado"`. Applying them changed no score: after regenerating the JSON files of the 5 plots, the totals are the same.
 
 Every figure comes from `data/cache/`: `motor.recomendar.recomendar()` was run in memory for the 5 plots (maize with beans, water priority), without writing files. The figures match the JSON files in `web/public/data/`.
 
@@ -75,8 +75,8 @@ The 5 plots all come out different, which the total score does not achieve.
 | State | Shape | Word (en / es) | What it says |
 |---|---|---|---|
 | Green | Circle | "Good" / «Bien» | The satellite did not see the problem in the period |
-| Yellow | Triangle | "Watch" / «Atención» | It saw it a little: one month, or one or two years |
-| Red | Square | "Repeats" / «Se repite» | It saw it often: two months or more, or three years or more |
+| Yellow | Triangle | "Watch out" / «Ponga atención» | It saw it a few times: one month, or one or two years |
+| Red | Square | "Happens often" / «Pasa seguido» | It saw it several times: two months or more, or three years or more |
 | Gray | Question mark, dotted border | "The satellite can't see well here" / «El satélite no ve bien aquí» | Data from that source are missing; nothing is guessed |
 
 - Never colour alone: shape, word, icon and a fixed position (soil, fire, canícula, always in that order).
@@ -119,4 +119,4 @@ With today's data (base scenario):
 2. Gray per fact, not gray for the whole plot when confidence is low.
 3. The 3-point tie margin: confirmed.
 4. Olopa, where the tie is not transitive: the three options are shown in no order, saying that none stands out enough.
-5. The words for each state ("Good", "Watch", "Repeats") are kept; Iván reviews them in the comprehension test.
+5. The words for each state ("Good", "Watch out", "Happens often", since 15 Nov) are kept; Iván reviews them in the comprehension test.

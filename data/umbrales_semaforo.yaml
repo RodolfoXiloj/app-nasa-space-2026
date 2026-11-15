@@ -46,6 +46,6 @@ opciones:
 # Las palabras son un borrador que Iván revisa con la prueba de comprensión.
 estados:
   verde: {forma: circulo, es: "Bien", en: "Good"}
-  amarillo: {forma: triangulo, es: "Atención", en: "Watch"}
-  rojo: {forma: cuadrado, es: "Se repite", en: "Repeats"}
+  amarillo: {forma: triangulo, es: "Ponga atención", en: "Watch out"}
+  rojo: {forma: cuadrado, es: "Pasa seguido", en: "Happens often"}
   gris: {forma: interrogacion, es: "El satélite no ve bien aquí", en: "The satellite can't see well here"}
