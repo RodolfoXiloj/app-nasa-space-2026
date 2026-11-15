@@ -1,15 +1,22 @@
-# Capturas del prototipo
+# Capturas del sitio
 
-Fecha y hora de las capturas: sin registro real (la hora 21:56 que figuraba era planeada); están en el repo desde el commit `2cac4b4` (14 nov 2026). Según el plan, se toman con Edge sin interfaz sobre la web compilada (`npm run build`), servida con `npx vite preview --host 0.0.0.0 --port 4173`, como indica `docs/es/prueba-telefono.md`.
-- **En línea:** contra la IP local de la laptop.
-- **Sin internet:** contra `127.0.0.1`, con un proxy inexistente.
+Todas salen de la web compilada (`npm run build` en `web/`), servida con `vite preview` en `127.0.0.1`, con Chromium sin interfaz (Playwright). Se rehicieron el sábado 14 nov 2026, de 17:56 a 17:57 (Guatemala, UTC−6), con la línea de julio-agosto 2026 ya en la vista del agricultor. Las capturas anteriores de esta carpeta eran del prototipo en español, de antes de la vista del agricultor, y se reemplazaron.
 
-Hay dos tamaños: escritorio (1366 × 768) y teléfono (390 × 844). Cada captura es una pantalla visible, no la página entera.
+| Capturas | Qué muestran | Comando (en `web/`, después del build) |
+|---|---|---|
+| `escritorio-*.png` y `telefono-*.png` (26) | Vista Evidence en español, a 1366 × 768 y a 390 × 844 | `python scripts/evidence_capturas.py` |
+| `agricultor-390-es-jocotan.png` y `agricultor-412-en-olopa.png` | Vista del agricultor, página entera | `python scripts/agricultor_playwright.py --capturas` |
+| `en/farmer-390-*.png` (4) | Las pantallas en inglés que usan las diapositivas (`docs/slides/`) | `python scripts/slides_capturas.py` |
+| `pictos.png` | Los pictogramas a 390 px (`docs/pictos.md`); no cambió desde el paso de los pictogramas | — |
+
+## Vista Evidence
+
+Cada captura es una pantalla visible, no la página entera.
 
 | N.º | Vista | Escritorio | Teléfono |
 |---|---|---|---|
-| 01 | Primera pantalla, con la observación preliminar de julio-agosto 2026 | `escritorio-01-primera-pantalla-observacion-2026.png` | `telefono-01-primera-pantalla-observacion-2026.png` |
-| 02 | Mapa con las 5 parcelas (un nivel de zoom más lejos) y controles | `escritorio-02-mapa-5-parcelas.png` | `telefono-02-mapa-5-parcelas.png` |
+| 01 | Primera pantalla de Evidence, con la observación preliminar de julio-agosto 2026 | `escritorio-01-primera-pantalla-observacion-2026.png` | `telefono-01-primera-pantalla-observacion-2026.png` |
+| 02 | Mapa con las 5 parcelas | `escritorio-02-mapa-5-parcelas.png` | `telefono-02-mapa-5-parcelas.png` |
 | 03 | «Lo que ve el satélite» y «Clima de la zona» | `escritorio-03-satelite-y-clima.png` | `telefono-03-satelite-y-clima.png` |
 | 04-08 | Tarjeta para el agricultor con el reproductor de audio, una por parcela: Jocotán, Camotán, Olopa, San Juan Ermita, Zacapa | `escritorio-04-tarjeta-jocotan.png` … `escritorio-08-tarjeta-zacapa.png` | `telefono-04-tarjeta-jocotan.png` … `telefono-08-tarjeta-zacapa.png` |
 | 09 | Comparación de las 3 rotaciones (Jocotán) | `escritorio-09-rotaciones-jocotan.png` | `telefono-09-rotaciones-jocotan.png` |
@@ -18,9 +25,6 @@ Hay dos tamaños: escritorio (1366 × 768) y teléfono (390 × 844). Cada captur
 | 12 | Glosario y fuentes | `escritorio-12-glosario-y-fuentes.png` | `telefono-12-glosario-y-fuentes.png` |
 | 13 | Sin internet: el mapa pasa solo a la capa guardada «Color real MODIS», con su aviso | `escritorio-13-sin-internet-mapa-capa-guardada.png` | `telefono-13-sin-internet-mapa-capa-guardada.png` |
 
-**Detalles visuales que se buscaban al rehacerlas** (sin medición ni hora real registradas; revisarlos en las PNG):
-- la tabla de la tarjeta cabe entera en teléfono, a 360 y 390 px;
-- el eje de NDVI marca cada año una vez;
-- las fechas de Fuentes y de Validación ya no se parten;
-- los decimales de la tabla de 2026 son uniformes;
-- los botones del teléfono tienen un área de toque de 40 px o más.
+Las capturas 01 a 12 se toman con internet (mapa base de OpenStreetMap). En la 13 el script corta toda petición que no vaya al servidor local, y el mapa cambia solo a la capa guardada.
+
+Son una foto del sitio, no una prueba: lo que se comprueba (desbordes, nombres accesibles, tamaños de toque, audio) está en `web/scripts/evidence_playwright.py`, `agricultor_playwright.py` y `sin-red.mjs`, y sus corridas en `docs/es/pruebas.md`.
