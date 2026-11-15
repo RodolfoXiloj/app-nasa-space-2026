@@ -111,8 +111,12 @@ All of it runs in `python web/scripts/evidence_playwright.py` (after `npm run bu
 
 ### Pending (outside this pass)
 
-- `App.jsx` (not in scope) is in Spanish only: the header, the slogan, the tabs ("Parcela", "Validación", "Glosario y fuentes"), the tab bar name ("Secciones"), the example band and the footer. They need English texts.
-- `App.jsx` scrolls to the 2026 observation with `behavior: 'smooth'`, which ignores reduced motion. It should check `prefers-reduced-motion` too.
-- The engine data has English fields (`es` / `en` in each JSON); Evidence still shows the Spanish ones. Marking them `lang="es"` is the stopgap.
-- The plot selector shows "Ejemplo (Jocotán)" in Spanish when there is no index.
+Done after this pass (14 Nov 2026):
+
+- `App.jsx` now has English texts for the header, the tagline, the tabs, the tab bar name, the example band and the footer, and Evidence shows the engine's English fields when the interface is in English; only labelled Spanish quotes keep `lang="es"`. `web/scripts/evidence_playwright.py` fails if Spanish text is left in the English view.
+- The scroll to the 2026 observation reads `prefers-reduced-motion` and jumps without animation when it is set (in the code of `App.jsx`; no automated check).
+- The plot selector's fallback name has an English text, "Example (Jocotán)".
+
+Still pending:
+
 - On a real phone with TalkBack: the reading of the long chart summaries, the table regions while scrolling sideways, the map controls, and the calendar list.

@@ -1,6 +1,6 @@
 # Estado de Milpa Resiliente
 
-Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest, humo, build y sin red: todas pasan). Este es el repo de entrega de NASA Space Apps 2026. Tiene remoto privado en GitHub y todavía no está desplegado. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/es/pruebas.md`, junto con las pendientes.
+Última batería completa: sábado 14 nov 2026 (pytest, humo, build, sin red, Playwright del agricultor y de Evidence, y PDF de las diapositivas: todas pasan). Este es el repo de entrega de NASA Space Apps 2026. Tiene remoto privado en GitHub y todavía no está desplegado. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/es/pruebas.md`, junto con las pendientes.
 
 ## Qué funciona
 
@@ -10,10 +10,10 @@ Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest
 | Datos sin clave | POWER 1991-2025 · NDVI MOD13Q1 2001-2025 de las 5 parcelas · FIRMS 2012-2025 · **CHIRPS v3 mensual 1991-2025** y **diario de junio a agosto 2001-2025** (lectura por rangos HTTP con decodificador LZW propio, sin rasterio) · CHIRPS v3 de julio y agosto 2026, aparte, solo para la observación de 2026 · SRTM · SoilGrids (REST, con respaldo WCS; el respaldo no tiene corrida real registrada) · teselas GIBS para el mapa sin red |
 | Datos con clave (`.env`) | Earthdata Login (usuario en `.env`; la contraseña solo por tarjeta segura, nunca en disco del repo) · **FIRMS 2026** con `FIRMS_MAP_KEY`: producto estándar hasta el 31 jul y NRT después; 270 focos en la zona; ya entra al motor (15 años observados) |
 | SMAP | **SPL3SMP_E.006 por AppEEARS, 31 mar 2015 a 13 nov 2026** (tarea `7c0fd22c…`; datos en el repo desde el commit `41ec4eb`, 14 nov 2026). Solo datos con calidad recomendada. Mediana de jul-ago: Jocotán y San Juan Ermita 0.247 m³/m³ (comparten la celda de 9 km), Olopa 0.274 y Zacapa 0.206. **Camotán no tiene SMAP:** su celda nunca alcanza la calidad recomendada (3007 mediciones descartadas); el motor lo dice así y usa el modelo MERRA-2 rotulado. Confianza de agua: Jocotán y San Juan Ermita «alta», Olopa «media», Zacapa «baja» (POWER se desvía 55 % de CHIRPS) y Camotán «baja» (sin SMAP) |
-| Motor | Lluvia corregida con CHIRPS; clase «poca cobertura»; regla 5.1 de la validación conectada a la confianza; rechaza cachés de otra coordenada; referencia de ZARC por departamento rotulada. **Audio:** 5 mp3 (edge-tts, voz es-GT-MartaNeural, ~72 s) con la IA declarada en la web y en etiquetas ID3 (`motor/audio_id3.py`); un mp3 solo se enlaza si fue generado con el texto actual (hash en su etiqueta) |
+| Motor | Lluvia corregida con CHIRPS; clase «poca cobertura»; regla 5.1 de la validación conectada a la confianza; rechaza cachés de otra coordenada; referencia de ZARC por departamento rotulada. **Audio:** 20 mp3 de voz sintética (edge-tts): por parcela, la tarjeta en español (es-GT-MartaNeural, ~70 s) y en inglés (en-US-JennyNeural, ~92 s), y el audio corto por frases en español e inglés (26 a 30 s) con subtítulos. La IA se declara en la web y en etiquetas ID3 (`motor/audio_id3.py`); un mp3 solo se enlaza si fue generado con el texto actual (hash en su etiqueta) |
 | Validación | `python -m pipeline.validacion.validar`: POWER contra CHIRPS, sequía de 2018 y **observación preliminar de julio-agosto 2026** → `web/public/data/validacion.json` y `docs/validacion.md` (se regenera, no se edita a mano). Cotejo de cifras contra la caché (plan 12.6): sin corrida real registrada |
 | Biblioteca | 8 plantillas con fuentes verificadas (ICTA, MAGA, CIMMYT, FAO, Bioversity): 3 actuales, maíz con canavalia, milpa completa, maíz con gandul, sorgo con caupí y maíz ICTA B-5. Kc y Ky verificados contra FAO-56 y FAO-66 |
-| Web | Observación de 2026 en la primera pantalla, con enlace al detalle en Validación; pestaña Validación completa; capas «sin red», y **sin internet el mapa pasa solo a la capa guardada**; Sentinel-2 en línea; rótulo de voz sintética junto al reproductor. Prueba sin red automática: `npm run sin-red` (14 de 14 el 14 nov 2026, 12:10). Prueba en teléfono: `docs/es/prueba-telefono.md` (pendiente) |
+| Web | Primera pantalla: vista del agricultor (semáforo de 3 hechos, pictogramas, línea de julio-agosto 2026, botón Escuchar con subtítulos, kit comunitario), en inglés y español. A un toque, Evidence: mapa, satélite, clima, rotaciones, futuros de NASA, tarjeta con audio en el idioma de la interfaz, pestaña Validación y glosario; capas «sin red», y **sin internet el mapa pasa solo a la capa guardada**. Prueba sin red automática: `npm run sin-red` (23 de 23). Prueba en teléfono: `docs/es/prueba-telefono.md` (pendiente) |
 | Futuros de NASA | **NEX-GDDP-CMIP6** precalculado en Earth Engine (`pipeline/gee/cmip6_cambios.js`, sin llamadas en vivo): cambio de lluvia de mayo-octubre y junio-agosto y de temperatura, 2041-2060 contra 1995-2014, por modelo y parcela (33 modelos en SSP2-4.5, 34 en SSP5-8.5). `python -m motor.futuros` lo aplica con el mismo balance de agua y escribe `web/public/data/futuros_nasa.json`; Evidence lo muestra debajo de las rotaciones. No cambia el contrato, el bloque `farmer`, la tarjeta ni el audio |
 
 ## Lo que dicen los datos
@@ -33,6 +33,8 @@ Pruebas de línea base corridas el sábado 14 nov 2026, de 12:09 a 12:11 (pytest
 - En julio-agosto, NASA POWER se desvía 4.6 % de CHIRPS en Jocotán (error medio de 45.7 mm/mes, r = 0.74, n = 50 meses, 2001-2025).
 - El motor, con lo que se sabía hasta 2017, marca 2018 como riesgo alto en 5 de 5 parcelas; alguna señal (motor, NDVI o SMAP) lo muestra en 5. Regla 5.1: 5 parcelas con señal; no se activa.
 - Evidencia pública: FAO GIEWS (27 ago 2018) reporta para Guatemala 175 126 ha de maíz y frijol perdidas y 1 290 785 personas afectadas; Chiquimula entre los departamentos más afectados.
+- Contra 7 años con pérdidas documentadas (2009, 2010, 2015, 2016, 2018, 2019 y 2023): 3 aciertos por parcela (4 en San Juan Ermita); el motor no marca 2016, 2019 ni 2023 en ninguna parcela (`perdidas_documentadas` en `validacion.json`).
+- Canícula con el otro reparto diario de CHIRPS («rnl», ERA5): 14 parcela-años con racha de más de 15 días contra 8 con «sat»; el color cambia en 3 de 5 parcelas ([sensibilidad-canicula.md](sensibilidad-canicula.md)).
 - Jocotán: 2018 es el año 1 de 25 por déficit; motor sí; NDVI jul-sep 2018 -2.35 DE; SMAP jul-ago 2018 -0.67 DE; aciertos 3, falsas alarmas 2, fallos 1 (n = 20); Spearman 0.69 (n = 20); POWER frente a CHIRPS en jul-ago 4.6 %.
 - Camotán: 2018 es el año 1 de 25 por déficit; motor sí; NDVI jul-sep 2018 0.14 DE; SMAP jul-ago 2018 sin dato; aciertos 3, falsas alarmas 2, fallos 1 (n = 20); Spearman 0.45 (n = 20); POWER frente a CHIRPS en jul-ago -5.8 %.
 - Olopa: 2018 es el año 1 de 25 por déficit; motor sí; NDVI jul-sep 2018 -0.14 DE; SMAP jul-ago 2018 -1.06 DE; aciertos 3, falsas alarmas 3, fallos 1 (n = 20); Spearman 0.07 (n = 20); POWER frente a CHIRPS en jul-ago -22.1 %.
@@ -57,22 +59,25 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 - **SMAP:** la humedad de julio-agosto más baja de sus 12 años en **3 de 3 celdas de 9 km** con dato. Jocotán y San Juan Ermita comparten celda; Camotán no tiene dato de calidad recomendada. No se da percentil.
 - **Reportes públicos, con su ámbito exacto:**
   - FEWS NET (agosto) **coincide**, pero no es confirmación independiente: su mapa de lluvia es del mismo grupo que CHIRPS.
-  - Prensa Libre: «36 mil 431 hogares» en el corredor seco guatemalteco, según una evaluación de Oxfam y Acción contra el Hambre. La nota no aclara si son hogares evaluados o estimados, y no se atribuye a Chiquimula.
+  - Prensa Libre: «36 mil 431 hogares» en el corredor seco guatemalteco, según una evaluación de Oxfam y Acción contra el Hambre. Según la nota, el estudio incorporó 4260 participantes, representativos de unos 91 121 hogares: es una estimación representativa, no un conteo, y no se atribuye a Chiquimula ni a Zacapa.
   - Canal Antigua: 113 825 familias afectadas en 15 municipios de Chiquimula y Jutiapa.
-- **Límites:** es una observación del pasado, no un pronóstico ni una alerta. El motor usa 2001-2025 y no la usa en puntajes, confianza ni audio. El Climate Hazards Center recalcula CHIRPS cada mes.
+- **Límites:** es una observación del pasado, no un pronóstico ni una alerta. La lluvia y la humedad de 2026 no entran en los puntajes, la confianza ni el audio: el clima del motor es 2001-2025. Los focos de enero a mayo de 2026 sí cuentan en el hecho de quema. El Climate Hazards Center recalcula CHIRPS cada mes.
 
 ## Qué falta
 
-**Necesita a Rodolfo o a alguien de la zona**
-- Prueba en un teléfono real con `docs/es/prueba-telefono.md`: servir en la red local, recorrer la lista y anotar los resultados. También pendientes: TalkBack y una prueba de comprensión (ver `docs/es/pruebas.md`).
-- Confirmar en campo, o con alguien de la zona, los 5 puntos y los límites municipales de Olopa y San Juan Ermita.
+**Necesita a una persona** (ninguna tiene resultado anotado todavía)
+- Las 7 pruebas con personas de `docs/es/pruebas-personas/`: formulario y Members, TalkBack en un Android real e impresión en blanco y negro (Rodolfo); escucha de los 20 audios y cifras en pantalla (Mario); comprensión de los pictogramas con 3 a 5 adultos e inglés en voz alta (Iván).
+- Prueba en un teléfono real con `docs/es/prueba-telefono.md`: servir en la red local, recorrer la lista y anotar los resultados.
+- Conversación con un agricultor y con un extensionista: las preguntas, parcela por parcela, están en `docs/es/preguntas-agricultor.md`. Con ellas se confirman los 5 puntos, los límites municipales de Olopa y San Juan Ermita, los años malos y las fechas y duraciones que hoy son supuestos.
 - Revisar con un agrónomo o extensionista las reglas de puntaje y las 8 plantillas (preguntas en `docs/es/revision-plan.md`, sección 3.2).
+- Que una persona vuelva a abrir cada página detrás de las cifras de impacto del 14 de noviembre (`docs/impact.md`).
 
 **Técnico (opcional)**
-- Canícula: con CHIRPS diario las rachas son más realistas, pero el umbral de 15 días y el día seco de 2 mm siguen siendo los del plan; no se recalibraron para que 2018 salga bien.
+- Canícula: con CHIRPS diario las rachas son más realistas, pero el umbral de 15 días y el día seco de 2 mm siguen siendo los del plan; no se recalibraron para que 2018 salga bien. El conteo depende del reparto diario («sat» o «rnl»): ver [sensibilidad-canicula.md](sensibilidad-canicula.md).
+- `motor/clima.py` deja anotado para Mario confirmar en la documentación de POWER por qué su lluvia cambia de nivel antes de 2001; el motor ya evita ese tramo (usa 2001-2025).
 - Camotán sin SMAP: la segunda tarea con SPL4SMGP (modelo, zona de raíces) tardaría horas y habría que rotularla como modelo. Queda como está.
 
-**De entrega:** la web, el README y los documentos principales ya están en inglés. Pendientes: despliegue público, slides y formulario de Space Apps (borrador en `docs/project-page-en.md`).
+**De entrega:** la web, el README, los documentos principales y las 7 diapositivas (`docs/slides/`, PDF de 7 páginas) ya están en inglés. Pendientes, todos de Rodolfo: hacer público el repositorio, desplegar el sitio (`render.yaml`), pedir la clasificación FortiGuard de la URL, pegar el borrador de `docs/project-page-en.md` en el formulario de Space Apps revisando los límites de cada campo, y poner ahí la URL pública.
 
 ## Comandos
 

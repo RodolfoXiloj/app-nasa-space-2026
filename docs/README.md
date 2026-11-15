@@ -38,6 +38,7 @@ The team worked in Spanish. These files stay in Spanish:
 | [es/estado.md](es/estado.md) | Project status: what works, what the data say and what is left |
 | [es/revision-plan.md](es/revision-plan.md) | Review of the plan against the repo, with questions for the agronomist (section 3.2) |
 | [es/prueba-telefono.md](es/prueba-telefono.md) | Checklist for the real-phone test |
+| [es/preguntas-agricultor.md](es/preguntas-agricultor.md) | What to ask a farmer and an extension worker in the area, plot by plot: each question says what it is for and which file its answer changes |
 | [es/carriles.md](es/carriles.md) | Work lanes and the files each lane could touch |
 | [es/uso-ia.md](es/uso-ia.md) | Spanish working log of AI use |
 | [es/impacto.md](es/impacto.md) | Spanish copy of [impact.md](impact.md) |
