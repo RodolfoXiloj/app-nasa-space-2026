@@ -110,15 +110,15 @@ Plan (sección 8), más las reglas de Space Apps que están en `docs/` y la [gu�
 | Entregable | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
 | Demo web en URL pública | Hecho (14 nov 2026) | https://milpa-resiliente.onrender.com/ | — |
-| Repo público con README, licencia y fuentes | Listo, privado hasta el envío | `README.md`, `LICENSE` (MIT), `data/fuentes.yaml` (38 fuentes, IMERG incluida), en `github.com/RodolfoXiloj/app-nasa-space-2026`. Las notas internas de `docs/` no están en ningún commit | Hacerlo público el día del envío |
+| Repo público con README, licencia y fuentes | Hecho (15 nov 2026, tarde) | `README.md`, `LICENSE` (MIT), `data/fuentes.yaml` (38 fuentes, IMERG incluida), en `github.com/RodolfoXiloj/app-nasa-space-2026`. Antes de abrirlo se revisó que el historial no tiene claves ni la investigación de competidores | — |
 | Validación publicada | Hecho | Pestaña Validación del sitio publicado (https://milpa-resiliente.onrender.com/) y `docs/validacion.md` | — |
-| **Video de 30 s o menos**, o **slides de 7 o menos** contando la portada | Hecho (slides) | `docs/slides/index.html` y `docs/slides/milpa-resiliente.pdf`: 7 diapositivas en inglés; `tests/test_slides.py` falla si pasan de 7 | — |
-| Archivos alojados fuera y enlace que abra sin iniciar sesión | Listo, falta abrir el repo | El PDF de las slides está en GitHub (`app-nasa-space-2026`, `docs/slides/milpa-resiliente.pdf`) y el sitio en https://milpa-resiliente.onrender.com/ | El repositorio es privado hasta el envío: después de hacerlo público, abrir el enlace del PDF en incógnito |
+| **Video de 30 s o menos**, o **slides de 7 o menos** contando la portada | Hecho: slides y video | `docs/slides/index.html` y `docs/slides/milpa-resiliente.pdf`: 7 diapositivas en inglés; `tests/test_slides.py` falla si pasan de 7. El video final dura 29.9 s y no está en el repo | Subir el video a YouTube y poner su enlace en el formulario |
+| Archivos alojados fuera y enlace que abra sin iniciar sesión | Hecho para las slides (15 nov 2026) | El PDF de las slides en GitHub (`app-nasa-space-2026`, `docs/slides/milpa-resiliente.pdf`) responde sin sesión, y el sitio en https://milpa-resiliente.onrender.com/ | Abrir el enlace del video en una ventana privada cuando esté subido |
 | Página del proyecto en inglés | Falta | — | `docs/project-page-en.md` como borrador; Rodolfo revisa la parte técnica |
 | Uso de IA (Super Intelligence) declarado | Parcial | `docs/es/uso-ia.md` | Que cada integrante anote lo suyo; incluirlo en la página y en la última slide |
 | Citar cada fuente usada | Parcial | `data/fuentes.yaml` y la pestaña «Glosario y fuentes» | Falta IMERG (GPM) |
 | Aviso de que apoya y no reemplaza al técnico | Hecho | Campo `aviso` del JSON y tarjeta | — |
-| Formulario enviado por el dueño del equipo, con una segunda persona revisando | Falta | — | Domingo; plazo: **15 nov a las 12:00, hora de Guatemala** |
+| Formulario enviado por el dueño del equipo, con una segunda persona revisando | Por confirmar | — | Según la página oficial de 2026, el envío cierra el **domingo 15 nov a las 11:59 PM, hora local**, y manda la hora en que termina el evento local. Este plan decía 12:00 |
 
 ## 2. Decisión 2026: ¿mostrar que julio-agosto 2026 fue el más seco del registro?
 

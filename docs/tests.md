@@ -10,12 +10,13 @@ Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
 ## People tests: Sunday 15 Nov 2026
 
-Reported by Rodolfo between 13:25 and 13:38 (UTC−6), after the submission deadline (12:00). The time of each test was not logged.
+Reported by Rodolfo between 13:25 and 13:38 (UTC−6), except the remote visit, reported at about 16:30. The time of each test was not logged.
 
 | Test | Who | Result |
 |---|---|---|
 | TalkBack on a real Android phone, farmer view (`docs/es/pruebas-personas/rodolfo-talkback.md`) | Rodolfo | ✅ "All good". The phone model, the Android and Chrome versions and what each step announced were not written down |
 | Pictogram comprehension (`docs/es/pruebas-personas/ivan-pictogramas.md`) | Iván | 3 adults, none of them a farmer: Participant 1 is an agronomist (by phone call); Participants 2 and 3 study data science and design (in person). The answers are Iván's notes, written afterwards, not word for word, and verbal consent was not noted. Results below |
+| Remote visit to the plots and a farmer using the app | Rodolfo | The farmer says it looks good, after using it once or twice; it still needs more use in the field and without signal. Only what Rodolfo reported is logged here, not the farmer's own words |
 
 What Iván found:
 
@@ -348,14 +349,15 @@ These two baselines were run before the farmer view, the pictograms and the phra
 
 ## Pending
 
-These cannot be done yet, so they have no time or result:
+Still to do, with no time or result yet:
 
 | Test | Status |
 |---|---|
-| Real phone (Android or iPhone), with the checklist in [es/prueba-telefono.md](es/prueba-telefono.md) | Pending |
-| TalkBack (Android screen reader) on the phone | Pending |
+| Real phone (Android or iPhone), with the full checklist in [es/prueba-telefono.md](es/prueba-telefono.md) | Pending. Two real uses so far (above): TalkBack on an Android phone and the farmer in the remote visit |
+| TalkBack on the Evidence view | Pending (the farmer view already passed, above) |
 | Review of the scoring rules and the 8 templates with an agronomist or extension worker | Pending |
-| Comprehension test with users (card, pictograms and audio) | Pending |
+| Comprehension test with farmers, with the full protocol (card, pictograms and audio) | Pending. A first test with 3 adults who are not farmers and one farmer's opinion are above |
+| Longer use in the field and without signal | Pending |
 
 ## No real run logged
 

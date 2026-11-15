@@ -30,10 +30,13 @@ No AI produces any number on screen. Numbers come from the data and the rules in
 An agronomist confirmed three facts we rely on: ICTA B-7 is the most used maize in eastern Guatemala because of its drought tolerance, postrera beans are planted in August and September, and 10 days without rain at flowering already damage maize. The scoring rules still need a full review, and we list that as a limit.
 
 **10. Does it work without internet?**
-Yes. The site is static files; the map falls back to saved NASA GIBS layers; audio and data are local. `npm run sin-red` checks it with the internet blocked; it has not been tried in the field yet. Earth Engine was used only once, offline, to precompute the climate futures.
+Yes. The site is static files; the map falls back to saved NASA GIBS layers; audio and data are local. `npm run sin-red` checks it with the internet blocked; a farmer has used it only once or twice so far, so it still needs longer use in the field and without signal. Earth Engine was used only once, offline, to precompute the climate futures.
 
 **11. How would this reach more farmers?**
-Through the people who already advise them. Extension workers can show it in the field from a laptop or phone, print the one-page sheet or share the audio on WhatsApp. Next steps: visit the plots with extension workers, agronomist review, INSIVUMEH station rain and audio in Ch'orti'.
+Through the people who already advise them. Extension workers can show it in the field from a laptop or phone, print the one-page sheet or share the audio on WhatsApp. Next steps: visit the plots in person with extension workers, agronomist review, INSIVUMEH station rain and audio in Ch'orti'.
 
 **12. What is the biggest weakness?**
-The five plots are example points chosen by satellite, not visited yet, and the thresholds were set after seeing the data. We show both on the "Where it fails" panel instead of hiding them.
+The five plots are example points chosen by satellite and visited only remotely so far, and the thresholds were set after seeing the data. We show both on the "Where it fails" panel instead of hiding them.
+
+**13. Have farmers used it?**
+One farmer, in a remote visit on 15 November, used it once or twice and says it looks good. Three adults who are not farmers tested the pictograms: 1 of 3 read every drawing without help, and 2 of 3 also read the canícula sun as good weather. Longer use in the field and without signal comes next.

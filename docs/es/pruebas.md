@@ -8,12 +8,13 @@ Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
 ## Pruebas con personas: domingo 15 nov 2026
 
-Informadas por Rodolfo entre las 13:25 y las 13:38 (UTC−6), después del plazo de envío (12:00). La hora de cada prueba no quedó anotada.
+Informadas por Rodolfo entre las 13:25 y las 13:38 (UTC−6), salvo la visita remota, que informó hacia las 16:30. La hora de cada prueba no quedó anotada.
 
 | Prueba | Quién | Resultado |
 |---|---|---|
 | TalkBack en un Android real, vista del agricultor (`docs/es/pruebas-personas/rodolfo-talkback.md`) | Rodolfo | ✅ «Todo bien». No se anotaron el modelo del teléfono, las versiones de Android y Chrome ni lo que anunció cada paso |
 | Comprensión de los pictogramas (`docs/es/pruebas-personas/ivan-pictogramas.md`) | Iván | 3 personas adultas, ninguna agricultora: Participante 1 es profesional de agronomía (por llamada); Participantes 2 y 3 estudian ciencia de datos y diseño (en persona). Las respuestas son notas de Iván escritas después, no palabras literales, y el consentimiento verbal no quedó anotado. Resultados abajo |
+| Visita remota a las parcelas y uso de la app por un agricultor | Rodolfo | El agricultor dice que se ve bien. La usó una o dos veces; falta usarla más en el campo y sin señal. Aquí queda solo lo que informó Rodolfo, no las palabras del agricultor |
 
 Lo que encontró Iván:
 
@@ -366,14 +367,15 @@ Ninguna prueba falló en esta corrida.
 
 ## Pendiente
 
-Todavía no se pueden hacer, así que no tienen hora ni resultado:
+Lo que falta, todavía sin hora ni resultado:
 
 | Prueba | Estado |
 |---|---|
-| Teléfono real (Android o iPhone), con la lista de `docs/es/prueba-telefono.md` | Pendiente |
-| TalkBack (lector de pantalla de Android) en el teléfono | Pendiente |
+| Teléfono real (Android o iPhone), con la lista completa de `docs/es/prueba-telefono.md` | Pendiente. Ya hay dos usos reales (arriba): TalkBack en un Android y el agricultor de la visita remota |
+| TalkBack en la vista Evidence | Pendiente (la vista del agricultor ya pasó, arriba) |
 | Revisión con un agrónomo o extensionista de las reglas de puntaje y las 8 plantillas | Pendiente |
-| Prueba de comprensión con personas usuarias (tarjeta y audio) | Pendiente |
+| Prueba de comprensión con agricultores, con el protocolo completo (tarjeta, pictogramas y audio) | Pendiente. Hubo una primera prueba con 3 adultos que no son agricultores y la opinión de un agricultor (arriba) |
+| Uso más largo en el campo y sin señal | Pendiente |
 
 ## Sin corrida real registrada
 

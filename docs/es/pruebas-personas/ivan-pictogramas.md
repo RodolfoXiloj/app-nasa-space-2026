@@ -103,7 +103,7 @@ Solo en el teléfono, con **Jocotán** (la hoja impresa no trae estas tarjetas).
 
 ## Tabla para anotar los resultados y la hora real (3 a 5 adultos, sin datos personales)
 
-**Resultados del domingo 15 nov 2026.** Iván se los pasó a Rodolfo en un documento a las 13:20 (UTC−6), después del plazo de envío. Según Iván, fueron 3 personas adultas reales: una por llamada y dos en persona. Para leer la tabla:
+**Resultados del domingo 15 nov 2026.** Iván se los pasó a Rodolfo en un documento a las 13:20 (UTC−6). Según Iván, fueron 3 personas adultas reales: una por llamada y dos en persona. Para leer la tabla:
 
 - Ninguna de las 3 personas es agricultora. Participante 1 es profesional de agronomía; Participantes 2 y 3 estudian ciencia de datos y diseño.
 - Las respuestas son las notas de Iván, escritas después y en tercera persona. No son la primera respuesta literal que pide esta guía.

@@ -128,9 +128,9 @@ Done (test runs are logged in [docs/tests.md](docs/tests.md)):
 Still to do:
 
 - **Agronomist review** of the scoring rules and the eight rotation templates.
-- **Comprehension test with farmers** of the pictograms, the traffic-light words and the audio. A first pictogram test with 3 adults who are not farmers ran on 15 Nov 2026 ([docs/tests.md](docs/tests.md)); the main doubt was the canícula sun, which 2 of 3 first or also read as good weather.
+- **Comprehension test with farmers** of the pictograms, the traffic-light words and the audio. A first pictogram test with 3 adults who are not farmers ran on 15 Nov 2026 ([docs/tests.md](docs/tests.md)); the main doubt was the canícula sun, which 2 of 3 first or also read as good weather. In a remote visit on 15 Nov 2026, a farmer who used the app once or twice said it looks good; longer use in the field and without signal is still needed.
 - **Real phone test of the Evidence view.** On 15 Nov 2026 Rodolfo went through the farmer view with TalkBack (Android's screen reader) on a real Android phone: all good.
-- **Field check of the five points:** they were chosen from NDVI and Sentinel-2 imagery and have not been verified on the ground.
+- **Field check of the five points:** they were chosen from NDVI and Sentinel-2 imagery, and Rodolfo visited the plots remotely on 15 Nov 2026; an in-person visit is still pending.
 
 Known limits:
 
