@@ -42,7 +42,7 @@ rotaciones:
       nombre: "What you do today: maize with beans in primera and beans in postrera"
       nombre_corto: "what you plant today"
       beneficios:
-        - "It is the system the family already knows and has seed for."
+        - "It is the system the family uses today and has seed for."
         - "Beans in postrera use the rains at the end of the year."
       vacios:
         - "We don't know which maize and bean varieties you use."
