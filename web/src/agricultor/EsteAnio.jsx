@@ -13,7 +13,8 @@ const TEXTOS = {
     seco: (a) => `${a}, el año más seco`,
     este: '2026',
     mm: (n) => `${n} mm`,
-    resumen: (n, s, a, e) => `Lluvia de julio y agosto: un año normal, ${n} milímetros; ${a}, ${s}; 2026, ${e}.`,
+    resumen: (n, s, a, e) =>
+      `Lluvia de julio y agosto: un año normal, ${n} milímetros;${a ? ` ${a}, el año más seco, ${s} milímetros;` : ''} 2026, ${e} milímetros.`,
     nota: 'Lluvia de julio y agosto en su parcela, según CHIRPS (satélite y estaciones). Lo normal es la mediana de 1991 a 2025.',
   },
   en: {
@@ -22,7 +23,8 @@ const TEXTOS = {
     seco: (a) => `${a}, the driest year`,
     este: '2026',
     mm: (n) => `${n} mm`,
-    resumen: (n, s, a, e) => `July and August rain: a normal year, ${n} millimeters; ${a}, ${s}; 2026, ${e}.`,
+    resumen: (n, s, a, e) =>
+      `July and August rain: a normal year, ${n} millimeters;${a ? ` ${a}, the driest year, ${s} millimeters;` : ''} 2026, ${e} millimeters.`,
     nota: 'July and August rain at your plot, according to CHIRPS (satellite and stations). Normal is the 1991-2025 median.',
   },
 }

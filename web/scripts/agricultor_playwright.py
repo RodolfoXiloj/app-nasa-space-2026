@@ -472,6 +472,11 @@ def caso_tarjetas(navegador, ancho: int, idioma: str) -> None:
     anota(pag.inner_text(".agr-futuro .agr-tarjeta-frase") == frase["futuro"], f"{pre}: «El futuro» dice la frase del audio")
     etiquetas = pag.evaluate("() => [...document.querySelectorAll('.agr-futuro .agr-matas, .agr-anio .agr-barras')].map((e) => e.getAttribute('aria-label') || '')")
     anota(len(etiquetas) == 4 and all(etiquetas), f"{pre}: las barras y cada fila de matas se dicen en palabras (aria-label)", f"{len(etiquetas)}")
+    # Cada barra con su unidad y el año más seco con su nombre (15 nov 2026: antes decía «2018, 138; 2026, 79»).
+    barras_dichas = pag.get_attribute(".agr-anio .agr-barras", "aria-label") or ""
+    unidad, seco = ("milímetros", "el año más seco") if idioma == "es" else ("millimeters", "the driest year")
+    anota(barras_dichas.count(unidad) == 3 and seco in barras_dichas,
+          f"{pre}: las tres barras de «Este año» se dicen con sus {unidad}", barras_dichas)
     palabra = "Pasa seguido" if idioma == "es" else "Happens often"
     anota(palabra in pag.inner_text(".agr-lista-hechos [data-hecho='suelo']"), f"{pre}: el rojo del semáforo dice «{palabra}»")
     sw = pag.evaluate("document.documentElement.scrollWidth")
