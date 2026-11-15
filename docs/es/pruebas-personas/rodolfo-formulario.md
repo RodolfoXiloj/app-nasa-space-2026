@@ -18,7 +18,7 @@
 
 ## Conteo actual de `docs/project-page-en.md` (calculado automáticamente como apoyo)
 
-Recalculado con un script sobre `main` en el commit `78de49a`, el `2026-11-14T16:54:51-06:00` (palabras = `split()`; caracteres del bloque sin su título `## ...`). Si `docs/project-page-en.md` cambia, hay que volver a contar.
+Recalculado con un script sobre `main` en el commit `b578358`, el `2026-11-14T16:54:51-06:00` (palabras = `split()`; caracteres del bloque sin su título `## ...`). Si `docs/project-page-en.md` cambia, hay que volver a contar.
 
 Usa esta tabla como referencia inmediata mientras miras el contador de cada casilla en el formulario web de Space Apps:
 

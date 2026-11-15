@@ -2,7 +2,7 @@
 
 > Lo que mejoraba el funcionamiento se aplicó: ver `docs/es/estado.md` y `docs/es/pruebas.md`.
 
-En el repo desde el commit `60c981b` (14 nov 2026). Solo revisión: en este turno no se cambió código. Esta revisión se conserva como referencia documental.
+En el repo desde el commit `5b60f57` (14 nov 2026). Solo revisión: en este turno no se cambió código. Esta revisión se conserva como referencia documental.
 
 **Qué se comparó**
 - **Plan final:** el plan aprobado de Fable está en el hilo de T3 «Plan: Milpa Resiliente (NASA Space Apps 2026)», ítem `proposed_plan`. No hay copia en `docs/`.

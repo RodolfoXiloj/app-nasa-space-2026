@@ -20,7 +20,7 @@
 | **0e** | Prueba de humo de contratos JSON y audios | `npm run smoke` (en `web/`) | `2026-11-14T16:34:30-06:00` | `2026-11-14T16:34:42-06:00` | `0` — 16 JSON validados + `observacion_2026` + 5 mp3 en inglés con etiqueta de IA (`sin fallas`). |
 | **0f** | Prueba de extremo a extremo sin red (Service Worker con red bloqueada) | `npm run sin-red` (en `web/`) | `2026-11-14T16:34:52-06:00` | `2026-11-14T16:35:05-06:00` | `0` — **23 de 23 comprobaciones pasan**. |
 | **1–5** | Script integral de Parte B (conteo de `project-page-en.md`, auditoría de MP3/VTT, cruce de cifras contra JSON, árbol de accesibilidad a 360 px y generación de PDFs en Carta y escala de grises) | `python "$env:TEMP\milpa-pruebas\correr_parte_b.py"` | `2026-11-14T16:39:56-06:00` | `2026-11-14T16:40:04-06:00` | `0` — Guardado en `$env:TEMP\milpa-pruebas\resultados_parte_b.json` y 14 PDFs en Carta/escala de grises. |
-| **5 (recálculo)** | Conteo de palabras y caracteres de `docs/project-page-en.md` sobre `main` en el commit `78de49a` | script de conteo por sección (`## ...`) | `2026-11-14T16:54:51-06:00` | `2026-11-14T16:54:51-06:00` | `0` — tabla de la sección 5 actualizada. |
+| **5 (recálculo)** | Conteo de palabras y caracteres de `docs/project-page-en.md` sobre `main` en el commit `b578358` | script de conteo por sección (`## ...`) | `2026-11-14T16:54:51-06:00` | `2026-11-14T16:54:51-06:00` | `0` — tabla de la sección 5 actualizada. |
 
 ---
 
@@ -318,7 +318,7 @@
 
 ## 5. Conteo de caracteres y palabras de cada sección de `docs/project-page-en.md`
 
-- **Hora real de la corrida:** `2026-11-14T16:54:51-06:00` (recálculo sobre `main` en el commit `78de49a`; la primera corrida, a las `2026-11-14T16:39:56-06:00`, se hizo sobre un `main` anterior y sus cifras ya no valen)
+- **Hora real de la corrida:** `2026-11-14T16:54:51-06:00` (recálculo sobre `main` en el commit `b578358`; la primera corrida, a las `2026-11-14T16:39:56-06:00`, se hizo sobre un `main` anterior y sus cifras ya no valen)
 - **Método:** palabras = `split()` del bloque; caracteres del bloque sin su título `## ...`; «sin saltos de línea» quita los saltos de línea; párrafos = bloques separados por una línea en blanco. El encabezado se cuenta sin el título `# ...`.
 
 > **Aviso:** Este conteo mide exactamente el texto actual en el repositorio (`docs/project-page-en.md`), pero **no reemplaza la revisión que debe hacer Rodolfo Xiloj** (`rodolfo-formulario.md`) dentro del formulario web autenticado de NASA Space Apps para comprobar los límites reales de cada campo y la pestaña **Members**.

@@ -4,9 +4,30 @@ English version of [es/pruebas.md](es/pruebas.md). If the two ever differ, the S
 
 Only real runs are logged: each one with the date and time it ran (Guatemala, UTC−6), the command and the result as printed.
 
-**Correction of 14 Nov 2026:** an earlier version of this file had rows with times on Saturday 14 Nov 2026 (from 09:17 to 21:58). Those were planned times, not tests that ran, and they were removed. They remain in the git history (commit `d84918b` and earlier) only as a record of the plan, not as results.
+**Correction of 14 Nov 2026:** an earlier version of this file had rows with times on Saturday 14 Nov 2026 (from 09:17 to 21:58). Those were planned times, not tests that ran, and they were removed. They remain in the git history (commit `f86908b` and earlier) only as a record of the plan, not as results.
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
+
+## History rewritten and clean clone: Saturday 14 Nov 2026
+
+**What was done.** At 18:06:48 (UTC−6) the history of the 23 branches on GitHub was rewritten with `git filter-repo`, in a separate clone, and published with `git push --atomic --force-with-lease` (each branch with the id it had before, so nobody else's push could be overwritten). Everything that was already out of the repo was removed from every commit: the internal notes (`docs/memoria/` and `docs/es/memoria/`), the code graph (`graphify-out/`), the name of a member who is no longer on the team (in texts and in six old versions of the slides PDF) and the "Co-authored-by" line of one message. Checked before publishing: the content of the tip of `main` is byte-for-byte the same as before; `main` goes from 70 to 68 commits (the two that only added the notes and the graph are gone); authors, dates and messages do not change.
+
+**What changes for a reader of this log.** Almost every commit has a new id. The ones quoted in this file, in `docs/peso.md`, in `docs/es/revision-plan.md` and in the guides under `docs/es/pruebas-personas/` were updated to the new id; each was matched by its message. Times and results of the runs were not touched.
+
+After publishing, the GitHub repository was cloned into a new folder and everything was run there, on `main` at `084de42`. Same laptop and versions. Times from `date` (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 18:07:53 to 18:07:57 | Clean clone | `git clone <repository>` | ✅ `main`, 68 commits, 340 files; 0 note paths in the whole history |
+| 18:07:58 to 18:08:04 | Web dependencies | `cd web && npm ci` | ✅ "added 108 packages in 6s"; exit 0 |
+| 18:08:12 to 18:08:31 | Automated tests with the total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ "250 passed in 17.89s"; exit 0 |
+| 18:08:31 to 18:08:33 | Web smoke test | `cd web && npm run smoke` | ✅ "Prueba de humo de la web: sin fallas"; exit 0 |
+| 18:08:33 to 18:08:39 | Web build | `cd web && npm run build` | ✅ "526 modules transformed"; first-load JS `index` 171.70 kB (gzip 56.85 kB); exit 0 |
+| 18:08:39 to 18:08:52 | Offline test | `cd web && npm run sin-red -- <temp folder>` | ✅ "23 de 23 comprobaciones pasan"; exit 0 |
+| 18:08:52 to 18:08:59 | Farmer view and kit | `python web/scripts/agricultor_playwright.py` | ✅ "96 de 96 comprobaciones pasan"; exit 0 |
+| 18:09:00 to 18:09:12 | Evidence view | `python web/scripts/evidence_playwright.py` | ✅ "143 de 143 comprobaciones pasan"; exit 0 |
+| 18:09:12 to 18:09:14 | Slides PDF | `cd web && python scripts/slides_pdf.py` | ✅ "docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)"; exit 0 |
+| 18:09:14 to 18:09:15 | Canícula sensitivity | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ "OK 'sat'…" and "OK 'rnl'…"; exit 0 |
 
 ## `main` with `entrega-impacto-6` on top and the guides corrected: Saturday 14 Nov 2026
 
@@ -43,7 +64,7 @@ The `.frases.en.vtt` files carried the Spanish mp3 timings (ending between 25.98
 
 The new test `test_ultimo_subtitulo_termina_con_su_mp3` fails at all 5 plots with the previous `.en.vtt` files and passes with the new ones.
 
-## Branch `entrega-impacto-6` on top of `main` (`5a5d6d3`): Saturday 14 Nov 2026
+## Branch `entrega-impacto-6` on top of `main` (`fbc143c`): Saturday 14 Nov 2026
 
 This branch's changes: the `perdidas_documentadas` block in `validacion.json` and in `docs/validacion.md`, the 2026 limit and the SMAP, CHIRPS and Prensa Libre notes with their English, the Evidence card mp3 in the interface language, the slide screenshots and PDF regenerated, and new tests in `tests/test_validacion.py` and `tests/test_slides.py`. `sin-red.mjs` now requires `audio/{plot}.en.mp3` on the card when Evidence is in English (it used to require the Spanish mp3 in both languages); `evidence_playwright.py` checks the card mp3 in each language. Before this, the data were regenerated offline with `python -m pipeline.validacion.validar` and `python -m motor.exportar` (no `--audio`): `puntajes`, `farmer.hechos`, `farmer.opciones` and `texto_tarjeta` stayed identical in the 15 plot JSON files. Same laptop: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0; `web/node_modules` from `npm ci`. Times from `date` (UTC−6).
 
@@ -64,9 +85,9 @@ Before this run, the same battery had two failures, which were fixed:
 - `evidence_playwright.py` (no time logged): "137 de 143". The 6 failures were in "Validación", "sin scroll horizontal" (width 419 to 420 px), caused by the CHIRPS README URL in the new note. `.lista-compacta li` was added to the `overflow-wrap: anywhere` rule in `evidence.css`; then "143 de 143".
 - `npm run sin-red`, 16:58:38 to 17:00:05: "18 de 23", exit 1. The 5 "Parcela …: 3 rotaciones, tarjeta y audio mp3" checks expected `audio/{plot}.mp3` with Evidence in English, which now plays `audio/{plot}.en.mp3`. The check now requires the mp3 of the active language; then "23 de 23".
 
-## Branch `entrega-impacto-1` on top of `main` (`4fdf64f`): Saturday 14 Nov 2026
+## Branch `entrega-impacto-1` on top of `main` (`ea3fde1`): Saturday 14 Nov 2026
 
-While this branch was in progress, `main` gained three commits (`61bf817`, `b69bcd1` and `4fdf64f`: English card audio, slides and sources). The branch was rebased onto `4fdf64f`, with no file in common, and every command was run again on the rebased branch with this branch's changes. Same laptop and versions as the next section; `web/node_modules` comes from the `npm ci` logged there. Times from `date` (UTC−6).
+While this branch was in progress, `main` gained three commits (`947ffc0`, `81e0333` and `ea3fde1`: English card audio, slides and sources). The branch was rebased onto `ea3fde1`, with no file in common, and every command was run again on the rebased branch with this branch's changes. Same laptop and versions as the next section; `web/node_modules` comes from the `npm ci` logged there. Times from `date` (UTC−6).
 
 | Time | What | Command | Result |
 |---|---|---|---|
@@ -80,9 +101,9 @@ While this branch was in progress, `main` gained three commits (`61bf817`, `b69b
 | Right after, before 16:13:17 | Automated tests with the total | `python -m pytest` | ✅ "226 passed in 9.53s" |
 | Right after, before 16:13:17 | The same in the clean environment outside the repo | `python -m pytest -q` (with the clean environment's Python) | ✅ exit 0 |
 
-## Branch `entrega-impacto-1`, first pass on `eed0b1f`: Saturday 14 Nov 2026
+## Branch `entrega-impacto-1`, first pass on `384b5e6`: Saturday 14 Nov 2026
 
-This branch changes only documents, `requirements.txt` and `render.yaml`. The web and browser runs below were made on the branch at commit `eed0b1f` (the same as `main`), before those changes; the last three rows ran after them. Same laptop: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. The worktree had no `web/node_modules`, so `npm ci` ran first. Times are the ones `date` printed at the start and end of each command (UTC−6).
+This branch changes only documents, `requirements.txt` and `render.yaml`. The web and browser runs below were made on the branch at commit `384b5e6` (the same as `main`), before those changes; the last three rows ran after them. Same laptop: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. The worktree had no `web/node_modules`, so `npm ci` ran first. Times are the ones `date` printed at the start and end of each command (UTC−6).
 
 | Time | What | Command | Result |
 |---|---|---|---|
@@ -128,7 +149,7 @@ Setup: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1. `np
 | Build | `cd web && npm run build` | ✅ vite v6.4.6, 519 modules, ~3.5 s |
 | Offline test | `cd web && npm run sin-red -- <temp folder>` | ✅ 20 of 20; Listen with `jocotan.frases.en.mp3` and `.frases.en.vtt` subtitles; Jocotán totals 80/88/87 unchanged |
 
-## Step 0 baseline: Saturday 14 Nov 2026 (commit `15c5130`)
+## Step 0 baseline: Saturday 14 Nov 2026 (commit `982d5d6`)
 
 After adding the `farmer` block to the contract, the border contrast and the non-breaking spaces in `Controles.jsx`. No data were regenerated: the JSON files and mp3s in `web/public/` are the same as in the previous baseline. Same laptop and versions (Python 3.11.9, pytest 9.0.2, Node v24.15.0, npm 11.12.1). Times are the ones `date` printed at the start and end of each command.
 
@@ -142,7 +163,7 @@ After adding the `farmer` block to the contract, the border contrast and the non
 
 Before this baseline, on the same day (no time logged), `motor.recomendar.recomendar()` was run in memory for the 5 plots without writing files: the `farmer` block meets the schema and `contrato.errores_textos` reports no errors for any plot. Those runs give the figures in [thresholds.md](thresholds.md).
 
-## Baseline: Saturday 14 Nov 2026 (commit `d84918b`)
+## Baseline: Saturday 14 Nov 2026 (commit `f86908b`)
 
 Setup: Windows 11 laptop, Python 3.11.9 (pytest 9.0.2), Node v24.15.0 and npm 11.12.1. Nothing was installed: `web/node_modules` was already present. Times are the ones `date` printed at the start and end of each command.
 

@@ -2,9 +2,30 @@
 
 Solo se anotan corridas reales: cada una con la fecha y la hora en que se corrió (Guatemala, UTC−6), el comando y el resultado tal como lo imprimió.
 
-**Corrección del 14 nov 2026:** la versión anterior de este archivo tenía filas con horas del sábado 14 nov 2026 (de 09:17 a 21:58). Eran horarios planeados, no pruebas hechas, y se quitaron. Siguen en el historial de git (commit `d84918b` y anteriores) solo como referencia del plan, no como resultados.
+**Corrección del 14 nov 2026:** la versión anterior de este archivo tenía filas con horas del sábado 14 nov 2026 (de 09:17 a 21:58). Eran horarios planeados, no pruebas hechas, y se quitaron. Siguen en el historial de git (commit `f86908b` y anteriores) solo como referencia del plan, no como resultados.
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
+
+## Historial reescrito y clon limpio: sábado 14 nov 2026
+
+**Qué se hizo.** A las 18:06:48 (UTC−6) se reescribió el historial de las 23 ramas de GitHub con `git filter-repo`, en un clon aparte, y se publicó con `git push --atomic --force-with-lease` (cada rama con el identificador que tenía antes, para no pisar un push ajeno). Se quitó de todos los commits lo que ya estaba fuera del repo: las notas internas (`docs/memoria/` y `docs/es/memoria/`), el grafo del código (`graphify-out/`), el nombre de un integrante que ya no está en el equipo (en textos y en seis versiones antiguas del PDF de las diapositivas) y la línea «Co-authored-by» de un mensaje. Comprobado antes de publicar: el contenido de la punta de `main` es idéntico byte a byte al de antes; `main` pasa de 70 a 68 commits (desaparecen los dos que solo agregaban las notas y el grafo); autores, fechas y mensajes no cambian.
+
+**Qué cambia para quien lea este registro.** Casi todos los commits tienen identificador nuevo. Los que este archivo, `docs/peso.md`, `docs/es/revision-plan.md` y las guías de `docs/es/pruebas-personas/` citaban se actualizaron al nuevo; cada uno se cotejó por su mensaje. Las horas y los resultados de las corridas no se tocaron.
+
+Después de publicar se clonó el repositorio de GitHub en una carpeta nueva y se corrió todo ahí, sobre `main` en `084de42`. Mismo equipo y versiones. Horas de `date` (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 18:07:53 a 18:07:57 | Clon limpio | `git clone <repositorio>` | ✅ `main`, 68 commits, 340 archivos; 0 rutas de notas en todo el historial |
+| 18:07:58 a 18:08:04 | Dependencias de la web | `cd web && npm ci` | ✅ «added 108 packages in 6s»; salida 0 |
+| 18:08:12 a 18:08:31 | Pruebas automáticas con el total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ «250 passed in 17.89s»; salida 0 |
+| 18:08:31 a 18:08:33 | Humo de la web | `cd web && npm run smoke` | ✅ «Prueba de humo de la web: sin fallas»; salida 0 |
+| 18:08:33 a 18:08:39 | Build | `cd web && npm run build` | ✅ «526 modules transformed»; JS inicial `index` 171.70 kB (gzip 56.85 kB); salida 0 |
+| 18:08:39 a 18:08:52 | Sin red | `cd web && npm run sin-red -- <carpeta temporal>` | ✅ «23 de 23 comprobaciones pasan»; salida 0 |
+| 18:08:52 a 18:08:59 | Vista del agricultor y kit | `python web/scripts/agricultor_playwright.py` | ✅ «96 de 96 comprobaciones pasan»; salida 0 |
+| 18:09:00 a 18:09:12 | Vista Evidence | `python web/scripts/evidence_playwright.py` | ✅ «143 de 143 comprobaciones pasan»; salida 0 |
+| 18:09:12 a 18:09:14 | PDF de las diapositivas | `cd web && python scripts/slides_pdf.py` | ✅ «docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)»; salida 0 |
+| 18:09:14 a 18:09:15 | Sensibilidad de la canícula | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ «OK 'sat'…» y «OK 'rnl'…»; salida 0 |
 
 ## `main` con `entrega-impacto-6` unida y las guías corregidas: sábado 14 nov 2026
 
@@ -41,7 +62,7 @@ Los `.frases.en.vtt` traían los tiempos del mp3 en español (terminaban entre 2
 
 La prueba nueva `test_ultimo_subtitulo_termina_con_su_mp3` falla en las 5 parcelas con los `.en.vtt` anteriores y pasa con los nuevos.
 
-## Rama `entrega-impacto-6` sobre `main` (`5a5d6d3`): sábado 14 nov 2026
+## Rama `entrega-impacto-6` sobre `main` (`fbc143c`): sábado 14 nov 2026
 
 Cambios de esta rama: bloque `perdidas_documentadas` en `validacion.json` y en `docs/validacion.md`, límite de 2026 y notas de SMAP, CHIRPS y Prensa Libre con su inglés, el mp3 de la tarjeta de Evidence en el idioma de la interfaz, capturas y PDF de las diapositivas regenerados, y pruebas nuevas en `tests/test_validacion.py` y `tests/test_slides.py`. `sin-red.mjs` ahora exige `audio/{parcela}.en.mp3` en la tarjeta cuando Evidence está en inglés (antes exigía el mp3 en español en los dos idiomas); `evidence_playwright.py` comprueba el mp3 de la tarjeta en cada idioma. Antes se regeneró sin red con `python -m pipeline.validacion.validar` y `python -m motor.exportar` (sin `--audio`): `puntajes`, `farmer.hechos`, `farmer.opciones` y `texto_tarjeta` quedaron idénticos en los 15 JSON de parcela. Mismo equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0; `web/node_modules` con `npm ci`. Horas de `date` (UTC−6).
 
@@ -62,9 +83,9 @@ Antes de esta corrida, la misma batería tuvo dos fallas que se corrigieron:
 - `evidence_playwright.py` (sin hora anotada): «137 de 143». Las 6 en «Validación», «sin scroll horizontal» (ancho 419 a 420 px), por la URL del README de CHIRPS en la nota nueva. Se agregó `.lista-compacta li` a la regla `overflow-wrap: anywhere` de `evidence.css`; después, «143 de 143».
 - `npm run sin-red`, 16:58:38 a 17:00:05: «18 de 23», salida 1. Las 5 «Parcela …: 3 rotaciones, tarjeta y audio mp3» esperaban `audio/{parcela}.mp3` con Evidence en inglés, que ahora toca `audio/{parcela}.en.mp3`. Se cambió la comprobación para exigir el mp3 del idioma activo; después, «23 de 23».
 
-## Rama `entrega-impacto-1` sobre `main` (`4fdf64f`): sábado 14 nov 2026
+## Rama `entrega-impacto-1` sobre `main` (`ea3fde1`): sábado 14 nov 2026
 
-Mientras se trabajaba esta rama, `main` recibió tres commits (`61bf817`, `b69bcd1` y `4fdf64f`: audio de la tarjeta en inglés, diapositivas y fuentes). La rama se rebasó sobre `4fdf64f`, sin archivos en común, y todos los comandos se corrieron otra vez sobre la rama rebasada con los cambios de esta rama. Mismo equipo y versiones que la sección siguiente; `web/node_modules` viene del `npm ci` anotado ahí. Horas de `date` (UTC−6).
+Mientras se trabajaba esta rama, `main` recibió tres commits (`947ffc0`, `81e0333` y `ea3fde1`: audio de la tarjeta en inglés, diapositivas y fuentes). La rama se rebasó sobre `ea3fde1`, sin archivos en común, y todos los comandos se corrieron otra vez sobre la rama rebasada con los cambios de esta rama. Mismo equipo y versiones que la sección siguiente; `web/node_modules` viene del `npm ci` anotado ahí. Horas de `date` (UTC−6).
 
 | Hora | Qué | Comando | Resultado |
 |---|---|---|---|
@@ -78,9 +99,9 @@ Mientras se trabajaba esta rama, `main` recibió tres commits (`61bf817`, `b69bc
 | Justo después, antes de las 16:13:17 | Pruebas automáticas con el total | `python -m pytest` | ✅ «226 passed in 9.53s» |
 | Justo después, antes de las 16:13:17 | Lo mismo en el entorno limpio fuera del repo | `python -m pytest -q` (con el Python del entorno limpio) | ✅ salida 0 |
 
-## Rama `entrega-impacto-1`, primera pasada sobre `eed0b1f`: sábado 14 nov 2026
+## Rama `entrega-impacto-1`, primera pasada sobre `384b5e6`: sábado 14 nov 2026
 
-Esta rama solo cambia documentos, `requirements.txt` y `render.yaml`. Las corridas de la web y del navegador de abajo se hicieron en la rama en el commit `eed0b1f` (el mismo de `main`), antes de esos cambios; las tres últimas filas se corrieron después. Mismo equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. El worktree no tenía `web/node_modules`, así que primero se corrió `npm ci`. Las horas son las que imprimió `date` al empezar y al terminar cada comando (UTC−6).
+Esta rama solo cambia documentos, `requirements.txt` y `render.yaml`. Las corridas de la web y del navegador de abajo se hicieron en la rama en el commit `384b5e6` (el mismo de `main`), antes de esos cambios; las tres últimas filas se corrieron después. Mismo equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. El worktree no tenía `web/node_modules`, así que primero se corrió `npm ci`. Las horas son las que imprimió `date` al empezar y al terminar cada comando (UTC−6).
 
 | Hora | Qué | Comando | Resultado |
 |---|---|---|---|
@@ -112,7 +133,7 @@ Corrido en una copia del repo sin los binarios (mp3, png, pdf). Las 23 fallas so
 | 15:39 | Evidence a 1280 y 390 px | Playwright, `#evidence` | Sección visible en inglés, sin desplazamiento horizontal a 390 px |
 | Pendiente | Sin red | `cd web && npm run sin-red` | Sin correr: necesita los mp3 |
 
-Repetido en una copia completa de la rama en `2403e3f` (con mp3, png y pdf), en Linux con Chromium sin interfaz (`NAVEGADOR` apuntando a Chromium con `--no-sandbox`):
+Repetido en una copia completa de la rama en `e15332c` (con mp3, png y pdf), en Linux con Chromium sin interfaz (`NAVEGADOR` apuntando a Chromium con `--no-sandbox`):
 
 | Hora | Qué | Comando | Resultado |
 |---|---|---|---|
@@ -148,7 +169,7 @@ Equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1. `n
 | Build | `cd web && npm run build` | ✅ vite v6.4.6, 519 módulos, ~3.5 s |
 | Sin red | `cd web && npm run sin-red -- <carpeta temp>` | ✅ 20 de 20; «Listen» con `jocotan.frases.en.mp3` y subtítulos `.frases.en.vtt`; totales de Jocotán 80/88/87 sin cambio |
 
-## Línea base del paso 0: sábado 14 nov 2026 (commit `15c5130`)
+## Línea base del paso 0: sábado 14 nov 2026 (commit `982d5d6`)
 
 Después de agregar el bloque `farmer` al contrato, el contraste de los bordes y los espacios fijos de `Controles.jsx`. No se regeneraron datos: los JSON y los mp3 de `web/public/` son los mismos de la línea base anterior. Mismo equipo y mismas versiones (Python 3.11.9, pytest 9.0.2, Node v24.15.0, npm 11.12.1). Las horas son las que imprimió `date` al empezar y al terminar cada comando.
 
@@ -162,7 +183,7 @@ Después de agregar el bloque `farmer` al contrato, el contraste de los bordes y
 
 Antes de esta línea base, el mismo 14 nov 2026 (sin hora anotada), se corrió `motor.recomendar.recomendar()` en memoria para las 5 parcelas, sin escribir archivos: el bloque `farmer` cumple el esquema y `contrato.errores_textos` no da errores en ninguna. Esas corridas dan las cifras de `docs/umbrales.md`.
 
-## Línea base: sábado 14 nov 2026 (commit `d84918b`)
+## Línea base: sábado 14 nov 2026 (commit `f86908b`)
 
 Equipo: laptop con Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0 y npm 11.12.1. No se instaló nada: `web/node_modules` ya estaba en el repo. Las horas son las que imprimió `date` al empezar y al terminar cada comando.
 
