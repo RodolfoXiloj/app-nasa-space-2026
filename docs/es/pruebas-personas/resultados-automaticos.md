@@ -362,7 +362,16 @@ Las secciones 1 a 6 son corridas de las 16:29 a las 16:54 sobre un `main` anteri
 | 0 | *Encabezado y notas previas* | 138 | 824 | 813 | 683 | 5 |
 | 5 | **`Detailed Project Description`** | **1 376** | **8 037** | **8 020** | **6 654** | 9 |
 
-Las demás filas de la sección 5 no cambian (`Project Name` 2 / 16, `High-Level Project Summary` 306 / 1 776, `Short version` 161 / 973, `Use of Super Intelligence (SI)` 199 / 1 183, `NASA Data` 385 / 2 266, `Space Agency Partner Data and Other References` 130 / 991).
+Las demás filas de la sección 5 no cambian (`Project Name` 2 / 16, `High-Level Project Summary` 306 / 1 776, `Short version` 161 / 973, `Use of Super Intelligence (SI)` 199 / 1 183, `NASA Data` 385 / 2 266).
+
+**Recuento después del despliegue** (`2026-11-14T18:38-06:00`, mismo método): el sitio quedó en `https://milpa-resiliente.onrender.com/` y el repositorio de entrega pasó a `github.com/RodolfoXiloj/app-nasa-space-2026`, así que cambian cuatro filas más:
+
+| # | Sección | Palabras | Caracteres (con espacios) | Caracteres (sin saltos de línea) | Caracteres (sin espacios) | Párrafos / bloques |
+|---|---|---|---|---|---|---|
+| 0 | *Encabezado y notas previas* | 152 | 977 | 966 | 822 | 5 |
+| 3 | **`Link to Project Demo`** | 1 | 94 | 94 | 94 | 1 |
+| 4 | **`Link to Final Project`** | 1 | 38 | 38 | 38 | 1 |
+| 8 | **`Space Agency Partner Data and Other References`** | 130 | 985 | 982 | 856 | 1 |
 
 Dos precisiones más sobre las secciones 0 a 2, para que nadie las tome como el estado actual:
 

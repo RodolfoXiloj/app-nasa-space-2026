@@ -56,7 +56,15 @@ Usa esta tabla como referencia inmediata mientras miras el contador de cada casi
 ### Paso 3. Comprobar los enlaces públicos y FortiGuard
 1. En **Link to Project Demo**, verifica que el enlace `https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf` abra sin pedir inicio de sesión (pruébalo en una ventana de incógnito).
 2. En **Link to Final Project**, pega la URL pública de la aplicación desplegada y ábrela en ventana de incógnito para confirmar que carga directo en inglés (`lang="en"`).
-3. Entra a `https://www.fortiguard.com/webfilter` y pega la URL pública del sitio para comprobar que tiene categoría asignada y no aparece como *Unrated* o bloqueada (requisito de la guía de envío cuando se usa un dominio propio o de alojamiento gratuito).
+3. Entra a `https://www.fortiguard.com/webfilter`, busca `milpa-resiliente.onrender.com` (pide marcar «I'm not a robot») y comprueba que tiene categoría asignada y no aparece como *Unrated* o bloqueada (requisito de la guía de envío cuando se usa un dominio propio o de alojamiento gratuito).
+4. Si sale *Unrated* o una categoría bloqueada, pide la categoría en `https://www.fortiguard.com/faq/wfratingsubmit?url=milpa-resiliente.onrender.com`:
+   - **URL:** `milpa-resiliente.onrender.com` (ya viene llena).
+   - **Suggest a category:** **Education** (material informativo para agricultores y extensionistas; las redes de escuelas, universidades y oficinas casi nunca la bloquean). Alternativa: *Reference*. No uses *Web Hosting* ni *Information Technology*.
+   - **Attach a screenshot** (opcional, máximo 2 MB): `docs/capturas/en/farmer-390-jocotan.png` (124 KB).
+   - **Name** y **Email:** los tuyos; al correo llega el aviso cuando lo revisen (unas 24 horas, según la página).
+   - **Company Name** (obligatorio): `Team A dream – NASA Space Apps Challenge 2026`.
+   - **Comment:** «Milpa Resiliente is a free, static educational website built for the NASA Space Apps Challenge 2026 (challenge "Field Shift: Adapting Farms with NASA Data"). It shows smallholder farmers and agricultural extension workers in Guatemala's Dry Corridor what NASA satellite records say about five example plots (bare soil, nearby fires, dry spells), with crop rotation options, sources and limits. No login, no ads, no downloads other than its own audio files.»
+   - Marca «I'm not a robot» y **Submit**. Anota en la tabla de abajo la fecha del envío y la categoría que asignen.
 
 ### Paso 4.Actualizar las frases de pruebas pendientes (cuando Mario, Iván y tú terminen)
 En `docs/project-page-en.md` hay tres frases escritas con honestidad porque al redactar el borrador aún faltaban las pruebas humanas:

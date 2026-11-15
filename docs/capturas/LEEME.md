@@ -1,6 +1,6 @@
 # Capturas del sitio
 
-Todas salen de la web compilada (`npm run build` en `web/`), servida con `vite preview` en `127.0.0.1`, con Chromium sin interfaz (Playwright). Se rehicieron el sábado 14 nov 2026, de 17:56 a 17:57 (Guatemala, UTC−6), con la línea de julio-agosto 2026 ya en la vista del agricultor. Las capturas anteriores de esta carpeta eran del prototipo en español, de antes de la vista del agricultor, y se reemplazaron.
+Todas salen de la web compilada (`npm run build` en `web/`), servida con `vite preview` en `127.0.0.1`, con Chromium sin interfaz (Playwright). Se rehicieron el sábado 14 nov 2026, de 18:26:02 a 18:26:46 (Guatemala, UTC−6), con la línea de julio-agosto 2026 en la vista del agricultor, el título en español «alrededor de esta parcela» y la tabla de pérdidas en Validación. Las capturas anteriores de esta carpeta eran del prototipo en español, de antes de la vista del agricultor, y se reemplazaron.
 
 | Capturas | Qué muestran | Comando (en `web/`, después del build) |
 |---|---|---|

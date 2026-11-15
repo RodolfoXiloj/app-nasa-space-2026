@@ -85,7 +85,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 |---|---|---|---|
 | Compuerta 0: leer los recursos oficiales de Field Shift y las guías de jueces y de entrega | **Falta, no consta** | Ni `docs/es/estado.md` ni el README la registran. Hoy no se pudieron abrir las páginas oficiales: error de certificado al leerlas | Que Rodolfo o Iván lean la Project Submission Guide y la Judging Guide en el navegador (pendiente) |
 | **Inicio del trabajo y reglas del evento** | **Por confirmar con la organización** | Todos los commits de este repo son del 14 nov 2026 (`git log`): dicen cuándo entró cada cosa al repo, no cuándo se hizo | Confirmar las reglas con el organizador antes de publicar. Las fechas de la documentación son las de esos commits |
-| H1-H4: datos, motor, 5 parcelas, validación y audio | Hecho, salvo la web pública | `2c1fbf8`, `a02250c`, `63356c7` | Despliegue (H2 y H3 lo pedían en URL pública) |
+| H1-H4: datos, motor, 5 parcelas, validación y audio | Hecho | `2c1fbf8`, `a02250c`, `63356c7`; sitio publicado en https://milpa-resiliente.onrender.com/ | — |
 | Reparto validado con Mario e Iván | Falta | Las tareas de datos y web las hizo el asistente | Pendiente: reunión de 15 min; cada quien revisa lo de su carpeta |
 | Fuente de pérdidas de 2018 | Hecho | FAO GIEWS | — |
 | Revisión con agrónomo o extensionista | Falta | `motor/puntaje.py` y `data/rotaciones.yaml` dicen «valores iniciales» | Ver sección 3 |
@@ -97,8 +97,8 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 | 12.1 Contrato: cada JSON contra el esquema | Hecho | `tests/test_contrato.py` | — |
 | 12.2 Validador de números, con un número inventado a propósito | Hecho | `tests/test_redaccion.py` | — |
 | 12.3 ZARC: fechas inventadas y caso sin registro | Hecho | `tests/test_zarc.py` | — |
-| 12.4 Sin red: con el wifi apagado, la copia local abre todo, reproduce el audio e imprime | Parcial | Datos, audio y capas son locales. La hora 10:29 que se citaba era planeada; `npm run sin-red` pasó 14 de 14 el 14 nov 2026 a las 12:10 (`pruebas.md`) | Prueba formal con el wifi de la laptop apagado (pasos en la sección 4) |
-| 12.5 URL pública en incógnito y en teléfono con datos móviles | Falta | — | Pendiente: teléfono por la red local y la URL de Render con datos móviles |
+| 12.4 Sin red: con el wifi apagado, la copia local abre todo, reproduce el audio e imprime | Hecho en la laptop | Datos, audio y capas son locales; `npm run sin-red` pasa 23 de 23 (14 nov 2026, `pruebas.md`) | Probarlo en un teléfono conectado a la laptop por la red local (`docs/es/prueba-telefono.md`) |
+| 12.5 URL pública en incógnito y en teléfono con datos móviles | Parcial | https://milpa-resiliente.onrender.com/: 68 de 68 archivos responden y 24 de 24 comprobaciones en un navegador sin sesión, a 390 y 1366 px (14 nov 2026, 18:36; `pruebas.md`) | Abrirla en un teléfono real con datos móviles |
 | 12.6 Trazabilidad: 3 cifras al azar de cada tarjeta encontradas en `data/cache/` | Falta | El validador asegura que los textos usan cifras del JSON, pero no coteja el JSON contra la caché | Mario o Rodolfo, unos 20 min |
 | 12.7 Validación reproducible con un comando | Hecho | `python -m pipeline.validacion.validar` | Revisar que las slides usen esas mismas cifras |
 | 12.8 Lista de entrega | Falta | — | Ver la tabla siguiente |
@@ -110,10 +110,10 @@ Plan (sección 8), más las reglas de Space Apps que están en `docs/` y la [gu�
 | Entregable | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
 | Demo web en URL pública | Hecho (14 nov 2026) | https://milpa-resiliente.onrender.com/ | — |
-| Repo público con README, licencia y fuentes | Parcial | `README.md`, `LICENSE` (MIT), `data/fuentes.yaml` (23 fuentes) | Pendiente: crear el remoto y hacer push. Decidir si se publican las 2 notas internas de `docs/` (hoy en `.gitignore`). Agregar IMERG a las fuentes |
-| Validación publicada | Hecho en local | Pestaña Validación y `docs/validacion.md` | Será pública cuando se despliegue |
-| **Video de 30 s o menos**, o **slides de 7 o menos** contando la portada | Falta | — | Las slides van **en inglés**. Un video en español necesita **subtítulos en inglés**. Pasar del límite deja el proyecto fuera del juzgamiento global |
-| Archivos alojados fuera y enlace que abra sin iniciar sesión | Falta | — | YouTube, Drive o GitHub; probar cada enlace en incógnito |
+| Repo público con README, licencia y fuentes | Listo, privado hasta el envío | `README.md`, `LICENSE` (MIT), `data/fuentes.yaml` (38 fuentes, IMERG incluida), en `github.com/RodolfoXiloj/app-nasa-space-2026`. Las notas internas de `docs/` no están en ningún commit | Hacerlo público el día del envío |
+| Validación publicada | Hecho | Pestaña Validación del sitio publicado (https://milpa-resiliente.onrender.com/) y `docs/validacion.md` | — |
+| **Video de 30 s o menos**, o **slides de 7 o menos** contando la portada | Hecho (slides) | `docs/slides/index.html` y `docs/slides/milpa-resiliente.pdf`: 7 diapositivas en inglés; `tests/test_slides.py` falla si pasan de 7 | — |
+| Archivos alojados fuera y enlace que abra sin iniciar sesión | Listo, falta abrir el repo | El PDF de las slides está en GitHub (`app-nasa-space-2026`, `docs/slides/milpa-resiliente.pdf`) y el sitio en https://milpa-resiliente.onrender.com/ | El repositorio es privado hasta el envío: después de hacerlo público, abrir el enlace del PDF en incógnito |
 | Página del proyecto en inglés | Falta | — | `docs/project-page-en.md` como borrador; Rodolfo revisa la parte técnica |
 | Uso de IA (Super Intelligence) declarado | Parcial | `docs/es/uso-ia.md` | Que cada integrante anote lo suyo; incluirlo en la página y en la última slide |
 | Citar cada fuente usada | Parcial | `data/fuentes.yaml` y la pestaña «Glosario y fuentes» | Falta IMERG (GPM) |
