@@ -10,6 +10,9 @@ import Tarjeta from './components/Tarjeta.jsx'
 import Validacion from './components/Validacion.jsx'
 import Glosario from './components/Glosario.jsx'
 import { LineaObservacion2026 } from './components/Observacion2026.jsx'
+import CaniculaDias from './components/CaniculaDias.jsx'
+import LluviaJulAgo from './components/LluviaJulAgo.jsx'
+import Biblioteca, { AguaCiclo } from './components/Biblioteca.jsx'
 import { useLocale, useT } from './i18n/useT.js'
 import { leerMotor } from './i18n/motor.js'
 
@@ -32,6 +35,7 @@ export default function App({ pidInicial = null }) {
   const [pestana, setPestana] = useState('parcela')
   const [validacion, setValidacion] = useState(null)
   const [futuros, setFuturos] = useState(null)
+  const [explorar, setExplorar] = useState(null)
 
   useEffect(() => {
     cargarJSON('data/futuros_nasa.json')
@@ -60,6 +64,21 @@ export default function App({ pidInicial = null }) {
   }, [])
 
   const parcela = useMemo(() => indice?.find((p) => p.id === pid), [indice, pid])
+
+  // Explorador (python -m motor.explorar): huellas, canícula día por día, julio-agosto 2026 y biblioteca.
+  // Si falta el archivo, Evidence se ve como antes.
+  useEffect(() => {
+    setExplorar(null)
+    if (!pid || pid === '__ejemplo__') return undefined
+    let vigente = true
+    cargarJSON(`data/explorar/${pid}.json`)
+      .then((j) => vigente && setExplorar(j))
+      .catch(() => vigente && setExplorar(null))
+    return () => {
+      vigente = false
+    }
+  }, [pid])
+  const conBiblioteca = cultivo === 'maiz_frijol' && explorar && explorar.parcela === res?.parcela?.id
   // Textos del motor en el idioma activo; si falta el inglés, va el español marcado con lang="es".
   const aviso = leerMotor(res, 'aviso', loc)
   const vacios = leerMotor(res?.meta, 'datos_de_ejemplo', loc)
@@ -116,7 +135,7 @@ export default function App({ pidInicial = null }) {
         <main className="contenido">
           <section className="fila-superior no-imprimir">
             <div className="columna-mapa">
-              <Mapa parcelas={indice || []} seleccion={pid} onSeleccion={setPid} res={res} />
+              <Mapa parcelas={indice || []} seleccion={pid} onSeleccion={setPid} res={res} explorar={explorar} />
               <Controles
                 indice={indice || []}
                 pid={pid}
@@ -147,9 +166,17 @@ export default function App({ pidInicial = null }) {
               )}
             </div>
           </section>
+          {explorar && (
+            <section className="dos-columnas contenido-fila">
+              <CaniculaDias key={`can-${explorar.parcela}`} explorar={explorar} />
+              <LluviaJulAgo explorar={explorar} />
+            </section>
+          )}
           {res && (
             <>
               <Rotaciones res={res} lluvia={lluvia} temp={temp} prioridad={prioridad} />
+              {conBiblioteca && <AguaCiclo key={`agua-${explorar.parcela}`} explorar={explorar} res={res} />}
+              {conBiblioteca && <Biblioteca key={`bib-${explorar.parcela}`} explorar={explorar} res={res} prioridad={prioridad} />}
               <FuturosNasa futuros={futuros} pid={res.parcela?.id} cultivo={cultivo} />
               <Tarjeta res={res} lluvia={lluvia} temp={temp} prioridad={prioridad} />
               {vacios.txt?.length > 0 && (

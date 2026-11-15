@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { CircleMarker, LayersControl, MapContainer, TileLayer, Tooltip, ZoomControl, useMap } from 'react-leaflet'
+import { Comparador, EtiquetasComparador, Herramientas, HuellasCapa, TomarMapa } from './mapa/Herramientas.jsx'
+import './explorar.css'
 import { BASE } from '../lib/datos.js'
 import { useLocale, useT } from '../i18n/useT.js'
 import { leerMotor } from '../i18n/motor.js'
@@ -69,13 +71,22 @@ function RespaldoSinRed({ enLinea, guardada, avisar }) {
   return null
 }
 
-export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
+// Fechas de las capas NDVI guardadas (pipeline/capas.py, web/public/capas/capas.json).
+const FECHAS = { seca: '2026-03-22', lluvia: '2026-09-14' }
+
+export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar = null }) {
   const t = useT()
   const loc = useLocale()
   const quieto = menosMovimiento()
   const enLinea = useRef(null)
   const guardada = useRef(null)
   const [sinRed, setSinRed] = useState(false)
+  const [mapa, setMapa] = useState(null)
+  const tomar = useCallback((m) => setMapa(m), [])
+  const [huellas, setHuellas] = useState(false)
+  const [comparar, setComparar] = useState(false)
+  const [pos, setPos] = useState(0.5)
+  const [opacidad, setOpacidad] = useState(0.75)
   const sel = parcelas.find((p) => p.id === seleccion)
   const destino = sel ? [sel.lat, sel.lon] : res ? [res.parcela.lat, res.parcela.lon] : null
   const puntos = parcelas.length
@@ -87,6 +98,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
   return (
     <>
       <div className="mapa" role="region" aria-label={t('mapa.region')}>
+        <div className="mapa-marco">
         <MapContainer
           center={[14.82, -89.45]}
           zoom={10}
@@ -126,10 +138,10 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
               />
             </LayersControl.BaseLayer>
             <LayersControl.Overlay name={t('mapa.ndviDry')}>
-              <TileLayer url={local('ndvi_seca', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
+              <TileLayer url={local('ndvi_seca', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={opacidad} attribution={ATRIB_GIBS} />
             </LayersControl.Overlay>
             <LayersControl.Overlay name={t('mapa.ndviWet')}>
-              <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={0.75} attribution={ATRIB_GIBS} />
+              <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={opacidad} attribution={ATRIB_GIBS} />
             </LayersControl.Overlay>
           </LayersControl>
           {puntos.map((p) => {
@@ -152,10 +164,17 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
               </CircleMarker>
             )
           })}
+          {comparar && (
+            <Comparador izq={local('ndvi_seca', 'png')} der={local('ndvi_lluvia', 'png')} pos={pos} caja={CAJA} opacidad={Math.max(opacidad, 0.5)} />
+          )}
+          <HuellasCapa explorar={explorar} activa={huellas} />
+          <TomarMapa alTomar={tomar} />
           <Volar destino={destino} />
           <NombreCapas nombre={t('a11y.layers')} />
           <RespaldoSinRed enLinea={enLinea} guardada={guardada} avisar={setSinRed} />
         </MapContainer>
+        {comparar && <EtiquetasComparador pos={pos} fechas={FECHAS} />}
+        </div>
         {sinRed && (
           <p className="nota-mapa aviso-sin-red" role="status">
             {t('mapa.offlineNote')}
@@ -163,6 +182,19 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res }) {
         )}
         <p className="nota-mapa">{t('mapa.footnote')}</p>
       </div>
+      <Herramientas
+        mapa={mapa}
+        explorar={explorar}
+        huellas={huellas}
+        setHuellas={setHuellas}
+        comparar={comparar}
+        setComparar={setComparar}
+        pos={pos}
+        setPos={setPos}
+        opacidad={opacidad}
+        setOpacidad={setOpacidad}
+        fechas={FECHAS}
+      />
       {/* El color del círculo no es la única señal: la misma información, en texto. */}
       <details className="mapa-texto">
         <summary>{t('a11y.mapList', { n: puntos.length })}</summary>

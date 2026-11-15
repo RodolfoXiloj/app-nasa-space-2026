@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLocale, useT } from '../i18n/useT.js'
+import NubeModelos from './NubeModelos.jsx'
 
 // The plot's 3 rotations tested in the NASA NEX-GDDP-CMIP6 futures (2041-2060).
 // Reads web/public/data/futuros_nasa.json (python -m motor.futuros). If the file is missing, nothing is shown.
@@ -68,6 +69,15 @@ export default function FuturosNasa({ futuros, pid, cultivo = 'maiz_frijol' }) {
           </article>
         ))}
       </div>
+      <NubeModelos
+        key={`${pid}-${esc}`}
+        escenario={e}
+        rotaciones={rots}
+        nombreEsc={t(`futuros.${esc}`)}
+        futuro={futuros.periodo_futuro}
+        base={futuros.periodo_base}
+        nombre={nombre}
+      />
       <p className="nota">
         {t('futuros.rule', { hoy: d.agua_actual_hoy, futuro: futuros.periodo_futuro, base: futuros.periodo_base })}
       </p>

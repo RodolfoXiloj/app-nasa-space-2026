@@ -150,6 +150,17 @@ body { margin: 0; }
 }
 .agr .agr-escuchar .agr-boton--linea[aria-pressed='true'] { background: var(--agr-tinta); color: var(--agr-papel); }
 .agr .agr-escuchar .agr-nota { margin-top: 0; }
+/* Mientras suena: barras decorativas en el botón y la tarjeta del hecho que nombra la voz, con borde grueso. */
+.agr .agr-ondas { display: flex; align-items: center; gap: 3px; height: 28px; flex: none; }
+.agr .agr-ondas i { display: block; width: 4px; height: 8px; background: currentColor; border-radius: 2px; }
+.agr .agr-ondas--suena i { animation: agr-onda 0.9s ease-in-out infinite alternate; }
+.agr .agr-ondas--suena i:nth-child(2) { animation-delay: -0.3s; }
+.agr .agr-ondas--suena i:nth-child(3) { animation-delay: -0.6s; }
+.agr .agr-ondas--suena i:nth-child(4) { animation-delay: -0.45s; }
+@keyframes agr-onda { from { height: 6px; } to { height: 26px; } }
+.agr .agr-repetir { display: flex; flex-wrap: wrap; gap: 8px; }
+.agr .agr-hecho[data-hablando] { outline: 5px solid var(--agr-tinta); outline-offset: -5px; }
+.agr .agr-hecho[data-hablando] .agr-hecho-icono { transform: scale(1.25); transition: transform 0.25s; }
 
 .agr .agr-subtitulo {
   margin: 0 0 4px;

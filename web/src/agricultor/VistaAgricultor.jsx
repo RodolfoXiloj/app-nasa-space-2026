@@ -201,7 +201,7 @@ export default function VistaAgricultor({ idioma, setIdioma, indice, pid, setPid
         {/* Un toque desde la primera pantalla: el audio corto de esta parcela, con subtítulos. */}
         {farmerAudio && farmerAudio.es && farmerAudio.es.mp3 && !cargando && (
           <Suspense fallback={null}>
-            <Escuchar key={farmerAudio.es.mp3} farmerAudio={farmerAudio} idioma={idioma} />
+            <Escuchar key={farmerAudio.es.mp3} farmerAudio={farmerAudio} idioma={idioma} frases={f.frases} />
           </Suspense>
         )}
 
