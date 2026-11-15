@@ -36,7 +36,7 @@ Estados: **Hecho**, **Parcial**, **Falta**, **Cortado** (cortado a propósito se
 | 2 Tarjeta en PDF con estilos de impresión y `window.print()` | Hecho | `web/src/components/Tarjeta.jsx` («Imprimir o guardar PDF»); `@media print` en `styles.css` | Probarlo desde el teléfono (sección 4) |
 | 2 Audio con edge-tts y voz del navegador de respaldo | Hecho | 5 mp3 con voz es-GT-MartaNeural, de ~72 s cada uno; la prueba de humo falla si falta uno | Decidir si 72 s es demasiado largo. El plan original pedía 45 s o menos; el final no fija tope |
 | 2 Mapa con capas GIBS y respaldo sin red | Hecho | `web/public/capas/` (24 teselas: color real y NDVI); `web/src/components/Mapa.jsx` | El mapa base de OpenStreetMap necesita internet; sin red hay que usar la capa «Color real MODIS (sin red)» |
-| 2 Despliegue en Render (sitio estático) | Falta | `render.yaml` escrito, sin desplegar | Pendiente: conectar el repo en Render, verificar `rootDir: web` y `staticPublishPath: dist`, y abrir la URL en incógnito |
+| 2 Despliegue en Render (sitio estático) | Hecho (14 nov 2026) | https://milpa-resiliente.onrender.com/ | Abrirla en un teléfono con datos móviles |
 | 2 Estructura: `docs/guion-video.md` y `docs/project-page-en.md` | Falta | No existen | Guion del video y página en inglés (último bloque) |
 | 2 API en vivo, extra | Cortado (corte 1) | `api/README.md` | Nada: queda como siguiente paso |
 
@@ -109,7 +109,7 @@ Plan (sección 8), más las reglas de Space Apps que están en `docs/` y la [gu�
 
 | Entregable | Estado | Evidencia | Qué falta exactamente |
 |---|---|---|---|
-| Demo web en URL pública | Falta | Build listo (`web/dist`) | Pendiente: Render |
+| Demo web en URL pública | Hecho (14 nov 2026) | https://milpa-resiliente.onrender.com/ | — |
 | Repo público con README, licencia y fuentes | Parcial | `README.md`, `LICENSE` (MIT), `data/fuentes.yaml` (23 fuentes) | Pendiente: crear el remoto y hacer push. Decidir si se publican las 2 notas internas de `docs/` (hoy en `.gitignore`). Agregar IMERG a las fuentes |
 | Validación publicada | Hecho en local | Pestaña Validación y `docs/validacion.md` | Será pública cuando se despliegue |
 | **Video de 30 s o menos**, o **slides de 7 o menos** contando la portada | Falta | — | Las slides van **en inglés**. Un video en español necesita **subtítulos en inglés**. Pasar del límite deja el proyecto fuera del juzgamiento global |

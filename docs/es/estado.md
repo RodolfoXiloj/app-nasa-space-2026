@@ -1,6 +1,6 @@
 # Estado de Milpa Resiliente
 
-Última batería completa: sábado 14 nov 2026 (pytest, humo, build, sin red, Playwright del agricultor y de Evidence, y PDF de las diapositivas: todas pasan). Este es el repo de entrega de NASA Space Apps 2026. Tiene remoto privado en GitHub y todavía no está desplegado. Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/es/pruebas.md`, junto con las pendientes.
+Última batería completa: sábado 14 nov 2026 (pytest, humo, build, sin red, Playwright del agricultor y de Evidence, y PDF de las diapositivas: todas pasan). Este es el repo de entrega de NASA Space Apps 2026. El repositorio de entrega es https://github.com/RodolfoXiloj/app-nasa-space-2026 (privado hasta el envío) y el sitio está publicado en https://milpa-resiliente.onrender.com/ (Render; se reconstruye con cada push a `main`). Cada prueba corrida de verdad, con su comando, resultado y hora, está en `docs/es/pruebas.md`, junto con las pendientes.
 
 ## Qué funciona
 
@@ -77,7 +77,7 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 - POWER antes de 2001: su lluvia (PRECTOTCORR) es MERRA-2 corregido con el análisis de pluviómetros CPC Unified (definición de la API de POWER; Reichle y Liu, 2021, NASA/TM-2021-104606 vol. 59, p. 7), que falla donde hay pocos pluviómetros. Ninguna fuente documenta un cambio en 2001, así que la causa exacta del salto sigue sin confirmar. No afecta al motor: usa 2001-2025 y toma el total de lluvia de CHIRPS.
 - Camotán sin SMAP: la segunda tarea con SPL4SMGP (modelo, zona de raíces) tardaría horas y habría que rotularla como modelo. Queda como está.
 
-**De entrega:** la web, el README, los documentos principales y las 7 diapositivas (`docs/slides/`, PDF de 7 páginas) ya están en inglés. Pendientes, todos de Rodolfo: hacer público el repositorio, desplegar el sitio (`render.yaml`), pedir la clasificación FortiGuard de la URL, pegar el borrador de `docs/project-page-en.md` en el formulario de Space Apps revisando los límites de cada campo, y poner ahí la URL pública.
+**De entrega:** la web, el README, los documentos principales y las 7 diapositivas (`docs/slides/`, PDF de 7 páginas) ya están en inglés. El sitio está desplegado en https://milpa-resiliente.onrender.com/. Pendientes, de Rodolfo: hacer público el repositorio y pegar el borrador de `docs/project-page-en.md` en el formulario de Space Apps revisando el límite de cada campo.
 
 ## Comandos
 

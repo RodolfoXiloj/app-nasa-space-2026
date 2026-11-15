@@ -27,7 +27,7 @@ Usa esta tabla como referencia inmediata mientras miras el contador de cada casi
 | 1 | **Project Name** | 2 | 16 | 15 | Texto: `Milpa Resiliente` |
 | 2a | **High-Level Project Summary** *(versión principal)* | 306 | 1 776 | 1 471 | Pega esta primero. Si el formulario corta o pide menos caracteres/palabras, usa la **2b (Short version)**. |
 | 2b | **High-Level Project Summary — Short version** *(respaldo)* | 161 | 973 | 813 | Úsala solo si la versión principal (2a) supera el límite del campo en la plataforma. |
-| 3 | **Link to Project Demo** | 1 | 100 | 100 | URL del PDF de las 7 diapositivas en GitHub (`https://github.com/RodolfoXiloj/challenge-space-apps-2026/blob/main/docs/slides/milpa-resiliente.pdf`). |
+| 3 | **Link to Project Demo** | 1 | 100 | 100 | URL del PDF de las 7 diapositivas en GitHub (`https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf`). |
 | 4 | **Link to Final Project** | *(4 en borrador)* | *(20 en borrador)* | *(17 en borrador)* | Hoy dice `TBD: public site URL`. Reemplázalo por la URL pública real donde abren la vista del agricultor y *Evidence*. |
 | 5 | **Detailed Project Description** | 1 376 | 8 037 | 6 654 | Incluye 8 bloques: *What it does*, *How it works*, *Local roots*, *How we test the rotations against the future*, *How we checked it*, *Benefits*, *Limits we state openly* y *Tools*. |
 | 6 | **Use of Super Intelligence (SI)** | 199 | 1 183 | 985 | Declaración honesta de uso de IA (Claude, agente de búsqueda, voces sintéticas `edge-tts` y validador determinista). |
@@ -54,7 +54,7 @@ Usa esta tabla como referencia inmediata mientras miras el contador de cada casi
    - Si el formulario marca exceso de longitud o recorta el final, bórralo y pega el bloque **Short version** (**161 palabras / 973 caracteres con espacios**).
 
 ### Paso 3. Comprobar los enlaces públicos y FortiGuard
-1. En **Link to Project Demo**, verifica que el enlace `https://github.com/RodolfoXiloj/challenge-space-apps-2026/blob/main/docs/slides/milpa-resiliente.pdf` abra sin pedir inicio de sesión (pruébalo en una ventana de incógnito).
+1. En **Link to Project Demo**, verifica que el enlace `https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf` abra sin pedir inicio de sesión (pruébalo en una ventana de incógnito).
 2. En **Link to Final Project**, pega la URL pública de la aplicación desplegada y ábrela en ventana de incógnito para confirmar que carga directo en inglés (`lang="en"`).
 3. Entra a `https://www.fortiguard.com/webfilter` y pega la URL pública del sitio para comprobar que tiene categoría asignada y no aparece como *Unrated* o bloqueada (requisito de la guía de envío cuando se usa un dominio propio o de alojamiento gratuito).
 

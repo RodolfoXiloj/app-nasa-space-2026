@@ -6,8 +6,8 @@ Draft of the submission form fields, in the order of the official Project Submis
 
 1. Check the length limit of each field in the form itself: the limits are not written anywhere in this repository.
 2. If the High-Level Project Summary does not fit, paste the “Short version” below it instead.
-3. After deploying, ask for the FortiGuard classification of the public URL.
-4. Replace the placeholder in “Link to Final Project” with the public site URL.
+3. The site is live at https://milpa-resiliente.onrender.com/ (Render, static site, rebuilt on every push to `main`). Check its FortiGuard category before sending.
+4. The repository (https://github.com/RodolfoXiloj/app-nasa-space-2026) must be public before sending: the demo link points to the PDF inside it.
 
 Challenge: **Field Shift: Adapting Farms with NASA Data** · Team: **A dream** (Rodolfo Xiloj, Mario, Iván) · Guatemala.
 
@@ -27,11 +27,11 @@ Milpa Resiliente turns two decades of satellite records into a three-fact traffi
 
 ## Link to Project Demo
 
-https://github.com/RodolfoXiloj/challenge-space-apps-2026/blob/main/docs/slides/milpa-resiliente.pdf
+https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf
 
 ## Link to Final Project
 
-TBD: public site URL
+https://milpa-resiliente.onrender.com/
 
 ## Detailed Project Description
 
@@ -74,4 +74,4 @@ An AI coding agent (Claude, by Anthropic) wrote most of the code, most of the te
 - **Space agency partner data:** Sentinel-2 cloudless imagery (EOX, from ESA Copernicus Sentinel-2) for the base map and to choose the plot points.
 - **Other data:** CHIRPS v3 (Climate Hazards Center, UC Santa Barbara; Funk et al., 2026, Scientific Data 13, 718, doi:10.1038/s41597-026-07096-4), SoilGrids (ISRIC), OpenStreetMap, FAO-56, FAO-33 and FAO-66 (crop coefficients and yield response), ZARC (FAO–MAGA), FAO GIEWS Update of 27 August 2018, FEWS NET Guatemala update of August 2026, SESAN IPC forecast 2026-2027, Oxfam rainfall-deficit report 2019, FAO/WFP assessment 2010, FAO on Kuxur Rum, ALMG on Ch'orti', NASA Earthdata notices on Suomi NPP and on the MODIS-to-VIIRS transition, and the news reports cited in `docs/validation.md`. Every URL is in `docs/impact.md` and `data/fuentes.yaml`.
 - **Software:** React, Leaflet and react-leaflet, Recharts, Vite, edge-tts, PyYAML, requests, pytest, jsonschema.
-- **Repository:** https://github.com/RodolfoXiloj/challenge-space-apps-2026
+- **Repository:** https://github.com/RodolfoXiloj/app-nasa-space-2026
