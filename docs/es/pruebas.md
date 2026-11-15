@@ -6,6 +6,20 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## La versión interactiva publicada: sábado 14 nov 2026
+
+Rodolfo pidió unir v2 a `main` y desplegar. Horas de `date` (UTC−6).
+
+| Hora | Qué | Resultado |
+|---|---|---|
+| 22:32:30 | Antes de subir: `main` en GitHub (`1688bd4`) ya estaba dentro de `v2-interactiva`; 13 commits, todos de RodolfoXiloj; ningún mensaje menciona IA; ningún commit trae la investigación de competidores | ✅ |
+| 22:32:37 | `git push origin v2-interactiva:main` | ✅ avance directo `1688bd4..8042d5d`, sin forzar |
+| 22:33:04 | El sitio publicado sirve el build nuevo (Render lo reconstruyó solo) | ✅ `assets/index-CW9d9-sM.js`, el mismo del build local |
+| 22:33:12 | Archivos nuevos en https://milpa-resiliente.onrender.com/: página, `sw.js`, manifiesto, ícono, `data/explorar/`, relieve, capas de agosto, video de 30 s, audio | ✅ todos 200; `sw.js` llega con `Cache-Control: no-cache` |
+| 22:33:45 a 22:34:35 | Prueba de las piezas de v2 (`scripts/v2_playwright.py`) contra el sitio publicado, a 390 px en español y 1280 px en inglés | ✅ 35 de 35, vista 3D incluida, sin errores de JavaScript |
+| 22:34:52 a 22:35:10 | Vista del agricultor publicada con Edge, en español e inglés: el kit con sus 5 botones, el service worker, «Guardar para usar sin señal» (318 kB y 328 kB), recarga con la red cortada (emulación del navegador), Escuchar y el hecho marcado | ✅ 18 de 18. En la primera pasada, 3 comprobaciones fallaron por el guion de la prueba (esperaba 6 botones y no esperaba a que llegara el kit), no por el sitio |
+| Pendiente | La misma revisión en un Android real o en el emulador | — |
+
 ## Versión interactiva (rama `v2-interactiva`): sábado 14 nov 2026
 
 Hecha en la noche, en tandas; la batería completa pasó después de cada tanda. Aquí va la corrida final, sobre el código ya corregido tras la revisión independiente (sección 11 de `plan-version-interactiva.md`). Horas con `date` (UTC−6).

@@ -8,6 +8,20 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## The interactive version, published: Saturday 14 Nov 2026
+
+Rodolfo asked to merge v2 into `main` and deploy. Times from `date` (UTC−6).
+
+| Time | What | Result |
+|---|---|---|
+| 22:32:30 | Before the push: `main` on GitHub (`1688bd4`) was already inside `v2-interactiva`; 13 commits, all by RodolfoXiloj; no message mentions AI; no commit carries the competitor research | ✅ |
+| 22:32:37 | `git push origin v2-interactiva:main` | ✅ fast-forward `1688bd4..8042d5d`, nothing forced |
+| 22:33:04 | The published site serves the new build (Render rebuilt it on its own) | ✅ `assets/index-CW9d9-sM.js`, the same as the local build |
+| 22:33:12 | New files on https://milpa-resiliente.onrender.com/: page, `sw.js`, manifest, icon, `data/explorar/`, relief, August layers, 30-second video, audio | ✅ all 200; `sw.js` comes with `Cache-Control: no-cache` |
+| 22:33:45 to 22:34:35 | The v2 pieces test (`scripts/v2_playwright.py`) against the published site, at 390 px in Spanish and 1280 px in English | ✅ 35 of 35, 3D view included, no JavaScript errors |
+| 22:34:52 to 22:35:10 | The published farmer view in Edge, Spanish and English: the kit's 5 buttons, the service worker, "Save to use without signal" (318 kB and 328 kB), reload with the network cut (browser emulation), Listen and the highlighted fact | ✅ 18 of 18. In the first pass 3 checks failed because of the test script (it expected 6 buttons and did not wait for the kit), not because of the site |
+| Pending | The same check on a real Android phone or the emulator | — |
+
 ## Interactive version (branch `v2-interactiva`): Saturday 14 Nov 2026
 
 Built at night in batches; the full battery passed after each batch. This is the final run, on the code already fixed after the independent review (section 11 of `es/plan-version-interactiva.md`). Times from `date` (UTC−6).
