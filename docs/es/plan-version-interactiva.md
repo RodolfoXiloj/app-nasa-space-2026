@@ -321,19 +321,19 @@ Se decide a las **09:00 del domingo 15 nov**, para dejar tres horas para unir, d
 2. La revisión independiente del código no dejó nada que bloquee, o lo que dejó ya está arreglado.
 3. Rodolfo abrió una vez, con `npm run preview`, las piezas nuevas (huellas, comparador, 3D, gráficas, biblioteca, imagen de WhatsApp, «Guardar para usar sin señal») y está de acuerdo con lo que dicen.
 4. Un teléfono Android (o el emulador) abre la primera pantalla, Escuchar suena y Evidence abre.
-5. `main` sigue en `29b9d18`, o lo nuevo de `main` ya se unió a `v2-interactiva` con merge y la batería volvió a pasar.
+5. `main` sigue donde estaba, o lo nuevo de `main` ya se unió a `v2-interactiva` con merge y la batería volvió a pasar. *Sábado 22:16: `main` recibió el video de 30 s (`1688bd4`); se unió con merge (`cb2b8a6`) y la batería completa pasó.*
 
 **Cómo lanzar (sin forzar nada):**
 
-1. Desde esta rama: `git push origin v2-interactiva:main`. Es un avance directo de `main`, porque `v2-interactiva` sale de `29b9d18`; si Git lo rechaza por no ser avance directo, primero se une `main` a `v2-interactiva` (paso 5 de la lista). Nunca `--force`.
+1. Desde esta rama: `git push origin v2-interactiva:main`. Es un avance directo de `main`, porque `v2-interactiva` ya contiene `main` (merge `cb2b8a6`); si `main` vuelve a cambiar antes, primero se une otra vez (paso 5 de la lista). Nunca `--force`.
 2. Render reconstruye solo. El build hace `npm ci`, así que instala `maplibre-gl` desde `package-lock.json`. El CDN puede guardar un 404 hasta 300 s.
 3. Revisar el sitio en vivo en una ventana privada, en los dos idiomas: primera pantalla, Escuchar con el hecho marcado, kit (imagen y guardar), Evidence con huellas, comparador, 3D y gráficas.
-4. Si todo está bien: `lite` se queda en `29b9d18` como respaldo, y el commit enviado se marca con la etiqueta `entrega-2026-11-15`.
+4. Si todo está bien: el commit enviado se marca con la etiqueta `entrega-2026-11-15`. La versión lite de respaldo es la de `main` antes del push (hoy `1688bd4`, con el video de 30 s).
 5. El formulario puede sumar una frase sobre lo nuevo; las cuentas de palabras de `docs/project-page-en.md` hay que rehacerlas si se cambia algo.
 
 **Cómo volver a la versión lite si algo sale mal (sin forzar nada):**
 
-1. `git revert --no-commit 29b9d18..main` y un commit «revert: back to the lite version»; deja el contenido igual al de `29b9d18` sin reescribir historial. Push normal a `main`.
+1. `git read-tree -u --reset 1688bd4` (o el commit de `main` que estaba antes del push) y un commit «revert: back to the lite version»: deja los archivos iguales a los de esa versión, borra los que v2 agregó y no reescribe historial. Push normal a `main`. *No usar `29b9d18`: borraría también el video de 30 s, que entró a `main` después.*
 2. Agregar en ese mismo commit un `web/public/sw.js` que se retira solo, para que los teléfonos que alcanzaron a abrir v2 no se queden con su caché:
 
 ```js
