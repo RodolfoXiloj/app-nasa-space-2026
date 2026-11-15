@@ -116,7 +116,7 @@ export function Comparador({ izq, der, pos, caja, opacidad }) {
     map.on('move zoom resize zoomend moveend', actualizar)
     return () => map.off('move zoom resize zoomend moveend', actualizar)
   }, [map, pos])
-  const comun = { bounds: caja, minNativeZoom: 7, maxNativeZoom: 9, maxZoom: 16, opacity: opacidad }
+  const comun = { bounds: caja, minNativeZoom: 7, maxNativeZoom: 9, maxZoom: 18, opacity: opacidad }
   return (
     <>
       <Pane name="cmpIzq" style={{ zIndex: 250 }}>

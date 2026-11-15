@@ -137,18 +137,18 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar =
                 bounds={CAJA}
                 minNativeZoom={7}
                 maxNativeZoom={9}
-                maxZoom={16}
+                maxZoom={18}
                 attribution={ATRIB_GIBS}
               />
             </LayersControl.BaseLayer>
             <LayersControl.Overlay name={t('mapa.ndviDry')}>
-              <TileLayer url={local('ndvi_seca', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={opacidad} attribution={ATRIB_GIBS} />
+              <TileLayer url={local('ndvi_seca', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={18} opacity={opacidad} attribution={ATRIB_GIBS} />
             </LayersControl.Overlay>
             <LayersControl.Overlay name={t('mapa.ndviWet')}>
-              <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={opacidad} attribution={ATRIB_GIBS} />
+              <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={18} opacity={opacidad} attribution={ATRIB_GIBS} />
             </LayersControl.Overlay>
             <LayersControl.Overlay name={tx('relieve.capa')}>
-              <TileLayer url={local('relieve', 'png')} bounds={CAJA} minNativeZoom={8} maxNativeZoom={11} maxZoom={16} attribution={ATRIB_SRTM} />
+              <TileLayer url={local('relieve', 'png')} bounds={CAJA} minNativeZoom={8} maxNativeZoom={11} maxZoom={18} attribution={ATRIB_SRTM} />
             </LayersControl.Overlay>
           </LayersControl>
           {puntos.map((p) => {
