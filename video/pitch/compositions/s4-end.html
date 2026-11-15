@@ -1,0 +1,112 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f7f4ec;
+      font-family: "Roboto", sans-serif;
+      color: #000;
+    }
+    #s4-lockup {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 330px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 34px;
+    }
+    #s4-sq {
+      width: 100px;
+      height: 100px;
+      background: #ffd200;
+      border: 6px solid #000;
+      flex: none;
+    }
+    #s4-mark {
+      font-size: 96px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: #1d5a2c;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    #s4-url {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 500px;
+      text-align: center;
+    }
+    #s4-url span {
+      display: inline-block;
+      background: #fff;
+      border: 4px solid #000;
+      padding: 12px 30px;
+      font-size: 46px;
+      font-weight: 700;
+    }
+    #s4-team {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 636px;
+      text-align: center;
+      font-size: 36px;
+      font-weight: 700;
+    }
+    #s4-challenge {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 690px;
+      text-align: center;
+      font-size: 32px;
+      font-weight: 500;
+    }
+    #s4-credits {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 778px;
+      text-align: center;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: #3b3b3b;
+    }
+  </style>
+  <div id="root" data-composition-id="s4" data-width="1920" data-height="1080">
+    <div id="s4-lockup">
+      <div id="s4-sq"></div>
+      <div id="s4-mark">Milpa Resiliente</div>
+    </div>
+    <div id="s4-url"><span>milpa-resiliente.onrender.com</span></div>
+    <div id="s4-team">Team A dream · NASA Space Apps Challenge 2026</div>
+    <div id="s4-challenge">Field Shift: Adapting Farms with NASA Data</div>
+    <div id="s4-credits" data-layout-ignore>
+      Imagery: NASA GIBS (Blue Marble NG; MODIS Terra, 21 Feb 2026). Rain: CHIRPS v3. Climate futures: NASA NEX-GDDP-CMIP6.<br />
+      Narration: AI voice (Kokoro, run on our computer). Site voice: AI (Microsoft edge-tts). Sounds: Openverse, CC0.
+    </div>
+  </div>
+  <script>
+    (function () {
+      const T0 = 26.85;
+      const at = (t) => t - T0;
+      const tl = gsap.timeline({ paused: true });
+
+      // The yellow pixel lands, then the name wipes in beside it.
+      tl.fromTo("#s4-sq", { scale: 2.4, opacity: 0, filter: "blur(10px)", rotation: -8 },
+        { scale: 1, opacity: 1, filter: "blur(0px)", rotation: 0, duration: 0.42, ease: "expo.out" }, at(26.98));
+      tl.fromTo("#s4-mark", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.45, ease: "power4.out" }, at(27.22));
+      tl.fromTo("#s4-url", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power2.out" }, at(27.45));
+      tl.fromTo("#s4-team", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, at(27.52));
+      tl.fromTo("#s4-challenge", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power2.out" }, at(27.6));
+      tl.fromTo("#s4-credits", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, at(27.7));
+
+      window.__timelines["s4"] = tl;
+    })();
+  </script>
+</template>

@@ -20,8 +20,20 @@ Hecha en la noche, en tandas; la batería completa pasó después de cada tanda.
 | 21:37:02 | Evidence | `python scripts/evidence_playwright.py` | ✅ 143 de 143 |
 | 21:37:29 | Piezas nuevas de Evidence | `python scripts/v2_playwright.py` | ✅ 35 de 35 |
 | 21:38:22 | Sin señal, también tras un despliegue nuevo | `python scripts/sin_senal_playwright.py` | ✅ 24 de 24 |
+| 22:14:08 a 22:16:39 | La misma batería después de unir `main` (`1688bd4`, video de 30 s) a la rama | Todo lo de arriba | ✅ «265 passed in 22.25s»; primera pantalla 171.57 kB; «sin fallas»; 23 de 23; 96 de 96; 143 de 143; 35 de 35; 24 de 24 |
 
 Antes del arreglo del redondeo, la prueba de humo nueva falló como debía: «camotan.json: total recalculado: lluvia_0_temp_0 actual_maiz_frijol: la web da 85, el motor 84». Ese defecto también está en la versión lite publicada (ver `plan-version-interactiva.md`, sección 11).
+
+## Video de 30 s: sábado 14 nov 2026
+
+Proyecto en `video/pitch/` (HyperFrames 0.8.225); lo que es real en cada toma está en su README. Las horas de la revisión y del render salen de los archivos que escribieron; las de la batería, de `date` (UTC−6).
+
+| Hora | Qué | Resultado |
+|---|---|---|
+| 20:27 | `npx hyperframes check` (lint, ejecución, diseño, movimiento, contraste, oficio, audio) | ✅ 0 errores; 1 aviso que se deja a propósito (`timeline_track_too_dense`: los 18 subtítulos comparten pista) |
+| 20:28 a 20:29 | Render | ✅ 29.8 s, 1920 × 1080, 30 fps, H.264 + AAC 48 kHz; −15.9 LUFS integrados, pico real −1.3 dBTP. Medido, no escuchado |
+| 20:31:59 a 20:33:09 | Batería con el video en `web/public/video/`: build, `pytest`, humo, sin red | ✅ JS de la primera carga 171.53 kB; «250 passed in 18.21s»; «sin fallas»; 23 de 23 |
+| Pendiente | Que una persona vea y escuche el video entero | — |
 
 ## Android en emulador y nombres de las figuras: sábado 14 nov 2026
 

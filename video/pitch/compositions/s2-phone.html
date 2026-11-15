@@ -1,0 +1,172 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f7f4ec;
+      font-family: "Roboto", sans-serif;
+    }
+    #s2-mark {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 412px;
+      text-align: center;
+      font-size: 150px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: #1d5a2c;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    #s2-mark-in {
+      display: inline-block;
+      transform-origin: 0 0;
+    }
+    #s2-mark .s2-l {
+      display: inline-block;
+    }
+    #s2-cam {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: 0 0;
+    }
+    /* Phone: screen 460 x 1022 px = 412 x 915 CSS px at 1.1165 */
+    #s2-body {
+      position: absolute;
+      left: 710px;
+      top: 9px;
+      width: 500px;
+      height: 1062px;
+      border-radius: 56px;
+      background: #111;
+    }
+    #s2-screen {
+      position: absolute;
+      left: 730px;
+      top: 29px;
+      width: 460px;
+      height: 1022px;
+      border-radius: 38px;
+      overflow: hidden;
+      background: #fff;
+    }
+    #s2-page {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 460px;
+    }
+    #s2-page img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 460px;
+      display: block;
+    }
+    #s2-touch {
+      position: absolute;
+      left: 938px;
+      top: 412px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.22);
+      border: 3px solid rgba(0, 0, 0, 0.6);
+      opacity: 0;
+    }
+    #s2-cover {
+      position: absolute;
+      left: 16px;
+      top: 21px;
+      width: 222px;
+      height: 36px;
+      background: #fff;
+    }
+  </style>
+  <div id="root" data-composition-id="s2" data-width="1920" data-height="1080">
+    <div id="s2-cam" data-layout-allow-overflow>
+      <div id="s2-body"></div>
+      <div id="s2-screen">
+        <div id="s2-page">
+          <!-- Real screens of the built site (video/pitch/scripts/capturas.py), Olopa, English -->
+          <img id="s2-before" src="assets/ui/farmer-full-before.png" alt="" />
+          <img id="s2-after" src="assets/ui/farmer-full.png" alt="" />
+          <div id="s2-cover"></div>
+        </div>
+      </div>
+      <div id="s2-touch"></div>
+    </div>
+    <div id="s2-mark"><span id="s2-mark-in"><span class="s2-l">M</span><span class="s2-l">i</span><span class="s2-l">l</span><span class="s2-l">p</span><span class="s2-l">a</span><span class="s2-l">&nbsp;</span><span class="s2-l">R</span><span class="s2-l">e</span><span class="s2-l">s</span><span class="s2-l">i</span><span class="s2-l">l</span><span class="s2-l">i</span><span class="s2-l">e</span><span class="s2-l">n</span><span class="s2-l">t</span><span class="s2-l">e</span></span></div>
+  </div>
+  <script>
+    (function () {
+      // Scene clock: 0 here is 8.55 s in the film.
+      const T0 = 8.55;
+      const at = (t) => t - T0;
+      const K = 1.1165; // screen px per CSS px of the phone
+
+      const tl = gsap.timeline({ paused: true });
+
+      // Camera: scale k, phone kept centred on x = 960, and the viewport's CSS row vy kept at screen y = 520.
+      const cam = (k, vy) => ({ scale: k, x: 960 - k * 960, y: 520 - k * (29 + K * vy) });
+      const page = (s) => ({ y: -s * K });
+      gsap.set("#s2-cam", cam(1, 439.8));
+      gsap.set("#s2-page", page(0));
+      gsap.set("#s2-after", { opacity: 0 });
+      gsap.set(["#s2-body", "#s2-screen"], { opacity: 0 });
+
+      // 1. The name, letter by letter, on the voice.
+      tl.fromTo("#s2-mark .s2-l", { opacity: 0.0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.16, stagger: 0.032, ease: "power2.out" }, at(8.6));
+
+      // 2. The name shrinks into the phone's own header; the phone appears around it.
+      //    Header wordmark in the capture: CSS (16, 21.8), 191 x 24.5 -> frame (747.9, 53.3), 213 px wide.
+      const markW = document.getElementById("s2-mark-in").getBoundingClientRect().width || 1150;
+      const markX = (1920 - markW) / 2;
+      const f = 213.4 / markW;
+      tl.fromTo("#s2-mark-in", { x: 0, y: 0, scale: 1 },
+        { x: 747.9 - markX, y: 50.5 - 412, scale: f, duration: 0.55, ease: "power3.inOut" }, at(10.0));
+      tl.fromTo(["#s2-body", "#s2-screen"], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, at(10.08));
+      tl.fromTo("#s2-body", { scale: 1.04, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "expo.out" }, at(10.08));
+      tl.fromTo("#s2-screen", { scale: 1.04, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: "expo.out" }, at(10.08));
+      tl.set("#s2-mark", { opacity: 0 }, at(10.55));
+      tl.set("#s2-cover", { opacity: 0 }, at(10.55));
+
+      // 3. "three facts": push in to 1.9x and scroll the real page fact by fact.
+      //    Facts before the tap: tops at CSS 551, 1071, 1406.
+      tl.fromTo("#s2-cam", cam(1, 439.8), { ...cam(1.9, 380), duration: 0.45, ease: "power2.inOut" }, at(10.72));
+      tl.fromTo("#s2-page", page(0), { ...page(301), duration: 0.45, ease: "power2.inOut" }, at(10.72));
+      tl.fromTo("#s2-page", page(301), { ...page(821), duration: 0.32, ease: "power2.inOut", immediateRender: false }, at(11.55));
+      tl.fromTo("#s2-page", page(821), { ...page(1156), duration: 0.3, ease: "power2.inOut", immediateRender: false }, at(12.22));
+
+      // 4. "and hear": back up to Listen, tap it, the real page changes state.
+      tl.fromTo("#s2-page", page(1156), { ...page(0), duration: 0.45, ease: "power3.inOut", immediateRender: false }, at(12.92));
+      tl.fromTo("#s2-cam", cam(1.9, 380), { ...cam(1.9, 430), duration: 0.45, ease: "power3.inOut", immediateRender: false }, at(12.92));
+      // Touch on Listen: viewport CSS (206, 362.5) -> frame (960, 433.7)
+      gsap.set("#s2-touch", { x: 0, y: 0 });
+      tl.fromTo("#s2-touch", { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.14, ease: "power2.out" }, at(13.55));
+      tl.to("#s2-touch", { scale: 0.82, duration: 0.07, ease: "power2.in" }, at(13.68));
+      tl.to("#s2-touch", { scale: 1, opacity: 0, duration: 0.25, ease: "power2.out" }, at(13.76));
+      tl.set("#s2-after", { opacity: 1 }, at(13.7));
+      tl.set("#s2-before", { opacity: 0 }, at(13.7));
+
+      // 5. The site speaks ("Soil: watch.") with its own subtitle box, then a fast scroll to "See the evidence".
+      //    After the tap the page is 3367 CSS px tall; max scroll 2452; the button sits at viewport CSS 667-749.
+      tl.fromTo("#s2-page", page(0), { ...page(2452), duration: 0.45, ease: "power3.inOut", immediateRender: false }, at(15.42));
+      tl.fromTo("#s2-cam", cam(1.9, 430), { ...cam(1.9, 708), duration: 0.45, ease: "power3.inOut", immediateRender: false }, at(15.42));
+      tl.fromTo("#s2-touch", { opacity: 0, scale: 1.4, y: 385.8 }, { opacity: 1, scale: 1, y: 385.8, duration: 0.12, ease: "power2.out", immediateRender: false }, at(15.86));
+      tl.to("#s2-touch", { scale: 0.82, duration: 0.07, ease: "power2.in" }, at(15.98));
+      tl.to("#s2-touch", { opacity: 0, duration: 0.1 }, at(16.06));
+
+      // 6. Zoom through the real green button, aimed at its empty right side: CSS (340, 3160) -> frame (1109.6, 819.5).
+      tl.fromTo("#s2-cam", cam(1.9, 708), { scale: 34, x: 960 - 34 * 1109.6, y: 540 - 34 * 819.5, duration: 0.36, ease: "power3.in", immediateRender: false }, at(16.05));
+
+      window.__timelines["s2"] = tl;
+    })();
+  </script>
+</template>

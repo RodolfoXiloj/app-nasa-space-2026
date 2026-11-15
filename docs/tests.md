@@ -22,8 +22,20 @@ Built at night in batches; the full battery passed after each batch. This is the
 | 21:37:02 | Evidence | `python scripts/evidence_playwright.py` | ✅ 143 of 143 |
 | 21:37:29 | New Evidence pieces | `python scripts/v2_playwright.py` | ✅ 35 of 35 |
 | 21:38:22 | Without signal, also after a new deploy | `python scripts/sin_senal_playwright.py` | ✅ 24 of 24 |
+| 22:14:08 to 22:16:39 | The same battery after merging `main` (`1688bd4`, 30-second video) into the branch | All of the above | ✅ "265 passed in 22.25s"; first screen 171.57 kB; "sin fallas"; 23 of 23; 96 of 96; 143 of 143; 35 of 35; 24 of 24 |
 
 Before the rounding fix, the new smoke check failed as it should: "camotan.json: total recalculado: lluvia_0_temp_0 actual_maiz_frijol: la web da 85, el motor 84". The same defect is in the published lite version (see `es/plan-version-interactiva.md`, section 11).
+
+## 30-second demo video: Saturday 14 Nov 2026
+
+Project in `video/pitch/` (HyperFrames 0.8.225); what is real in each shot is in its README. Check and render times come from the files they wrote; the battery times from `date` (UTC−6).
+
+| Time | What | Result |
+|---|---|---|
+| 20:27 | `npx hyperframes check` (lint, runtime, layout, motion, contrast, craft, audio) | ✅ 0 errors; 1 warning kept on purpose (`timeline_track_too_dense`: the 18 captions share one track) |
+| 20:28 to 20:29 | Render | ✅ 29.8 s, 1920 × 1080, 30 fps, H.264 + AAC 48 kHz; −15.9 LUFS integrated, true peak −1.3 dBTP. Measured, not heard |
+| 20:31:59 to 20:33:09 | Battery with the video in `web/public/video/`: build, `pytest`, smoke, offline | ✅ first-load JS 171.53 kB; "250 passed in 18.21s"; "sin fallas"; 23 of 23 |
+| Pending | A person watches and hears the whole video | — |
 
 ## Android emulator and pictogram names: Saturday 14 Nov 2026
 

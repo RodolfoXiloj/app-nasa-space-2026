@@ -1,0 +1,162 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #f7f4ec;
+      font-family: "Roboto", sans-serif;
+    }
+    #s3-flood {
+      position: absolute;
+      inset: 0;
+      background: #1d5a2c;
+    }
+    #s3-cam {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: 0 0;
+    }
+    /* Futures panel: 1068 x 591 CSS px shown 1800 px wide (1.6854 per CSS px) */
+    #s3-panel {
+      position: absolute;
+      left: 60px;
+      top: 42px;
+      width: 1800px;
+      height: 996px;
+      transform-origin: 50% 50%;
+    }
+    #s3-panel img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1800px;
+      height: 996px;
+      border-radius: 14px;
+    }
+    #s3-dots i {
+      position: absolute;
+      width: 18.6px;
+      height: 18.6px;
+      margin: -0.9px 0 0 -0.9px;
+      border-radius: 50%;
+      background: #ddd7c8;
+      display: block;
+    }
+    #s3-phone {
+      position: absolute;
+      left: 240px;
+      top: 118px;
+      width: 358px;
+      height: 761px;
+      border-radius: 44px;
+      background: #111;
+    }
+    #s3-phone img {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      width: 330px;
+      height: 733px;
+      border-radius: 30px;
+    }
+    .s3-label {
+      position: absolute;
+      font-size: 46px;
+      font-weight: 900;
+      color: #000;
+      white-space: nowrap;
+    }
+    .s3-label span {
+      display: inline-block;
+    }
+    #s3-label-farmer {
+      left: 240px;
+      top: 40px;
+    }
+    #s3-label-ext {
+      left: 680px;
+      top: 106px;
+    }
+  </style>
+  <div id="root" data-composition-id="s3" data-width="1920" data-height="1080">
+    <div id="s3-cam" data-layout-allow-overflow>
+      <div id="s3-panel">
+        <!-- Real Evidence screen of the built site, Olopa, English (video/pitch/scripts/capturas.py) -->
+        <img src="assets/ui/futures-olopa.png" alt="" />
+        <div id="s3-dots"></div>
+      </div>
+    </div>
+    <div id="s3-phone" data-layout-allow-overflow><img src="assets/ui/farmer-listen.png" alt="" /></div>
+    <div id="s3-label-farmer" class="s3-label"><span>For</span> <span>the</span> <span>farmer</span></div>
+    <div id="s3-label-ext" class="s3-label"><span>For</span> <span>the</span> <span>extension</span> <span>worker</span></div>
+    <div id="s3-flood"></div>
+  </div>
+  <script>
+    (function () {
+      const T0 = 16.4;
+      const at = (t) => t - T0;
+      const S = 1800 / 1068;
+      // The 33 models of NASA NEX-GDDP-CMIP6 (SSP2-4.5) per rotation card, as the site draws them:
+      // [x, y, holds] in CSS px of the panel (assets/ui/ui.json; states from web/public/data/futuros_nasa.json).
+      const D = [[[30,369.0,1],[43,369.0,1],[56,369.0,1],[69,369.0,1],[82,369.0,1],[95,369.0,1],[108,369.0,1],[121,369.0,1],[134,369.0,1],[147,369.0,1],[160,369.0,1],[173,369.0,1],[186,369.0,1],[199,369.0,1],[212,369.0,1],[225,369.0,1],[238,369.0,1],[251,369.0,1],[264,369.0,1],[277,369.0,1],[290,369.0,1],[303,369.0,1],[316,369.0,1],[329,369.0,1],[30,382.0,1],[43,382.0,1],[56,382.0,1],[69,382.0,1],[82,382.0,1],[95,382.0,1],[108,382.0,1],[121,382.0,1],[134,382.0,1]],[[378,369.0,0],[391,369.0,1],[404,369.0,0],[417,369.0,0],[430,369.0,0],[443,369.0,1],[456,369.0,0],[469,369.0,1],[482,369.0,0],[495,369.0,0],[508,369.0,0],[521,369.0,0],[534,369.0,0],[547,369.0,0],[560,369.0,0],[573,369.0,0],[586,369.0,0],[599,369.0,1],[612,369.0,1],[625,369.0,1],[638,369.0,0],[651,369.0,0],[664,369.0,0],[677,369.0,0],[378,382.0,0],[391,382.0,0],[404,382.0,1],[417,382.0,0],[430,382.0,1],[443,382.0,1],[456,382.0,0],[469,382.0,0],[482,382.0,0]],[[726,387.2,0],[739,387.2,1],[752,387.2,0],[765,387.2,0],[778,387.2,0],[791,387.2,1],[804,387.2,0],[817,387.2,1],[830,387.2,0],[843,387.2,0],[856,387.2,0],[869,387.2,0],[882,387.2,0],[895,387.2,0],[908,387.2,0],[921,387.2,0],[934,387.2,0],[947,387.2,1],[960,387.2,1],[973,387.2,1],[986,387.2,0],[999,387.2,0],[1012,387.2,0],[1025,387.2,0],[726,400.2,0],[739,400.2,0],[752,400.2,1],[765,400.2,0],[778,400.2,1],[791,400.2,1],[804,400.2,0],[817,400.2,0],[830,400.2,0]]];
+      const box = document.getElementById("s3-dots");
+      const greens = [[], [], []];
+      D.forEach((card, c) => card.forEach(([x, y, s], i) => {
+        const el = document.createElement("i");
+        el.id = `s3-d${c}-${i}`;
+        el.style.left = `${x * S}px`;
+        el.style.top = `${y * S}px`;
+        box.appendChild(el);
+        if (s) greens[c].push(el);
+      }));
+
+      const tl = gsap.timeline({ paused: true });
+      // Camera on the panel: scale k with the panel point (bx, by) (frame coords at k = 1) at screen (sx, sy).
+      const cam = (k, bx, by, sx = 960, sy = 500) => ({ scale: k, x: sx - k * bx, y: sy - k * by });
+      const FULL = cam(1, 960, 500);
+      gsap.set("#s3-cam", FULL);
+      gsap.set("#s3-phone", { x: -760 });
+      gsap.set(".s3-label span", { opacity: 0 });
+
+      // In: the green of the button floods to paper; the panel settles from 1.12x.
+      tl.fromTo("#s3-flood", { opacity: 1 }, { opacity: 0, duration: 0.36, ease: "power2.inOut" }, at(16.42));
+      tl.fromTo("#s3-panel", { scale: 1.12, filter: "blur(10px)", opacity: 0.4 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.5, ease: "expo.out" }, at(16.42));
+
+      // "Today's crops hold in nine": punch in on "What you do today" (card centre at frame (960, 663.9)).
+      const TODAY = cam(1.9, 960, 663.9);
+      tl.fromTo("#s3-cam", FULL, { ...TODAY, duration: 0.5, ease: "power2.inOut" }, at(17.95));
+      const fill = (els, start, gap) => {
+        tl.fromTo(els, { backgroundColor: "#ddd7c8" }, { backgroundColor: "#3f7d3a", duration: 0.12, stagger: gap, ease: "none" }, start);
+        tl.fromTo(els, { scale: 1 }, { keyframes: [{ scale: 1.45, duration: 0.08 }, { scale: 1, duration: 0.14 }], stagger: gap, ease: "power2.out" }, start);
+      };
+      fill(greens[1], at(18.55), 0.08);
+
+      // "Short-cycle maize, in all thirty-three": pan to the first card (centre at frame (373.5, 663.9)).
+      const SHORT = cam(1.9, 373.5, 663.9);
+      tl.fromTo("#s3-cam", TODAY, { ...SHORT, duration: 0.45, ease: "power2.inOut", immediateRender: false }, at(20.15));
+      fill(greens[0], at(20.68), 0.032);
+
+      // Pull back to the whole panel; the jack-bean card shows its 9 too.
+      tl.fromTo("#s3-cam", SHORT, { ...FULL, duration: 0.5, ease: "power2.inOut", immediateRender: false }, at(21.98));
+      fill(greens[2], at(22.12), 0.045);
+
+      // "Same evidence": the panel carries to the right, the farmer's phone comes in from the left.
+      const RIGHT = cam(0.64, 960, 540, 1256, 500);
+      tl.fromTo("#s3-cam", FULL, { ...RIGHT, duration: 0.55, ease: "power3.inOut", immediateRender: false }, at(22.62));
+      tl.fromTo("#s3-phone", { x: -760 }, { x: 0, duration: 0.6, ease: "expo.out" }, at(22.75));
+      tl.fromTo("#s3-label-farmer span", { opacity: 0, color: "#b9b4a6" }, { opacity: 1, color: "#000", duration: 0.12, stagger: 0.08 }, at(23.9));
+      tl.fromTo("#s3-label-ext span", { opacity: 0, color: "#b9b4a6" }, { opacity: 1, color: "#000", duration: 0.12, stagger: 0.08 }, at(24.85));
+
+      // Out to the end card on the same ground.
+      tl.fromTo(["#s3-cam", "#s3-phone", ".s3-label"], { opacity: 1, filter: "blur(0px)" },
+        { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, at(26.72));
+
+      window.__timelines["s3"] = tl;
+    })();
+  </script>
+</template>

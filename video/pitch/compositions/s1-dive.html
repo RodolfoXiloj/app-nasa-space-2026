@@ -1,0 +1,225 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #05080d;
+      font-family: "Roboto", sans-serif;
+    }
+    #s1-video,
+    #s1-final {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      object-fit: cover;
+    }
+    #s1-final {
+      image-rendering: pixelated;
+    }
+    #s1-svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1920px;
+      height: 1080px;
+      overflow: visible;
+    }
+    #s1-stamp {
+      position: absolute;
+      right: 96px;
+      top: 214px;
+      text-align: right;
+      color: #fff;
+      text-shadow: 0 3px 14px rgba(0, 0, 0, 0.75);
+    }
+    #s1-stamp .s1-place {
+      font-size: 44px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    #s1-num {
+      font-size: 230px;
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: #ffd200;
+      margin-top: 6px;
+    }
+    #s1-num span {
+      font-size: 150px;
+    }
+    #s1-stamp .s1-what {
+      font-size: 58px;
+      font-weight: 900;
+      margin-top: 4px;
+    }
+    #s1-stamp .s1-when {
+      font-size: 44px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    #s1-stamp .s1-src {
+      font-size: 32px;
+      font-weight: 500;
+      margin-top: 14px;
+      opacity: 0.92;
+    }
+    .s1-word {
+      display: inline-block;
+    }
+    .s1-card {
+      position: absolute;
+      background: #fff;
+      border: 4px solid #000;
+      padding: 16px 26px 18px;
+      color: #000;
+    }
+    .s1-card b {
+      display: block;
+      font-size: 56px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+    .s1-card span {
+      display: block;
+      font-size: 36px;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+    #s1-card-pixel {
+      left: 1004px;
+      top: 384px;
+    }
+    #s1-card-plot {
+      right: 1110px;
+      top: 590px;
+      text-align: right;
+    }
+    #s1-credit {
+      position: absolute;
+      left: 40px;
+      top: 40px;
+      font-size: 24px;
+      font-weight: 500;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 4px 12px;
+    }
+  </style>
+  <div id="root" data-composition-id="s1" data-width="1920" data-height="1080">
+    <video id="s1-video" class="clip" data-start="0" data-duration="4.97" data-track-index="0"
+      src="assets/dive/picada.mp4" muted playsinline></video>
+    <img id="s1-final" class="clip" data-start="4.93" data-duration="3.67" data-track-index="1"
+      src="assets/dive/final.png" alt="" />
+
+    <svg id="s1-svg" viewBox="0 0 1920 1080" data-layout-allow-overflow>
+      <g id="s1-grid" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.5" fill="none"></g>
+      <line id="s1-leader-u" x1="832" y1="594" x2="884" y2="486" stroke="#fff" stroke-width="7" opacity="0" />
+      <line id="s1-leader" x1="832" y1="594" x2="884" y2="486" stroke="#000" stroke-width="3" opacity="0" />
+      <rect id="s1-plot" x="883.79" y="453.79" width="32.42" height="32.42" fill="#fff" stroke="#000" stroke-width="3" opacity="0" />
+      <rect id="s1-flood" x="835.29" y="401.87" width="129.53" height="133.89" fill="#f7f4ec" opacity="0" />
+      <rect id="s1-sq-u" x="707.9" y="369.4" width="36" height="36" fill="none" stroke="#000" stroke-width="9" opacity="0" />
+      <rect id="s1-sq" x="707.9" y="369.4" width="36" height="36" fill="none" stroke="#ffd200" stroke-width="5" opacity="0" />
+    </svg>
+
+    <div id="s1-stamp">
+      <div class="s1-place"><span class="s1-word">Olopa,</span> <span class="s1-word">Guatemala</span></div>
+      <div id="s1-num"><b id="s1-num-v">100</b><span> %</span></div>
+      <div class="s1-what"><span class="s1-word">of</span> <span class="s1-word">normal</span> <span class="s1-word">rain</span></div>
+      <div class="s1-when"><span class="s1-word">July–August</span> <span class="s1-word">2026</span></div>
+      <div class="s1-src"><span class="s1-word">Lowest</span> <span class="s1-word">since</span> <span class="s1-word">1991</span> <span class="s1-word">·</span> <span class="s1-word">CHIRPS</span> <span class="s1-word">v3</span></div>
+    </div>
+
+    <div id="s1-card-pixel" class="s1-card"><b>1 MODIS pixel</b><span>250 m × 250 m = 6.25 ha</span></div>
+    <div id="s1-card-plot" class="s1-card"><b>A family plot</b><span>about 0.35 ha · FAO/WFP</span></div>
+    <div id="s1-credit" data-layout-ignore>NASA GIBS · Blue Marble NG · MODIS Terra, 21 Feb 2026</div>
+  </div>
+  <script>
+    (function () {
+      // Where the yellow square sits, frame by frame (from assets/dive/final.json):
+      // [t, x, y, w, h]. It follows the plot point on the globe, then becomes the real MODIS pixel.
+      const P = [[0.6,725.9,387.4,36,36],[0.633,726.8,388.0,36,36],[0.667,727.7,388.5,36,36],[0.7,728.5,389.1,36,36],[0.733,729.3,389.6,36,36],[0.767,730.1,390.2,36,36],[0.8,730.8,390.7,36,36],[0.833,731.6,391.2,36,36],[0.867,732.4,391.8,36,36],[0.9,733.1,392.4,36,36],[0.933,734.0,393.0,36,36],[0.967,734.9,393.6,36,36],[1.0,735.9,394.3,36,36],[1.033,737.1,395.0,36,36],[1.067,738.3,395.7,36,36],[1.1,739.8,396.6,36,36],[1.133,741.4,397.4,36,36],[1.167,743.2,398.4,36,36],[1.2,745.2,399.5,36,36],[1.233,747.5,400.6,36,36],[1.267,750.2,401.9,36,36],[1.3,753.1,403.2,36,36],[1.333,756.4,404.7,36,36],[1.367,760.1,406.3,36,36],[1.4,764.2,408.0,36,36],[1.433,768.8,409.9,36,36],[1.467,773.8,412.0,36,36],[1.5,779.3,414.1,36,36],[1.533,785.2,416.5,36,36],[1.567,791.7,419.0,36,36],[1.6,798.7,421.7,36,36],[1.633,806.1,424.4,36,36],[1.667,813.9,427.4,36,36],[1.7,822.1,430.4,36,36],[1.733,830.6,433.5,36,36],[1.767,839.2,436.6,36,36],[1.8,847.8,439.7,36,36],[1.833,856.1,442.8,36,36],[1.867,863.9,445.6,36,36],[1.9,870.9,448.1,36,36],[1.933,876.6,450.1,36,36],[1.967,880.5,451.5,36,36],[2.0,882.0,452.0,36,36],[3.767,882.0,452.0,36,36],[3.8,881.7,450.8,36.6,37.8],[3.833,880.5,449.4,39.1,40.4],[3.867,879.1,448.0,41.8,43.2],[3.9,877.7,446.5,44.6,46.1],[3.933,876.3,445.0,47.5,49.1],[3.967,874.8,443.4,50.5,52.2],[4.0,873.2,441.8,53.6,55.4],[4.033,871.6,440.1,56.8,58.7],[4.067,870.0,438.4,60.1,62.1],[4.1,868.3,436.6,63.4,65.5],[4.133,866.6,434.9,66.8,69.1],[4.167,864.9,433.0,70.3,72.7],[4.2,863.1,431.2,73.8,76.3],[4.233,861.4,429.3,77.3,80.0],[4.267,859.6,427.4,80.9,83.6],[4.3,857.8,425.6,84.5,87.3],[4.333,856.0,423.7,88.0,91.0],[4.367,854.3,421.9,91.5,94.6],[4.4,852.6,420.1,95.0,98.2],[4.433,850.9,418.3,98.4,101.7],[4.467,849.2,416.5,101.7,105.1],[4.5,847.6,414.8,104.9,108.4],[4.533,846.1,413.2,107.9,111.6],[4.567,844.6,411.7,110.9,114.6],[4.6,843.2,410.2,113.6,117.5],[4.633,841.9,408.9,116.2,120.2],[4.667,840.7,407.6,118.6,122.6],[4.7,839.6,406.4,120.8,124.9],[4.733,838.6,405.4,122.8,127.0],[4.767,837.8,404.5,124.6,128.8],[4.8,837.0,403.7,126.1,130.3],[4.833,836.4,403.0,127.3,131.6],[4.867,835.9,402.5,128.3,132.6],[4.9,835.6,402.2,129.0,133.3],[4.933,835.4,401.9,129.4,133.7],[4.967,835.3,401.9,129.5,133.9]];
+      // MODIS pixel edges on screen at the end of the dive (250 m grid of GIBS)
+      const MX = [58.12, 187.65, 317.18, 446.71, 576.23, 705.76, 835.29, 964.82, 1094.34, 1223.87, 1353.4, 1482.93, 1612.46, 1741.98, 1871.51];
+      const MY = [134.09, 267.98, 401.87, 535.76, 669.65, 803.54, 937.43];
+
+      const NS = "http://www.w3.org/2000/svg";
+      const grid = document.getElementById("s1-grid");
+      const lines = [];
+      MX.forEach((x) => {
+        const l = document.createElementNS(NS, "line");
+        l.setAttribute("x1", x); l.setAttribute("x2", x); l.setAttribute("y1", 0); l.setAttribute("y2", 1080);
+        l.setAttribute("pathLength", "100"); l.setAttribute("stroke-dasharray", "100 120"); l.setAttribute("stroke-dashoffset", "110");
+        grid.appendChild(l); lines.push({ el: l, d: Math.abs(x - 900) });
+      });
+      MY.forEach((y) => {
+        const l = document.createElementNS(NS, "line");
+        l.setAttribute("x1", 0); l.setAttribute("x2", 1920); l.setAttribute("y1", y); l.setAttribute("y2", y);
+        l.setAttribute("pathLength", "100"); l.setAttribute("stroke-dasharray", "100 120"); l.setAttribute("stroke-dashoffset", "110");
+        grid.appendChild(l); lines.push({ el: l, d: Math.abs(y - 470) * 1.6 });
+      });
+
+      const tl = gsap.timeline({ paused: true });
+      const sq = ["#s1-sq", "#s1-sq-u"];
+
+      // Hook: place, the number counting down to 22, then the rest of the line.
+      const words = gsap.utils.toArray("#s1-stamp .s1-word");
+      gsap.set(words, { opacity: 0 });
+      gsap.set("#s1-num", { opacity: 0 });
+      const wordIn = (els, at) =>
+        tl.fromTo(els, { opacity: 0, filter: "blur(6px)" },
+          { opacity: 1, filter: "blur(0px)", duration: 0.13, stagger: 0.067, ease: "power2.out" }, at);
+      wordIn("#s1-stamp .s1-place .s1-word", 0.2);
+      tl.fromTo("#s1-num", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 0.32);
+      wordIn("#s1-stamp .s1-what .s1-word", 0.95);
+      wordIn("#s1-stamp .s1-when .s1-word", 1.2);
+      wordIn("#s1-stamp .s1-src .s1-word", 1.5);
+      // The count is a pure function of scene time, so any frame renders on its own.
+      const numEl = document.getElementById("s1-num-v");
+      const clock = { t: 0 };
+      tl.fromTo(clock, { t: 0 }, {
+        t: 8.6, duration: 8.6, ease: "none",
+        onUpdate: () => {
+          const u = Math.min(1, Math.max(0, (clock.t - 0.42) / 1.3));
+          const e = 1 - Math.pow(1 - u, 2);
+          numEl.textContent = String(Math.round(100 - 78 * e));
+        },
+      }, 0);
+      tl.fromTo("#s1-stamp", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.22, ease: "power2.in" }, 3.38);
+
+      // The yellow square: appears on Olopa, rides the dive, lands on the pixel.
+      tl.fromTo(sq, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, P[0][0]);
+      tl.set(sq, { attr: { x: P[0][1], y: P[0][2], width: P[0][3], height: P[0][4] } }, 0);
+      for (let i = 1; i < P.length; i++) {
+        const a = P[i - 1], b = P[i];
+        tl.fromTo(sq, { attr: { x: a[1], y: a[2], width: a[3], height: a[4] } },
+          { attr: { x: b[1], y: b[2], width: b[3], height: b[4] }, duration: b[0] - a[0], ease: "none", immediateRender: false }, a[0]);
+      }
+      tl.fromTo("#s1-credit", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 4.1);
+
+      // Pixel hold: the grid draws out from the plot, then the two cards.
+      lines.sort((p, q) => p.d - q.d).forEach((l, i) => {
+        tl.fromTo(l.el, { attr: { "stroke-dashoffset": 110 } }, { attr: { "stroke-dashoffset": 0 }, duration: 0.45, ease: "power2.out" }, 4.98 + i * 0.018);
+      });
+      tl.fromTo("#s1-card-pixel", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.3, ease: "power4.out" }, 5.12);
+      tl.fromTo("#s1-plot", { opacity: 0, scale: 0, svgOrigin: "900 470" }, { opacity: 1, scale: 1, svgOrigin: "900 470", duration: 0.35, ease: "back.out(2)" }, 6.22);
+      tl.fromTo(["#s1-leader", "#s1-leader-u"], { opacity: 0 }, { opacity: 1, duration: 0.15 }, 6.3);
+      tl.fromTo("#s1-card-plot", { clipPath: "inset(0 0 0 100%)" }, { clipPath: "inset(0 0 0 0%)", duration: 0.3, ease: "power4.out" }, 6.32);
+
+      // Out: cards and grid blur away, the pixel fills and becomes the next world.
+      tl.fromTo(["#s1-card-pixel", "#s1-card-plot", "#s1-grid", "#s1-plot", "#s1-leader", "#s1-leader-u", "#s1-credit"],
+        { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, 7.9);
+      tl.fromTo("#s1-flood", { opacity: 0 }, { opacity: 1, duration: 0.1, ease: "none" }, 8.0);
+      const big = { x: -60, y: -60, width: 2040, height: 1200 };
+      tl.fromTo("#s1-flood", { attr: { x: 835.29, y: 401.87, width: 129.53, height: 133.89 } },
+        { attr: big, duration: 0.45, ease: "power3.inOut", immediateRender: false }, 8.06);
+      tl.fromTo(sq, { attr: { x: 835.29, y: 401.87, width: 129.53, height: 133.89 } },
+        { attr: big, duration: 0.45, ease: "power3.inOut", immediateRender: false }, 8.06);
+
+      window.__timelines["s1"] = tl;
+    })();
+  </script>
+</template>
