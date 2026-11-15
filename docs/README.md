@@ -12,7 +12,7 @@ Start with the [project README](../README.md). The documents below are in Englis
 | [existing-tools.md](existing-tools.md) | What already exists (ASIS, ZARC, Agroclimatic Technical Boards, FEWS NET/IPC, WFP, GLAM, Plantix) and what Milpa does not claim |
 | [chorti.md](chorti.md) | Ch'orti' recording script for native speakers: the phrases, the empty `caa` slot and the rules |
 | [judge-qa.md](judge-qa.md) | Likely judge questions with short answers, each backed by a number in the repo |
-| [../video/pitch/README.md](../video/pitch/README.md) | The 30-second demo video (HyperFrames): what is real in each shot, the voice and sounds, and how to rebuild it (Spanish). The video itself is `web/public/video/milpa-resiliente-30s.mp4` |
+| [../video/pitch/README.md](../video/pitch/README.md) | The first 30-second demo video (14 Nov, HyperFrames): what is real in each shot, the voice and sounds, and how to rebuild it (Spanish). That video is `web/public/video/milpa-resiliente-30s.mp4`; the final demo video (15 Nov) is on YouTube: https://youtu.be/WJXsrxVFvQ8 |
 
 ## How the tool decides and how we checked it
 

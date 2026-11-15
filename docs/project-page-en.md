@@ -8,7 +8,7 @@ Draft of the submission form fields, in the order of the official Project Submis
 2. If the High-Level Project Summary does not fit, paste the “Short version” below it instead.
 3. The site is live at https://milpa-resiliente.onrender.com/ (Render, static site, rebuilt on every push to `main`). Check its FortiGuard category before sending.
 4. The repository (https://github.com/RodolfoXiloj/app-nasa-space-2026) is public since the afternoon of 15 Nov 2026, and the slides PDF opens without signing in.
-5. For the video demo, upload the final 30-second video (`milpa-30s-B5-elevenlabs.mp4`, 29.9 s) to YouTube as public or unlisted, paste its link in “Link to Project Demo” and open it in a private window first.
+5. The final 30-second video is on YouTube and opens without signing in: https://youtu.be/WJXsrxVFvQ8 (paste it without the `?si=` part that the share button adds).
 
 Challenge: **Field Shift: Adapting Farms with NASA Data** · Team: **A dream** (Rodolfo Xiloj, Mario, Iván) · Guatemala.
 
@@ -28,7 +28,9 @@ Milpa Resiliente turns two decades of satellite records into a three-fact traffi
 
 ## Link to Project Demo
 
-The 30-second video: paste its YouTube link here once it is uploaded (see step 5 above). If the video cannot be used, the 7 slides: https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf
+https://youtu.be/WJXsrxVFvQ8
+
+Backup, if the video cannot be used: the 7 slides, https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf
 
 ## Link to Final Project
 

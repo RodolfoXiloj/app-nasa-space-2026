@@ -4,7 +4,7 @@
 
 > NASA satellite records turned into three facts a farmer can see and hear, for the milpa in Guatemala’s Dry Corridor.
 
-**Live site:** https://milpa-resiliente.onrender.com/ · **Demo video (30 s, English captions):** https://milpa-resiliente.onrender.com/video/milpa-resiliente-30s.mp4 · **Demo (7 slides, PDF):** [docs/slides/milpa-resiliente.pdf](docs/slides/milpa-resiliente.pdf)
+**Live site:** https://milpa-resiliente.onrender.com/ · **Demo video (30 s, English captions):** https://youtu.be/WJXsrxVFvQ8 · **Demo (7 slides, PDF):** [docs/slides/milpa-resiliente.pdf](docs/slides/milpa-resiliente.pdf)
 
 Milpa Resiliente is a static website for farmers and agricultural extension workers in Guatemala's Dry Corridor. Next to the three facts, it shows three crop rotations to talk over with the extension worker, with the evidence and its limits in plain sight. It covers five example plots in Chiquimula and Zacapa: Jocotán, Camotán, Olopa, San Juan Ermita and Zacapa. The whole site is in English and Spanish, with an EN/ES selector; English is the default.
 
