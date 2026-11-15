@@ -6,6 +6,36 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Frases claras, «Este año», «El futuro» y la parcela guardada sin señal: domingo 15 nov 2026
+
+Rodolfo pidió que el audio y las frases de la vista del agricultor las entienda cualquier persona, y que el agricultor también vea el antes y después y los futuros. Horas de `date` (UTC−6).
+
+| Hora | Qué | Resultado |
+|---|---|---|
+| Sin hora anotada | Imagen para WhatsApp y hoja impresa de las 5 parcelas en los 2 idiomas, con las frases nuevas (script aparte con Edge) | ❌ en Zacapa la frase del suelo pasaba de 3 líneas y se salía de su caja, en español y en inglés; la leyenda de formas seguía con «atención» y «se repite». Las 10 hojas impresas cabían en 1 página |
+| Sin hora anotada | Arreglo: la letra de la frase se achica hasta que quepa (Zacapa: 26 px en español, 24 px en inglés) y la leyenda usa las palabras nuevas | ✅ las 10 imágenes caben; las 10 hojas, en 1 página |
+| 02:52:08 a 02:52:19 | Vista del agricultor con una comprobación nueva: la imagen de Zacapa se descarga como PNG de 1080 × 1440 | ✅ 113 de 113 |
+| 02:56:07 a 02:56:17 | Capturas de las diapositivas y PDF | ✅ 4 capturas; PDF de 7 páginas |
+| 02:56:50 a 02:59:24 | Batería completa | ✅ primera pantalla 171.95 kB; «sin fallas»; 23 de 23; 113 de 113; 24 de 24; 35 de 35; 143 de 143. pytest, aparte de 03:00:09 a 03:00:37: «280 passed» |
+| 03:01:13 | `git push origin v2-interactiva:main` (`979a351`) | ✅ avance directo `f350376..979a351`, sin forzar |
+| 03:02:23 | El sitio publicado sirve el build nuevo | ✅ `assets/index-BjPRQeSo.js` |
+| 03:02:39 a 03:03:33 | Sitio publicado: archivos contra el build local, vista del agricultor y piezas de v2 | ✅ JS, CSS, tarjetas, datos, mp3 y subtítulos iguales (los de texto, sin contar los finales de línea: aquí CRLF, en Render LF); `sw.js` igual salvo su versión, que es un hash de `public/`; 35 de 35. ❌ 111 de 113: «Escuchar en la primera pantalla» falló en los dos casos |
+| 03:04:07 a 03:04:12 | Por qué falló: cuánto tarda Escuchar en aparecer en el sitio publicado | La prueba medía antes de que llegara (Escuchar viene con `import()`): aparece de 0.07 a 0.12 s después de los hechos y queda en la primera pantalla (457 de 844 px; 402 de 915 px). La prueba ahora espera hasta 5 s |
+| 03:04:52 a 03:05:17 | Vista del agricultor, local y publicada, con esa espera | ✅ 113 de 113 en los dos |
+| 03:05:45 a 03:07:07 | Sitio publicado sin red: guardar la parcela con el kit, cortar la red (emulación del navegador) y recargar | ✅ Jocotán en español (461 kB guardados): las dos tarjetas, Escuchar y las palabras nuevas. ❌ Olopa en inglés, elegida en el menú: se guardó (477 kB), pero sin red la vista no abría |
+| 03:07:31 a 03:07:49 | Causa | La página siempre abría la primera parcela (Jocotán), y sin red `data/jocotan.json` no estaba guardado. Venía de la versión interactiva del 14 nov, no de este cambio |
+| 03:10:48 a 03:11:49 | Arreglo: el kit recuerda en el teléfono la parcela guardada y la página la abre primero. La prueba sin señal suma un caso: Olopa elegida en el menú | ✅ 25 de 25; primera pantalla 172.05 kB, 0.05 kB sobre el tope (`docs/peso.md`) |
+| 03:13:16 a 03:15:51 | Batería completa | ✅ 172.05 kB; «sin fallas»; 23 de 23; 113 de 113; 25 de 25; 35 de 35; 143 de 143. pytest, aparte de 03:16:01 a 03:16:27: «280 passed» |
+| 03:17:31 | `git push origin v2-interactiva:main` (`8d781c0`) | ✅ avance directo `979a351..8d781c0`, sin forzar |
+| 03:18:18 | El sitio publicado sirve el build nuevo | ✅ `assets/index-CWgu1VB2.js` |
+| 03:18:53 a 03:19:55 | Sitio publicado: archivos, sin red, vista del agricultor y piezas de v2 | ✅ 37 archivos iguales al build local (sin contar los finales de línea ni la versión de `sw.js`); la precarga lleva las tarjetas. Sin red: Jocotán en español y Olopa en inglés abren la parcela guardada, con las dos tarjetas, Escuchar y las palabras nuevas (14 de 14). 113 de 113; 35 de 35 |
+| Sin hora anotada | Revisión de las guías de pruebas con personas | La figura de «Este año» se leía «2018, 138; 2026, 79», sin decir qué son esas cifras |
+| 03:23:49 a 03:25:03 | Arreglo: la figura dice «2018, el año más seco, 138 milímetros; 2026, 79 milímetros» (y en inglés); la prueba del agricultor lo comprueba | ✅ «sin fallas»; 115 de 115; 25 de 25 |
+| 03:25:12 a 03:27:47 | Batería completa | ✅ «280 passed»; 172.05 kB; «sin fallas»; 23 de 23; 115 de 115; 25 de 25; 35 de 35; 143 de 143 |
+| 03:27:54 | `git push origin v2-interactiva:main` (`8abda09`) | ✅ avance directo `8d781c0..8abda09`, sin forzar |
+| 03:28:41 a 03:29:57 | Sitio publicado con la figura nueva | ✅ sirve el build nuevo a las 03:28:41; la figura dice los milímetros en los dos idiomas (115 de 115); sin red, Jocotán y Olopa abren con todo (14 de 14); 35 de 35; 37 archivos iguales al build local sin contar los finales de línea ni la versión de `sw.js` |
+| Pendiente | Que una persona escuche los 10 audios nuevos (`docs/es/pruebas-personas/mario-audios.md`) y pruebe «Guardar para usar sin señal» con una parcela que no sea Jocotán en un teléfono real | — |
+
 ## Relieve 3D en Android: sábado 14 nov 2026
 
 Rodolfo abrió la vista 3D en su teléfono Android a las 22:43 y el relieve salía en picos de cientos de metros (capturas de su pantalla). Horas de `date` (UTC−6).

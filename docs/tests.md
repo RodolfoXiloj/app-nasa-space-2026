@@ -8,6 +8,36 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## Plain sentences, "This year", "The future" and the saved plot without signal: Sunday 15 Nov 2026
+
+Rodolfo asked for the farmer view's audio and sentences to be understood by anyone, and for the farmer to also see the before and after and the futures. Times from `date` (UTC−6).
+
+| Time | What | Result |
+|---|---|---|
+| No time logged | WhatsApp image and print sheet of the 5 plots in both languages, with the new sentences (separate script with Edge) | ❌ in Zacapa the soil sentence ran past 3 lines and out of its box, in Spanish and English; the shapes legend still said «atención» and «se repite». The 10 print sheets fit on 1 page |
+| No time logged | Fix: the sentence's letter shrinks until it fits (Zacapa: 26 px in Spanish, 24 px in English) and the legend uses the new words | ✅ the 10 images fit; the 10 sheets, on 1 page |
+| 02:52:08 to 02:52:19 | Farmer view with a new check: Zacapa's image downloads as a 1080 × 1440 PNG | ✅ 113 of 113 |
+| 02:56:07 to 02:56:17 | Slide captures and PDF | ✅ 4 captures; 7-page PDF |
+| 02:56:50 to 02:59:24 | Full battery | ✅ first screen 171.95 kB; "sin fallas"; 23 of 23; 113 of 113; 24 of 24; 35 of 35; 143 of 143. pytest, separately from 03:00:09 to 03:00:37: "280 passed" |
+| 03:01:13 | `git push origin v2-interactiva:main` (`979a351`) | ✅ fast-forward `f350376..979a351`, not forced |
+| 03:02:23 | The published site serves the new build | ✅ `assets/index-BjPRQeSo.js` |
+| 03:02:39 to 03:03:33 | Published site: files against the local build, farmer view and v2 pieces | ✅ JS, CSS, cards, data, mp3 and subtitles identical (text files without counting line endings: CRLF here, LF on Render); `sw.js` identical except its version, a hash of `public/`; 35 of 35. ❌ 111 of 113: "Listen on the first screen" failed in both cases |
+| 03:04:07 to 03:04:12 | Why it failed: how long Listen takes to appear on the published site | The test measured before it arrived (Listen comes with `import()`): it appears 0.07 to 0.12 s after the facts and stays on the first screen (457 of 844 px; 402 of 915 px). The test now waits up to 5 s |
+| 03:04:52 to 03:05:17 | Farmer view, local and published, with that wait | ✅ 113 of 113 in both |
+| 03:05:45 to 03:07:07 | Published site without network: save the plot with the kit, cut the network (browser emulation) and reload | ✅ Jocotán in Spanish (461 kB saved): both cards, Listen and the new words. ❌ Olopa in English, chosen from the menu: saved (477 kB), but without network the view did not open |
+| 03:07:31 to 03:07:49 | Cause | The page always opened the first plot (Jocotán), and without network `data/jocotan.json` was not saved. It came from the 14 Nov interactive version, not from this change |
+| 03:10:48 to 03:11:49 | Fix: the kit remembers the saved plot on the phone and the page opens it first. The offline test adds a case: Olopa chosen from the menu | ✅ 25 of 25; first screen 172.05 kB, 0.05 kB over the budget (`docs/peso.md`) |
+| 03:13:16 to 03:15:51 | Full battery | ✅ 172.05 kB; "sin fallas"; 23 of 23; 113 of 113; 25 of 25; 35 of 35; 143 of 143. pytest, separately from 03:16:01 to 03:16:27: "280 passed" |
+| 03:17:31 | `git push origin v2-interactiva:main` (`8d781c0`) | ✅ fast-forward `979a351..8d781c0`, not forced |
+| 03:18:18 | The published site serves the new build | ✅ `assets/index-CWgu1VB2.js` |
+| 03:18:53 to 03:19:55 | Published site: files, offline, farmer view and v2 pieces | ✅ 37 files identical to the local build (without counting line endings or the `sw.js` version); the precache carries the cards. Offline: Jocotán in Spanish and Olopa in English open the saved plot, with both cards, Listen and the new words (14 of 14). 113 of 113; 35 of 35 |
+| No time logged | Review of the people-test guides | The "This year" figure was read as "2018, 138; 2026, 79", without saying what those numbers are |
+| 03:23:49 to 03:25:03 | Fix: the figure says "2018, the driest year, 138 millimeters; 2026, 79 millimeters" (and in Spanish); the farmer-view test checks it | ✅ "sin fallas"; 115 of 115; 25 of 25 |
+| 03:25:12 to 03:27:47 | Full battery | ✅ "280 passed"; 172.05 kB; "sin fallas"; 23 of 23; 115 of 115; 25 of 25; 35 of 35; 143 of 143 |
+| 03:27:54 | `git push origin v2-interactiva:main` (`8abda09`) | ✅ fast-forward `8d781c0..8abda09`, not forced |
+| 03:28:41 a 03:29:57 | Published site with the new figure | ✅ serves the new build at 03:28:41; the figure says the millimeters in both languages (115 of 115); offline, Jocotán and Olopa open with everything (14 of 14); 35 of 35; 37 files identical to the local build without counting line endings or the `sw.js` version |
+| Pending | A person listens to the 10 new audio files (`docs/es/pruebas-personas/mario-audios.md`) and tries "Save to use without signal" with a plot other than Jocotán on a real phone | — |
+
 ## 3D relief on Android: Saturday 14 Nov 2026
 
 Rodolfo opened the 3D view on his Android phone at 22:43 and the relief showed spikes hundreds of metres tall (his screenshots). Times from `date` (UTC−6).

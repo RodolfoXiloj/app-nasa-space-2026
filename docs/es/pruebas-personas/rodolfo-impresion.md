@@ -16,7 +16,7 @@ En Milpa Resiliente hay **dos vistas imprimibles distintas**, diseñadas para ca
 
 1. **La Hoja de parcela (desde la vista del agricultor, primera pantalla):**
    - Pensada para entregar en mano al agricultor o pegar en el cuaderno comunitario.
-   - Contiene: el título «MILPA RESILIENTE · HOJA DE LA PARCELA», el municipio, los 3 hechos del semáforo con su figura (círculo, triángulo o cuadrado), su palabra (*Bien*, *Atención*, *Se repite*), su dibujo (la rueda de 12 meses y los discos de 15 y 25 años), la frase de cada hecho y su fuente, la línea «Formas: círculo = bien, triángulo = atención, cuadrado = se repite, ? = sin dato», las opciones, «Qué tan seguros estamos», el aviso «No es un aviso oficial: platíquelo con su técnico», la línea de uso de IA y la dirección de la página.
+   - Contiene: el título «MILPA RESILIENTE · HOJA DE LA PARCELA», el municipio, los 3 hechos del semáforo con su figura (círculo, triángulo o cuadrado), su palabra (*Bien*, *Ponga atención*, *Pasa seguido*), su dibujo (la rueda de 12 meses y los discos de 15 y 25 años), la frase de cada hecho (la misma de la pantalla y del audio) y su fuente, la línea «Formas: círculo = bien, triángulo = ponga atención, cuadrado = pasa seguido, ? = sin dato.», las opciones, «Qué tan seguros estamos», el aviso «No es un aviso oficial: platíquelo con su técnico», la línea de uso de IA y la dirección de la página.
 2. **La Tarjeta del agricultor (desde la vista *Evidence*):**
    - Pensada para el técnico extensionista y el agricultor.
    - Contiene: encabezado de la parcela (coordenada, cultivo de hoy y prioridad), lo que ve el satélite, la tabla comparativa de las 3 rotaciones con sus puntajes (*Agua*, *Suelo*, *Plagas*, *Total* y *Confianza*), por qué la opción con mejor puntaje, la fecha de siembra citada de ZARC (con la URL completa visible solo al imprimir), el aviso de que la herramienta apoya y no reemplaza, las fuentes de datos y la línea de uso de IA. El guion del audio no se imprime.
@@ -28,7 +28,7 @@ En Milpa Resiliente hay **dos vistas imprimibles distintas**, diseñadas para ca
 ### Parte 1. Imprimir la «Hoja de la parcela» (vista del agricultor)
 
 1. Abre la aplicación web en Chrome o Edge (`http://localhost:4173/`).
-2. Arriba a la derecha, selecciona **«Español»** y en el selector **Parcela** deja **«Jocotán, Chiquimula»** (puedes repetir con **Olopa** o **Zacapa** para ver los 3 estados del semáforo: círculo *Bien*, triángulo *Atención* y cuadrado *Se repite*).
+2. Arriba a la derecha, selecciona **«Español»** y en el selector **Parcela** deja **«Jocotán, Chiquimula»** (puedes repetir con **Olopa** o **Zacapa** para ver los 3 estados del semáforo: círculo *Bien*, triángulo *Ponga atención* y cuadrado *Pasa seguido*).
 3. Baja hasta la sección **«Compartir esta parcela»** y haz clic en el botón **«Imprimir hoja»**.
 4. En la ventana de impresión del navegador, ajusta:
    - **Destino:** tu impresora física (o *Guardar como PDF* si vas a llevar el archivo a imprimir/fotocopiar).
@@ -57,13 +57,14 @@ Revisa cada hoja física con esta lista:
 
 ### A. En la «Hoja de la parcela» (vista agricultor)
 1. **Cabe en 1 sola página Carta:** No sale una segunda hoja en blanco ni con el aviso final suelto.
-2. **Se ocultó el resto de la interfaz:** En el papel **no** aparecen los botones `English / Español`, ni el selector desplegable de parcela, ni el reproductor de audio, ni los botones `Imprimir hoja / Descargar audio / Compartir por WhatsApp`, ni el botón `Ver la evidencia`.
+2. **Se ocultó el resto de la interfaz:** En el papel **no** aparecen los botones `English / Español`, ni el selector desplegable de parcela, ni el reproductor de audio, ni los botones `Imprimir hoja / Descargar audio / Compartir por WhatsApp / Imagen para WhatsApp` (ni `Guardar para usar sin señal`, si aparece), ni el botón `Ver la evidencia`. Tampoco salen las tarjetas «Este año» y «El futuro: 2041 a 2060»: la hoja no las lleva.
 3. **Semáforo legible sin color (forma + palabra):**
    - Las figuras son lisas, sin signos dentro: la palabra de al lado dice el estado.
-   - **Se repite (rojo en pantalla):** se distingue claramente como un **cuadrado** acompañado de la palabra **«Se repite»**.
-   - **Atención (amarillo en pantalla):** se distingue claramente como un **triángulo** acompañado de la palabra **«Atención»**.
+   - **Pasa seguido (rojo en pantalla):** se distingue claramente como un **cuadrado** acompañado de la palabra **«Pasa seguido»**.
+   - **Ponga atención (amarillo en pantalla):** se distingue claramente como un **triángulo** acompañado de la palabra **«Ponga atención»**.
    - **Bien (verde en pantalla, ej. Canícula en Olopa o Quema en Zacapa):** se distingue claramente como un **círculo** acompañado de la palabra **«Bien»**.
-   - Debajo de los tres hechos sale la línea **«Formas: círculo = bien, triángulo = atención, cuadrado = se repite, ? = sin dato.»**
+   - Debajo de los tres hechos sale la línea **«Formas: círculo = bien, triángulo = ponga atención, cuadrado = pasa seguido, ? = sin dato.»**
+   - Cada hecho lleva su frase nueva completa, sin cortarse. En Jocotán: **«En marzo y abril, su tierra suele quedar sin plantas que la cubran. Lo vio el satélite de 2021 a 2025.»**, **«En 3 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en abril y mayo.»** y **«En 2 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia.»**
 4. **Rueda de 12 meses (`RuedaMeses`) legible en blanco y negro:**
    - Los meses de **suelo desnudo** (marzo y abril en Jocotán) van en **negro sólido**.
    - Los meses de **poca cobertura** (febrero y mayo en Jocotán) tienen **rayado diagonal**.

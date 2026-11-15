@@ -1,5 +1,7 @@
 # Resultados de las pruebas automáticas de apoyo (Parte B)
 
+> **Nota del 15 nov 2026:** ese día cambiaron las palabras del semáforo («Atención» / "Watch" pasó a «Ponga atención» / "Watch out", y «Se repite» / "Repeats" a «Pasa seguido» / "Happens often") y las frases que dice la voz (las nuevas están en las otras guías). Los textos citados abajo son los de esta corrida anterior, del 14 nov 2026.
+
 **Fecha de ejecución:** `2026-11-14` (zona horaria local `UTC-06:00`)  
 **Rama / worktree:** `entrega-pruebas-personas`  
 **Carpeta de artefactos temporales fuera del repositorio:** `$env:TEMP\milpa-pruebas` (no se sube al repo)  

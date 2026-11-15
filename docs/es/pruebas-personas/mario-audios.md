@@ -2,7 +2,7 @@
 
 **Responsable:** Mario  
 **Carpeta de audios:** `web/public/audio/`  
-**Tiempo estimado:** 35 a 40 minutos  
+**Tiempo estimado:** 40 a 45 minutos  
 
 > **Por qué hace falta una persona:** Un script automático puede comprobar que los archivos `.mp3` y `.vtt` existen, cuánto duran y que el texto del subtítulo coincide letra por letra con el JSON. Pero solo un oído humano detecta si la voz sintética pronuncia mal un topónimo o cultivo (*Jocotán*, *Camotán*, *Olopa*, *canícula*, *canavalia*, *caupí*, *ZARC*, *SMAP*, *ICTA B-5*), si se corta una sílaba al final de una frase o si el subtítulo va adelantado o atrasado respecto a la voz.
 
@@ -12,12 +12,14 @@
 
 La aplicación reproduce **20 audios activos** (4 por cada una de las 5 parcelas):
 
-1. **5 audios cortos en español (`{parcela}.frases.mp3`, 26 a 29 s):** suenan en la **vista del agricultor** al poner el idioma en **Español** y tocar **«Escuchar»**. Llevan subtítulos sincronizados frase por frase desde `{parcela}.frases.es.vtt` (6 frases por audio).
-2. **5 audios cortos en inglés (`{parcela}.frases.en.mp3`, 28 a 30 s):** suenan en la **vista del agricultor** al dejar el idioma en **English** y tocar **«Listen»**. Llevan subtítulos sincronizados desde `{parcela}.frases.en.vtt` (6 frases por audio).
+1. **5 audios cortos en español (`{parcela}.frases.mp3`, 44.6 a 63.4 s):** suenan en la **vista del agricultor** al poner el idioma en **Español** y tocar **«Escuchar»**. Llevan subtítulos sincronizados frase por frase desde `{parcela}.frases.es.vtt` (8 frases por audio; 7 en Camotán y Zacapa, que no traen la frase `futuro` porque sus opciones van en gris).
+2. **5 audios cortos en inglés (`{parcela}.frases.en.mp3`, 49.0 a 66.8 s):** suenan en la **vista del agricultor** al dejar el idioma en **English** y tocar **«Listen»**. Llevan subtítulos sincronizados desde `{parcela}.frases.en.vtt` (las mismas 8 o 7 frases que en español).
 3. **5 audios largos de la tarjeta en español (`{parcela}.mp3`, 67 a 73 s):** suenan en la **vista *Evidence*** dentro del recuadro **«Tarjeta para el agricultor»**, con el idioma en **Español**. No usan archivo `.vtt` separado porque el texto completo que lee la voz está impreso justo debajo del reproductor (`texto_tarjeta`).
 4. **5 audios largos de la tarjeta en inglés (`{parcela}.en.mp3`, 89 a 95 s):** suenan en el mismo reproductor de *Evidence* con el idioma en **English** (desde el 14 nov 2026; antes la tarjeta sonaba en español en los dos idiomas).
 
 *(Nota: los subtítulos en inglés del audio corto se corrigieron el 14 nov 2026: ahora siguen los tiempos del mp3 en inglés, no los del español. Fíjate igual en si cada frase cambia a la par de la voz.)*
+
+*(El 15 nov 2026 se rehicieron los 10 audios cortos: ahora dicen con frases claras qué pasó, cuándo y cada cuánto, y suman la lluvia de este año (`este_anio`) y los climas de 2041 a 2060 (`futuro`). Las tablas de abajo ya traen esos textos y tiempos; lo que se escuchó el 14 nov era la versión anterior. Los 10 audios largos de la tarjeta no cambiaron.)*
 
 ---
 
@@ -26,8 +28,8 @@ La aplicación reproduce **20 audios activos** (4 por cada una de las 5 parcelas
 1. Abre la aplicación web en tu navegador (`http://localhost:4173/`) o abre directamente los archivos de `web/public/audio/` con tu reproductor mientras miras la página.
    - **Recomendación:** Hazlo desde la página web (`http://localhost:4173/`) para comprobar al mismo tiempo que el recuadro de subtítulos va cambiando a la par de la voz.
 2. En la **vista del agricultor**:
-   - Pon el idioma en **Español**, elige cada parcela en el menú desplegable, toca **«Escuchar»** y sigue las **6 frases** en la tabla del **Grupo 1**.
-   - Cambia el idioma a **English**, elige cada parcela, toca **«Listen»** y sigue las **6 frases** en la tabla del **Grupo 2**.
+   - Pon el idioma en **Español**, elige cada parcela en el menú desplegable, toca **«Escuchar»** y sigue las **7 u 8 frases** en la tabla del **Grupo 1**.
+   - Cambia el idioma a **English**, elige cada parcela, toca **«Listen»** y sigue las **7 u 8 frases** en la tabla del **Grupo 2**.
 3. Baja y toca **«Ver la evidencia»** (*See the evidence*), ve a la sección **«Tarjeta para el agricultor»** y dale reproducir al audio de cada una de las 5 parcelas mientras sigues el párrafo del **Grupo 3**.
    - Cambia el idioma a **English** dentro de *Evidence* y repite con las 5 parcelas siguiendo el **Grupo 4**: debe sonar la voz en inglés, no la española.
 4. Marca en la tabla final la **hora real** en que escuchaste cada audio y anota cualquier palabra mal pronunciada, corte brusco o desfase de subtítulo.
@@ -39,142 +41,156 @@ La aplicación reproduce **20 audios activos** (4 por cada una de las 5 parcelas
 ### Grupo 1. Vista del agricultor — 5 audios cortos en Español (voz `es-GT-MartaNeural`)
 
 #### Audio 1: Jocotán (español corto)
-- **Archivo MP3:** `web/public/audio/jocotan.frases.mp3` (duración: **26.0 s**, 105 KB)
-- **Archivo de subtítulos:** `web/public/audio/jocotan.frases.es.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/jocotan.frases.mp3` (duración: **60.9 s**, 244 872 bytes)
+- **Archivo de subtítulos:** `web/public/audio/jocotan.frases.es.vtt` (8 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.649` | `Parcela de Jocotán, con voz de computadora.` |
-| 2 (`suelo`) | `00:02.899 → 00:07.729` | `Suelo: se repite. El satélite vio 2 meses de suelo desnudo.` |
-| 3 (`quema`) | `00:07.979 → 00:12.359` | `Quema: se repite. Vio quemas cerca en 3 de 15 años.` |
-| 4 (`canicula`) | `00:12.609 → 00:18.503` | `Canícula: atención. Racha seca de más de 15 días en 2 de 25 años.` |
-| 5 (`opciones`) | `00:18.753 → 00:22.681` | `Hay dos opciones parejas: maíz con canavalia o sorgo con caupí.` |
-| 6 (`cierre`) | `00:22.931 → 00:25.984` | `No es un aviso oficial: platíquelo con su técnico.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.906` | `Parcela de Jocotán. Le habla una voz de computadora.` |
+| 2 (`suelo`) | `00:04.156 → 00:11.943` | `En marzo y abril, su tierra suele quedar sin plantas que la cubran. Lo vio el satélite de 2021 a 2025.` |
+| 3 (`quema`) | `00:12.193 → 00:17.460` | `En 3 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en abril y mayo.` |
+| 4 (`canicula`) | `00:17.710 → 00:23.141` | `En 2 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia.` |
+| 5 (`este_anio`) | `00:23.391 → 00:36.560` | `Este año, en julio y agosto, llovió solo la cuarta parte de lo normal (24 %). Es menos que en 2018, el año más seco desde 1991. Es un dato preliminar.` |
+| 6 (`opciones`) | `00:36.810 → 00:40.968` | `Hoy hay dos opciones parejas: maíz con canavalia o sorgo con caupí.` |
+| 7 (`futuro`) | `00:41.218 → 00:57.594` | `La NASA calcula 33 climas posibles para 2041 a 2060. Si siembra como hoy, maíz con frijol, le alcanza el agua en 3 de 33. Maíz con canavalia: en 3. Sorgo con caupí: en los 33.` |
+| 8 (`cierre`) | `00:57.844 → 01:00.897` | `No es un aviso oficial: platíquelo con su técnico.` |
 
 #### Audio 2: Camotán (español corto)
-- **Archivo MP3:** `web/public/audio/camotan.frases.mp3` (duración: **27.4 s**, 111 KB)
-- **Archivo de subtítulos:** `web/public/audio/camotan.frases.es.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/camotan.frases.mp3` (duración: **44.6 s**, 179 580 bytes)
+- **Archivo de subtítulos:** `web/public/audio/camotan.frases.es.vtt` (7 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.636` | `Parcela de Camotán, con voz de computadora.` |
-| 2 (`suelo`) | `00:02.886 → 00:08.925` | `Suelo: atención. El satélite vio 2 meses con poca cobertura, ninguno desnudo.` |
-| 3 (`quema`) | `00:09.175 → 00:13.555` | `Quema: se repite. Vio quemas cerca en 3 de 15 años.` |
-| 4 (`canicula`) | `00:13.805 → 00:19.698` | `Canícula: atención. Racha seca de más de 15 días en 2 de 25 años.` |
-| 5 (`opciones`) | `00:19.948 → 00:24.131` | `No podemos decir qué opción conviene más: falta la humedad del suelo de SMAP.` |
-| 6 (`cierre`) | `00:24.381 → 00:27.435` | `No es un aviso oficial: platíquelo con su técnico.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.892` | `Parcela de Camotán. Le habla una voz de computadora.` |
+| 2 (`suelo`) | `00:04.142 → 00:12.184` | `En marzo y abril, su tierra suele quedar con pocas plantas que la cubran. Lo vio el satélite de 2021 a 2025.` |
+| 3 (`quema`) | `00:12.434 → 00:17.773` | `En 3 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en marzo y abril.` |
+| 4 (`canicula`) | `00:18.023 → 00:23.454` | `En 2 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia.` |
+| 5 (`este_anio`) | `00:23.704 → 00:36.835` | `Este año, en julio y agosto, llovió solo la cuarta parte de lo normal (26 %). Es menos que en 2018, el año más seco desde 1991. Es un dato preliminar.` |
+| 6 (`opciones`) | `00:37.085 → 00:41.268` | `No podemos decir qué opción conviene más: falta la humedad del suelo de SMAP.` |
+| 7 (`cierre`) | `00:41.518 → 00:44.572` | `No es un aviso oficial: platíquelo con su técnico.` |
 
 #### Audio 3: Olopa (español corto)
-- **Archivo MP3:** `web/public/audio/olopa.frases.mp3` (duración: **28.6 s**, 116 KB)
-- **Archivo de subtítulos:** `web/public/audio/olopa.frases.es.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/olopa.frases.mp3` (duración: **63.4 s**, 254 760 bytes)
+- **Archivo de subtítulos:** `web/public/audio/olopa.frases.es.vtt` (8 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.466` | `Parcela de Olopa, con voz de computadora.` |
-| 2 (`suelo`) | `00:02.716 → 00:08.754` | `Suelo: atención. El satélite vio 2 meses con poca cobertura, ninguno desnudo.` |
-| 3 (`quema`) | `00:09.004 → 00:13.445` | `Quema: atención. Vio quemas cerca en 1 de 15 años.` |
-| 4 (`canicula`) | `00:13.695 → 00:19.308` | `Canícula: bien. Ninguna racha seca pasó de 15 días en 25 años.` |
-| 5 (`opciones`) | `00:19.558 → 00:25.294` | `Las tres opciones quedan parejas: lo que siembra hoy, maíz con canavalia y maíz de ciclo corto.` |
-| 6 (`cierre`) | `00:25.544 → 00:28.597` | `No es un aviso oficial: platíquelo con su técnico.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.785` | `Parcela de Olopa. Le habla una voz de computadora.` |
+| 2 (`suelo`) | `00:04.035 → 00:12.077` | `En marzo y abril, su tierra suele quedar con pocas plantas que la cubran. Lo vio el satélite de 2021 a 2025.` |
+| 3 (`quema`) | `00:12.327 → 00:17.219` | `En 1 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en abril.` |
+| 4 (`canicula`) | `00:17.469 → 00:22.860` | `En los últimos 25 años, la canícula nunca dejó más de 15 días seguidos casi sin lluvia.` |
+| 5 (`este_anio`) | `00:23.110 → 00:36.762` | `Este año, en julio y agosto, llovió solo la quinta parte de lo normal (22 %). Es menos que en 1997, el año más seco desde 1991. Es un dato preliminar.` |
+| 6 (`opciones`) | `00:37.012 → 00:43.175` | `Hoy, las tres opciones quedan parejas: lo que siembra hoy, maíz con canavalia y maíz de ciclo corto.` |
+| 7 (`futuro`) | `00:43.425 → 01:00.079` | `La NASA calcula 33 climas posibles para 2041 a 2060. Si siembra como hoy, maíz con frijol, le alcanza el agua en 9 de 33. Maíz con canavalia: en 9. Maíz de ciclo corto: en los 33.` |
+| 8 (`cierre`) | `01:00.329 → 01:03.382` | `No es un aviso oficial: platíquelo con su técnico.` |
 
 #### Audio 4: San Juan Ermita (español corto)
-- **Archivo MP3:** `web/public/audio/san_juan_ermita.frases.mp3` (duración: **26.4 s**, 107 KB)
-- **Archivo de subtítulos:** `web/public/audio/san_juan_ermita.frases.es.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/san_juan_ermita.frases.mp3` (duración: **61.9 s**, 249 012 bytes)
+- **Archivo de subtítulos:** `web/public/audio/san_juan_ermita.frases.es.vtt` (8 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.990` | `Parcela de San Juan Ermita, con voz de computadora.` |
-| 2 (`suelo`) | `00:03.240 → 00:08.127` | `Suelo: se repite. El satélite vio 3 meses de suelo desnudo.` |
-| 3 (`quema`) | `00:08.377 → 00:12.764` | `Quema: atención. Vio quemas cerca en 2 de 15 años.` |
-| 4 (`canicula`) | `00:13.014 → 00:18.947` | `Canícula: atención. Racha seca de más de 15 días en 1 de 25 años.` |
-| 5 (`opciones`) | `00:19.197 → 00:23.125` | `Hay dos opciones parejas: maíz con canavalia o sorgo con caupí.` |
-| 6 (`cierre`) | `00:23.375 → 00:26.428` | `No es un aviso oficial: platíquelo con su técnico.` |
+| 1 (`parcela`) | `00:00.000 → 00:04.251` | `Parcela de San Juan Ermita. Le habla una voz de computadora.` |
+| 2 (`suelo`) | `00:04.501 → 00:13.011` | `En febrero, marzo y abril, su tierra suele quedar sin plantas que la cubran. Lo vio el satélite de 2021 a 2025.` |
+| 3 (`quema`) | `00:13.261 → 00:18.573` | `En 2 de los últimos 15 años hubo quemas a menos de medio kilómetro de su parcela, en marzo y abril.` |
+| 4 (`canicula`) | `00:18.823 → 00:24.358` | `En 1 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia.` |
+| 5 (`este_anio`) | `00:24.608 → 00:37.533` | `Este año, en julio y agosto, llovió solo la quinta parte de lo normal (20 %). Es menos que en 2018, el año más seco desde 1991. Es un dato preliminar.` |
+| 6 (`opciones`) | `00:37.783 → 00:41.942` | `Hoy hay dos opciones parejas: maíz con canavalia o sorgo con caupí.` |
+| 7 (`futuro`) | `00:42.192 → 00:58.626` | `La NASA calcula 33 climas posibles para 2041 a 2060. Si siembra como hoy, maíz con frijol, le alcanza el agua en 5 de 33. Maíz con canavalia: en 5. Sorgo con caupí: en los 33.` |
+| 8 (`cierre`) | `00:58.876 → 01:01.929` | `No es un aviso oficial: platíquelo con su técnico.` |
 
 #### Audio 5: Zacapa (español corto)
-- **Archivo MP3:** `web/public/audio/zacapa.frases.mp3` (duración: **26.9 s**, 109 KB)
-- **Archivo de subtítulos:** `web/public/audio/zacapa.frases.es.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/zacapa.frases.mp3` (duración: **47.0 s**, 189 275 bytes)
+- **Archivo de subtítulos:** `web/public/audio/zacapa.frases.es.vtt` (7 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.558` | `Parcela de Zacapa, con voz de computadora.` |
-| 2 (`suelo`) | `00:02.808 → 00:08.701` | `Suelo: atención. El satélite vio 1 mes de suelo desnudo y 4 con poca cobertura.` |
-| 3 (`quema`) | `00:08.951 → 00:12.835` | `Quema: bien. No vio quemas cerca en 15 años.` |
-| 4 (`canicula`) | `00:13.085 → 00:19.038` | `Canícula: se repite. Racha seca de más de 15 días en 3 de 25 años.` |
-| 5 (`opciones`) | `00:19.288 → 00:23.574` | `No podemos decir qué opción conviene más: dos fuentes de lluvia no coinciden.` |
-| 6 (`cierre`) | `00:23.824 → 00:26.877` | `No es un aviso oficial: platíquelo con su técnico.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.847` | `Parcela de Zacapa. Le habla una voz de computadora.` |
+| 2 (`suelo`) | `00:04.097 → 00:14.816` | `En abril, su tierra suele quedar sin plantas que la cubran; en enero, febrero, marzo y mayo, con pocas. Lo vio el satélite de 2021 a 2025.` |
+| 3 (`quema`) | `00:15.066 → 00:20.096` | `En los últimos 15 años, el satélite no vio quemas a menos de medio kilómetro de su parcela.` |
+| 4 (`canicula`) | `00:20.346 → 00:25.834` | `En 3 de los últimos 25 años, la canícula dejó más de 15 días seguidos casi sin lluvia.` |
+| 5 (`este_anio`) | `00:26.084 → 00:39.175` | `Este año, en julio y agosto, llovió solo la quinta parte de lo normal (21 %). Es menos que en 2018, el año más seco desde 1991. Es un dato preliminar.` |
+| 6 (`opciones`) | `00:39.425 → 00:43.711` | `No podemos decir qué opción conviene más: dos fuentes de lluvia no coinciden.` |
+| 7 (`cierre`) | `00:43.961 → 00:47.015` | `No es un aviso oficial: platíquelo con su técnico.` |
 
 ---
 
 ### Grupo 2. Vista del agricultor — 5 audios cortos en Inglés (voz `en-US-JennyNeural`)
 
-*(Nota técnica útil: los archivos `.frases.en.vtt` comparten las marcas de tiempo de las 6 frases con el español; revisa al escuchar si el cambio de cada subtítulo en inglés acompaña bien a la voz de Jenny).*
-
-**Aviso:** los subtítulos de los audios cortos en inglés se están corrigiendo en la rama `entrega-impacto-6`. Si esa rama ya se unió a `main` cuando hagas la prueba, revisa los tiempos nuevos; si no, anota igual los desfases que oigas.
+*(Nota técnica útil: cada `.frases.en.vtt` lleva sus propios tiempos, medidos sobre el mp3 en inglés, así que no coinciden con los del español; revisa al escuchar si el cambio de cada subtítulo en inglés acompaña bien a la voz).*
 
 #### Audio 6: Jocotán (inglés corto)
-- **Archivo MP3:** `web/public/audio/jocotan.frases.en.mp3` (duración: **28.5 s**, 115 KB)
-- **Archivo de subtítulos:** `web/public/audio/jocotan.frases.en.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/jocotan.frases.en.mp3` (duración: **65.4 s**, 263 010 bytes)
+- **Archivo de subtítulos:** `web/public/audio/jocotan.frases.en.vtt` (8 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.649` | `Jocotán plot, read by a computer voice.` |
-| 2 (`suelo`) | `00:02.899 → 00:07.729` | `Soil: repeats. The satellite saw 2 months of bare soil.` |
-| 3 (`quema`) | `00:07.979 → 00:12.359` | `Burning: repeats. Fires seen nearby in 3 of 15 years.` |
-| 4 (`canicula`) | `00:12.609 → 00:18.503` | `Midsummer drought: watch. Dry spells longer than 15 days in 2 of 25 years.` |
-| 5 (`opciones`) | `00:18.753 → 00:22.681` | `There are two even options: maize with jack bean or sorghum with cowpea.` |
-| 6 (`cierre`) | `00:22.931 → 00:25.984` | `This is not an official notice: talk it over with your extension worker.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.902` | `Jocotán plot. A computer voice is reading this.` |
+| 2 (`suelo`) | `00:04.152 → 00:12.991` | `In March and April, your land is usually left with no plants covering it. The satellite saw it from 2021 to 2025.` |
+| 3 (`quema`) | `00:13.241 → 00:19.342` | `In 3 of the last 15 years there were fires within half a kilometer of your plot, in April and May.` |
+| 4 (`canicula`) | `00:19.592 → 00:26.193` | `In 2 of the last 25 years, the midsummer drought brought more than 15 days in a row with almost no rain.` |
+| 5 (`este_anio`) | `00:26.443 → 00:39.809` | `This year, July and August got only a quarter of the normal rain (24 %). That is less than in 2018, the driest year since 1991. It is a preliminary figure.` |
+| 6 (`opciones`) | `00:40.059 → 00:44.621` | `Today there are two even options: maize with jack bean or sorghum with cowpea.` |
+| 7 (`futuro`) | `00:44.871 → 01:01.301` | `NASA computes 33 possible climates for 2041 to 2060. Planting as today, maize with beans has enough water in 3 of 33. Maize with jack bean: in 3. Sorghum with cowpea: in all 33.` |
+| 8 (`cierre`) | `01:01.551 → 01:05.425` | `This is not an official notice: talk it over with your extension worker.` |
 
 #### Audio 7: Camotán (inglés corto)
-- **Archivo MP3:** `web/public/audio/camotan.frases.en.mp3` (duración: **29.3 s**, 118 KB)
-- **Archivo de subtítulos:** `web/public/audio/camotan.frases.en.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/camotan.frases.en.mp3` (duración: **49.0 s**, 197 420 bytes)
+- **Archivo de subtítulos:** `web/public/audio/camotan.frases.en.vtt` (7 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.636` | `Camotán plot, read by a computer voice.` |
-| 2 (`suelo`) | `00:02.886 → 00:08.925` | `Soil: watch. The satellite saw 2 months with little cover, none bare.` |
-| 3 (`quema`) | `00:09.175 → 00:13.555` | `Burning: repeats. Fires seen nearby in 3 of 15 years.` |
-| 4 (`canicula`) | `00:13.805 → 00:19.698` | `Midsummer drought: watch. Dry spells longer than 15 days in 2 of 25 years.` |
-| 5 (`opciones`) | `00:19.948 → 00:24.131` | `We can't say which option is best: SMAP soil moisture is missing.` |
-| 6 (`cierre`) | `00:24.381 → 00:27.435` | `This is not an official notice: talk it over with your extension worker.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.893` | `Camotán plot. A computer voice is reading this.` |
+| 2 (`suelo`) | `00:04.143 → 00:12.399` | `In March and April, your land usually has little plant cover. The satellite saw it from 2021 to 2025.` |
+| 3 (`quema`) | `00:12.649 → 00:18.946` | `In 3 of the last 15 years there were fires within half a kilometer of your plot, in March and April.` |
+| 4 (`canicula`) | `00:19.196 → 00:25.943` | `In 2 of the last 25 years, the midsummer drought brought more than 15 days in a row with almost no rain.` |
+| 5 (`este_anio`) | `00:26.193 → 00:40.022` | `This year, July and August got only a quarter of the normal rain (26 %). That is less than in 2018, the driest year since 1991. It is a preliminary figure.` |
+| 6 (`opciones`) | `00:40.272 → 00:44.801` | `We can't say which option is best: SMAP soil moisture is missing.` |
+| 7 (`cierre`) | `00:45.051 → 00:49.040` | `This is not an official notice: talk it over with your extension worker.` |
 
 #### Audio 8: Olopa (inglés corto)
-- **Archivo MP3:** `web/public/audio/olopa.frases.en.mp3` (duración: **29.8 s**, 91 KB)
-- **Archivo de subtítulos:** `web/public/audio/olopa.frases.en.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/olopa.frases.en.mp3` (duración: **65.4 s**, 263 008 bytes)
+- **Archivo de subtítulos:** `web/public/audio/olopa.frases.en.vtt` (8 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.466` | `Olopa plot, read by a computer voice.` |
-| 2 (`suelo`) | `00:02.716 → 00:08.754` | `Soil: watch. The satellite saw 2 months with little cover, none bare.` |
-| 3 (`quema`) | `00:09.004 → 00:13.445` | `Burning: watch. Fires seen nearby in 1 of 15 years.` |
-| 4 (`canicula`) | `00:13.695 → 00:19.308` | `Midsummer drought: good. No dry spell went past 15 days in 25 years.` |
-| 5 (`opciones`) | `00:19.558 → 00:25.294` | `All three options come out even: what you plant today, maize with jack bean and short-cycle maize.` |
-| 6 (`cierre`) | `00:25.544 → 00:28.597` | `This is not an official notice: talk it over with your extension worker.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.862` | `Olopa plot. A computer voice is reading this.` |
+| 2 (`suelo`) | `00:04.112 → 00:12.305` | `In March and April, your land usually has little plant cover. The satellite saw it from 2021 to 2025.` |
+| 3 (`quema`) | `00:12.555 → 00:17.955` | `In 1 of the last 15 years there were fires within half a kilometer of your plot, in April.` |
+| 4 (`canicula`) | `00:18.205 → 00:24.617` | `In the last 25 years, the midsummer drought never brought more than 15 days in a row with almost no rain.` |
+| 5 (`este_anio`) | `00:24.867 → 00:38.326` | `This year, July and August got only a fifth of the normal rain (22 %). That is less than in 1997, the driest year since 1991. It is a preliminary figure.` |
+| 6 (`opciones`) | `00:38.576 → 00:44.731` | `Today, all three options come out even: what you plant today, maize with jack bean and short-cycle maize.` |
+| 7 (`futuro`) | `00:44.981 → 01:01.324` | `NASA computes 33 possible climates for 2041 to 2060. Planting as today, maize with beans has enough water in 9 of 33. Maize with jack bean: in 9. Short-cycle maize: in all 33.` |
+| 8 (`cierre`) | `01:01.574 → 01:05.447` | `This is not an official notice: talk it over with your extension worker.` |
 
 #### Audio 9: San Juan Ermita (inglés corto)
-- **Archivo MP3:** `web/public/audio/san_juan_ermita.frases.en.mp3` (duración: **28.6 s**, 116 KB)
-- **Archivo de subtítulos:** `web/public/audio/san_juan_ermita.frases.en.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/san_juan_ermita.frases.en.mp3` (duración: **66.8 s**, 268 388 bytes)
+- **Archivo de subtítulos:** `web/public/audio/san_juan_ermita.frases.en.vtt` (8 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.990` | `San Juan Ermita plot, read by a computer voice.` |
-| 2 (`suelo`) | `00:03.240 → 00:08.127` | `Soil: repeats. The satellite saw 3 months of bare soil.` |
-| 3 (`quema`) | `00:08.377 → 00:12.764` | `Burning: watch. Fires seen nearby in 2 of 15 years.` |
-| 4 (`canicula`) | `00:13.014 → 00:18.947` | `Midsummer drought: watch. Dry spells longer than 15 days in 1 of 25 years.` |
-| 5 (`opciones`) | `00:19.197 → 00:23.125` | `There are two even options: maize with jack bean or sorghum with cowpea.` |
-| 6 (`cierre`) | `00:23.375 → 00:26.428` | `This is not an official notice: talk it over with your extension worker.` |
+| 1 (`parcela`) | `00:00.000 → 00:04.380` | `San Juan Ermita plot. A computer voice is reading this.` |
+| 2 (`suelo`) | `00:04.630 → 00:14.509` | `In February, March and April, your land is usually left with no plants covering it. The satellite saw it from 2021 to 2025.` |
+| 3 (`quema`) | `00:14.759 → 00:20.960` | `In 2 of the last 15 years there were fires within half a kilometer of your plot, in March and April.` |
+| 4 (`canicula`) | `00:21.210 → 00:27.769` | `In 1 of the last 25 years, the midsummer drought brought more than 15 days in a row with almost no rain.` |
+| 5 (`este_anio`) | `00:28.019 → 00:41.028` | `This year, July and August got only a fifth of the normal rain (20 %). That is less than in 2018, the driest year since 1991. It is a preliminary figure.` |
+| 6 (`opciones`) | `00:41.278 → 00:45.841` | `Today there are two even options: maize with jack bean or sorghum with cowpea.` |
+| 7 (`futuro`) | `00:46.091 → 01:02.667` | `NASA computes 33 possible climates for 2041 to 2060. Planting as today, maize with beans has enough water in 5 of 33. Maize with jack bean: in 5. Sorghum with cowpea: in all 33.` |
+| 8 (`cierre`) | `01:02.917 → 01:06.790` | `This is not an official notice: talk it over with your extension worker.` |
 
 #### Audio 10: Zacapa (inglés corto)
-- **Archivo MP3:** `web/public/audio/zacapa.frases.en.mp3` (duración: **29.0 s**, 117 KB)
-- **Archivo de subtítulos:** `web/public/audio/zacapa.frases.en.vtt` (6 frases)
+- **Archivo MP3:** `web/public/audio/zacapa.frases.en.mp3` (duración: **50.9 s**, 204 716 bytes)
+- **Archivo de subtítulos:** `web/public/audio/zacapa.frases.en.vtt` (7 frases)
 
 | Frase | Tiempo (`.vtt`) | Texto del subtítulo que debe verse y escucharse |
 |---|---|---|
-| 1 (`parcela`) | `00:00.000 → 00:02.558` | `Zacapa plot, read by a computer voice.` |
-| 2 (`suelo`) | `00:02.808 → 00:08.701` | `Soil: watch. The satellite saw 1 month of bare soil and 4 with little cover.` |
-| 3 (`quema`) | `00:08.951 → 00:12.835` | `Burning: good. No fires seen nearby in 15 years.` |
-| 4 (`canicula`) | `00:13.085 → 00:19.038` | `Midsummer drought: repeats. Dry spells longer than 15 days in 3 of 25 years.` |
-| 5 (`opciones`) | `00:19.288 → 00:23.574` | `We can't say which option is best: two rain sources disagree.` |
-| 6 (`cierre`) | `00:23.824 → 00:26.877` | `This is not an official notice: talk it over with your extension worker.` |
+| 1 (`parcela`) | `00:00.000 → 00:03.958` | `Zacapa plot. A computer voice is reading this.` |
+| 2 (`suelo`) | `00:04.208 → 00:16.691` | `In April, your land is usually left with no plants covering it; in January, February, March and May, with little cover. The satellite saw it from 2021 to 2025.` |
+| 3 (`quema`) | `00:16.941 → 00:22.380` | `In the last 15 years, the satellite saw no fires within half a kilometer of your plot.` |
+| 4 (`canicula`) | `00:22.630 → 00:29.227` | `In 3 of the last 25 years, the midsummer drought brought more than 15 days in a row with almost no rain.` |
+| 5 (`este_anio`) | `00:29.477 → 00:42.750` | `This year, July and August got only a fifth of the normal rain (21 %). That is less than in 2018, the driest year since 1991. It is a preliminary figure.` |
+| 6 (`opciones`) | `00:43.000 → 00:46.738` | `We can't say which option is best: two rain sources disagree.` |
+| 7 (`cierre`) | `00:46.988 → 00:50.861` | `This is not an official notice: talk it over with your extension worker.` |
 
 ---
 
@@ -243,16 +259,16 @@ Suenan en *Evidence* con el idioma en **English**, en el mismo reproductor de «
 
 | # | Fecha y hora real (ej. `2026-11-15 10:00`) | Ruta del archivo MP3 | Archivo de subtítulos o texto | Duración esperada | ¿Se escuchó completo y claro? (Sí / No) | ¿El subtítulo coincidió con la voz? (Sí / No) | Palabras mal pronunciadas, cortes o errores detectados |
 |---|---|---|---|---|---|---|---|
-| **1** | | `web/public/audio/jocotan.frases.mp3` | `jocotan.frases.es.vtt` (6 frases) | 26.0 s | | | |
-| **2** | | `web/public/audio/camotan.frases.mp3` | `camotan.frases.es.vtt` (6 frases) | 27.4 s | | | |
-| **3** | | `web/public/audio/olopa.frases.mp3` | `olopa.frases.es.vtt` (6 frases) | 28.6 s | | | |
-| **4** | | `web/public/audio/san_juan_ermita.frases.mp3` | `san_juan_ermita.frases.es.vtt` (6 frases) | 26.4 s | | | |
-| **5** | | `web/public/audio/zacapa.frases.mp3` | `zacapa.frases.es.vtt` (6 frases) | 26.9 s | | | |
-| **6** | | `web/public/audio/jocotan.frases.en.mp3` | `jocotan.frases.en.vtt` (6 frases) | 28.5 s | | | |
-| **7** | | `web/public/audio/camotan.frases.en.mp3` | `camotan.frases.en.vtt` (6 frases) | 29.3 s | | | |
-| **8** | | `web/public/audio/olopa.frases.en.mp3` | `olopa.frases.en.vtt` (6 frases) | 29.8 s | | | |
-| **9** | | `web/public/audio/san_juan_ermita.frases.en.mp3` | `san_juan_ermita.frases.en.vtt` (6 frases) | 28.6 s | | | |
-| **10** | | `web/public/audio/zacapa.frases.en.mp3` | `zacapa.frases.en.vtt` (6 frases) | 29.0 s | | | |
+| **1** | | `web/public/audio/jocotan.frases.mp3` | `jocotan.frases.es.vtt` (8 frases) | 60.9 s | | | |
+| **2** | | `web/public/audio/camotan.frases.mp3` | `camotan.frases.es.vtt` (7 frases) | 44.6 s | | | |
+| **3** | | `web/public/audio/olopa.frases.mp3` | `olopa.frases.es.vtt` (8 frases) | 63.4 s | | | |
+| **4** | | `web/public/audio/san_juan_ermita.frases.mp3` | `san_juan_ermita.frases.es.vtt` (8 frases) | 61.9 s | | | |
+| **5** | | `web/public/audio/zacapa.frases.mp3` | `zacapa.frases.es.vtt` (7 frases) | 47.0 s | | | |
+| **6** | | `web/public/audio/jocotan.frases.en.mp3` | `jocotan.frases.en.vtt` (8 frases) | 65.4 s | | | |
+| **7** | | `web/public/audio/camotan.frases.en.mp3` | `camotan.frases.en.vtt` (7 frases) | 49.0 s | | | |
+| **8** | | `web/public/audio/olopa.frases.en.mp3` | `olopa.frases.en.vtt` (8 frases) | 65.4 s | | | |
+| **9** | | `web/public/audio/san_juan_ermita.frases.en.mp3` | `san_juan_ermita.frases.en.vtt` (8 frases) | 66.8 s | | | |
+| **10** | | `web/public/audio/zacapa.frases.en.mp3` | `zacapa.frases.en.vtt` (7 frases) | 50.9 s | | | |
 | **11** | | `web/public/audio/jocotan.mp3` | `texto_tarjeta` en `jocotan.json` | 70.9 s | | | |
 | **12** | | `web/public/audio/camotan.mp3` | `texto_tarjeta` en `camotan.json` | 68.2 s | | | |
 | **13** | | `web/public/audio/olopa.mp3` | `texto_tarjeta` en `olopa.json` | 73.5 s | | | |

@@ -61,8 +61,8 @@ Señala el dibujo pequeño que va junto al nombre de cada hecho (en la vista del
 Muéstrale las tres figuras (cambia a **Olopa** o **Zacapa** para que vea también el círculo, o muéstralas en la hoja en blanco y negro):
 
 4. **Orden sin depender del color:**
-   - **Pregunta abierta:** *«Aquí hay tres figuras: un círculo, un triángulo y un cuadrado. Si la hoja estuviera fotocopiada en blanco y negro, ¿cuál diría que indica que todo está bien, cuál pide poner atención y cuál indica un problema que se repite?»*
-   - **Significado esperado:** círculo = *Bien*; triángulo = *Atención*; cuadrado = *Se repite*.
+   - **Pregunta abierta:** *«Aquí hay tres figuras: un círculo, un triángulo y un cuadrado. Si la hoja estuviera fotocopiada en blanco y negro, ¿cuál diría que indica que todo está bien, cuál pide poner atención y cuál indica un problema que pasa seguido?»*
+   - **Significado esperado:** círculo = *Bien*; triángulo = *Ponga atención*; cuadrado = *Pasa seguido*.
    - **Anota también:** si lo dedujo por la figura o porque leyó la palabra de al lado. La figura sola no trae signos: la palabra es la que dice el estado.
 
 ### Bloque C. Los dibujos de cantidad (`RuedaMeses` y `PuntosAnios`)
@@ -77,7 +77,7 @@ Vuelve a la parcela **Jocotán**:
    - **Significado esperado:** **3 de 15 años** en Quema (3 discos negros con una llama blanca dentro; los otros 12 son aros vacíos) y **2 de 25 años** en Canícula (2 discos negros con un sol dentro).
 
 ### Bloque D. El botón de escuchar, el signo gris y la línea de 2026
-Junto a las opciones de siembra no hay dibujos de cultivos, y el dibujo del cuadro del satélite en manzanas (`PixelManzanas`) solo está en la galería de desarrollo, no en el sitio. Por eso este bloque pregunta por lo que sí está en la primera pantalla:
+Las opciones de siembra no llevan dibujo propio (las matas de «El futuro» van en el Bloque E), y el dibujo del cuadro del satélite en manzanas (`PixelManzanas`) solo está en la galería de desarrollo, no en el sitio. Por eso este bloque pregunta por lo que sí está en la primera pantalla:
 
 7. **Botón «Escuchar» (una bocina) y signo gris (`Senal` gris: círculo punteado con un signo de pregunta):**
    - **Pregunta abierta:** *«Arriba hay un botón amarillo con una bocina. ¿Para qué cree que sirve?»* Después cambia a **Camotán**, baja a las opciones y señala el círculo punteado con el signo de pregunta: *«¿Y esta figura, qué le dice?»*
@@ -87,17 +87,29 @@ Junto a las opciones de siembra no hay dibujos de cultivos, y el dibujo del cuad
    - **Significado esperado:** ya pasó: es lo que se observó, no un pronóstico.
    - **Posible confusión a vigilar:** que lo lea como un aviso de lo que viene. Si pasa, anótalo con sus palabras: hay que cambiar ese texto.
 
+### Bloque E. Las tarjetas «Este año» y «El futuro: 2041 a 2060» (desde el 15 nov 2026)
+Solo en el teléfono, con **Jocotán** (la hoja impresa no trae estas tarjetas). Tapa primero la frase y los números de cada tarjeta:
+
+9. **Las tres barras de «Este año»** (un año normal, 2018 y 2026, después de los 3 hechos):
+   - **Pregunta abierta:** *«Estas tres barras son de la lluvia de julio y agosto. ¿Qué le dicen de este año?»*
+   - **Significado esperado:** en 2026 llovió mucho menos que en un año normal, y menos que en 2018, el año más seco (79 mm frente a 324 mm de un año normal y 138 mm en 2018).
+   - **Posible confusión a vigilar:** que lo lea como un pronóstico de lo que va a llover.
+10. **Las matas de «El futuro»** (una fila de 33 matas por opción, después de las opciones; verdes y derechas, o secas y dobladas):
+   - **Pregunta abierta:** *«Esta tarjeta habla de los años 2041 a 2060. ¿Qué cree que quieren decir las matas verdes y las secas?»*
+   - **Significado esperado:** cada mata es un clima posible; verde = le alcanza el agua, seca = no le alcanza. En Jocotán quedan verdes 3 de 33 con lo que siembra hoy (maíz con frijol), 3 con maíz con canavalia y las 33 con sorgo con caupí.
+   - **Posible confusión a vigilar:** que crea que cada mata es una planta de su parcela o un año que ya pasó.
+
 ---
 
 ## Tabla para anotar los resultados y la hora real (3 a 5 adultos, sin datos personales)
 
-| Código anónimo | Fecha y hora real (ej. `2026-11-15 14:10`) | Consentimiento verbal (`Sí`) | Medio usado (`Teléfono` o `Hoja B/N`) | **1–3. Dibujos de Suelo, Quema y Canícula:** ¿qué dijo que eran? | **4. Semáforo (círculo, triángulo, cuadrado):** ¿distinguió cuál es Bien, Atención y Se repite? | **5. Rueda de 12 meses:** ¿identificó los 2 meses desnudos (marzo y abril)? | **6. Discos de años (3/15 y 2/25):** ¿contó bien los discos marcados? | **7–8. Bocina, signo de pregunta y línea de 2026:** ¿se entendieron? | Qué parte le causó duda o qué sugirió cambiar |
-|---|---|---|---|---|---|---|---|---|---|
-| **Participante 1** | | | | | | | | | |
-| **Participante 2** | | | | | | | | | |
-| **Participante 3** | | | | | | | | | |
-| **Participante 4** *(opcional)* | | | | | | | | | |
-| **Participante 5** *(opcional)* | | | | | | | | | |
+| Código anónimo | Fecha y hora real (ej. `2026-11-15 14:10`) | Consentimiento verbal (`Sí`) | Medio usado (`Teléfono` o `Hoja B/N`) | **1–3. Dibujos de Suelo, Quema y Canícula:** ¿qué dijo que eran? | **4. Semáforo (círculo, triángulo, cuadrado):** ¿distinguió cuál es Bien, Ponga atención y Pasa seguido? | **5. Rueda de 12 meses:** ¿identificó los 2 meses desnudos (marzo y abril)? | **6. Discos de años (3/15 y 2/25):** ¿contó bien los discos marcados? | **7–8. Bocina, signo de pregunta y línea de 2026:** ¿se entendieron? | **9–10. Barras de «Este año» y matas de «El futuro»:** ¿se entendieron? | Qué parte le causó duda o qué sugirió cambiar |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **Participante 1** | | | | | | | | | | |
+| **Participante 2** | | | | | | | | | | |
+| **Participante 3** | | | | | | | | | | |
+| **Participante 4** *(opcional)* | | | | | | | | | | |
+| **Participante 5** *(opcional)* | | | | | | | | | | |
 
 ---
 
