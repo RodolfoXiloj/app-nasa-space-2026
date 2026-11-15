@@ -27,12 +27,12 @@ Usa esta tabla como referencia inmediata mientras miras el contador de cada casi
 | 1 | **Project Name** | 2 | 16 | 15 | Texto: `Milpa Resiliente` |
 | 2a | **High-Level Project Summary** *(versión principal)* | 306 | 1 776 | 1 471 | Pega esta primero. Si el formulario corta o pide menos caracteres/palabras, usa la **2b (Short version)**. |
 | 2b | **High-Level Project Summary — Short version** *(respaldo)* | 161 | 973 | 813 | Úsala solo si la versión principal (2a) supera el límite del campo en la plataforma. |
-| 3 | **Link to Project Demo** | 1 | 100 | 100 | URL del PDF de las 7 diapositivas en GitHub (`https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf`). |
-| 4 | **Link to Final Project** | *(4 en borrador)* | *(20 en borrador)* | *(17 en borrador)* | Hoy dice `TBD: public site URL`. Reemplázalo por la URL pública real donde abren la vista del agricultor y *Evidence*. |
+| 3 | **Link to Project Demo** | 1 | 94 | 94 | URL del PDF de las 7 diapositivas en GitHub (`https://github.com/RodolfoXiloj/app-nasa-space-2026/blob/main/docs/slides/milpa-resiliente.pdf`). |
+| 4 | **Link to Final Project** | 1 | 38 | 38 | `https://milpa-resiliente.onrender.com/` (sitio publicado en Render el 14 nov 2026). |
 | 5 | **Detailed Project Description** | 1 376 | 8 037 | 6 654 | Incluye 8 bloques: *What it does*, *How it works*, *Local roots*, *How we test the rotations against the future*, *How we checked it*, *Benefits*, *Limits we state openly* y *Tools*. |
 | 6 | **Use of Super Intelligence (SI)** | 199 | 1 183 | 985 | Declaración honesta de uso de IA (Claude, agente de búsqueda, voces sintéticas `edge-tts` y validador determinista). |
 | 7 | **NASA Data** | 385 | 2 266 | 1 882 | Lista de los 8 productos de la NASA usados (MODIS MOD13Q1, FIRMS VIIRS, GPM IMERG vía CHIRPS v3, NASA POWER, SMAP SPL3SMP_E, SRTM GL3, NASA GIBS y NEX-GDDP-CMIP6), con la prueba de CHIRPS «sat» contra «rnl». |
-| 8 | **Space Agency Partner Data and Other References** | 130 | 991 | 862 | Sentinel-2 (ESA Copernicus / EOX), CHIRPS v3, SoilGrids, OpenStreetMap, FAO-56/33/66, ZARC (FAO–MAGA), GIEWS 2018, FEWS NET 2026, SESAN, Oxfam, Kuxur Rum, ALMG, software y enlace al repo. |
+| 8 | **Space Agency Partner Data and Other References** | 130 | 985 | 856 | Sentinel-2 (ESA Copernicus / EOX), CHIRPS v3, SoilGrids, OpenStreetMap, FAO-56/33/66, ZARC (FAO–MAGA), GIEWS 2018, FEWS NET 2026, SESAN, Oxfam, Kuxur Rum, ALMG, software y enlace al repo. |
 
 ---
 
@@ -77,10 +77,10 @@ Completa esta tabla mientras revisas el formulario:
 | | **Sección Members** (integrantes registrados en Space Apps) | N/A | Texto actual dice: `Rodolfo Xiloj, Mario, Iván` | | ¿Quiénes aparecen en Members?: |
 | | **Project Name** | | 2 palabras / 16 caracteres | | |
 | | **High-Level Project Summary** | | Principal: 306 pal. / 1 776 car.<br>Corta: 161 pal. / 973 car. | | ¿Se usó la principal o la versión corta?: |
-| | **Link to Project Demo** | | 1 palabra / 100 caracteres | | ¿Abre en ventana de incógnito sin login?: |
-| | **Link to Final Project** | | URL pública definitiva | | URL pegada y categoría en FortiGuard: |
+| | **Link to Project Demo** | | 1 palabra / 94 caracteres | | ¿Abre en ventana de incógnito sin login?: |
+| | **Link to Final Project** | | `https://milpa-resiliente.onrender.com/` (38 caracteres) | | URL pegada y categoría en FortiGuard: |
 | | **Detailed Project Description** | | 1 376 palabras / 8 037 caracteres | | |
 | | **Use of Super Intelligence (SI)** | | 199 palabras / 1 183 caracteres | | |
 | | **NASA Data** | | 385 palabras / 2 266 caracteres | | |
-| | **Space Agency Partner Data and Other References** | | 130 palabras / 991 caracteres | | |
+| | **Space Agency Partner Data and Other References** | | 130 palabras / 985 caracteres | | |
 | | **Frases de pruebas pendientes** (fotocopia y pictogramas) | N/A | 3 menciones en el borrador | | ¿Actualizadas tras las pruebas de Rodolfo e Iván?: |

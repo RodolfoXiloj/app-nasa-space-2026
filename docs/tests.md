@@ -8,6 +8,30 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## New repository and live site: Saturday 14 Nov 2026
+
+Changes: the Validation tab shows the table of years with documented crop losses; the farmer view's Spanish heading reads «Lo que el satélite vio alrededor de esta parcela»; a note on POWER rain before 2001. The code went to the new repository `RodolfoXiloj/app-nasa-space-2026` (private until submission) and the site is live at https://milpa-resiliente.onrender.com/ (Render static site governed by `render.yaml`). Times from `date` (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 18:25:56 to 18:26:02 | Web build | `cd web && npm run build` | ✅ "526 modules transformed"; first-load JS `index` 171.71 kB (gzip 56.86 kB), Evidence 676.41 kB; exit 0 |
+| 18:26:02 to 18:26:55 | Screenshots and PDF | `evidence_capturas.py`, `agricultor_playwright.py --capturas`, `slides_capturas.py`, `slides_pdf.py` | ✅ "26 capturas"; "96 de 96 comprobaciones pasan"; "7 páginas (tope 7)"; exit 0 |
+| 18:26:55 to 18:27:10 | Automated tests with the total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ "250 passed in 14.26s" |
+| 18:27:10 to 18:27:11 | Web smoke test | `cd web && npm run smoke` | ✅ "Prueba de humo de la web: sin fallas" |
+| 18:27:11 to 18:27:24 | Offline test | `cd web && npm run sin-red -- <temp folder>` | ✅ "23 de 23 comprobaciones pasan" |
+| 18:27:24 to 18:27:32 | Farmer view and kit | `python web/scripts/agricultor_playwright.py` | ✅ "96 de 96 comprobaciones pasan" |
+| 18:27:32 to 18:27:45 | Evidence view | `python web/scripts/evidence_playwright.py` | ✅ "143 de 143 comprobaciones pasan" |
+| 18:27:45 to 18:27:46 | Canícula sensitivity | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ "OK 'sat'…" and "OK 'rnl'…" |
+| 18:33:37 to 18:33:52 (UTC 00:33) | Render deploy of commit `6c1ca22` | push to `main` | ✅ status "live", with `rootDir: web` and publish path `dist` |
+| 18:36:05 to 18:36:25 | Every file of `web/public/` on the live site | `curl` to https://milpa-resiliente.onrender.com/ | ✅ 68 of 68 answer 200, and so does the root |
+| 18:36:25 to 18:36:36 | The live site in a browser, at 390 px in English and Spanish and at 1366 px in English | Playwright script outside the repo | ✅ "24 de 24 comprobaciones pasan": language, 2026 line, Listen, card with the mp3 of the language, loss table, no horizontal scroll, no JavaScript errors |
+
+Before those last two rows there were failures, now resolved:
+
+- The service was first created publishing `web/dist` without `rootDir`; when it was moved to the `render.yaml` configuration, the 18:31 deploy failed with "Publish directory dist does not exist!" because the settings changed mid-deploy. The next deploy, with the same settings, succeeded.
+- During that change the CDN cached a 404 for `audio/jocotan.mp3` (300 s cache): the 18:33:58 check found 67 of 68. After the cache expired it was 68 of 68.
+- The FortiGuard lookup asks for a captcha and, to request a category, a contact email: left for a person.
+
 ## History rewritten and clean clone: Saturday 14 Nov 2026
 
 **What was done.** At 18:06:48 (UTC−6) the history of the 23 branches on GitHub was rewritten with `git filter-repo`, in a separate clone, and published with `git push --atomic --force-with-lease` (each branch with the id it had before, so nobody else's push could be overwritten). Everything that was already out of the repo was removed from every commit: the internal notes (`docs/memoria/` and `docs/es/memoria/`), the code graph (`graphify-out/`), the name of a member who is no longer on the team (in texts and in six old versions of the slides PDF) and the "Co-authored-by" line of one message. Checked before publishing: the content of the tip of `main` is byte-for-byte the same as before; `main` goes from 70 to 68 commits (the two that only added the notes and the graph are gone); authors, dates and messages do not change.

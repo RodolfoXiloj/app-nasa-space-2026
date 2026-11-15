@@ -6,6 +6,30 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Repositorio nuevo y sitio publicado: sábado 14 nov 2026
+
+Cambios: pestaña Validación con la tabla de años con pérdidas documentadas; título en español de la vista del agricultor «Lo que el satélite vio alrededor de esta parcela»; nota sobre la lluvia de POWER antes de 2001. El código se subió al repositorio nuevo `RodolfoXiloj/app-nasa-space-2026` (privado hasta el envío) y el sitio quedó en https://milpa-resiliente.onrender.com/ (Render, sitio estático gobernado por `render.yaml`). Horas de `date` (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 18:25:56 a 18:26:02 | Build | `cd web && npm run build` | ✅ «526 modules transformed»; JS inicial `index` 171.71 kB (gzip 56.86 kB), Evidence 676.41 kB; salida 0 |
+| 18:26:02 a 18:26:55 | Capturas y PDF | `evidence_capturas.py`, `agricultor_playwright.py --capturas`, `slides_capturas.py`, `slides_pdf.py` | ✅ «26 capturas»; «96 de 96 comprobaciones pasan»; «7 páginas (tope 7)»; salida 0 |
+| 18:26:55 a 18:27:10 | Pruebas automáticas con el total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ «250 passed in 14.26s» |
+| 18:27:10 a 18:27:11 | Humo de la web | `cd web && npm run smoke` | ✅ «Prueba de humo de la web: sin fallas» |
+| 18:27:11 a 18:27:24 | Sin red | `cd web && npm run sin-red -- <carpeta temporal>` | ✅ «23 de 23 comprobaciones pasan» |
+| 18:27:24 a 18:27:32 | Vista del agricultor y kit | `python web/scripts/agricultor_playwright.py` | ✅ «96 de 96 comprobaciones pasan» |
+| 18:27:32 a 18:27:45 | Vista Evidence | `python web/scripts/evidence_playwright.py` | ✅ «143 de 143 comprobaciones pasan» |
+| 18:27:45 a 18:27:46 | Sensibilidad de la canícula | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ «OK 'sat'…» y «OK 'rnl'…» |
+| 18:33:37 a 18:33:52 (UTC 00:33) | Despliegue en Render del commit `6c1ca22` | push a `main` | ✅ estado «live», con `rootDir: web` y publicación `dist` |
+| 18:36:05 a 18:36:25 | Cada archivo de `web/public/` en el sitio publicado | `curl` a https://milpa-resiliente.onrender.com/ | ✅ 68 de 68 responden 200, y la raíz también |
+| 18:36:25 a 18:36:36 | El sitio publicado en navegador, a 390 px en inglés y español y a 1366 px en inglés | script de Playwright fuera del repo | ✅ «24 de 24 comprobaciones pasan»: idioma, línea de 2026, Escuchar, tarjeta con el mp3 del idioma, tabla de pérdidas, sin scroll horizontal, sin errores de JavaScript |
+
+Antes de esas dos últimas filas hubo fallas, ya resueltas:
+
+- El primer servicio se creó publicando `web/dist` sin `rootDir`; al pasarlo a la configuración de `render.yaml`, el despliegue de las 18:31 falló con «Publish directory dist does not exist!» porque se cambió la configuración a mitad del despliegue. El siguiente, con la misma configuración, salió bien.
+- Durante ese cambio, el CDN guardó un 404 de `audio/jocotan.mp3` (caché de 300 s): la revisión de las 18:33:58 marcó 67 de 68. Se esperó a que venciera la caché y quedó en 68 de 68.
+- La consulta de FortiGuard pide un captcha y, para pedir categoría, un correo de contacto: queda para una persona.
+
 ## Historial reescrito y clon limpio: sábado 14 nov 2026
 
 **Qué se hizo.** A las 18:06:48 (UTC−6) se reescribió el historial de las 23 ramas de GitHub con `git filter-repo`, en un clon aparte, y se publicó con `git push --atomic --force-with-lease` (cada rama con el identificador que tenía antes, para no pisar un push ajeno). Se quitó de todos los commits lo que ya estaba fuera del repo: las notas internas (`docs/memoria/` y `docs/es/memoria/`), el grafo del código (`graphify-out/`), el nombre de un integrante que ya no está en el equipo (en textos y en seis versiones antiguas del PDF de las diapositivas) y la línea «Co-authored-by» de un mensaje. Comprobado antes de publicar: el contenido de la punta de `main` es idéntico byte a byte al de antes; `main` pasa de 70 a 68 commits (desaparecen los dos que solo agregaban las notas y el grafo); autores, fechas y mensajes no cambian.
