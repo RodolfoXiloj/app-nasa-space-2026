@@ -22,6 +22,14 @@ function ConCitas({ txt, loc }) {
   )
 }
 
+// El motor empieza el texto de ZARC con «Fecha de siembra:» y la tarjeta ya pone esa etiqueta en negrita:
+// se quita del texto para no decirla dos veces.
+function sinEtiqueta(txt, etiqueta) {
+  if (!txt || !etiqueta || !txt.startsWith(etiqueta)) return txt
+  const resto = txt.slice(etiqueta.length).trimStart()
+  return resto.charAt(0).toUpperCase() + resto.slice(1)
+}
+
 const PREF_VOZ = { es: ['es-GT', 'es-MX', 'es-US', 'es-419', 'es-ES'], en: ['en-US', 'en-GB'] }
 
 function vozDe(idioma) {
@@ -179,7 +187,7 @@ export default function Tarjeta({ res, lluvia, temp, prioridad }) {
         <p>
           <b>{t('tarjeta.planting')}</b>{' '}
           <span lang={lang(zarc)}>
-            <ConCitas txt={zarc.txt} loc={lang(zarc) || loc} />
+            <ConCitas txt={sinEtiqueta(zarc.txt, t('tarjeta.planting'))} loc={lang(zarc) || loc} />
           </span>{' '}
           <span className="solo-imprimir">({res.zarc.enlace})</span>
           <a className="no-imprimir" href={res.zarc.enlace} target="_blank" rel="noreferrer">

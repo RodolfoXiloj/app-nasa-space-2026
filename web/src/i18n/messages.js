@@ -151,7 +151,7 @@ export const messages = {
         'Plot at {lat}, {lon} · today’s crop: {cultivo} · priority: {prioridad}{escenario}',
       escenario: ' · scenario: rain {lluvia} %, +{temp} °C',
       satellite:
-        'What the satellite sees: {detalle}; {ciclos} greenness cycle(s) per year; nearby fire in {quema} of {total} years.',
+        '{detalle}; {ciclos} greenness cycle(s) per year; nearby fire in {quema} of {total} years.',
       detalleBare: 'bare soil in {meses}',
       detalleLow: 'low cover in {meses}',
       detalleOk: 'no bare-soil months seen',
@@ -437,7 +437,7 @@ export const messages = {
         'Parcela en {lat}, {lon} · cultivo de hoy: {cultivo} · prioridad: {prioridad}{escenario}',
       escenario: ' · escenario: lluvia {lluvia} %, +{temp} °C',
       satellite:
-        'Lo que ve el satélite: {detalle}; {ciclos} ciclo(s) de verdor por año; quema cercana en {quema} de {total} años.',
+        '{detalle}; {ciclos} ciclo(s) de verdor por año; quema cercana en {quema} de {total} años.',
       detalleBare: 'suelo desnudo en {meses}',
       detalleLow: 'poca cobertura en {meses}',
       detalleOk: 'no se ven meses con el suelo desnudo',
