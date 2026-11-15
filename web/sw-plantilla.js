@@ -108,7 +108,7 @@ self.addEventListener('fetch', (e) => {
   const r = ruta(url)
   if (r.startsWith('assets/')) return e.respondWith(primeroGuardado(req))
   if (r.startsWith('audio/')) return e.respondWith(audio(req))
-  if (r.startsWith('data/') || r.startsWith('capas/') || r === 'manifest.webmanifest' || r.startsWith('icono')) {
+  if (r.startsWith('data/') || r.startsWith('capas/') || r.startsWith('terreno/') || r === 'manifest.webmanifest' || r.startsWith('icono')) {
     return e.respondWith(guardadoYActualiza(req, e))
   }
 })

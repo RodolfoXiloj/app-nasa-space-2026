@@ -12,7 +12,9 @@ function sinSenal() {
     apply: 'build',
     generateBundle(_opciones, bundle) {
       const nombres = Object.keys(bundle).sort()
-      const assets = nombres.filter((f) => f.startsWith('assets/') && /\.(js|css)$/.test(f) && !/Evidencia/.test(f))
+      // Solo la primera pantalla y lo que llega justo después de pintar; Evidence y la vista 3D se guardan al abrirlas.
+      const primeras = /^assets\/(index|Escuchar|Kit|Linea2026|sinSenal)-[\w-]+\.(js|css)$/
+      const assets = nombres.filter((f) => primeras.test(f))
       const precarga = ['./', ...assets, 'data/parcelas.json', 'data/validacion.json', 'manifest.webmanifest', 'icono-192.png']
       const version = createHash('sha256').update(nombres.join('|')).digest('hex').slice(0, 12)
       const fuente = readFileSync(new URL('./sw-plantilla.js', import.meta.url), 'utf-8')

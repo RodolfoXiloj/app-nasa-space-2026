@@ -130,9 +130,24 @@ const en = {
     revision: 'Rules not yet reviewed by an agronomist.',
   },
   ligero: {
-    activo: 'Light version: no large layers or 3D view.',
-    activar: 'Light version',
-    desactivar: 'Full version',
+    activo: 'This phone asks to save data: the 3D view is not offered here.',
+    sinWebgl: 'This browser cannot draw 3D (no WebGL): the relief layer of the map is the 2D version.',
+  },
+  relieve: {
+    abrir: 'See the relief in 3D',
+    capa: 'Relief (SRTM, shaded)',
+    titulo: 'The relief around the plot, in 3D',
+    resumen: 'The plot point is at {alt} m; the slope of its 90 m cell is {pend} % (SRTM). Relief exaggerated {exa} times.',
+    controles: '3D view controls',
+    girarIzq: 'Turn left',
+    girarDer: 'Turn right',
+    masInclinado: 'Tilt more',
+    menosInclinado: 'Tilt less',
+    volver: 'Back to the plot',
+    cerrar: 'Close 3D',
+    cargando: 'Loading the 3D view…',
+    nota:
+      'Relief from SRTM (courtesy of the U.S. Geological Survey) through Mapzen Terrain Tiles, stored in the site and exaggerated {exa} times so slopes are easier to see. Image: Sentinel-2 cloudless with signal; the stored MODIS layer without it. The lines are what each satellite measures. Drag to move; with two fingers or right click, turn and tilt.',
   },
 }
 
@@ -263,9 +278,24 @@ const es = {
     revision: 'Reglas sin revisar por un agrónomo.',
   },
   ligero: {
-    activo: 'Versión ligera: sin capas grandes ni vista 3D.',
-    activar: 'Versión ligera',
-    desactivar: 'Versión completa',
+    activo: 'Este teléfono pide ahorrar datos: aquí no se ofrece la vista 3D.',
+    sinWebgl: 'Este navegador no puede dibujar en 3D (sin WebGL): la capa de relieve del mapa es la versión en 2D.',
+  },
+  relieve: {
+    abrir: 'Ver el relieve en 3D',
+    capa: 'Relieve (SRTM, sombreado)',
+    titulo: 'El relieve alrededor de la parcela, en 3D',
+    resumen: 'El punto de la parcela está a {alt} m; la pendiente de su celda de 90 m es de {pend} % (SRTM). Relieve exagerado {exa} veces.',
+    controles: 'Controles de la vista 3D',
+    girarIzq: 'Girar a la izquierda',
+    girarDer: 'Girar a la derecha',
+    masInclinado: 'Inclinar más',
+    menosInclinado: 'Inclinar menos',
+    volver: 'Volver a la parcela',
+    cerrar: 'Cerrar el 3D',
+    cargando: 'Cargando la vista 3D…',
+    nota:
+      'Relieve del SRTM (cortesía del Servicio Geológico de EE. UU.) vía Terrain Tiles de Mapzen, guardado en el sitio y exagerado {exa} veces para que la pendiente se vea mejor. Imagen: Sentinel-2 sin nubes con señal; sin señal, la capa MODIS guardada. Las líneas son lo que mide cada satélite. Arrastre para moverse; con dos dedos o clic derecho, gire e incline.',
   },
 }
 

@@ -28,6 +28,13 @@
 .huella--smap i { border-top: 4px dashed #6b4a8a; }
 .huella--power i { border-top: 5px dashed #55624f; }
 
+/* Vista 3D (Relieve3D.jsx) */
+.relieve3d { display: grid; gap: 6px; }
+.relieve3d h3 { margin: 0.4rem 0 0; }
+.relieve3d-mapa { height: 420px; border-radius: var(--radio); border: 1px solid var(--linea); overflow: hidden; }
+.relieve3d .maplibregl-ctrl-attrib-button { width: 32px; height: 32px; }
+.mapa-botones .boton-3d { font-weight: 700; border-width: 2px; }
+
 /* Gráficas nuevas */
 .explorar-grafica { width: 100%; }
 .selector-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }

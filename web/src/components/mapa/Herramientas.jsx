@@ -5,10 +5,24 @@
 //   mueve con el dedo, el ratón o las flechas. Usa las teselas que ya están guardadas en el sitio.
 // - Opacidad de las capas NDVI.
 // Con movimiento reducido no hay vuelos animados.
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 import { Circle, Pane, Polygon, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import { useTx } from '../../i18n/explorar.js'
+
+// M5: la vista 3D llega con import() solo al tocar el botón (MapLibre pesa cientos de kB).
+const Relieve3D = lazy(() => import('./Relieve3D.jsx'))
+
+// A6: sin WebGL o con ahorro de datos no se ofrece el 3D; queda la capa de relieve en 2D del mapa.
+function puede3D() {
+  if (typeof navigator !== 'undefined' && navigator.connection && navigator.connection.saveData) return 'ahorro'
+  try {
+    const c = document.createElement('canvas')
+    return c.getContext('webgl2') || c.getContext('webgl') ? 'si' : 'sinWebgl'
+  } catch {
+    return 'sinWebgl'
+  }
+}
 
 const ESTILO = {
   parcela: { color: '#1d2b1a', weight: 3, fillOpacity: 0.25, fillColor: '#e0b43a' },
@@ -140,8 +154,11 @@ export function EtiquetasComparador({ pos, fechas, par }) {
 }
 
 // Fuera del mapa: botones, lista de huellas, comparador y opacidad.
-export function Herramientas({ mapa, explorar, huellas, setHuellas, comparar, setComparar, pos, setPos, opacidad, setOpacidad, fechas }) {
+export function Herramientas({ mapa, explorar, res, huellas, setHuellas, comparar, setComparar, pos, setPos, opacidad, setOpacidad, fechas }) {
   const tx = useTx()
+  const [en3D, setEn3D] = useState(false)
+  const [modo3D] = useState(puede3D)
+  useEffect(() => setEn3D(false), [explorar])
   const [paso, setPaso] = useState(null)
   const reloj = useRef(null)
   const centro = explorar ? [explorar.lat, explorar.lon] : null
@@ -200,6 +217,11 @@ export function Herramientas({ mapa, explorar, huellas, setHuellas, comparar, se
             </button>
           </>
         )}
+        {explorar && modo3D === 'si' && (
+          <button type="button" onClick={() => setEn3D(!en3D)} aria-pressed={en3D} className="boton-3d">
+            {en3D ? tx('relieve.cerrar') : tx('relieve.abrir')}
+          </button>
+        )}
         {Object.keys(PARES).map((k) => (
           <button key={k} type="button" onClick={() => abrirComparar(comparar === k ? null : k)} aria-pressed={comparar === k}>
             {tx(PARES[k].boton)}
@@ -219,6 +241,13 @@ export function Herramientas({ mapa, explorar, huellas, setHuellas, comparar, se
             {tx('capas.cerrarComparar')}
           </button>
         </div>
+      )}
+
+      {explorar && modo3D !== 'si' && <p className="nota">{tx(modo3D === 'ahorro' ? 'ligero.activo' : 'ligero.sinWebgl')}</p>}
+      {en3D && explorar && (
+        <Suspense fallback={<p className="nota" role="status">{tx('relieve.cargando')}</p>}>
+          <Relieve3D explorar={explorar} res={res} onCerrar={() => setEn3D(false)} />
+        </Suspense>
       )}
 
       <div className="mapa-rango">

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { CircleMarker, LayersControl, MapContainer, TileLayer, Tooltip, ZoomControl, useMap } from 'react-leaflet'
 import { Comparador, EtiquetasComparador, Herramientas, HuellasCapa, PARES, TomarMapa } from './mapa/Herramientas.jsx'
 import './explorar.css'
+import { useTx } from '../i18n/explorar.js'
 import { BASE } from '../lib/datos.js'
 import { useLocale, useT } from '../i18n/useT.js'
 import { leerMotor } from '../i18n/motor.js'
@@ -11,6 +12,8 @@ const CAJA = [[14.586, -89.64], [15.021, -89.214]]
 const ATRIB_GIBS = 'Imágenes: <a href="https://www.earthdata.nasa.gov/gibs">NASA GIBS</a>'
 const ATRIB_S2 =
   '<a href="https://s2maps.eu">Sentinel-2 cloudless 2021</a> de EOX (datos Copernicus Sentinel 2021), CC BY-NC-SA 4.0'
+
+const ATRIB_SRTM = 'SRTM data courtesy of the <a href="https://www.usgs.gov/">U.S. Geological Survey</a> · Terrain Tiles: Mapzen'
 
 const COLORES = { alta: '#2e7d32', media: '#c79100', baja: '#b23c17', pendiente: '#7a7a7a' }
 
@@ -76,6 +79,7 @@ const FECHAS = { ndvi_seca: '2026-03-22', ndvi_lluvia: '2026-09-14', ndvi_ago_20
 
 export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar = null }) {
   const t = useT()
+  const tx = useTx()
   const loc = useLocale()
   const quieto = menosMovimiento()
   const enLinea = useRef(null)
@@ -143,6 +147,9 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar =
             <LayersControl.Overlay name={t('mapa.ndviWet')}>
               <TileLayer url={local('ndvi_lluvia', 'png')} bounds={CAJA} minNativeZoom={7} maxNativeZoom={9} maxZoom={16} opacity={opacidad} attribution={ATRIB_GIBS} />
             </LayersControl.Overlay>
+            <LayersControl.Overlay name={tx('relieve.capa')}>
+              <TileLayer url={local('relieve', 'png')} bounds={CAJA} minNativeZoom={8} maxNativeZoom={11} maxZoom={16} attribution={ATRIB_SRTM} />
+            </LayersControl.Overlay>
           </LayersControl>
           {puntos.map((p) => {
             const nivel = p.disponible ? p.resumen?.confianza || 'media' : 'pendiente'
@@ -185,6 +192,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar =
       <Herramientas
         mapa={mapa}
         explorar={explorar}
+        res={res}
         huellas={huellas}
         setHuellas={setHuellas}
         comparar={comparar}
