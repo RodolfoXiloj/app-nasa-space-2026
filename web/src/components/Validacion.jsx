@@ -20,6 +20,9 @@ import DondeFalla from './DondeFalla.jsx'
 import Observacion2026 from './Observacion2026.jsx'
 import ProductoDecision from './ProductoDecision.jsx'
 
+// «2016, 2019 ni 2023» / «2016, 2019 or 2023»
+const unir = (xs, conj) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} ${conj} ${xs[xs.length - 1]}` : `${xs[0] ?? ''}`)
+
 const signo = (v) => (v == null ? '—' : `${v > 0 ? '+' : ''}${v}`)
 
 function TablaPowerChirps({ val, t }) {
@@ -107,6 +110,60 @@ function Tabla2018({ val, t }) {
   )
 }
 
+function TablaPerdidas({ pd, t, v }) {
+  const anios = (xs) => (xs.length ? xs.join(', ') : t('common.dash'))
+  return (
+    <table className="tabla-datos">
+      <thead>
+        <tr>
+          <th>{t('validacion.colPlot')}</th>
+          <th>{t('validacion.lossFlagged')}</th>
+          <th>{t('validacion.lossHits')}</th>
+          <th>{t('validacion.lossFalse')}</th>
+          <th>{t('validacion.lossMisses')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {pd.parcelas.map((x) => (
+          <tr key={x.id}>
+            <td>{x.municipio}</td>
+            <td className="num">{anios(x.anios_marcados)}</td>
+            <td className="num">
+              {x.aciertos} ({anios(x.anios_aciertos)})
+            </td>
+            <td className="num">
+              {x.falsas_alarmas} ({anios(x.anios_falsas_alarmas)})
+            </td>
+            <td className="num">
+              {x.fallos} ({anios(x.anios_fallos)})
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
+function ListaPerdidas({ pd, v }) {
+  return (
+    <ul className="lista-compacta">
+      {pd.anios.map((a) => (
+        <li key={a.anio}>
+          <b>{a.anio}</b>: {v(a, 'que_documenta')}. <i>{v(a, 'ambito')}.</i>{' '}
+          {a.fuentes.map((f, i) => (
+            <span key={f.id}>
+              {i ? ' · ' : ''}
+              <a href={f.url} target="_blank" rel="noreferrer">
+                {v(f, 'nombre')}
+              </a>
+            </span>
+          ))}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export default function Validacion({ res, validacion }) {
   const t = useT()
   const loc = useLocale()
@@ -131,6 +188,7 @@ export default function Validacion({ res, validacion }) {
   const localeEs = loc === 'es'
   // Textos del pipeline de validación en el idioma activo (bloques `en` de validacion.json).
   const v = (obj, campo) => leerMotor(obj, campo, loc).txt
+  const pd = validacion.perdidas_documentadas
   const arriba = dispersion.filter((d) => d.power > d.chirps).length
   const resumenPuntos = t('a11y.scatterChart', {
     n: dispersion.length,
@@ -221,6 +279,27 @@ export default function Validacion({ res, validacion }) {
               {t('common.seeReport')}
             </a>
           </div>
+        )}
+        {pd && (
+          <>
+            <h3>{t('validacion.lossTitle')}</h3>
+            <p className="sub">{t('validacion.lossSub', { n: pd.anios.length })}</p>
+            <div className="tabla-scroll" role="region" aria-label={t('a11y.table', { titulo: t('validacion.lossTitle') })} tabIndex={0}>
+              <TablaPerdidas pd={pd} t={t} v={v} />
+            </div>
+            {pd.anios_sin_marcar_en_ninguna_parcela?.length > 0 && (
+              <p className="nota">{t('validacion.lossNone', { lista: unir(pd.anios_sin_marcar_en_ninguna_parcela, localeEs ? 'ni' : 'or') })}</p>
+            )}
+            <details>
+              <summary>{t('validacion.lossSources', { n: pd.anios.length })}</summary>
+              <ListaPerdidas pd={pd} v={v} />
+              <ul className="lista-compacta">
+                {v(pd, 'notas')?.map((n) => (
+                  <li key={n}>{n}</li>
+                ))}
+              </ul>
+            </details>
+          </>
         )}
         <h3>{t('validacion.chart2', { muni: sel?.municipio })}</h3>
         <div className="grafica" role="img" aria-label={resumenSequia}>

@@ -225,6 +225,15 @@ export const messages = {
       publicBody:
         '{fuente}: Guatemala reported {ha} ha of crop losses, mainly maize and beans, and {pers} people affected; Chiquimula among the hardest-hit departments.',
       chart2: 'Water deficit of the current rotation in {muni} and greenness anomaly',
+      lossTitle: 'Against the years with documented crop losses',
+      lossSub:
+        'Same rule and thresholds, nothing re-run or tuned. Each plot’s high-risk years (2006–2025) counted against {n} years with crop losses documented in public sources.',
+      lossFlagged: 'Years flagged as high risk',
+      lossHits: 'Hits',
+      lossFalse: 'False alarms',
+      lossMisses: 'Misses',
+      lossNone: 'The engine does not flag {lista} at any plot.',
+      lossSources: 'The {n} years, what each source documents and its scope',
       serieDeficit: 'Year deficit (%)',
       serieThreshold: 'Threshold from prior years (%)',
       serieNdvi: 'NDVI anomaly Jul–Sep (SD)',
@@ -511,6 +520,15 @@ export const messages = {
       publicBody:
         '{fuente}: Guatemala reportó {ha} ha de cultivos perdidos, sobre todo maíz y frijol, y {pers} personas afectadas; Chiquimula entre los departamentos más afectados.',
       chart2: 'Déficit de agua de la rotación actual en {muni} y anomalía de verdor',
+      lossTitle: 'Contra los años con pérdidas de cosecha documentadas',
+      lossSub:
+        'La misma regla y los mismos umbrales, sin volver a correr ni ajustar nada. Los años de riesgo alto de cada parcela (2006-2025) contra {n} años con pérdidas documentadas en fuentes públicas.',
+      lossFlagged: 'Años marcados como riesgo alto',
+      lossHits: 'Aciertos',
+      lossFalse: 'Falsas alarmas',
+      lossMisses: 'Fallos',
+      lossNone: 'El motor no marca {lista} en ninguna parcela.',
+      lossSources: 'Los {n} años, qué documenta cada fuente y su ámbito',
       serieDeficit: 'Déficit del año (%)',
       serieThreshold: 'Umbral con años anteriores (%)',
       serieNdvi: 'Anomalía NDVI jul–sep (DE)',

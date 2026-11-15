@@ -124,7 +124,7 @@ export const TEXTOS = {
     parcela: 'Parcela',
     parcelaEjemplo: 'Parcela de ejemplo',
     ubicacionProvisional: 'Ubicación por confirmar',
-    titulo: 'Lo que el satélite vio en esta parcela',
+    titulo: 'Lo que el satélite vio alrededor de esta parcela',
     entradilla: 'Tres hechos de años pasados, siempre en el mismo orden. Son registros, no un pronóstico.',
     hechos: { suelo: 'Suelo desnudo', quema: 'Quema cerca de la parcela', canicula: 'Canícula larga' },
     estados: {

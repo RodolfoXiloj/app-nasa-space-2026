@@ -162,7 +162,7 @@ try {
   await ev(`document.querySelector('.agr-barra button').click()`)
   const tituloEs = await hasta(() => ev(`document.querySelector('#agr-titulo')?.textContent || null`), 10000)
   const langEs = await ev(`document.documentElement.lang`)
-  anota(tituloEs === 'Lo que el satélite vio en esta parcela' && langEs === 'es', 'Español elegido en Evidence sigue al volver a la vista del agricultor', `${langEs}: ${tituloEs}`)
+  anota(tituloEs === 'Lo que el satélite vio alrededor de esta parcela' && langEs === 'es', 'Español elegido en Evidence sigue al volver a la vista del agricultor', `${langEs}: ${tituloEs}`)
 
   // 6. qué pidió la página: lo local debe responder y lo externo fallar
   const todas = [...peticiones.values()].filter((p) => p.url.startsWith('http'))
