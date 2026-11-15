@@ -32,8 +32,7 @@ export function PixelManzanas({ ladoPixelM, m2PorManzana, lang = 'es', size = 24
 
   return (
     <figure className={className} style={{ margin: 0, display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-      <svg viewBox="0 0 240 262" width={size} height={(size * 262) / 240} role="img" aria-labelledby={`${id}-t`} data-picto="pixelManzanas" data-manzanas={manzanas.toFixed(2)}>
-        <title id={`${id}-t`}>{titulo}</title>
+      <svg viewBox="0 0 240 262" width={size} height={(size * 262) / 240} role="img" aria-label={titulo} data-picto="pixelManzanas" data-manzanas={manzanas.toFixed(2)}>
         <defs>
           <pattern id={patron} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <rect width="7" height="7" fill="var(--picto-cubierto, #fff)" />

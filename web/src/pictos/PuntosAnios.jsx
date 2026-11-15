@@ -1,4 +1,3 @@
-import { useId } from 'react'
 import { frases } from './textos.js'
 
 // Años como puntos (idea A7 del plan): «3 de 15 años» son 15 puntos y 3 llevan una llama.
@@ -37,7 +36,6 @@ const RADIO = 12
  * @param {number} columnas  puntos por fila (5 da filas de 5 años, fáciles de contar)
  */
 export function PuntosAnios({ tipo, marcados, total, columnas = 5, lang = 'es', size = 28, leyenda = true, className }) {
-  const id = useId()
   const n = Number.isInteger(total) && total > 0 ? total : 0
   const m = Math.min(Math.max(Number.isInteger(marcados) ? marcados : 0, 0), n)
   const cols = Math.min(columnas, Math.max(n, 1))
@@ -54,12 +52,11 @@ export function PuntosAnios({ tipo, marcados, total, columnas = 5, lang = 'es', 
         width={ancho * escala}
         height={alto * escala}
         role="img"
-        aria-labelledby={`${id}-t`}
+        aria-label={titulo}
         data-picto={`puntos-${tipo}`}
         data-marcados={m}
         data-total={n}
       >
-        <title id={`${id}-t`}>{titulo}</title>
         {Array.from({ length: n }, (_, i) => {
           const x = (i % cols) * PASO + PASO / 2
           const y = Math.floor(i / cols) * PASO + PASO / 2

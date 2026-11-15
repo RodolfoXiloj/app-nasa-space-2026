@@ -1,4 +1,3 @@
-import { useId } from 'react'
 import { TITULOS } from './textos.js'
 
 // Los 10 pictogramas obligatorios del paso 3 (idea A3 del plan).
@@ -7,11 +6,10 @@ import { TITULOS } from './textos.js'
 // Cuadrícula de 48 × 48; el trazo de 3 se ve de 1.5 px a 24 px y de 6 px a 96 px.
 
 export function Picto({ nombre, lang = 'es', size = 48, decorativo = false, className, children }) {
-  const id = useId()
   const titulo = TITULOS[nombre][lang] ?? TITULOS[nombre].es
   const accesible = decorativo
     ? { 'aria-hidden': true, focusable: 'false' }
-    : { role: 'img', 'aria-labelledby': id }
+    : { role: 'img', 'aria-label': titulo }
   return (
     <svg
       viewBox="0 0 48 48"
@@ -26,7 +24,6 @@ export function Picto({ nombre, lang = 'es', size = 48, decorativo = false, clas
       data-picto={nombre}
       {...accesible}
     >
-      {!decorativo && <title id={id}>{titulo}</title>}
       {children}
     </svg>
   )

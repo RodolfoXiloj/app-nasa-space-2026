@@ -68,8 +68,7 @@ export function RuedaMeses({ desnudos, poca, lang = 'es', size = 240, leyenda = 
 
   return (
     <figure className={className} style={{ margin: 0, display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-      <svg viewBox="0 0 240 240" width={size} height={size} role="img" aria-labelledby={`${id}-t`} data-picto="ruedaMeses">
-        <title id={`${id}-t`}>{titulo}</title>
+      <svg viewBox="0 0 240 240" width={size} height={size} role="img" aria-label={titulo} data-picto="ruedaMeses">
         <defs>
           <pattern id={patron} width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <rect width="7" height="7" fill="var(--picto-cubierto, #fff)" />
