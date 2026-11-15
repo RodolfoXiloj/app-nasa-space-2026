@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CircleMarker, LayersControl, MapContainer, TileLayer, Tooltip, ZoomControl, useMap } from 'react-leaflet'
-import { Comparador, EtiquetasComparador, Herramientas, HuellasCapa, TomarMapa } from './mapa/Herramientas.jsx'
+import { Comparador, EtiquetasComparador, Herramientas, HuellasCapa, PARES, TomarMapa } from './mapa/Herramientas.jsx'
 import './explorar.css'
 import { BASE } from '../lib/datos.js'
 import { useLocale, useT } from '../i18n/useT.js'
@@ -72,7 +72,7 @@ function RespaldoSinRed({ enLinea, guardada, avisar }) {
 }
 
 // Fechas de las capas NDVI guardadas (pipeline/capas.py, web/public/capas/capas.json).
-const FECHAS = { seca: '2026-03-22', lluvia: '2026-09-14' }
+const FECHAS = { ndvi_seca: '2026-03-22', ndvi_lluvia: '2026-09-14', ndvi_ago_2025: '2025-08-13', ndvi_ago_2026: '2026-08-13' }
 
 export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar = null }) {
   const t = useT()
@@ -84,7 +84,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar =
   const [mapa, setMapa] = useState(null)
   const tomar = useCallback((m) => setMapa(m), [])
   const [huellas, setHuellas] = useState(false)
-  const [comparar, setComparar] = useState(false)
+  const [comparar, setComparar] = useState(null)
   const [pos, setPos] = useState(0.5)
   const [opacidad, setOpacidad] = useState(0.75)
   const sel = parcelas.find((p) => p.id === seleccion)
@@ -165,7 +165,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar =
             )
           })}
           {comparar && (
-            <Comparador izq={local('ndvi_seca', 'png')} der={local('ndvi_lluvia', 'png')} pos={pos} caja={CAJA} opacidad={Math.max(opacidad, 0.5)} />
+            <Comparador key={comparar} izq={local(PARES[comparar].izq, 'png')} der={local(PARES[comparar].der, 'png')} pos={pos} caja={CAJA} opacidad={Math.max(opacidad, 0.5)} />
           )}
           <HuellasCapa explorar={explorar} activa={huellas} />
           <TomarMapa alTomar={tomar} />
@@ -173,7 +173,7 @@ export default function Mapa({ parcelas, seleccion, onSeleccion, res, explorar =
           <NombreCapas nombre={t('a11y.layers')} />
           <RespaldoSinRed enLinea={enLinea} guardada={guardada} avisar={setSinRed} />
         </MapContainer>
-        {comparar && <EtiquetasComparador pos={pos} fechas={FECHAS} />}
+        {comparar && <EtiquetasComparador pos={pos} fechas={FECHAS} par={comparar} />}
         </div>
         {sinRed && (
           <p className="nota-mapa aviso-sin-red" role="status">

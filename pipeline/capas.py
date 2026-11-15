@@ -20,6 +20,10 @@ CAPAS = {
     "color_real_seca": ("MODIS_Terra_CorrectedReflectance_TrueColor", "2026-03-15", "jpg", 9),
     "ndvi_seca": ("MODIS_Terra_L3_NDVI_16Day", "2026-03-22", "png", 9),
     "ndvi_lluvia": ("MODIS_Terra_L3_NDVI_16Day", "2026-09-14", "png", 9),
+    # Misma época en dos años: el compuesto de 16 días que empieza el 13 de agosto (día 225), en plena
+    # canícula, en 2025 y en 2026 (comparador de Evidence).
+    "ndvi_ago_2025": ("MODIS_Terra_L3_NDVI_16Day", "2025-08-13", "png", 9),
+    "ndvi_ago_2026": ("MODIS_Terra_L3_NDVI_16Day", "2026-08-13", "png", 9),
 }
 ZOOMS = range(7, 10)
 DESTINO = cache.RAIZ / "web" / "public" / "capas"
@@ -35,6 +39,10 @@ def bajar(margen: float = 0.08) -> dict:
     oeste, este = min(p["lon"] for p in ps) - margen, max(p["lon"] for p in ps) + margen
     sur, norte = min(p["lat"] for p in ps) - margen, max(p["lat"] for p in ps) + margen
     total = 0
+    previo = {}
+    if (DESTINO / "capas.json").exists():
+        previo = json.loads((DESTINO / "capas.json").read_text(encoding="utf-8"))
+    nuevas: dict[str, int] = {}
     for nombre, (capa, fecha, ext, nivel) in CAPAS.items():
         for z in ZOOMS:
             x0, y0 = tesela(norte, oeste, z)
@@ -48,9 +56,20 @@ def bajar(margen: float = 0.08) -> dict:
                     ruta.parent.mkdir(parents=True, exist_ok=True)
                     ruta.write_bytes(r.content)
                     total += 1
-    info = {"capas": {k: {"capa_gibs": v[0], "fecha": v[1], "formato": v[2]} for k, v in CAPAS.items()},
+                    nuevas[nombre] = nuevas.get(nombre, 0) + 1
+    ahora = cache.ahora_utc()
+    antes = previo.get("capas", {})
+
+    def descarga(k: str) -> str:
+        # La fecha en que se bajaron las teselas de esa capa; la de la corrida solo si hubo teselas nuevas.
+        if nuevas.get(k):
+            return ahora
+        return antes.get(k, {}).get("fecha_descarga") or previo.get("fecha_descarga") or ahora
+
+    info = {"capas": {k: {"capa_gibs": v[0], "fecha": v[1], "formato": v[2], "fecha_descarga": descarga(k)}
+                      for k, v in CAPAS.items()},
             "zooms": list(ZOOMS), "caja": [round(oeste, 3), round(sur, 3), round(este, 3), round(norte, 3)],
-            "fuente": "NASA GIBS (WMTS EPSG:3857)", "fecha_descarga": cache.ahora_utc()}
+            "fuente": "NASA GIBS (WMTS EPSG:3857)", "fecha_descarga": ahora}
     (DESTINO / "capas.json").write_text(json.dumps(info, ensure_ascii=False), encoding="utf-8")
     print(f"[capas] {total} teselas nuevas en {DESTINO}")
     return info

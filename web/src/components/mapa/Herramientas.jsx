@@ -115,14 +115,26 @@ export function Comparador({ izq, der, pos, caja, opacidad }) {
   )
 }
 
+// Los dos pares que se pueden comparar: capas guardadas en web/public/capas/ (pipeline/capas.py).
+export const PARES = {
+  estaciones: { izq: 'ndvi_seca', der: 'ndvi_lluvia', boton: 'capas.comparar', etqIzq: 'capas.izquierda', etqDer: 'capas.derecha', nota: null },
+  agosto: { izq: 'ndvi_ago_2025', der: 'ndvi_ago_2026', boton: 'capas.compararAgosto', etqIzq: 'capas.izquierdaAgosto', etqDer: 'capas.derechaAgosto', nota: 'capas.notaAgosto' },
+}
+
+function etiquetas(tx, par, fechas) {
+  const p = PARES[par]
+  return [tx(p.etqIzq, { fecha: fechaLarga(fechas[p.izq], tx.loc) }), tx(p.etqDer, { fecha: fechaLarga(fechas[p.der], tx.loc) })]
+}
+
 // Sobre el mapa: la línea de la división y el nombre de cada lado (decorativo: el texto va también abajo).
-export function EtiquetasComparador({ pos, fechas }) {
+export function EtiquetasComparador({ pos, fechas, par }) {
   const tx = useTx()
+  const [izq, der] = etiquetas(tx, par, fechas)
   return (
     <div className="cmp-capa" aria-hidden="true">
       <div className="cmp-division" style={{ left: `${pos * 100}%` }} />
-      <span className="cmp-etiqueta cmp-etiqueta--izq">◀ {tx('capas.izquierda', { fecha: fechaLarga(fechas.seca, tx.loc) })}</span>
-      <span className="cmp-etiqueta cmp-etiqueta--der">{tx('capas.derecha', { fecha: fechaLarga(fechas.lluvia, tx.loc) })} ▶</span>
+      <span className="cmp-etiqueta cmp-etiqueta--izq">◀ {izq}</span>
+      <span className="cmp-etiqueta cmp-etiqueta--der">{der} ▶</span>
     </div>
   )
 }
@@ -151,9 +163,9 @@ export function Herramientas({ mapa, explorar, huellas, setHuellas, comparar, se
   useEffect(detener, [explorar])
 
   // El NDVI guardado llega hasta el zoom 9: para comparar, el mapa se aleja al paisaje alrededor de la parcela.
-  const abrirComparar = (si) => {
-    setComparar(si)
-    if (!si || !mapa) return
+  const abrirComparar = (par) => {
+    setComparar(par)
+    if (!par || !mapa) return
     const zoom = Math.min(mapa.getZoom(), 10)
     const destino = centro || mapa.getCenter()
     if (menosMovimiento()) mapa.setView(destino, zoom, { animate: false })
@@ -188,9 +200,11 @@ export function Herramientas({ mapa, explorar, huellas, setHuellas, comparar, se
             </button>
           </>
         )}
-        <button type="button" onClick={() => abrirComparar(!comparar)} aria-pressed={comparar}>
-          {comparar ? tx('capas.cerrarComparar') : tx('capas.comparar')}
-        </button>
+        {Object.keys(PARES).map((k) => (
+          <button key={k} type="button" onClick={() => abrirComparar(comparar === k ? null : k)} aria-pressed={comparar === k}>
+            {tx(PARES[k].boton)}
+          </button>
+        ))}
       </div>
 
       {comparar && (
@@ -198,8 +212,12 @@ export function Herramientas({ mapa, explorar, huellas, setHuellas, comparar, se
           <label htmlFor="cmp-pos">{tx('capas.divisor')}</label>
           <input id="cmp-pos" type="range" min="0" max="100" step="1" value={Math.round(pos * 100)} onChange={(e) => setPos(Number(e.target.value) / 100)} aria-valuetext={`${Math.round(pos * 100)} %`} />
           <p className="nota">
-            ◀ {tx('capas.izquierda', { fecha: fechaLarga(fechas.seca, tx.loc) })} · {tx('capas.derecha', { fecha: fechaLarga(fechas.lluvia, tx.loc) })} ▶
+            ◀ {etiquetas(tx, comparar, fechas).join(' · ')} ▶
           </p>
+          {PARES[comparar].nota && <p className="nota">{tx(PARES[comparar].nota)}</p>}
+          <button type="button" className="enlace" onClick={() => abrirComparar(null)}>
+            {tx('capas.cerrarComparar')}
+          </button>
         </div>
       )}
 

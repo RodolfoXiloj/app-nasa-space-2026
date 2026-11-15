@@ -26,6 +26,11 @@ const en = {
   capas: {
     opacidad: 'NDVI layer opacity',
     comparar: 'Compare dry and rainy season',
+    compararAgosto: 'Compare mid-August 2025 and 2026',
+    izquierdaAgosto: '2025: NDVI from {fecha}',
+    derechaAgosto: '2026: NDVI from {fecha}',
+    notaAgosto:
+      'Same 16-day composite (from 13 August) in two years. In 2026 July and August had 20 % to 26 % of normal rain at the five plots. Paler means less green; clouds and the 16-day composite also change the picture: a preliminary observation, not proof of crop loss.',
     cerrarComparar: 'Close the comparison',
     izquierda: 'Dry season: NDVI of {fecha}',
     derecha: 'Rainy season: NDVI of {fecha}',
@@ -154,6 +159,11 @@ const es = {
   capas: {
     opacidad: 'Opacidad de las capas NDVI',
     comparar: 'Comparar época seca y época de lluvias',
+    compararAgosto: 'Comparar mediados de agosto de 2025 y 2026',
+    izquierdaAgosto: '2025: NDVI desde el {fecha}',
+    derechaAgosto: '2026: NDVI desde el {fecha}',
+    notaAgosto:
+      'El mismo compuesto de 16 días (desde el 13 de agosto) en dos años. En 2026 julio y agosto tuvieron entre el 20 % y el 26 % de la lluvia normal en las cinco parcelas. Más pálido es menos verde; las nubes y el compuesto de 16 días también cambian la imagen: es una observación preliminar, no prueba de pérdida de cosecha.',
     cerrarComparar: 'Cerrar la comparación',
     izquierda: 'Época seca: NDVI del {fecha}',
     derecha: 'Época de lluvias: NDVI del {fecha}',

@@ -13,6 +13,7 @@ import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
 import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { TEXTOS_KIT } from './textos.js'
+import { guardar, registrar, urlsParcela } from './sinSenal.js'
 import './kit.css'
 
 const ORDEN = ['suelo', 'quema', 'canicula']
@@ -135,6 +136,17 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
   const k = TEXTOS_KIT[idioma]
   // El portal y location.href existen solo en el navegador: se montan después del primer pintado.
   const [href, setHref] = useState(null)
+  // Guardar para usar sin señal: solo si el navegador registró el service worker (build, https o localhost).
+  const [puedeGuardar, setPuedeGuardar] = useState(false)
+  const [guardado, setGuardado] = useState(null)
+  useEffect(() => {
+    let vigente = true
+    registrar().then((r) => vigente && setPuedeGuardar(Boolean(r)))
+    return () => {
+      vigente = false
+    }
+  }, [])
+  useEffect(() => setGuardado(null), [pid, idioma])
   useEffect(() => {
     setHref(window.location.href)
     const quitar = () => document.documentElement.classList.remove(CLASE)
@@ -150,6 +162,11 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
   const texto = href ? resumenWhatsApp({ idioma, lugar, farmer, href }) : ''
   // El mp3 corto del idioma de la pantalla; si falta el inglés, el español.
   const mp3 = ((farmer.audio || {})[idioma] || {}).mp3 || `audio/${pid}.frases.mp3`
+
+  async function guardarAqui() {
+    setGuardado('guardando')
+    setGuardado(await guardar(urlsParcela({ parcela, farmer, idioma })))
+  }
 
   function imprimir() {
     document.documentElement.classList.add(CLASE)
@@ -169,6 +186,22 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
           {k.whatsapp}
         </a>
       </div>
+      {puedeGuardar && (
+        <div className="kit-sin-senal">
+          <button type="button" className="kit-boton kit-guardar" onClick={guardarAqui} disabled={guardado === 'guardando'}>
+            {k.guardar}
+          </button>
+          <p className="kit-detalle" aria-live="polite">
+            {guardado === 'guardando'
+              ? k.guardando
+              : guardado && guardado.ok
+                ? k.guardadoOk(Math.round(guardado.bytes / 1000))
+                : guardado
+                  ? k.guardadoError
+                  : k.guardarDetalle}
+          </p>
+        </div>
+      )}
       {href && createPortal(<Hoja idioma={idioma} lugar={lugar} nombre={nombre} farmer={farmer} rotaciones={rotaciones} href={href} />, document.body)}
     </section>
   )

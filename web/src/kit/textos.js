@@ -13,6 +13,11 @@ export const TEXTOS_KIT = {
     confianza: 'How sure we are:',
     web: 'Full page:',
     resumen: (lugar) => `Milpa Resiliente, ${lugar}`,
+    guardar: 'Save to use without signal',
+    guardarDetalle: 'Keeps this plot, its short audio and its subtitles on this phone, so the page opens without signal.',
+    guardando: 'Saving…',
+    guardadoOk: (kb) => `Saved: ${kb} kB on this phone. This plot opens without signal.`,
+    guardadoError: 'Could not save. Check the connection and try again.',
   },
   es: {
     titulo: 'Compartir esta parcela',
@@ -26,5 +31,10 @@ export const TEXTOS_KIT = {
     confianza: 'Qué tan seguros estamos:',
     web: 'Página completa:',
     resumen: (lugar) => `Milpa Resiliente, ${lugar}`,
+    guardar: 'Guardar para usar sin señal',
+    guardarDetalle: 'Guarda esta parcela, su audio corto y sus subtítulos en este teléfono, para abrir la página sin señal.',
+    guardando: 'Guardando…',
+    guardadoOk: (kb) => `Guardado: ${kb} kB en este teléfono. Esta parcela abre sin señal.`,
+    guardadoError: 'No se pudo guardar. Revise la conexión e intente otra vez.',
   },
 }

@@ -64,3 +64,7 @@
 .kit-opciones ol { margin: 2pt 0; padding-left: 16pt; }
 .kit-opciones li[data-destaca] { font-weight: 700; }
 .kit-aviso { margin-top: 8pt !important; padding: 5pt 8pt; border: 2pt solid #000; font-weight: 700; font-size: 12pt; }
+
+/* Guardar para usar sin señal (kit/sinSenal.js) */
+.agr .kit .kit-sin-senal { margin-top: 12px; display: grid; gap: 4px; justify-items: start; }
+.agr .kit .kit-guardar[disabled] { opacity: 0.7; cursor: progress; }

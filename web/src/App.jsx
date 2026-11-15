@@ -13,6 +13,7 @@ import { LineaObservacion2026 } from './components/Observacion2026.jsx'
 import CaniculaDias from './components/CaniculaDias.jsx'
 import LluviaJulAgo from './components/LluviaJulAgo.jsx'
 import Biblioteca, { AguaCiclo } from './components/Biblioteca.jsx'
+import { registrar } from './kit/sinSenal.js'
 import { useLocale, useT } from './i18n/useT.js'
 import { leerMotor } from './i18n/motor.js'
 
@@ -36,6 +37,11 @@ export default function App({ pidInicial = null }) {
   const [validacion, setValidacion] = useState(null)
   const [futuros, setFuturos] = useState(null)
   const [explorar, setExplorar] = useState(null)
+
+  // Uso sin señal: el mismo service worker que registra el kit (kit/sinSenal.js).
+  useEffect(() => {
+    registrar()
+  }, [])
 
   useEffect(() => {
     cargarJSON('data/futuros_nasa.json')

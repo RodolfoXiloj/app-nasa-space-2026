@@ -313,6 +313,9 @@ def caso_a11y(navegador, ancho: int, alto: int, idioma: str) -> None:
         pag.keyboard.press("Tab")
     esperado = [".agr-idioma", ".agr-idioma", "#agr-parcela", ".agr-escuchar-boton",
                 ".kit-imprimir", ".kit-audio", ".kit-whatsapp", ".agr-evidencia"]
+    # «Guardar para usar sin señal» solo sale si el navegador registró el service worker (kit/sinSenal.js).
+    if pag.locator(".kit-guardar").count():
+        esperado.insert(-1, ".kit-guardar")
     anota(paradas == esperado and not sin_foco, f"{pre}: orden de tabulación lógico y foco visible en cada parada",
           " > ".join(paradas) + (f"; sin foco visible: {sin_foco}" if sin_foco else ""))
 
