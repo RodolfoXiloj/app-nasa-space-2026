@@ -66,7 +66,7 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 ## Qué falta
 
 **Necesita a una persona** (ninguna tiene resultado anotado todavía)
-- Las 7 pruebas con personas de `docs/es/pruebas-personas/`: formulario y Members, TalkBack en un Android real e impresión en blanco y negro (Rodolfo); escucha de los 20 audios y cifras en pantalla (Mario); comprensión de los pictogramas con 3 a 5 adultos e inglés en voz alta (Iván).
+- Las pruebas con personas de `docs/es/pruebas-personas/` que faltan: formulario y Members, TalkBack en un Android real e impresión en blanco y negro (Rodolfo); cifras en pantalla (Mario); comprensión de los pictogramas con 3 a 5 adultos e inglés en voz alta (Iván). Hecha: la escucha de los audios (Mario, 14 nov: se entienden y la velocidad está bien).
 - Prueba en un teléfono real con `docs/es/prueba-telefono.md`: servir en la red local, recorrer la lista y anotar los resultados.
 - Conversación con un agricultor y con un extensionista: las preguntas, parcela por parcela, están en `docs/es/preguntas-agricultor.md`. Con ellas se confirman los 5 puntos, los límites municipales de Olopa y San Juan Ermita, los años malos y las fechas y duraciones que hoy son supuestos.
 - Revisar con un agrónomo o extensionista las reglas de puntaje y las 8 plantillas (preguntas en `docs/es/revision-plan.md`, sección 3.2).
@@ -77,7 +77,7 @@ Está en la primera pantalla de la web y en detalle en la pestaña Validación. 
 - POWER antes de 2001: su lluvia (PRECTOTCORR) es MERRA-2 corregido con el análisis de pluviómetros CPC Unified (definición de la API de POWER; Reichle y Liu, 2021, NASA/TM-2021-104606 vol. 59, p. 7), que falla donde hay pocos pluviómetros. Ninguna fuente documenta un cambio en 2001, así que la causa exacta del salto sigue sin confirmar. No afecta al motor: usa 2001-2025 y toma el total de lluvia de CHIRPS.
 - Camotán sin SMAP: la segunda tarea con SPL4SMGP (modelo, zona de raíces) tardaría horas y habría que rotularla como modelo. Queda como está.
 
-**De entrega:** la web, el README, los documentos principales y las 7 diapositivas (`docs/slides/`, PDF de 7 páginas) ya están en inglés. El sitio está desplegado en https://milpa-resiliente.onrender.com/ (68 de 68 archivos y 24 de 24 comprobaciones en navegador sobre el sitio publicado, 14 nov 2026). Pendientes, de Rodolfo: hacer público el repositorio, consultar la categoría de la URL en FortiGuard (pide captcha y correo) y pegar el borrador de `docs/project-page-en.md` en el formulario de Space Apps revisando el límite de cada campo.
+**De entrega:** la web, el README, los documentos principales y las 7 diapositivas (`docs/slides/`, PDF de 7 páginas) ya están en inglés. El sitio está desplegado en https://milpa-resiliente.onrender.com/ (68 de 68 archivos y 24 de 24 comprobaciones en navegador sobre el sitio publicado, 14 nov 2026). Pendientes, de Rodolfo: hacer público el repositorio, revisar la respuesta de FortiGuard (la solicitud de categoría *Education* se envió el 14 nov) y pegar el borrador de `docs/project-page-en.md` en el formulario de Space Apps revisando el límite de cada campo.
 
 ## Comandos
 

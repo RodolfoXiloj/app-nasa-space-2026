@@ -8,6 +8,15 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## People tests: first results (Saturday 14 Nov 2026)
+
+Reported by the team at 19:12 (UTC−6); the exact time of each test was not recorded.
+
+| Test | Who | Result |
+|---|---|---|
+| Listening to the audio files (`docs/es/pruebas-personas/mario-audios.md`) | Mario | ✅ "It is understandable." He found the voice speed right. The guide's file-by-file table was not filled in, so there is no per-file record of pronunciation or subtitle timing |
+| FortiGuard category request for `milpa-resiliente.onrender.com` | Rodolfo | Sent, suggesting the *Education* category. Waiting for the answer (the page says about 24 hours) |
+
 ## New repository and live site: Saturday 14 Nov 2026
 
 Changes: the Validation tab shows the table of years with documented crop losses; the farmer view's Spanish heading reads «Lo que el satélite vio alrededor de esta parcela»; a note on POWER rain before 2001. The code went to the new repository `RodolfoXiloj/app-nasa-space-2026` (private until submission) and the site is live at https://milpa-resiliente.onrender.com/ (Render static site governed by `render.yaml`). Times from `date` (UTC−6).

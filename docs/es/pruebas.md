@@ -6,6 +6,15 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Pruebas con personas: primeros resultados (sábado 14 nov 2026)
+
+Informados por el equipo a las 19:12 (UTC−6); la hora exacta de cada prueba no quedó registrada.
+
+| Prueba | Quién | Resultado |
+|---|---|---|
+| Escucha de los audios (`docs/es/pruebas-personas/mario-audios.md`) | Mario | ✅ «Se entiende». La velocidad de la voz le pareció bien. La tabla de la guía, audio por audio, no se llenó: no hay registro por archivo de pronunciación ni de sincronía de subtítulos |
+| Solicitud de categoría en FortiGuard para `milpa-resiliente.onrender.com` | Rodolfo | Enviada, con la categoría sugerida *Education*. Pendiente la respuesta (la página dice unas 24 horas) |
+
 ## Repositorio nuevo y sitio publicado: sábado 14 nov 2026
 
 Cambios: pestaña Validación con la tabla de años con pérdidas documentadas; título en español de la vista del agricultor «Lo que el satélite vio alrededor de esta parcela»; nota sobre la lluvia de POWER antes de 2001. El código se subió al repositorio nuevo `RodolfoXiloj/app-nasa-space-2026` (privado hasta el envío) y el sitio quedó en https://milpa-resiliente.onrender.com/ (Render, sitio estático gobernado por `render.yaml`). Horas de `date` (UTC−6).
