@@ -4,7 +4,7 @@
 //
 // Dos cachés:
 // - APP (con la versión en el nombre): la página y los archivos del build. Un despliegue nuevo la reemplaza.
-// - DATOS (sin versión): datos, audio, subtítulos, capas y relieve. Un despliegue NO la borra: lo que la
+// - DATOS (sin versión): datos, audio, subtítulos, capas y relieve (relieve3d/). Un despliegue NO la borra: lo que la
 //   persona guardó con el botón del kit sigue ahí. Al instalarse una versión nueva con señal, lo guardado
 //   de data/ y audio/ se vuelve a bajar para que el audio diga lo mismo que los datos.
 //
@@ -12,7 +12,7 @@
 //   de señal que no carga, sale la copia guardada en vez de una pantalla en blanco. Si la red responde
 //   después, la copia se actualiza por detrás.
 // - Archivos del build (assets/, con hash en el nombre): primero la copia guardada.
-// - Capas y relieve (capas/, terreno/): la copia guardada al instante y, si hay red, se actualiza por detrás.
+// - Capas y relieve (capas/, relieve3d/): la copia guardada al instante y, si hay red, se actualiza por detrás.
 // - Audio (audio/): solo lo que el botón «Guardar para usar sin señal» guardó a pedido de la persona.
 //   La primera pantalla no descarga audio (docs/peso.md); aquí tampoco se baja por su cuenta.
 //   El <audio> pide rangos de bytes: se responden cortando la copia completa (206).
@@ -155,7 +155,7 @@ self.addEventListener('fetch', (e) => {
   if (r.startsWith('assets/')) return e.respondWith(primeroGuardado(req))
   if (r.startsWith('audio/')) return e.respondWith(audio(req))
   if (r.startsWith('data/')) return e.respondWith(redConPlazo(req, e, DATOS, () => caches.match(req, COMO)))
-  if (r.startsWith('capas/') || r.startsWith('terreno/') || r === 'manifest.webmanifest' || r.startsWith('icono')) {
+  if (r.startsWith('capas/') || r.startsWith('relieve3d/') || r === 'manifest.webmanifest' || r.startsWith('icono')) {
     return e.respondWith(guardadoYActualiza(req, e))
   }
 })

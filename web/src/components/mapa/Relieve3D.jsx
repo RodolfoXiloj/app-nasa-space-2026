@@ -1,7 +1,9 @@
 // M5: el relieve alrededor de la parcela en 3D (MapLibre GL JS). Llega con import() solo cuando alguien toca
 // «Ver el relieve en 3D»: ni la primera pantalla ni Evidence cargan este archivo por su cuenta.
-// - Relieve: teselas Terrarium guardadas en web/public/terreno/ (pipeline/clientes/terreno.py; SRTM, cortesía
-//   del USGS, vía Terrain Tiles de Mapzen), exagerado 1.5 veces, y sombreado.
+// - Relieve: teselas guardadas en web/public/relieve3d/ (pipeline/clientes/terreno.py; SRTM, cortesía del USGS,
+//   vía Terrain Tiles de Mapzen), exagerado 1.5 veces, y sombreado. Codificación propia: altura = (R + G + B) × 4 m.
+//   Con Terrarium (rojo × 256 m) un teléfono que altera ±1 los píxeles al leerlos dibujaba picos de cientos de
+//   metros; así el error es de 4 m.
 // - Imagen: Sentinel-2 sin nubes (EOX) con señal; sin señal queda la capa MODIS guardada en el sitio.
 // - Encima, las huellas de cada producto (data/explorar/{pid}.json) pegadas al terreno.
 // La alternativa en texto da la altitud y la pendiente que ya trae el JSON del motor (parcela.terreno).
@@ -18,6 +20,8 @@ const EXAGERACION = 1.5
 const CAJA = [-89.64, 14.586, -89.214, 15.021]
 const COLOR = { parcela: '#e0b43a', modis: '#3f7d3a', firms: '#b23c17', chirps: '#1f4f7a', smap: '#6b4a8a', power: '#55624f' }
 const VISTA = { zoom: 13.4, pitch: 62, bearing: -28 }
+// La codificación de web/public/relieve3d/relieve3d.json (pipeline/clientes/terreno.py).
+const ALTURA = { encoding: 'custom', redFactor: 4, greenFactor: 4, blueFactor: 4, baseShift: 0 }
 
 function circulo([lat, lon], radio, n = 64) {
   const R = 6371008.8
@@ -67,9 +71,9 @@ export default function Relieve3D({ explorar, res, onCerrar }) {
             attribution: 'NASA GIBS (MODIS)' },
           s2: { type: 'raster', tiles: ['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2021_3857/default/g/{z}/{y}/{x}.jpg'], tileSize: 256, maxzoom: 15,
             attribution: 'Sentinel-2 cloudless 2021 by EOX (Copernicus Sentinel data 2021), CC BY-NC-SA 4.0' },
-          dem: { type: 'raster-dem', tiles: [`${base}terreno/{z}/{x}/{y}.png`], encoding: 'terrarium', tileSize: 256, minzoom: 8, maxzoom: 11, bounds: CAJA,
+          dem: { type: 'raster-dem', tiles: [`${base}relieve3d/{z}/{x}/{y}.png`], ...ALTURA, tileSize: 256, minzoom: 8, maxzoom: 11, bounds: CAJA,
             attribution: 'SRTM data courtesy of the U.S. Geological Survey · Terrain Tiles: Mapzen' },
-          sombra: { type: 'raster-dem', tiles: [`${base}terreno/{z}/{x}/{y}.png`], encoding: 'terrarium', tileSize: 256, minzoom: 8, maxzoom: 11, bounds: CAJA },
+          sombra: { type: 'raster-dem', tiles: [`${base}relieve3d/{z}/{x}/{y}.png`], ...ALTURA, tileSize: 256, minzoom: 8, maxzoom: 11, bounds: CAJA },
           huellas: { type: 'geojson', data: geoHuellas(explorar) },
           punto: { type: 'geojson', data: { type: 'Feature', properties: {}, geometry: { type: 'Point', coordinates: centro } } },
         },

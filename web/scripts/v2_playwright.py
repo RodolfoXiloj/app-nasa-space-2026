@@ -132,7 +132,7 @@ def prueba(nav, ancho: int, idioma: str) -> None:
             pg.locator(".boton-3d").click()
             pg.wait_for_selector(".relieve3d canvas", timeout=40000)
             pg.wait_for_timeout(3000)
-            anota(pg.locator(".relieve3d canvas").count() == 1 and any("/terreno/" in u for u in pedidas),
+            anota(pg.locator(".relieve3d canvas").count() == 1 and any("/relieve3d/" in u for u in pedidas),
                   f"{pre}: la vista 3D dibuja su lienzo y pide el relieve guardado")
             anota(bool(resumen(pg, ".relieve3d .resumen-grafica")), f"{pre}: la vista 3D tiene su texto · «{resumen(pg, '.relieve3d .resumen-grafica')[:60]}»")
             pg.locator(".boton-3d").click()

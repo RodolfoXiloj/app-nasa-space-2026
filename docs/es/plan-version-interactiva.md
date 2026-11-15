@@ -279,7 +279,7 @@ Todo en la rama local `v2-interactiva`, con la batería completa en verde despu�
 | M2 Opacidad NDVI | Hecho | |
 | M3 Antes y después | Hecho, los dos pasos | Paso 2: compuesto del 13 de agosto de 2025 y de 2026; en 2026 se ven manchas pálidas al norte (valle hacia Zacapa). Rótulo de observación preliminar |
 | M4 Relieve sombreado | Hecho | Las teselas salen de AWS Terrain Tiles (SRTM, cortesía del USGS) y no de LP DAAC, porque la contraseña de Earthdata no está en disco |
-| M5 Vista 3D | Hecho, con compuerta | MapLibre GL JS **6.16.0** y no 4.7.1: la 4.x tiene un aviso crítico de XSS (GHSA-jrc7-96c5-q579). Pesa 1069 kB (294 kB comprimido) más el worker, solo al tocar el botón; no se ofrece sin WebGL ni con ahorro de datos |
+| M5 Vista 3D | Hecho, con compuerta. **Arreglado el 14 nov a las 22:50:** en el Android de Rodolfo el relieve salía en picos de cientos de metros. Causa reproducida: su navegador altera ±1 los píxeles al leerlos y MapLibre, sin `VideoFrame`, usa esos píxeles; en Terrarium una unidad de rojo son 256 m. Ahora el relieve va recodificado en `web/public/relieve3d/` (altura = (R + G + B) × 4 m: el error baja a 4 m) y las originales quedan en `data/cache/terreno/`; prueba en `tests/test_terreno.py` | MapLibre GL JS **6.16.0** y no 4.7.1: la 4.x tiene un aviso crítico de XSS (GHSA-jrc7-96c5-q579). Pesa 1069 kB (294 kB comprimido) más el worker, solo al tocar el botón; no se ofrece sin WebGL ni con ahorro de datos |
 | G1 Agua del ciclo | Hecho | El último punto de cada curva es igual a `balance_ciclo` (prueba) |
 | G2 Canícula día por día | Hecho | La ventana es la del motor (15 jun a 31 ago, 78 días), no junio-agosto completo |
 | G3 Nube de modelos | Hecho | |
