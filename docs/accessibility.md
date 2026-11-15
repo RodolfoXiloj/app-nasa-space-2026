@@ -122,3 +122,23 @@ Done after this pass (14 Nov 2026):
 Still pending:
 
 - On a real phone with TalkBack: the reading of the long chart summaries, the table regions while scrolling sideways, the map controls, and the calendar list.
+
+## Interactive version (v2)
+
+Branch `v2-interactiva`, Saturday 14 Nov 2026 (night). The new pieces follow the same rules; the checks below run in `web/scripts/evidence_playwright.py` (the default state of Evidence), `web/scripts/v2_playwright.py` (each piece used as a person would) and `web/scripts/agricultor_playwright.py`.
+
+| Piece | What keeps it accessible |
+|---|---|
+| Listen highlight (farmer view) | The card the voice is reading gets a 5 px black outline, not a colour. With reduced motion the pictogram does not grow. Focus never moves; the subtitles were already announced, so the outline adds no second announcement. The "hear one fact again" buttons are 48 px and named after each fact |
+| Sound bars on Listen | Decorative (`aria-hidden`); still with reduced motion |
+| Share image (kit) | Each fact keeps its shape, word, drawing and the engine's sentence, so the image reads the same in black and white |
+| Save to use without signal (kit) | A 48 px button with its status in an `aria-live` line; it is one more stop in the tab order, between WhatsApp and Evidence |
+| Satellite footprints (map) | A checkbox with its label; every footprint is also in a text list with its size and a 48 px "Zoom to it" button. Lines differ by dash pattern as well as colour. The step-by-step zoom jumps without animation with reduced motion |
+| Two-date comparison (map) | The divider is an `<input type="range">` that moves with the arrow keys; the dates of each side are written below the map as well as on it |
+| NDVI opacity | A labelled `<input type="range">` with its value read as a percentage |
+| 3D view | Opens only on request; its text gives the plot's altitude and slope from the engine JSON and says the relief is exaggerated 1.5 times; the canvas is `role="img"` with that text; turn, tilt, back and close are 48 px buttons, so it can be used without dragging. Without WebGL or with data saving it is not offered and a sentence says why |
+| Canícula day by day | The SVG is `role="img"` with the count of long dry spells; dry days are dark and rainy days light (luminance, not hue), long spells have a thick outline, and every year is also a 48 px button with its longest spell in text |
+| Water curve, July–August 2026, model cloud | `role="img"` with a summary built from the data, a visible summary line, a dashed rain line and a hatched deficit; 2026 bars are hatched and every bar carries its value; the model cloud uses filled circles and crosses and has a table of the models |
+| Library | Template buttons with `aria-pressed`; the scores sit in a table inside a named, focusable scroll region; in English the template's source is a labelled Spanish quote |
+
+Still pending for v2: the same real-phone TalkBack pass as above, now also on the Listen highlight, the share image and the 3D view's buttons.

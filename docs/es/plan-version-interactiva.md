@@ -12,8 +12,9 @@ Esfuerzo: **S** son unas horas, **M** cerca de un día y **L** varios días.
 | **Interactiva (v2)** | `v2-interactiva` | Todo lo de este plan | Un segundo sitio estático en Render que sigue esta rama. Se crea aparte, sin tocar el `render.yaml` de `main`, después del envío y con las condiciones de «Lo que dicen las reglas», más abajo. La rama no lleva la investigación de competidores |
 
 - `lite` y `v2-interactiva` salen de `main` en `29b9d18`. Hasta el envío (domingo 15 nov, 12:00, hora de Guatemala) `main` todavía puede recibir arreglos. Al enviar, `lite` avanza a ese mismo commit (avance directo, sin forzar) y el commit se marca con la etiqueta `entrega-2026-11-15`.
-- **Decidido por Rodolfo (sábado 14 nov, noche):** la versión que se entrega es la lite; v2 no entra a `main` por ahora; la investigación de competidores no se sube a GitHub. Queda como archivo local, fuera de git: está en `.git/info/exclude` y en ningún commit.
-- **Después del envío, nada de v2 entra a `main` hasta que se anuncien los ganadores globales de 2026.** El formulario enlaza al sitio de Render, y Render lo reconstruye con cada push a `main`: si v2 entrara, los jueces verían un sitio distinto del enviado.
+- **Decidido por Rodolfo (sábado 14 nov, noche):** la investigación de competidores no se sube a GitHub. Queda como archivo local, fuera de git: está en `.git/info/exclude` y en ningún commit.
+- **Decisión nueva de Rodolfo (sábado 14 nov, 20:30):** se trabaja el plan y, **si todo sale bien, v2 se lanza a `main` antes del envío; si no, se entrega la versión lite.** El corte y la lista para decidir están en la sección 12.
+- **Después del envío no entra nada nuevo a `main` hasta que se anuncien los ganadores globales de 2026.** El formulario enlaza al sitio de Render, y Render lo reconstruye con cada push a `main`: lo que se vea al enviar es lo que deben ver los jueces.
 - `v2-interactiva` trae los arreglos de `main` con merge, nunca con rebase.
 - Las ramas de trabajo de v2 (sección 6) salen de `v2-interactiva` y Rodolfo las une, igual que con los carriles de [carriles.md](carriles.md).
 - La idea de «lite» sigue viva dentro de v2: la primera pantalla de v2 sigue siendo ligera (regla 1) y el ítem A6 deja abrir la versión ligera en teléfonos que piden ahorro de datos.
@@ -230,9 +231,9 @@ Cada fase cierra con la batería de la regla 7 y con una fila nueva en `docs/pes
 
 ## 7. Antes del envío (domingo 15 nov, 12:00)
 
-v2 no tiene que estar lista para el envío. Para la versión lite hay dos opciones:
+> Esta sección quedó superada por la decisión de las 20:30 (sección 1): ahora v2 se lanza antes del envío si pasa la lista de la sección 12. Las dos opciones de abajo eran para la versión lite.
 
-**Decidido: opción (a).** La versión lite es la de la entrega.
+Para la versión lite había dos opciones:
 
 - **(a) Recomendada: no tocar el sitio.** Se termina solo lo que pide la entrega: el formulario, hacer público el repo y las pruebas con personas ([revision-plan.md](revision-plan.md)).
 - **(b) Si sobra tiempo y Rodolfo lo decide:** G3 y M2 son solo de Evidence. No tocan la primera pantalla, el motor ni el contrato, y usan datos que ya están. Entrarían a `main` con la batería completa antes de las 10:00, para dejarle margen a Render (el CDN puede guardar un 404 hasta 300 s después de desplegar).
@@ -259,11 +260,77 @@ Si se quiere la fila de OpenET en los documentos de la entrega, se lleva con la 
 
 Tomadas por Rodolfo el sábado 14 nov, en la noche:
 
-1. La entrega es la versión lite, sin G3 ni M2 (sección 7).
-2. v2 no entra a `main` hasta que se anuncien los ganadores globales (sección 1).
+1. ~~La entrega es la versión lite, sin G3 ni M2 (sección 7).~~ Cambió a las 20:30: si todo sale bien se entrega v2; si no, la lite (sección 12).
+2. Después del envío no entra nada nuevo a `main` hasta que se anuncien los ganadores globales (sección 1).
 3. La investigación de competidores no se sube a GitHub. Las ramas `lite` y `v2-interactiva` sí se pueden subir cuando Rodolfo lo pida.
 4. v2 se publica en un segundo sitio de Render, con las tres condiciones de la sección 1. Lo recomendado es crearlo cuando la fase 1 tenga algo que mostrar.
 5. Se acepta `maplibre-gl` para M5 si primero se mide. Las otras condiciones de la compuerta siguen en pie.
 6. S1 va solo en Evidence, para el extensionista; la vista del agricultor se queda con tres opciones (fue la recomendación de este plan).
 
 No queda nada pendiente de decidir para arrancar la fase 1.
+
+## 11. Cómo quedó cada ítem (sábado 14 nov, 21:30)
+
+Todo en la rama local `v2-interactiva`, con la batería completa en verde después de cada tanda (registro en [pruebas.md](pruebas.md)).
+
+| Ítem | Estado | Notas |
+|---|---|---|
+| M1 Lo que ve cada satélite | Hecho | `motor/huellas.py`; el píxel de MODIS mide 231.66 m (5.37 ha), no los 250 m nominales: el README se corrigió de 6.25 ha a «unas 5.4 ha» |
+| M2 Opacidad NDVI | Hecho | |
+| M3 Antes y después | Hecho, los dos pasos | Paso 2: compuesto del 13 de agosto de 2025 y de 2026; en 2026 se ven manchas pálidas al norte (valle hacia Zacapa). Rótulo de observación preliminar |
+| M4 Relieve sombreado | Hecho | Las teselas salen de AWS Terrain Tiles (SRTM, cortesía del USGS) y no de LP DAAC, porque la contraseña de Earthdata no está en disco |
+| M5 Vista 3D | Hecho, con compuerta | MapLibre GL JS **6.16.0** y no 4.7.1: la 4.x tiene un aviso crítico de XSS (GHSA-jrc7-96c5-q579). Pesa 1069 kB (294 kB comprimido) más el worker, solo al tocar el botón; no se ofrece sin WebGL ni con ahorro de datos |
+| G1 Agua del ciclo | Hecho | El último punto de cada curva es igual a `balance_ciclo` (prueba) |
+| G2 Canícula día por día | Hecho | La ventana es la del motor (15 jun a 31 ago, 78 días), no junio-agosto completo |
+| G3 Nube de modelos | Hecho | |
+| G4 2026 frente a otros años | Hecho | Las cifras coinciden con `validacion.json` (prueba) |
+| G5 Escenarios con transición | No se hizo | Aporta poco frente al resto |
+| A1 La voz señala el hecho | Hecho | Sin tocar el motor: las frases de `farmer.frases` ya van en el orden de los subtítulos |
+| A2 Repetir una frase | Hecho | |
+| A3 Pictogramas que se mueven | No se hizo | Espera la prueba de comprensión de pictogramas |
+| A4 Tocar un hecho | No se hizo | Espera la prueba con personas |
+| A5 Sin señal | Hecho | Prueba que apaga el servidor y recarga: 20 de 20 |
+| A6 Modo ligero | Hecho en parte | Sin WebGL o con ahorro de datos no se ofrece el 3D; no hay enlace manual a una «versión ligera» |
+| K1 Imagen para WhatsApp | Hecho | |
+| S1 Biblioteca | Hecho, paso 1 | Paso 2 (futuros de cada plantilla) no se hizo |
+| D1 a D4 | Hechos | README, `docs/peso.md`, `docs/accessibility.md` y esta página |
+
+Fuentes: `data/fuentes.yaml` suma «terrain_tiles» (39 fuentes; antes 38). Al volver a exportar, solo cambió el bloque de fuentes de cada JSON de parcela.
+
+## 12. Lanzar o no: el corte de las 09:00 del domingo
+
+Se decide a las **09:00 del domingo 15 nov**, para dejar tres horas para unir, desplegar, revisar el sitio en vivo y enviar el formulario antes de las 12:00. Si a las 09:00 falta algo de esta lista, se entrega la versión lite y v2 sigue para después.
+
+**Lista para lanzar (todo con «sí»):**
+
+1. La batería completa pasa sobre el último commit de `v2-interactiva`: `python -m pytest`, `npm run smoke`, `npm run build` (primera pantalla ≤ 172 kB), `npm run sin-red`, `scripts/agricultor_playwright.py`, `scripts/evidence_playwright.py`, `scripts/sin_senal_playwright.py` y `scripts/v2_playwright.py`.
+2. La revisión independiente del código no dejó nada que bloquee, o lo que dejó ya está arreglado.
+3. Rodolfo abrió una vez, con `npm run preview`, las piezas nuevas (huellas, comparador, 3D, gráficas, biblioteca, imagen de WhatsApp, «Guardar para usar sin señal») y está de acuerdo con lo que dicen.
+4. Un teléfono Android (o el emulador) abre la primera pantalla, Escuchar suena y Evidence abre.
+5. `main` sigue en `29b9d18`, o lo nuevo de `main` ya se unió a `v2-interactiva` con merge y la batería volvió a pasar.
+
+**Cómo lanzar (sin forzar nada):**
+
+1. Desde esta rama: `git push origin v2-interactiva:main`. Es un avance directo de `main`, porque `v2-interactiva` sale de `29b9d18`; si Git lo rechaza por no ser avance directo, primero se une `main` a `v2-interactiva` (paso 5 de la lista). Nunca `--force`.
+2. Render reconstruye solo. El build hace `npm ci`, así que instala `maplibre-gl` desde `package-lock.json`. El CDN puede guardar un 404 hasta 300 s.
+3. Revisar el sitio en vivo en una ventana privada, en los dos idiomas: primera pantalla, Escuchar con el hecho marcado, kit (imagen y guardar), Evidence con huellas, comparador, 3D y gráficas.
+4. Si todo está bien: `lite` se queda en `29b9d18` como respaldo, y el commit enviado se marca con la etiqueta `entrega-2026-11-15`.
+5. El formulario puede sumar una frase sobre lo nuevo; las cuentas de palabras de `docs/project-page-en.md` hay que rehacerlas si se cambia algo.
+
+**Cómo volver a la versión lite si algo sale mal (sin forzar nada):**
+
+1. `git revert --no-commit 29b9d18..main` y un commit «revert: back to the lite version»; deja el contenido igual al de `29b9d18` sin reescribir historial. Push normal a `main`.
+2. Agregar en ese mismo commit un `web/public/sw.js` que se retira solo, para que los teléfonos que alcanzaron a abrir v2 no se queden con su caché:
+
+```js
+self.addEventListener('install', () => self.skipWaiting())
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys()
+      .then((ks) => Promise.all(ks.filter((k) => k.startsWith('milpa-')).map((k) => caches.delete(k))))
+      .then(() => self.registration.unregister())
+      .then(() => self.clients.matchAll())
+      .then((cs) => cs.forEach((c) => c.navigate(c.url))),
+  )
+})
+```

@@ -9,3 +9,8 @@ services:
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
     pullRequestPreviewsEnabled: false
+    # The service worker must always be checked against the server, so a new deploy replaces the old cache.
+    headers:
+      - path: /sw.js
+        name: Cache-Control
+        value: no-cache
