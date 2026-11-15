@@ -6,6 +6,27 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## `main` con `entrega-impacto-6` unida y las guías corregidas: sábado 14 nov 2026
+
+`entrega-impacto-6` se puso encima de `main` (que ya traía la línea de julio-agosto 2026 del agricultor y las guías de pruebas con personas). Sobre eso: capturas de `docs/capturas/` rehechas desde el sitio actual (script nuevo `web/scripts/evidence_capturas.py`), capturas y PDF de las diapositivas regenerados, la tarjeta de Evidence ya no repite «Lo que ve el satélite:» ni «Fecha de siembra:», las guías de `docs/es/pruebas-personas/` corregidas contra el texto real del sitio, `docs/es/preguntas-agricultor.md` y una prueba nueva (`tests/test_repo.py`: nada de lo que excluye `.gitignore` está en el repo). Mismo equipo: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. Horas de `date` (UTC−6).
+
+| Hora | Qué | Comando | Resultado |
+|---|---|---|---|
+| 17:56:08 a 17:56:14 | Build | `cd web && npm run build` | ✅ «526 modules transformed», «built in 4.65s»; JS inicial `index` 171.70 kB (gzip 56.85 kB), JS de Evidence 673.30 kB (gzip 190.77 kB); salida 0 |
+| 17:56:14 a 17:56:43 | Capturas de Evidence | `cd web && python scripts/evidence_capturas.py` | ✅ «26 capturas»; salida 0 |
+| 17:56:44 a 17:57:00 | Capturas del agricultor | `cd web && python scripts/agricultor_playwright.py --capturas` | ✅ «96 de 96 comprobaciones pasan»; salida 0 |
+| 17:57:00 a 17:57:07 | Capturas de las diapositivas | `cd web && python scripts/slides_capturas.py` | ✅ 4 capturas «OK»; salida 0 |
+| 17:57:07 a 17:57:09 | PDF de las diapositivas | `cd web && python scripts/slides_pdf.py` | ✅ «docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)»; salida 0 |
+| 17:57:09 a 17:57:24 | Pruebas automáticas | `python -m pytest -q` | ✅ solo puntos, hasta «[100%]», sin fallas; salida 0 |
+| 17:57:24 a 17:57:40 | Pruebas automáticas con el total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ «250 passed in 15.20s»; salida 0 |
+| 17:57:40 a 17:57:42 | Humo de la web | `cd web && npm run smoke` | ✅ «Prueba de humo de la web: sin fallas»; salida 0 |
+| 17:57:42 a 17:57:55 | Sin red | `cd web && npm run sin-red -- <carpeta temporal fuera del repo>` | ✅ «23 de 23 comprobaciones pasan»; salida 0 |
+| 17:57:55 a 17:58:03 | Vista del agricultor y kit a 360, 390 y 412 px | `python web/scripts/agricultor_playwright.py` | ✅ «96 de 96 comprobaciones pasan»; salida 0 |
+| 17:58:03 a 17:58:15 | Vista Evidence a 360, 390 y 412 px | `python web/scripts/evidence_playwright.py` | ✅ «143 de 143 comprobaciones pasan»; salida 0 |
+| 17:58:15 a 17:58:16 | Sensibilidad de la canícula | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ «OK 'sat': jocotan 2, camotan 2, olopa 0, san_juan_ermita 1, zacapa 3 de 25 años»; «OK 'rnl': caché completa; totales mensuales iguales a 'sat'»; salida 0 |
+
+Antes de esta corrida se regeneró sin red con `python -m motor.exportar` (sin `--audio`) por un cambio de redacción en el inglés de un beneficio de la rotación actual: `puntajes`, `farmer.hechos`, `farmer.opciones` y `texto_tarjeta` quedaron idénticos; en los 5 JSON principales solo cambió esa frase.
+
 ## Subtítulos en inglés del audio corto (rama `entrega-impacto-6`): sábado 14 nov 2026
 
 Los `.frases.en.vtt` traían los tiempos del mp3 en español (terminaban entre 25.98 y 28.60 s) aunque los `.frases.en.mp3` duran de 28.48 a 29.81 s. El exportador copiaba esos tiempos a la etiqueta del mp3 en inglés al generarlo; ahora guarda los del inglés y, para los mp3 ya generados, los lee del propio audio (las 5 uniones de 0.25 s entre frases, con ffmpeg y sin red). Regenerado con `python -m motor.exportar`, sin `--audio`: solo cambian los 5 `.en.vtt`; los mp3 no se tocaron. Horas de `date` (UTC−6).

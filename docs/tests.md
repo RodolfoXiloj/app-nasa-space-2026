@@ -8,6 +8,27 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## `main` with `entrega-impacto-6` on top and the guides corrected: Saturday 14 Nov 2026
+
+`entrega-impacto-6` was put on top of `main` (which already had the farmer view's July-August 2026 line and the people-test guides). On top of that: the screenshots in `docs/capturas/` retaken from the current site (new script `web/scripts/evidence_capturas.py`), the slide screenshots and PDF regenerated, the Evidence card no longer repeats "What the satellite sees:" or "Planting date:", the guides in `docs/es/pruebas-personas/` corrected against the site's real text, `docs/es/preguntas-agricultor.md`, and one new test (`tests/test_repo.py`: nothing that `.gitignore` excludes is in the repo). Same laptop: Windows 11, Python 3.11.9 (pytest 9.0.2), Node v24.15.0, npm 11.12.1, Playwright 1.58.0. Times from `date` (UTC−6).
+
+| Time | What | Command | Result |
+|---|---|---|---|
+| 17:56:08 to 17:56:14 | Web build | `cd web && npm run build` | ✅ "526 modules transformed", "built in 4.65s"; first-load JS `index` 171.70 kB (gzip 56.85 kB), Evidence JS 673.30 kB (gzip 190.77 kB); exit 0 |
+| 17:56:14 to 17:56:43 | Evidence screenshots | `cd web && python scripts/evidence_capturas.py` | ✅ "26 capturas"; exit 0 |
+| 17:56:44 to 17:57:00 | Farmer screenshots | `cd web && python scripts/agricultor_playwright.py --capturas` | ✅ "96 de 96 comprobaciones pasan"; exit 0 |
+| 17:57:00 to 17:57:07 | Slide screenshots | `cd web && python scripts/slides_capturas.py` | ✅ 4 screenshots "OK"; exit 0 |
+| 17:57:07 to 17:57:09 | Slides PDF | `cd web && python scripts/slides_pdf.py` | ✅ "docs/slides/milpa-resiliente.pdf: 7 páginas (tope 7)"; exit 0 |
+| 17:57:09 to 17:57:24 | Automated tests | `python -m pytest -q` | ✅ only dots, up to "[100%]", no failure; exit 0 |
+| 17:57:24 to 17:57:40 | Automated tests with the total | `python -m pytest -p no:cacheprovider -o addopts=''` | ✅ "250 passed in 15.20s"; exit 0 |
+| 17:57:40 to 17:57:42 | Web smoke test | `cd web && npm run smoke` | ✅ "Prueba de humo de la web: sin fallas"; exit 0 |
+| 17:57:42 to 17:57:55 | Offline test | `cd web && npm run sin-red -- <temp folder outside the repo>` | ✅ "23 de 23 comprobaciones pasan"; exit 0 |
+| 17:57:55 to 17:58:03 | Farmer view and kit at 360, 390 and 412 px | `python web/scripts/agricultor_playwright.py` | ✅ "96 de 96 comprobaciones pasan"; exit 0 |
+| 17:58:03 to 17:58:15 | Evidence view at 360, 390 and 412 px | `python web/scripts/evidence_playwright.py` | ✅ "143 de 143 comprobaciones pasan"; exit 0 |
+| 17:58:15 to 17:58:16 | Canícula sensitivity | `python -m pipeline.validacion.sensibilidad_canicula --verificar` | ✅ "OK 'sat': jocotan 2, camotan 2, olopa 0, san_juan_ermita 1, zacapa 3 de 25 años"; "OK 'rnl': caché completa; totales mensuales iguales a 'sat'"; exit 0 |
+
+Before this run the data were regenerated offline with `python -m motor.exportar` (no `--audio`) for a wording change in the English of one benefit of the current rotation: `puntajes`, `farmer.hechos`, `farmer.opciones` and `texto_tarjeta` stayed identical; in the 5 main JSON files only that sentence changed.
+
 ## English subtitles of the short audio (branch `entrega-impacto-6`): Saturday 14 Nov 2026
 
 The `.frases.en.vtt` files carried the Spanish mp3 timings (ending between 25.98 and 28.60 s), while the `.frases.en.mp3` files last 28.48 to 29.81 s. The exporter copied those timings into the English mp3 tag when generating it; it now stores the English ones and, for mp3 files already generated, reads them from the audio itself (the 5 joins of 0.25 s between phrases, with ffmpeg and no network). Regenerated with `python -m motor.exportar`, no `--audio`: only the 5 `.en.vtt` files change; the mp3 files were not touched. Times from `date` (UTC−6).
