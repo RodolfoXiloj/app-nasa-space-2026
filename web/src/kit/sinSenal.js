@@ -12,6 +12,17 @@ export function registrar() {
 
 const absoluta = (ruta) => new URL(import.meta.env.BASE_URL + ruta, window.location.href).href
 
+// La parcela guardada se recuerda en el teléfono, como el idioma: src/agricultor/Inicio.jsx la abre primero (con
+// esta misma clave), así que sin señal abre la que sí está guardada aunque no sea la primera de la lista. Antes del
+// 15 nov 2026 la página siempre abría Jocotán y, sin señal, otra parcela guardada no se veía.
+export function recordarParcela(id) {
+  try {
+    localStorage.setItem('milpa-parcela', id)
+  } catch {
+    /* modo privado: abre la primera parcela, como antes */
+  }
+}
+
 // Lo que hace falta para abrir esta parcela sin señal: la página, el índice, su JSON, la línea de 2026, el audio
 // corto en el idioma elegido y sus subtítulos. El resto de la primera pantalla ya lo guardó el service worker.
 export function urlsParcela({ parcela, farmer, idioma }) {

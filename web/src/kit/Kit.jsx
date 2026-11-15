@@ -13,7 +13,7 @@ import { Fuego, Sol, SueloCubierto, SueloDesnudo } from '../pictos/iconos.jsx'
 import { RuedaMeses } from '../pictos/RuedaMeses.jsx'
 import { PuntosAnios } from '../pictos/PuntosAnios.jsx'
 import { TEXTOS_KIT } from './textos.js'
-import { guardar, registrar, urlsParcela } from './sinSenal.js'
+import { guardar, recordarParcela, registrar, urlsParcela } from './sinSenal.js'
 import { compartirImagen } from './imagen.js'
 import './kit.css'
 
@@ -183,6 +183,7 @@ export default function Kit({ idioma, pid, parcela, farmer, rotaciones }) {
     const mio = turno.current
     setGuardado('guardando')
     const r = await guardar(urlsParcela({ parcela, farmer, idioma }))
+    if (r && r.ok) recordarParcela(pid)
     if (turno.current === mio) setGuardado(r)
   }
 

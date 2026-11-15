@@ -4,14 +4,19 @@ const DEFAULT_LOCALE = 'en'
 let locale = DEFAULT_LOCALE
 const listeners = new Set()
 
-function readStored() {
+// Lee una clave guardada en el teléfono: el idioma, y la parcela que se guardó para usar sin señal
+// (src/agricultor/Inicio.jsx). En modo privado, sin localStorage, devuelve null.
+export function guardado(clave) {
   try {
-    const v = localStorage.getItem(STORAGE_KEY)
-    if (v === 'en' || v === 'es') return v
+    return localStorage.getItem(clave)
   } catch {
-    /* private mode */
+    return null
   }
-  return DEFAULT_LOCALE
+}
+
+function readStored() {
+  const v = guardado(STORAGE_KEY)
+  return v === 'en' || v === 'es' ? v : DEFAULT_LOCALE
 }
 
 if (typeof window !== 'undefined') {

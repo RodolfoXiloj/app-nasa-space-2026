@@ -101,7 +101,13 @@ def caso(navegador, ancho: int, alto: int, idioma: str, pid_captura: str, captur
     anota(orden == "suelo,quema,canicula" and ancho_doc <= ancho,
           f"{pre}: 3 hechos en orden, sin desbordar a lo ancho", f"{orden}; ancho {ancho_doc} px")
 
+    # «Escuchar» llega con import() después de pintar: en el sitio publicado aparece unas décimas después de los
+    # hechos (15 nov 2026: 0.07 a 0.12 s), así que se espera hasta 5 s antes de medir dónde quedó.
     boton = pag.locator(".agr-escuchar-boton")
+    try:
+        boton.wait_for(state="visible", timeout=5000)
+    except Exception:
+        pass
     caja = boton.bounding_box() if boton.count() == 1 else None
     texto = boton.inner_text().split("\n")[0] if caja else ""
     esperado = {"es": "Escuchar", "en": "Listen"}[idioma]

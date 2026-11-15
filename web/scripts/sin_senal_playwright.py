@@ -3,12 +3,13 @@
 Uso (después de `npm run build`):
     cd web && python scripts/sin_senal_playwright.py
 
-Levanta `vite preview` en 127.0.0.1:4178 y, en español y en inglés:
+Levanta `vite preview` en 127.0.0.1:4178 y, en español (Jocotán, la primera de la lista) y en inglés (Olopa,
+elegida en el menú):
 1. abre la vista del agricultor con el servidor arriba y espera al service worker;
 2. comprueba que todavía no hay audio guardado (la primera pantalla no descarga audio, docs/peso.md);
 3. toca «Guardar para usar sin señal» del kit y espera el «Guardado: … kB»;
-4. APAGA el servidor y recarga: la vista debe abrir con los tres hechos, Escuchar debe sonar con subtítulos y
-   el hecho que nombra la voz debe quedar marcado;
+4. APAGA el servidor y recarga: la vista debe abrir con los tres hechos (con Olopa, la parcela guardada y no la
+   primera de la lista), Escuchar debe sonar con subtítulos y el hecho que nombra la voz debe quedar marcado;
 5. abre Evidence sin servidor: como no se guardó, debe decir qué pasó (role="alert"), sin pantalla en blanco.
 6. tras guardar, simula un despliegue nuevo (build con otra versión del service worker): la caché de la app
    cambia, lo guardado sigue y la parcela vuelve a abrir sin servidor con su audio. Al final rehace el build normal.
@@ -63,8 +64,8 @@ def apagar(p: subprocess.Popen) -> None:
             return
 
 
-def prueba(navegador, idioma: str) -> None:
-    pre = f"Sin señal, {idioma}"
+def prueba(navegador, idioma: str, pid: str | None = None) -> None:
+    pre = f"Sin señal, {idioma}" + (f", {pid} elegida en el menú" if pid else "")
     srv = servidor()
     try:
         ctx = navegador.new_context(viewport={"width": 390, "height": 844})
@@ -75,6 +76,10 @@ def prueba(navegador, idioma: str) -> None:
         pg.evaluate(f"() => localStorage.setItem('milpa-locale', '{idioma}')")
         pg.reload()
         pg.wait_for_selector(".agr-lista-hechos [data-hecho]")
+        if pid:  # una parcela que no es la primera de la lista (15 nov 2026: antes, sin señal no abría)
+            pg.select_option("#agr-parcela", pid)
+            pg.wait_for_function("(p) => (document.querySelector('.kit-audio')?.getAttribute('href') || '').includes(p + '.frases')",
+                                 arg=pid, timeout=20000)
         controlada = pg.evaluate("""async () => {
             const reg = await navigator.serviceWorker.ready;
             for (let i = 0; i < 40 && !navigator.serviceWorker.controller; i++) await new Promise((r) => setTimeout(r, 100));
@@ -99,6 +104,9 @@ def prueba(navegador, idioma: str) -> None:
     pg.wait_for_selector(".agr-lista-hechos [data-hecho]", timeout=15000)
     n = pg.locator(".agr-lista-hechos [data-hecho]").count()
     anota(n == 3, f"{pre}: la vista abre sin servidor con los tres hechos ({n})")
+    if pid:
+        abierta = pg.input_value("#agr-parcela")
+        anota(abierta == pid, f"{pre}: sin servidor abre la parcela guardada, no la primera de la lista ({abierta})")
     pg.wait_for_selector(".agr-escuchar-boton", timeout=10000)
     pg.locator(".agr-escuchar-boton").click()
     pg.wait_for_timeout(5500)
@@ -182,8 +190,8 @@ def main() -> int:
     with sync_playwright() as p:
         navegador = p.chromium.launch(channel="msedge")
         try:
-            for idioma in ("es", "en"):
-                prueba(navegador, idioma)
+            for idioma, pid in (("es", None), ("en", "olopa")):
+                prueba(navegador, idioma, pid)
             prueba_despliegue(navegador)
         finally:
             navegador.close()

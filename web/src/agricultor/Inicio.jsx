@@ -2,7 +2,7 @@
 // toque (#evidence en la dirección). Evidence se carga con import() solo al abrirla, con el mapa y las
 // gráficas; la primera pantalla no las descarga.
 import { Component, Suspense, lazy, useEffect, useRef, useState, useSyncExternalStore } from 'react'
-import { getLocale, setLocale, subscribeLocale } from '../i18n/store.js'
+import { getLocale, guardado, setLocale, subscribeLocale } from '../i18n/store.js'
 import VistaAgricultor from './VistaAgricultor.jsx'
 import { TEXTOS } from './textos.js'
 import './agricultor.css'
@@ -75,7 +75,10 @@ export default function Inicio() {
     cargarJSON('data/parcelas.json')
       .then((j) => {
         setIndice(j.parcelas)
-        const primera = j.parcelas.find((p) => p.disponible)
+        // Primero la parcela guardada con «Guardar para usar sin señal» (src/kit/sinSenal.js la recuerda con esta
+        // clave): sin señal es la que está en el teléfono. Si no hay ninguna, la primera disponible.
+        const guardada = guardado('milpa-parcela')
+        const primera = j.parcelas.find((p) => p.disponible && p.id === guardada) || j.parcelas.find((p) => p.disponible)
         setPid(primera ? primera.id : null)
         if (!primera) setCargando(false)
       })
