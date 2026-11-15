@@ -1,0 +1,6 @@
+# Se regenera con los scripts (ver README.md)
+assets/nasa/
+assets/dive/picada.mp4
+renders/
+.hyperframes/
+node_modules/

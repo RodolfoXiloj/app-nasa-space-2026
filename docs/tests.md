@@ -8,6 +8,17 @@ Only real runs are logged: each one with the date and time it ran (Guatemala, UT
 
 Key: ✅ passed · ❌ failed · Pending: cannot be done yet.
 
+## 30-second demo video: Saturday 14 Nov 2026
+
+Project in `video/pitch/` (HyperFrames 0.8.225); what is real in each shot is in its README. Check and render times come from the files they wrote; the battery times from `date` (UTC−6).
+
+| Time | What | Result |
+|---|---|---|
+| 20:27 | `npx hyperframes check` (lint, runtime, layout, motion, contrast, craft, audio) | ✅ 0 errors; 1 warning kept on purpose (`timeline_track_too_dense`: the 18 captions share one track) |
+| 20:28 to 20:29 | Render | ✅ 29.8 s, 1920 × 1080, 30 fps, H.264 + AAC 48 kHz; −15.9 LUFS integrated, true peak −1.3 dBTP. Measured, not heard |
+| 20:31:59 to 20:33:09 | Battery with the video in `web/public/video/`: build, `pytest`, smoke, offline | ✅ first-load JS 171.53 kB; "250 passed in 18.21s"; "sin fallas"; 23 of 23 |
+| Pending | A person watches and hears the whole video | — |
+
 ## Android emulator and pictogram names: Saturday 14 Nov 2026
 
 Emulator `Medium_Phone_API_35` (Android 15, Chrome 157, TalkBack 15.0). Details in `docs/es/pruebas-personas/resultados-automaticos.md`, section 8. Times from `date` (UTC−6).

@@ -6,6 +6,17 @@ Solo se anotan corridas reales: cada una con la fecha y la hora en que se corri�
 
 Leyenda: ✅ pasó · ❌ falló · Pendiente: todavía no se puede hacer.
 
+## Video de 30 s: sábado 14 nov 2026
+
+Proyecto en `video/pitch/` (HyperFrames 0.8.225); lo que es real en cada toma está en su README. Las horas de la revisión y del render salen de los archivos que escribieron; las de la batería, de `date` (UTC−6).
+
+| Hora | Qué | Resultado |
+|---|---|---|
+| 20:27 | `npx hyperframes check` (lint, ejecución, diseño, movimiento, contraste, oficio, audio) | ✅ 0 errores; 1 aviso que se deja a propósito (`timeline_track_too_dense`: los 18 subtítulos comparten pista) |
+| 20:28 a 20:29 | Render | ✅ 29.8 s, 1920 × 1080, 30 fps, H.264 + AAC 48 kHz; −15.9 LUFS integrados, pico real −1.3 dBTP. Medido, no escuchado |
+| 20:31:59 a 20:33:09 | Batería con el video en `web/public/video/`: build, `pytest`, humo, sin red | ✅ JS de la primera carga 171.53 kB; «250 passed in 18.21s»; «sin fallas»; 23 de 23 |
+| Pendiente | Que una persona vea y escuche el video entero | — |
+
 ## Android en emulador y nombres de las figuras: sábado 14 nov 2026
 
 Emulador `Medium_Phone_API_35` (Android 15, Chrome 157, TalkBack 15.0). Detalle en `docs/es/pruebas-personas/resultados-automaticos.md`, sección 8. Horas de `date` (UTC−6).

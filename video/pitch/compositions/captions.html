@@ -1,0 +1,69 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      font-family: "Roboto", sans-serif;
+      pointer-events: none;
+    }
+    .cap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 110px;
+      text-align: center;
+      overflow: visible;
+    }
+    .cap span {
+      display: inline-block;
+      background: #fff;
+      border: 4px solid #000;
+      padding: 6px 22px 8px;
+      font-size: 46px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #000;
+      white-space: nowrap;
+    }
+    .cap span i {
+      font-style: normal;
+      font-weight: 500;
+      color: #3b3b3b;
+    }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1920" data-height="1080">
+    <!-- English captions, timed to the narration's word times (faster-whisper small.en on each line) -->
+    <div id="c1" class="cap clip" data-start="0.3" data-duration="1.48" data-track-index="0"><span>This year, the rains failed</span></div>
+    <div id="c2" class="cap clip" data-start="1.78" data-duration="1.77" data-track-index="0"><span>Guatemala’s Dry Corridor.</span></div>
+    <div id="c3" class="cap clip" data-start="3.75" data-duration="1.44" data-track-index="0"><span>NASA satellites have watched</span></div>
+    <div id="c4" class="cap clip" data-start="5.19" data-duration="1.56" data-track-index="0"><span>this land for two decades,</span></div>
+    <div id="c5" class="cap clip" data-start="7.05" data-duration="1.4" data-track-index="0"><span>one pixel at a time.</span></div>
+    <div id="c6" class="cap clip" data-start="8.65" data-duration="1.46" data-track-index="0"><span>Milpa Resiliente turns</span></div>
+    <div id="c7" class="cap clip" data-start="10.11" data-duration="1.66" data-track-index="0"><span>those pixels into three facts</span></div>
+    <div id="c8" class="cap clip" data-start="11.77" data-duration="1.33" data-track-index="0"><span>a farmer can see,</span></div>
+    <div id="c9" class="cap clip" data-start="13.3" data-duration="0.7" data-track-index="0"><span>and hear.</span></div>
+    <div id="c10" class="cap clip" data-start="14.15" data-duration="1.35" data-track-index="0"><span><i>Site audio:</i> “Soil: watch.”</span></div>
+    <div id="c11" class="cap clip" data-start="15.85" data-duration="1.95" data-track-index="0"><span>Thirty-three NASA climate futures.</span></div>
+    <div id="c12" class="cap clip" data-start="18.2" data-duration="1.75" data-track-index="0"><span>Today’s crops hold in nine.</span></div>
+    <div id="c13" class="cap clip" data-start="20.4" data-duration="0.87" data-track-index="0"><span>Short-cycle maize,</span></div>
+    <div id="c14" class="cap clip" data-start="21.27" data-duration="1.18" data-track-index="0"><span>in all thirty-three.</span></div>
+    <div id="c15" class="cap clip" data-start="22.75" data-duration="1.0" data-track-index="0"><span>Same evidence,</span></div>
+    <div id="c16" class="cap clip" data-start="23.85" data-duration="0.76" data-track-index="0"><span>so the farmer</span></div>
+    <div id="c17" class="cap clip" data-start="24.61" data-duration="1.26" data-track-index="0"><span>and the extension worker</span></div>
+    <div id="c18" class="cap clip" data-start="25.87" data-duration="1.03" data-track-index="0"><span>decide together.</span></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      document.querySelectorAll("#root .cap").forEach((el) => {
+        const s = parseFloat(el.dataset.start);
+        const e = s + parseFloat(el.dataset.duration);
+        const span = el.querySelector("span");
+        tl.fromTo(span, { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "power2.out" }, s);
+        tl.to(span, { opacity: 0, duration: 0.08, ease: "power2.in" }, e - 0.08);
+        tl.set(span, { opacity: 0 }, e);
+      });
+      window.__timelines["captions"] = tl;
+    })();
+  </script>
+</template>
